@@ -214,3 +214,33 @@ whatsapp{
     height: 500px;
     background-color: #a0a0a0;
 }
+#slidebarmain{
+    height: 350px;
+    background-color: #b0b0b0;
+}
+#aboutus{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url("image/logo.png");
+    background-size: cover;
+    background-position: center;
+}
+#aboutuscontent{
+    height: 500px;
+    background-color: transparent;
+    border-radius: 10px;
+    width : 1000px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+#aboutusaside{
+    height: 400px;
+    border-radius: 10px;
+    width: 600px;
+    margin-right: 50px;
+}
