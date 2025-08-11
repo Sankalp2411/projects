@@ -3,11 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
+div{
+    border-radius: 10px;
+}
 body{
     font-family: Arial, sans-serif;
     background-color: blue;
     color: #333;
-
+    text-align: center;
 }
 nav{
     background-color: blue;
@@ -137,7 +140,7 @@ header{
     width: 50px;
     height: 50px;
 }
-whatsapp{
+#whatsapp{
     width: 50px;
     height: 50px;
     background-color:transparent;
@@ -243,4 +246,142 @@ whatsapp{
     border-radius: 10px;
     width: 600px;
     margin-right: 50px;
+}
+#blogtitle{
+    background-color: #d0d0d0;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 60px;
+}
+#blogcontent{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#blog1{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 275px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#blog2{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 275px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#blog3{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 275px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#blog4{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 275px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#producttitle{
+    background-color: #d0d0d0;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    font-size: 60px;
+}
+#productline1{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+#productline2{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom:50px;
+}
+#product1{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 140px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#product2{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 140px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#product3{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 140px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#product4{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 140px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#product5{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 140px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#product6{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 140px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#product7{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 140px;
+    background-color: #c0c0c0;
+    text-align: center;
+}
+#product8{
+    padding: 10px 10px 10px 10px;
+    margin:10px 10px 10px 10px;
+    border:1px solid #000;
+    width:25%;
+    height: 140px;
+    background-color: #c0c0c0;
+    text-align: center;
 }
