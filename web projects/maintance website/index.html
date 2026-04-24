@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REearthTech Innovation — Clean Energy & Tech Sustainability</title>
+    <meta name="description"
+        content="REearthTech Innovation — Pioneering tech sustainability, clean energy solutions, and next-generation energy infrastructure for a greener tomorrow.">
+    <meta name="keywords" content="clean energy, sustainability, solar, smart grid, defence tech, ReEarthTech">
+    <meta name="author" content="REearthTech Innovation">
+    <meta property="og:title" content="REearthTech Innovation — Clean Energy & Tech Sustainability">
+    <meta property="og:description" content="Pioneering tech sustainability and clean energy solutions for a greener tomorrow.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <!-- Prevent theme flash: apply saved theme before CSS renders -->
+    <script>
+        (function() {
+            var t = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" id="logo">
+                <img src="logo.png" alt="ReEarthTech Innovations" class="logo-img">
+                <span class="logo-text">ReEarthTech</span>
+            </a>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-controls">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fas fa-sun light-icon"></i>
+                    <i class="fas fa-moon dark-icon"></i>
+                </button>
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Global Space Background -->
+    <video autoplay loop muted playsinline class="global-video-bg">
+        <source src="background.mp4" type="video/mp4">
+    </video>
+    <div class="global-overlay"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas" class="particle-canvas"></canvas>
+
+    <!-- HOME -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1 class="hero-title gradient-text">ReEarthTech Innovations</h1>
+            <p class="hero-subtitle">Tech Sustainability · Clean Energy · Defence Innovation</p>
+            <div class="hero-cta">
+                <a href="#solutions" class="btn btn-primary" id="cta-explore"><i class="fas fa-bolt"></i> Explore Solutions</a>
+                <a href="#contact" class="btn btn-outline" id="cta-partner"><i class="fas fa-handshake"></i> Partner With Us</a>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+                <span>Scroll to explore</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item animate-on-scroll stagger-1">
+                    <div class="stat-number" data-target="98">0</div>
+                    <div class="stat-label">Energy Efficiency %</div>
+                </div>
+                <div class="stat-item animate-on-scroll stagger-2">
+                    <div class="stat-number" data-target="4">0</div>
+                    <div class="stat-label">Core Solutions</div>
+                </div>
+                <div class="stat-item animate-on-scroll stagger-3">
+                    <div class="stat-number" data-target="24">0</div>
+                    <div class="stat-label">/ 7 Monitoring</div>
+                </div>
+                <div class="stat-item animate-on-scroll stagger-4">
+                    <div class="stat-number" data-target="100">0</div>
+                    <div class="stat-label">% Clean Energy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header animate-on-scroll fade-up">
+                <h2 class="section-title gradient-text">Our Vision</h2>
+                <p class="section-desc">A world where every community has access to reliable clean energy — where technology bridges sustainability and human progress.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card animate-on-scroll stagger-1">
+                    <div class="about-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>Mission</h3>
+                    <p>Accelerate the world's transition to sustainable energy through intelligent, AI-powered systems — accessible and affordable for all.</p>
+                </div>
+                <div class="about-card animate-on-scroll stagger-2">
+                    <div class="about-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>Values</h3>
+                    <p>Innovation with purpose. Sustainability at the core. Technology that protects our planet while powering human progress.</p>
+                </div>
+                <div class="about-card animate-on-scroll stagger-3">
+                    <div class="about-icon"><i class="fas fa-shield-halved"></i></div>
+                    <h3>Focus</h3>
+                    <p>Deep-tech innovation across clean energy, defence technology, and sustainable infrastructure — built for the real world.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         SOLUTIONS SECTION
+         ============================ -->
+    <section id="solutions" class="section bg-secondary">
+        <div class="container">
+            <div class="section-header animate-on-scroll fade-up">
+                <span class="section-tag">What We Offer</span>
+                <h2 class="section-title gradient-text">Our Solutions</h2>
+                <p class="section-desc">Intelligent energy systems built for efficiency, sustainability, and scale.</p>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card animate-on-scroll stagger-1" id="solution-solar">
+                    <div class="card-icon"><i class="fas fa-solar-panel"></i></div>
+                    <h3>Solar Intelligence</h3>
+                    <p>AI-powered solar tracking and panel optimization for maximum energy harvest across any terrain.</p>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Adaptive panel angle optimization</li>
+                        <li><i class="fas fa-check"></i> Weather-aware energy forecasting</li>
+                        <li><i class="fas fa-check"></i> Remote monitoring dashboard</li>
+                    </ul>
+                    <a href="#projects" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="product-card animate-on-scroll stagger-2" id="solution-grid">
+                    <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+                    <h3>Smart Grid Management</h3>
+                    <p>Real-time micro-grid distribution and load balancing for seamless energy flow.</p>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Real-time load balancing</li>
+                        <li><i class="fas fa-check"></i> AI-driven distribution</li>
+                        <li><i class="fas fa-check"></i> Fault detection & recovery</li>
+                    </ul>
+                    <a href="#projects" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="product-card animate-on-scroll stagger-3" id="solution-storage">
+                    <div class="card-icon"><i class="fas fa-battery-full"></i></div>
+                    <h3>Energy Storage</h3>
+                    <p>Deep learning-driven battery storage optimization for consistent and reliable supply.</p>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Smart charge/discharge cycles</li>
+                        <li><i class="fas fa-check"></i> Lifespan maximization</li>
+                        <li><i class="fas fa-check"></i> Peak demand management</li>
+                    </ul>
+                    <a href="#projects" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="product-card animate-on-scroll stagger-4" id="solution-analytics">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Sustainability Analytics</h3>
+                    <p>Carbon footprint dashboards with actionable insights to drive your green transition.</p>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Carbon footprint tracking</li>
+                        <li><i class="fas fa-check"></i> ESG compliance reports</li>
+                        <li><i class="fas fa-check"></i> Predictive analytics</li>
+                    </ul>
+                    <a href="#projects" class="card-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         PROJECTS SECTION
+         ============================ -->
+    <section id="projects" class="section">
+        <div class="container">
+            <div class="section-header animate-on-scroll fade-up">
+                <span class="section-tag">Our Work</span>
+                <h2 class="section-title gradient-text">Our Projects</h2>
+                <p class="section-desc">Pioneering innovations in clean energy technology and sustainable mobility.</p>
+            </div>
+
+            <div class="projects-showcase">
+                <!-- Rakshavahan Card -->
+                <div class="project-showcase-card animate-on-scroll stagger-1" data-project="rakshavahan"
+                    id="project-rakshavahan">
+                    <div class="project-card-inner">
+                        <div class="project-card-header">
+                            <div class="project-icon-wrapper">
+                                <div class="project-icon"><i class="fas fa-shield-halved"></i></div>
+                                <div class="project-icon-ring"></div>
+                            </div>
+                            <span class="project-status">Active</span>
+                        </div>
+                        <h3 class="project-name">Rakshavahan</h3>
+                        <p class="project-tagline">Armoured Defence Mobility Platform</p>
+                        <p class="project-brief">Next-generation autonomous defence vehicle engineered for extreme
+                            terrains and mission-critical operations.</p>
+                        <div class="project-tags">
+                            <span class="ptag">Defence Tech</span>
+                            <span class="ptag">Autonomous</span>
+                            <span class="ptag">Armoured</span>
+                        </div>
+                        <div class="project-card-footer">
+                            <button class="project-view-btn" data-modal="modal-rakshavahan" id="btn-view-rakshavahan">
+                                <span>View Details</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lumiris Card -->
+                <div class="project-showcase-card animate-on-scroll stagger-2" data-project="lumiris"
+                    id="project-lumiris">
+                    <div class="project-card-inner">
+                        <div class="project-card-header">
+                            <div class="project-icon-wrapper">
+                                <div class="project-icon lumiris-icon"><i class="fas fa-sun"></i></div>
+                                <div class="project-icon-ring lumiris-ring"></div>
+                            </div>
+                            <span class="project-status">Active</span>
+                        </div>
+                        <h3 class="project-name">Lumiris</h3>
+                        <p class="project-tagline">Intelligent Clean Energy System</p>
+                        <p class="project-brief">AI-driven solar and renewable energy management platform maximizing
+                            output and minimizing environmental footprint.</p>
+                        <div class="project-tags">
+                            <span class="ptag">Clean Energy</span>
+                            <span class="ptag">AI-Powered</span>
+                            <span class="ptag">Solar</span>
+                        </div>
+                        <div class="project-card-footer">
+                            <button class="project-view-btn" data-modal="modal-lumiris" id="btn-view-lumiris">
+                                <span>View Details</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PROJECT MODALS ========== -->
+
+    <!-- Rakshavahan Modal -->
+    <div class="project-modal-overlay" id="modal-rakshavahan">
+        <div class="project-modal">
+            <button class="modal-close-btn" aria-label="Close Modal"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fas fa-shield-halved"></i></div>
+                <div>
+                    <h2 class="modal-title">Rakshavahan</h2>
+                    <p class="modal-subtitle">Armoured Defence Mobility Platform</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4><i class="fas fa-crosshairs"></i> Mission</h4>
+                    <p>Rakshavahan is an advanced, autonomous armoured vehicle platform designed for India's defence
+                        forces. Built for extreme terrain operations, it combines cutting-edge AI navigation, reinforced
+                        armour plating, and modular mission kits for surveillance, logistics, and tactical response.</p>
+                </div>
+                <div class="modal-section">
+                    <h4><i class="fas fa-microchip"></i> Key Features</h4>
+                    <ul class="modal-features">
+                        <li><i class="fas fa-check-circle"></i> Autonomous terrain navigation with LiDAR + GPS fusion
+                        </li>
+                        <li><i class="fas fa-check-circle"></i> Modular mission payloads — surveillance, supply,
+                            tactical</li>
+                        <li><i class="fas fa-check-circle"></i> Reinforced composite armour rated for ballistic
+                            protection</li>
+                        <li><i class="fas fa-check-circle"></i> Encrypted communication with real-time command relay
+                        </li>
+                        <li><i class="fas fa-check-circle"></i> All-terrain mobility — desert, mountain, and amphibious
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h4><i class="fas fa-layer-group"></i> Tech Stack</h4>
+                    <div class="modal-tech-tags">
+                        <span>AI / ML</span>
+                        <span>LiDAR</span>
+                        <span>Embedded Systems</span>
+                        <span>IoT</span>
+                        <span>Composite Materials</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close-action">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lumiris Modal -->
+    <div class="project-modal-overlay" id="modal-lumiris">
+        <div class="project-modal">
+            <button class="modal-close-btn" aria-label="Close Modal"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <div class="modal-icon lumiris-icon"><i class="fas fa-sun"></i></div>
+                <div>
+                    <h2 class="modal-title">Lumiris</h2>
+                    <p class="modal-subtitle">Intelligent Clean Energy System</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4><i class="fas fa-bullseye"></i> Vision</h4>
+                    <p>Lumiris is an AI-powered clean energy management platform that optimizes solar panel arrays,
+                        battery storage systems, and micro-grid distribution. It makes renewable energy adoption
+                        seamless, efficient, and scalable for communities and industries alike.</p>
+                </div>
+                <div class="modal-section">
+                    <h4><i class="fas fa-bolt"></i> Key Features</h4>
+                    <ul class="modal-features">
+                        <li><i class="fas fa-check-circle"></i> AI-driven solar tracking for maximum energy harvest</li>
+                        <li><i class="fas fa-check-circle"></i> Smart grid management with real-time load balancing</li>
+                        <li><i class="fas fa-check-circle"></i> Predictive maintenance alerts via IoT sensor network
+                        </li>
+                        <li><i class="fas fa-check-circle"></i> Battery storage optimization with deep learning</li>
+                        <li><i class="fas fa-check-circle"></i> Carbon footprint dashboard with actionable insights</li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h4><i class="fas fa-layer-group"></i> Tech Stack</h4>
+                    <div class="modal-tech-tags">
+                        <span>AI / ML</span>
+                        <span>Solar Tech</span>
+                        <span>IoT</span>
+                        <span>Smart Grid</span>
+                        <span>Data Analytics</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close-action">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================
+         TEAM SECTION
+         ============================ -->
+    <section id="team" class="section bg-secondary">
+        <div class="container">
+            <div class="section-header animate-on-scroll fade-up">
+                <span class="section-tag">The People</span>
+                <h2 class="section-title gradient-text">Leadership</h2>
+                <p class="section-desc">Driving the future of sustainable energy technology.</p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card animate-on-scroll stagger-1" id="team-kaustubh">
+                    <div class="team-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h4>Kaustubh Bodade</h4>
+                    <span class="team-role">Founder</span>
+                    <p class="team-bio">Visionary leader driving the intersection of AI, clean energy, and defence technology. Committed to building sustainable solutions that power human progress.</p>
+                    <a href="https://www.linkedin.com/in/kaustubh-bodade-984731276" target="_blank"
+                        class="team-linkedin" id="linkedin-kaustubh"><i class="fab fa-linkedin"></i> Connect on LinkedIn</a>
+                </div>
+                <div class="team-card animate-on-scroll stagger-2" id="team-ayush">
+                    <div class="team-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h4>Ayush Ahire</h4>
+                    <span class="team-role">Co-Founder</span>
+                    <p class="team-bio">Strategic thinker and technologist passionate about leveraging innovation to solve real-world energy and sustainability challenges at scale.</p>
+                    <a href="https://www.linkedin.com/in/ayush-ahire-431288259/" target="_blank"
+                        class="team-linkedin" id="linkedin-ayush"><i class="fab fa-linkedin"></i> Connect on LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         NEWSLETTER / CTA SECTION
+         ============================ -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-card animate-on-scroll fade-up">
+                <div class="cta-icon"><i class="fas fa-paper-plane"></i></div>
+                <h2 class="gradient-text">Stay Ahead of the Curve</h2>
+                <p>Get the latest updates on clean energy technology, new project launches, and sustainability insights delivered to your inbox.</p>
+                <form class="newsletter-form" id="newsletter-form" onsubmit="return false;">
+                    <div class="newsletter-input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Enter your email address" id="newsletter-email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="newsletter-submit">
+                        <i class="fas fa-arrow-right"></i> Subscribe
+                    </button>
+                </form>
+                <span class="newsletter-note">No spam. Unsubscribe anytime.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         CONTACT SECTION
+         ============================ -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-header animate-on-scroll fade-up">
+                <span class="section-tag">Get In Touch</span>
+                <h2 class="section-title gradient-text">Contact Us</h2>
+                <p class="section-desc">Ready to explore clean energy solutions or partner on a project? We'd love to hear from you.</p>
+            </div>
+
+            <div class="contact-layout animate-on-scroll fade-up">
+
+                <!-- Left: Contact Info -->
+                <div class="contact-info-panel">
+                    <h3>Let's Build Together</h3>
+                    <p>Reach out and let's create something extraordinary for a sustainable tomorrow.</p>
+
+                    <div class="contact-info-items">
+                        <a href="mailto:business@reearthtech.in" class="contact-item" id="contact-email">
+                            <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <span class="contact-label">Email Us</span>
+                                <span class="contact-value">business@reearthtech.in</span>
+                            </div>
+                        </a>
+                        <div class="contact-item" id="contact-location">
+                            <div class="contact-icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <span class="contact-label">Location</span>
+                                <span class="contact-value">India</span>
+                            </div>
+                        </div>
+                        <div class="contact-item" id="contact-response">
+                            <div class="contact-icon-box"><i class="fas fa-clock"></i></div>
+                            <div>
+                                <span class="contact-label">Response Time</span>
+                                <span class="contact-value">Within 24 hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-social-row">
+                        <a href="https://www.linkedin.com/in/kaustubh-bodade-984731276" target="_blank" class="contact-social-btn" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="contact-social-btn" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="contact-social-btn" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Contact Form -->
+                <div class="contact-form-panel">
+                    <form class="contact-form" id="contact-form" onsubmit="return handleContactForm(event);">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name">Full Name</label>
+                                <div class="form-input-wrapper">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="contact-name" name="name" placeholder="Your full name" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email-field">Email Address</label>
+                                <div class="form-input-wrapper">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="contact-email-field" name="email" placeholder="your@email.com" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Subject</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-tag"></i>
+                                <input type="text" id="contact-subject" name="subject" placeholder="How can we help?" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <div class="form-textarea-wrapper">
+                                <textarea id="contact-message" name="message" placeholder="Tell us about your project or inquiry..." rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary contact-submit-btn" id="contact-submit">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Send Message</span>
+                        </button>
+                        <div class="contact-form-success" id="contact-success">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Message sent! We'll get back to you within 24 hours.</span>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         FOOTER
+         ============================ -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="#" class="footer-logo-link">
+                    <img src="logo.png" alt="ReEarthTech Innovations" class="footer-logo-img">
+                </a>
+                <p>Tech Sustainability · Clean Energy · Innovation</p>
+            </div>
+            <div class="footer-nav">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#solutions">Solutions</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-links">
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 REearthTech Innovation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

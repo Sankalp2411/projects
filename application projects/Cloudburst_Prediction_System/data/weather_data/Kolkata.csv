@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Kolkata,West Bengal,22.5697,88.3697,30.97,30,1013,3.09,0,67,haze,2026-02-20 13:37:28.859557

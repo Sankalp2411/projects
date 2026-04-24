@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 76.7808,
+        "lat": 30.3783
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 11.21,
+        "feels_like": 10.24,
+        "temp_min": 11.21,
+        "temp_max": 11.21,
+        "pressure": 1020,
+        "humidity": 71,
+        "sea_level": 1020,
+        "grnd_level": 988
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.59,
+        "deg": 317,
+        "gust": 5.42
+    },
+    "clouds": {
+        "all": 1
+    },
+    "dt": 1770314331,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255691,
+        "sunset": 1770294731
+    },
+    "timezone": 19800,
+    "id": 1278860,
+    "name": "Amb\u0101la",
+    "cod": 200
+}

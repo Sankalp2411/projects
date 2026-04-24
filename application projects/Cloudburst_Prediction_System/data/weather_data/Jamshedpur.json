@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 86.1833,
+        "lat": 22.8
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 21.55,
+        "feels_like": 20.49,
+        "temp_min": 21.55,
+        "temp_max": 21.55,
+        "pressure": 1018,
+        "humidity": 28,
+        "sea_level": 1018,
+        "grnd_level": 996
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.14,
+        "deg": 11,
+        "gust": 1.21
+    },
+    "clouds": {
+        "all": 6
+    },
+    "dt": 1770314125,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770252791,
+        "sunset": 1770293117
+    },
+    "timezone": 19800,
+    "id": 1269300,
+    "name": "Jamshedpur",
+    "cod": 200
+}

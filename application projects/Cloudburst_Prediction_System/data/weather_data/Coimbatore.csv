@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Coimbatore,Tamil Nadu,11,76.9667,31.88,35,1011,6.17,0,40,scattered clouds,2026-02-20 13:37:27.278271

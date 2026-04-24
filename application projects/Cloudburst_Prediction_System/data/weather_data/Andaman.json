@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 114.4621,
+        "lat": -3.198
+    },
+    "weather": [
+        {
+            "id": 802,
+            "main": "Clouds",
+            "description": "scattered clouds",
+            "icon": "03n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 24.06,
+        "feels_like": 25.08,
+        "temp_min": 24.06,
+        "temp_max": 24.06,
+        "pressure": 1010,
+        "humidity": 98,
+        "sea_level": 1010,
+        "grnd_level": 1009
+    },
+    "visibility": 8245,
+    "wind": {
+        "speed": 0.93,
+        "deg": 297,
+        "gust": 0.85
+    },
+    "clouds": {
+        "all": 40
+    },
+    "dt": 1770314336,
+    "sys": {
+        "country": "ID",
+        "sunrise": 1770330548,
+        "sunset": 1770374596
+    },
+    "timezone": 28800,
+    "id": 1650213,
+    "name": "Andaman",
+    "cod": 200
+}

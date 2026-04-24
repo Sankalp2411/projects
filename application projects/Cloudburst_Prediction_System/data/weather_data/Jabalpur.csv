@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Jabalpur,Madhya Pradesh,23.167,79.9501,27.47,39,1014,5.66,0,20,few clouds,2026-02-20 13:37:28.289403

@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Lucknow,Uttar Pradesh,26.85,80.9167,28.99,34,1016,2.57,0,3,haze,2026-02-20 13:37:29.092571

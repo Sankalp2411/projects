@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Jammu,Jammu & Kashmir,32.7333,74.8667,27.14,18,1019,2.99,0,0,clear sky,2026-02-20 13:37:28.464481

@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 78.0833,
+        "lat": 27.8833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 12.73,
+        "feels_like": 11.36,
+        "temp_min": 12.73,
+        "temp_max": 12.73,
+        "pressure": 1020,
+        "humidity": 50,
+        "sea_level": 1020,
+        "grnd_level": 998
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.18,
+        "deg": 303,
+        "gust": 3.39
+    },
+    "clouds": {
+        "all": 1
+    },
+    "dt": 1770314330,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255157,
+        "sunset": 1770294640
+    },
+    "timezone": 19800,
+    "id": 1279017,
+    "name": "Aligarh",
+    "cod": 200
+}

@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Cuttack,Odisha,20.465,85.8793,33.1,13,1013,3.28,0,7,clear sky,2026-02-20 13:37:27.325609

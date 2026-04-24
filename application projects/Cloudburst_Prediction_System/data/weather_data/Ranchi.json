@@ -1,0 +1,45 @@
+{
+    "coord": {
+        "lon": 85.3333,
+        "lat": 23.35
+    },
+    "weather": [
+        {
+            "id": 721,
+            "main": "Haze",
+            "description": "haze",
+            "icon": "50n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 16.06,
+        "feels_like": 15.16,
+        "temp_min": 16.06,
+        "temp_max": 16.06,
+        "pressure": 1019,
+        "humidity": 55,
+        "sea_level": 1019,
+        "grnd_level": 943
+    },
+    "visibility": 4500,
+    "wind": {
+        "speed": 2.06,
+        "deg": 310
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314146,
+    "sys": {
+        "type": 1,
+        "id": 9131,
+        "country": "IN",
+        "sunrise": 1770253039,
+        "sunset": 1770293277
+    },
+    "timezone": 19800,
+    "id": 1258526,
+    "name": "Ranchi",
+    "cod": 200
+}

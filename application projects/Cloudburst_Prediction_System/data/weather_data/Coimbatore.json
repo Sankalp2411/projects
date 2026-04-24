@@ -1,0 +1,45 @@
+{
+    "coord": {
+        "lon": 76.9667,
+        "lat": 11
+    },
+    "weather": [
+        {
+            "id": 721,
+            "main": "Haze",
+            "description": "haze",
+            "icon": "50n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 24.88,
+        "feels_like": 25.23,
+        "temp_min": 24.88,
+        "temp_max": 24.88,
+        "pressure": 1017,
+        "humidity": 69,
+        "sea_level": 1017,
+        "grnd_level": 967
+    },
+    "visibility": 5000,
+    "wind": {
+        "speed": 3.09,
+        "deg": 360
+    },
+    "clouds": {
+        "all": 5
+    },
+    "dt": 1770314141,
+    "sys": {
+        "type": 1,
+        "id": 9206,
+        "country": "IN",
+        "sunrise": 1770254122,
+        "sunset": 1770296210
+    },
+    "timezone": 19800,
+    "id": 1273865,
+    "name": "Coimbatore",
+    "cod": 200
+}

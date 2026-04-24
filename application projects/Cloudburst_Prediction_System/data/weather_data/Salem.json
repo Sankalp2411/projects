@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 78.1667,
+        "lat": 11.65
+    },
+    "weather": [
+        {
+            "id": 802,
+            "main": "Clouds",
+            "description": "scattered clouds",
+            "icon": "03n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 20.32,
+        "feels_like": 20.39,
+        "temp_min": 20.32,
+        "temp_max": 20.32,
+        "pressure": 1018,
+        "humidity": 76,
+        "sea_level": 1018,
+        "grnd_level": 966
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.55,
+        "deg": 75,
+        "gust": 3.78
+    },
+    "clouds": {
+        "all": 49
+    },
+    "dt": 1770314236,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770253880,
+        "sunset": 1770295876
+    },
+    "timezone": 19800,
+    "id": 1257629,
+    "name": "Salem",
+    "cod": 200
+}

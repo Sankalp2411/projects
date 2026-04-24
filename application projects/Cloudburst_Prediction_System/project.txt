@@ -1,0 +1,1252 @@
+project structure
+Cloudburst_prediction_system(
+    config(
+        __pycache__(
+            __init__.cpython-310.pyc
+            config.cpython-310.pyc
+            project_config.cpython-310.pyc
+        )
+        __init__.py
+        project_config.py
+    )
+    data(
+        processed(
+            cleaned_weather_data.csv
+            ml_ready_weather_data.csv
+        )
+        raw(
+            weather_data.csv
+        )
+        weather_data(
+            #data with all cities with two types of files
+            #city.csv files
+            #city.json files
+        )
+        cloudburst_predictions.csv
+        combined_weather_data.csv
+        indian_cities.csv
+        weather_data.csv
+    )
+    maps(
+        india_cloudburst_prediction.html
+    )
+    models(
+        cloudburst_model.pkl
+        scaler.pkl
+    )
+    notebooks(
+        01_data_preprocessing.ipynb
+    )
+    src(
+        __pycache__(
+            __init__.cpython-310.pyc
+            data_preprocessing.cpython-310.pyc
+        )
+        __init__.py
+        data_preprocessing.py
+        feature_engineering.py
+        fetch_weather.py
+        map_visualization.py
+        model_evaluation.py
+        model_training.py
+        predict_cloudburst.py
+    )
+    venv(
+        #all venv files
+    )
+    app.py
+    README.md
+    requirements.txt
+)
+
+# config/project_config.py
+"""
+Central configuration file for Cloudburst Prediction Project
+This file acts as a SINGLE SOURCE OF TRUTH
+"""
+FEATURE_COLUMNS = [
+    "temperature",
+    "humidity",
+    "rainfall"
+]
+RAIN_THRESHOLD_MM = 100
+HUMIDITY_THRESHOLD = 85
+HIGH_RISK_PROBABILITY = 0.7
+RAW_WEATHER_DATA = "data/combined_weather_data.csv"
+PROCESSED_DATA = "data/processed/ml_ready_weather_data.csv"
+MODEL_PATH = "models/cloudburst_model.pkl"
+PREDICTION_OUTPUT = "data/cloudburst_predictions.csv"
+
+# src/data_preprocessing.py
+import pandas as pd
+import os
+RAW_DATA_PATH = "data/raw/weather_data.csv"
+PROCESSED_DATA_PATH = "data/processed/cleaned_weather_data.csv"
+CLOUD_BURST_THRESHOLD = 100  
+def load_data(file_path):
+    """Load CSV dataset"""
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File not found: {file_path}")
+    df = pd.read_csv(file_path)
+    return df
+def clean_data(df):
+    """Clean and preprocess dataset"""
+    df = df.drop_duplicates()
+    for col in ['temperature', 'humidity', 'pressure', 'wind_speed', 'cloud_cover']:
+        if col in df.columns:
+            df[col] = df[col].fillna(df[col].mean())
+    if 'rainfall' in df.columns:
+        df['rainfall'] = df['rainfall'].fillna(0)
+    if 'timestamp' in df.columns:
+        df['timestamp'] = pd.to_datetime(df['timestamp'])
+    return df
+def save_processed_data(df, output_path):
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    df.to_csv(output_path, index=False)
+if __name__ == "__main__":
+    df = load_data(RAW_DATA_PATH)
+    df = clean_data(df)
+    save_processed_data(df, PROCESSED_DATA_PATH)
+
+# src/feature_engineering.py
+import sys
+from pathlib import Path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(ROOT_DIR))
+import pandas as pd
+from config.project_config import (
+    FEATURE_COLUMNS,
+    RAIN_THRESHOLD_MM,
+    HUMIDITY_THRESHOLD,
+    RAW_WEATHER_DATA,
+    PROCESSED_DATA
+)
+raw_path = ROOT_DIR / RAW_WEATHER_DATA
+if not raw_path.exists():
+    raise FileNotFoundError(f"Raw weather file not found: {raw_path}")
+df = pd.read_csv(raw_path)
+missing_cols = [col for col in FEATURE_COLUMNS if col not in df.columns]
+if missing_cols:
+    raise ValueError(f"Missing required columns: {missing_cols}")
+df = df[FEATURE_COLUMNS]
+df["temperature"] = df["temperature"].fillna(df["temperature"].mean())
+df["humidity"] = df["humidity"].fillna(df["humidity"].mean())
+df["rainfall"] = df["rainfall"].fillna(0)
+df["cloudburst_label"] = (
+    (df["rainfall"] >= RAIN_THRESHOLD_MM) &
+    (df["humidity"] >= HUMIDITY_THRESHOLD)
+).astype(int)
+output_path = ROOT_DIR / PROCESSED_DATA
+output_path.parent.mkdir(parents=True, exist_ok=True)
+df.to_csv(output_path, index=False)
+
+# src/fetch_weather.py
+import os
+import requests
+import pandas as pd
+from datetime import datetime
+API_KEY = "f721ec92f16714f2deb81dd002027d28"
+BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+CITY_FILE = "data/indian_cities.csv"
+OUTPUT_DIR = "data/weather_data"
+COMBINED_FILE = "data/combined_weather_data.csv"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+if not os.path.exists(CITY_FILE):
+    raise FileNotFoundError(f"City file not found: {CITY_FILE}")
+cities_df = pd.read_csv(CITY_FILE)
+all_weather_records = []
+for _, row in cities_df.iterrows():
+    city = row["City"]
+    state = row["State"]
+    params = {
+        "q": f"{city},IN",
+        "appid": API_KEY,
+        "units": "metric"
+    }
+    response = requests.get(BASE_URL, params=params)
+    if response.status_code != 200:
+        continue
+    data = response.json()
+    record = {
+        "city": city,
+        "state": state,
+        "latitude": data["coord"]["lat"],
+        "longitude": data["coord"]["lon"],
+        "temperature": data["main"]["temp"],
+        "humidity": data["main"]["humidity"],
+        "pressure": data["main"]["pressure"],
+        "wind_speed": data["wind"]["speed"],
+        "rainfall": data.get("rain", {}).get("1h", 0),
+        "cloud_cover": data["clouds"]["all"],
+        "weather_description": data["weather"][0]["description"],
+        "datetime": datetime.now()
+    }
+    city_file = os.path.join(OUTPUT_DIR, f"{city}.csv")
+    pd.DataFrame([record]).to_csv(city_file, index=False)
+    all_weather_records.append(record)
+if not all_weather_records:
+    print("No weather data collected")
+    exit()
+combined_df = pd.DataFrame(all_weather_records)
+combined_df.to_csv(COMBINED_FILE, index=False)
+
+# src/map_visualization.py
+import pandas as pd
+import folium
+from folium.plugins import MarkerCluster
+PREDICTION_FILE = "data/cloudburst_predictions.csv"
+OUTPUT_MAP_FILE = "maps/india_cloudburst_prediction.html"
+df = pd.read_csv(PREDICTION_FILE)
+required_cols = {"latitude", "longitude", "city", "cloudburst_risk"}
+if not required_cols.issubset(df.columns):
+    raise ValueError("Required columns missing in prediction file")
+if df.empty:
+    print("No predictions available")
+    exit()
+india_map = folium.Map(location=[22.0, 79.0], zoom_start=5)
+marker_cluster = MarkerCluster().add_to(india_map)
+for _, row in df.iterrows():
+    color = "red" if row["cloudburst_risk"] == "High Risk" else "green"
+    popup = f"""
+    <b>City:</b> {row['city']}<br>
+    <b>State:</b> {row.get('state', 'N/A')}<br>
+    <b>Temperature:</b> {row['temperature']} °C<br>
+    <b>Humidity:</b> {row['humidity']} %<br>
+    <b>Rainfall:</b> {row['rainfall']} mm<br>
+    <b>Cloudburst Risk:</b> {row['cloudburst_risk']}
+    """
+    folium.CircleMarker(
+        location=[row["latitude"], row["longitude"]],
+        radius=6,
+        color=color,
+        fill=True,
+        fill_color=color,
+        fill_opacity=0.7,
+        popup=popup
+    ).add_to(marker_cluster)
+india_map.save(OUTPUT_MAP_FILE)
+
+#src/model_evaluation.py
+import pandas as pd
+from pathlib import Path
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+import joblib
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_FILE = BASE_DIR / "data" / "processed" / "ml_ready_weather_data.csv"
+MODEL_FILE = BASE_DIR / "models" / "cloudburst_model.pkl"
+df = pd.read_csv(DATA_FILE)
+drop_cols = ["cloudburst_label"]
+if "city" in df.columns:
+    drop_cols.append("city")
+X = df.drop(columns=drop_cols)
+y = df["cloudburst_label"]
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
+)
+model = joblib.load(MODEL_FILE)
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred, zero_division=0)
+recall = recall_score(y_test, y_pred, zero_division=0)
+f1 = f1_score(y_test, y_pred, zero_division=0)
+cm = confusion_matrix(y_test, y_pred)
+print("Model Evaluation Results")
+print("------------------------")
+print(f"Accuracy : {accuracy:.2f}")
+print(f"Precision: {precision:.2f}")
+print(f"Recall   : {recall:.2f}")
+print(f"F1-score : {f1:.2f}")
+print("\nConfusion Matrix:")
+print(cm)
+
+# src/model_training.py
+import sys
+from pathlib import Path
+import pandas as pd
+import pickle
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(ROOT_DIR))
+from config.project_config import (
+    FEATURE_COLUMNS,
+    PROCESSED_DATA,
+    MODEL_PATH
+)
+data_path = ROOT_DIR / PROCESSED_DATA
+if not data_path.exists():
+    raise FileNotFoundError(
+        f"ML-ready dataset not found. Run feature_engineering.py first: {data_path}"
+    )
+df = pd.read_csv(data_path)
+X = df[FEATURE_COLUMNS]
+y = df["cloudburst_label"]
+if y.nunique() < 2:
+    synthetic_data = pd.DataFrame({
+        "temperature": [22, 24, 23, 25],
+        "humidity": [90, 92, 88, 95],
+        "rainfall": [110, 130, 150, 180],
+        "cloudburst_label": [1, 1, 1, 1]
+    })
+    df = pd.concat([df, synthetic_data], ignore_index=True)
+    X = df[FEATURE_COLUMNS]
+    y = df["cloudburst_label"]
+model = LogisticRegression(max_iter=1000)
+model.fit(X, y)
+y_pred = model.predict(X)
+model_path = ROOT_DIR / MODEL_PATH
+model_path.parent.mkdir(parents=True, exist_ok=True)
+with open(model_path, "wb") as f:
+    pickle.dump(model, f)
+
+# src/predict_cloudburst.py
+import sys
+from pathlib import Path
+import pandas as pd
+import pickle
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(ROOT_DIR))
+from config.project_config import (
+    FEATURE_COLUMNS,
+    RAW_WEATHER_DATA,
+    MODEL_PATH,
+    PREDICTION_OUTPUT,
+    HIGH_RISK_PROBABILITY
+)
+data_path = ROOT_DIR / RAW_WEATHER_DATA
+if not data_path.exists():
+    raise FileNotFoundError(f"Weather data file not found: {data_path}")
+df = pd.read_csv(data_path)
+if df.empty:
+    print("No data available for prediction")
+    df.to_csv(ROOT_DIR / PREDICTION_OUTPUT, index=False)
+    exit()
+model_path = ROOT_DIR / MODEL_PATH
+if not model_path.exists():
+    raise FileNotFoundError(
+        f"Model not found. Train the model first: {model_path}"
+    )
+with open(model_path, "rb") as f:
+    model = pickle.load(f)
+missing_cols = [c for c in FEATURE_COLUMNS if c not in df.columns]
+if missing_cols:
+    raise ValueError(f"Missing required feature columns: {missing_cols}")
+X = df[FEATURE_COLUMNS].copy()
+X["temperature"] = X["temperature"].fillna(X["temperature"].mean())
+X["humidity"] = X["humidity"].fillna(X["humidity"].mean())
+X["rainfall"] = X["rainfall"].fillna(0)
+probabilities = model.predict_proba(X)[:, 1]
+predictions = (probabilities >= HIGH_RISK_PROBABILITY).astype(int)
+df["cloudburst_probability"] = probabilities.round(3)
+df["cloudburst_prediction"] = predictions
+df["cloudburst_risk"] = df["cloudburst_prediction"].map(
+    {0: "Low Risk", 1: "High Risk"}
+)
+output_path = ROOT_DIR / PREDICTION_OUTPUT
+output_path.parent.mkdir(parents=True, exist_ok=True)
+df.to_csv(output_path, index=False)
+
+# app.py
+import subprocess
+import webbrowser
+from pathlib import Path
+ROOT_DIR = Path(__file__).resolve().parent
+MAP_FILE = ROOT_DIR / "maps" / "india_cloudburst_prediction.html"
+print("Starting Cloudburst Prediction Pipeline...")
+subprocess.run(["python", "src/fetch_weather.py"], check=True)
+subprocess.run(["python", "src/data_preprocessing.py"], check=True)
+subprocess.run(["python", "src/feature_engineering.py"], check=True)
+subprocess.run(["python", "src/model_training.py"], check=True)
+subprocess.run(["python", "src/predict_cloudburst.py"], check=True)
+subprocess.run(["python", "src/map_visualization.py"], check=True)
+if MAP_FILE.exists():
+    webbrowser.open(f"file://{MAP_FILE.resolve()}")
+else:
+    print("Map file not found!")
+print("Cloudburst Prediction Pipeline completed successfully!")
+
+#notebook/01_data_preprocessing.ipynb
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from src.data_preprocessing import load_data, clean_data
+from config.config import DATA_PATH
+df = load_data(DATA_PATH)
+print("Initial Data:")
+display(df.head())
+df = clean_data(df)
+print("Data after cleaning:")
+display(df.head())
+print(df.describe())
+plt.figure(figsize=(8,5))
+sns.histplot(df['rainfall'], bins=50, kde=True)
+plt.title("Rainfall Distribution")
+plt.xlabel("Rainfall (mm/hour)")
+plt.show()
+plt.figure(figsize=(8,5))
+sns.scatterplot(x='temperature', y='humidity', data=df, hue='rainfall', palette='coolwarm')
+plt.title("Temperature vs Humidity")
+plt.show()
+df.to_csv(DATA_PATH, index=False)
+print("Processed CSV saved!")
+
+#data/processed/cleaned_weather_data.csv
+
+city,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,timestamp
+Delhi,22.05,35,1018,5.66,0,0,2026-02-05 16:04:59.480702
+Mumbai,32.99,31,1013,4.63,0,0,2026-02-05 16:04:59.484133
+Bangalore,27.78,28,1013,9.39,0,0,2026-02-05 16:04:59.501223
+Chennai,27.8,65,1014,6.69,0,40,2026-02-05 16:04:59.522881
+Kolkata,26.97,29,1014,3.09,0,0,2026-02-05 16:04:59.550839
+Hyderabad,27.23,36,1015,4.12,0,40,2026-02-05 16:04:59.571134
+Pune,30.22,29,1014,2.8,0,0,2026-02-05 16:04:59.588035
+Jaipur,23.62,25,1018,3.09,0,0,2026-02-05 16:04:59.600556
+
+#data/processed/ml_ready_weather_data.csv
+
+temperature,humidity,rainfall,cloudburst_label
+26.19,29,0,0
+32.02,35,0,0
+30.35,19,0,0
+20.89,44,0,0
+26.75,18,0,0
+27.26,66,0,0
+24.68,31,0,0
+21.84,48,0,0
+31.75,17,0,0
+22.97,46,0,0
+30.42,21,0,0
+32.39,13,0,0
+31.05,27,0,0
+25.79,27,0,0
+25.64,34,0,0
+30.54,18,0,0
+23.04,18,0,0
+27.48,41,0,0
+23.84,33,0,0
+28.15,17,0,0
+28.95,18,0,0
+27.48,41,0,0
+27.13,39,0,0
+31.12,29,0,0
+26.58,17,0,0
+32.04,16,0,0
+22.06,44,0,0
+28.42,61,0,0
+30.88,30,0,0
+31.1,17,0,0
+21.59,33,0,0
+24.05,33,0,0
+28.27,13,0,0
+29.66,16,0,0
+27.16,21,0,0
+30.51,33,0,0
+24.14,25,0,0
+24.67,24,0,0
+26.21,17,0,0
+33.01,21,0,0
+26.95,47,0,0
+26.31,30,0,0
+23.26,30,0,0
+30.02,16,0,0
+29.23,23,0,0
+24.95,25,0,0
+29.1,48,0,0
+29.47,30,0,0
+25.62,29,0,0
+23.9,37,0,0
+24.61,23,0,0
+29.45,25,0,0
+29.9,20,0,0
+27.44,26,0,0
+28.38,17,0,0
+25.7,32,0,0
+30.51,33,0,0
+26.97,32,0,0
+27.0,60,0,0
+28.07,26,0,0
+30.65,54,0,0
+25.99,34,0,0
+22.8,47,0,0
+31.01,48,0,0
+30.48,45,0,0
+24.89,23,0,0
+29.99,51,0,0
+29.0,34,0,0
+30.01,30,0,0
+31.05,19,0,0
+24.16,22,0,0
+25.96,47,0,0
+31.75,29,0,0
+29.08,26,0,0
+33.33,29,0,0
+24.06,20,0,0
+30.31,52,0,0
+29.32,21,0,0
+31.38,16,0,0
+13.18,27,0,0
+28.05,20,0,0
+27.13,26,0,0
+31.56,16,0,0
+31.99,29,0,0
+32.09,93,0,0
+30.99,58,0,0
+31.06,58,0,0
+30.69,45,0,0
+28.57,51,0,0
+26.5,22,0,0
+33.98,27,0,0
+26.95,28,0,0
+28.97,39,0,0
+28.94,34,0,0
+
+#data/weather_data.csv
+
+city,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,timestamp
+Delhi,22.05,35,1018,5.66,0,0,2026-02-05 16:04:59.480702
+Mumbai,32.99,31,1013,4.63,0,0,2026-02-05 16:04:59.484133
+Bangalore,27.78,28,1013,9.39,0,0,2026-02-05 16:04:59.501223
+Chennai,27.8,65,1014,6.69,0,40,2026-02-05 16:04:59.522881
+Kolkata,26.97,29,1014,3.09,0,0,2026-02-05 16:04:59.550839
+Hyderabad,27.23,36,1015,4.12,0,40,2026-02-05 16:04:59.571134
+Pune,30.22,29,1014,2.8,0,0,2026-02-05 16:04:59.588035
+Jaipur,23.62,25,1018,3.09,0,0,2026-02-05 16:04:59.600556
+
+#data/weather_data/Agra.csv
+
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Agra,Uttar Pradesh,27.1833,78.0167,26.19,29,1015,2.87,0,0,clear sky,2026-02-12 16:43:44.835997
+
+#data/weather_data/Agra.json
+
+{
+    "coord": {
+        "lon": 78.0167,
+        "lat": 27.1833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 13.96,
+        "feels_like": 12.69,
+        "temp_min": 13.96,
+        "temp_max": 13.96,
+        "pressure": 1020,
+        "humidity": 49,
+        "sea_level": 1020,
+        "grnd_level": 1000
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.7,
+        "deg": 313,
+        "gust": 3.29
+    },
+    "clouds": {
+        "all": 1
+    },
+    "dt": 1770314144,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255113,
+        "sunset": 1770294716
+    },
+    "timezone": 19800,
+    "id": 1279259,
+    "name": "Agra",
+    "cod": 200
+}
+
+#data/cloudburst_predictions.csv
+
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime,cloudburst_probability,cloudburst_prediction,cloudburst_risk
+Agra,Uttar Pradesh,27.1833,78.0167,26.19,29,1015,2.87,0,0,clear sky,2026-02-12 16:43:44.835997,0.0,0,Low Risk
+Ahmedabad,Gujarat,23.0333,72.6167,32.02,35,1012,4.12,0,96,smoke,2026-02-12 16:43:44.888623,0.0,0,Low Risk
+Ahmednagar,Maharashtra,19.0833,74.7333,30.35,19,1012,1.17,0,18,few clouds,2026-02-12 16:43:44.943785,0.0,0,Low Risk
+Aizawl,Mizoram,23.7333,92.7167,20.89,44,1012,1.54,0,0,haze,2026-02-12 16:43:44.990233,0.0,0,Low Risk
+Ajmer,Rajasthan,26.45,74.6333,26.75,18,1015,2.16,0,70,broken clouds,2026-02-12 16:43:45.054851,0.0,0,Low Risk
+Alappuzha,Kerala,9.49,76.3264,27.26,66,1010,6.66,0,0,clear sky,2026-02-12 16:43:45.138404,0.0,0,Low Risk
+Aligarh,Uttar Pradesh,27.8833,78.0833,24.68,31,1015,3.83,0,12,few clouds,2026-02-12 16:43:45.188087,0.0,0,Low Risk
+Ambala,Haryana,30.3783,76.7808,21.84,48,1016,3.43,0,2,clear sky,2026-02-12 16:43:45.268058,0.0,0,Low Risk
+Amravati,Maharashtra,20.9333,77.75,31.75,17,1013,1.72,0,1,clear sky,2026-02-12 16:43:45.336451,0.0,0,Low Risk
+Amritsar,Punjab,31.6331,74.8656,22.97,46,1015,2.06,0,40,haze,2026-02-12 16:43:45.390098,0.0,0,Low Risk
+Anantapur,Andhra Pradesh,14.6833,77.6,30.42,21,1012,4.76,0,3,clear sky,2026-02-12 16:43:45.454056,0.0,0,Low Risk
+Angul,Odisha,20.85,85.1,32.39,13,1012,2.39,0,0,clear sky,2026-02-12 16:43:45.800422,0.0,0,Low Risk
+Aurangabad,Maharashtra,19.8833,75.3333,31.05,27,1013,1.03,0,12,haze,2026-02-12 16:43:45.864457,0.0,0,Low Risk
+Ayodhya,Uttar Pradesh,26.8,82.2,25.79,27,1014,4.76,0,0,clear sky,2026-02-12 16:43:45.929935,0.0,0,Low Risk
+Azamgarh,Uttar Pradesh,26.06,83.1861,25.64,34,1014,3.66,0,0,clear sky,2026-02-12 16:43:45.991731,0.0,0,Low Risk
+Bagalkot,Karnataka,16.1833,75.7,30.54,18,1012,5.21,0,15,few clouds,2026-02-12 16:43:46.054866,0.0,0,Low Risk
+Bageshwar,Uttarakhand,29.85,79.7667,23.04,18,1013,2.4,0,0,clear sky,2026-02-12 16:43:46.126118,0.001,0,Low Risk
+Bangalore,Karnataka,12.9762,77.6033,27.48,41,1012,9.39,0,20,few clouds,2026-02-12 16:43:46.183126,0.0,0,Low Risk
+Bareilly,Uttar Pradesh,28.35,79.4167,23.84,33,1015,4.67,0,1,clear sky,2026-02-12 16:43:46.237151,0.0,0,Low Risk
+Barmer,Rajasthan,25.75,71.3833,28.15,17,1015,2.93,0,100,overcast clouds,2026-02-12 16:43:46.307902,0.0,0,Low Risk
+Belgaum,Karnataka,15.8667,74.5,28.95,18,1012,5.14,0,9,clear sky,2026-02-12 16:43:46.354470,0.0,0,Low Risk
+Bengaluru,Karnataka,12.9762,77.6033,27.48,41,1012,9.39,0,20,few clouds,2026-02-12 16:43:46.395964,0.0,0,Low Risk
+Bhopal,Madhya Pradesh,23.2667,77.4,27.13,39,1014,2.57,0,20,few clouds,2026-02-12 16:43:46.444010,0.0,0,Low Risk
+Bhubaneswar,Odisha,20.2333,85.8333,31.12,29,1012,2.06,0,3,haze,2026-02-12 16:43:46.507426,0.0,0,Low Risk
+Bikaner,Rajasthan,28.0167,73.3,26.58,17,1016,3.02,0,50,scattered clouds,2026-02-12 16:43:46.571485,0.0,0,Low Risk
+Bilaspur,Chhattisgarh,22.0833,82.15,32.04,16,1012,0.88,0,2,clear sky,2026-02-12 16:43:46.639018,0.0,0,Low Risk
+Chandigarh,Chandigarh,30.7343,76.7933,22.06,44,1016,4.33,0,1,clear sky,2026-02-12 16:43:46.700065,0.0,0,Low Risk
+Chennai,Tamil Nadu,13.0878,80.2785,28.42,61,1013,4.12,0,40,scattered clouds,2026-02-12 16:43:46.769521,0.0,0,Low Risk
+Coimbatore,Tamil Nadu,11.0,76.9667,30.88,30,1011,3.09,0,20,few clouds,2026-02-12 16:43:46.816975,0.0,0,Low Risk
+Cuttack,Odisha,20.465,85.8793,31.1,17,1012,0.75,0,1,clear sky,2026-02-12 16:43:46.884371,0.0,0,Low Risk
+Dehradun,Uttarakhand,30.3256,78.0437,21.59,33,1016,3.02,0,0,clear sky,2026-02-12 16:43:46.944090,0.0,0,Low Risk
+Delhi,Delhi,28.6667,77.2167,24.05,33,1016,3.6,0,20,haze,2026-02-12 16:43:47.007720,0.0,0,Low Risk
+Dhanbad,Jharkhand,23.8,86.45,28.27,13,1013,5.49,0,0,clear sky,2026-02-12 16:43:47.077774,0.0,0,Low Risk
+Dharwad,Karnataka,15.4667,75.0167,29.66,16,1012,3.6,0,0,clear sky,2026-02-12 16:43:47.136975,0.0,0,Low Risk
+Durgapur,West Bengal,23.4833,87.3167,27.16,21,1013,4.63,0,0,haze,2026-02-12 16:43:47.198959,0.0,0,Low Risk
+Ernakulam,Kerala,9.9833,76.2833,30.51,33,1010,2.24,0,0,clear sky,2026-02-12 16:43:47.292181,0.0,0,Low Risk
+Faridabad,Haryana,28.4333,77.3167,24.14,25,1016,3.81,0,3,clear sky,2026-02-12 16:43:47.365251,0.0,0,Low Risk
+Ghaziabad,Uttar Pradesh,28.6667,77.4333,24.67,24,1016,3.75,0,4,clear sky,2026-02-12 16:43:47.428067,0.0,0,Low Risk
+Gorakhpur,Uttar Pradesh,29.45,75.6833,26.21,17,1015,3.99,0,33,scattered clouds,2026-02-12 16:43:47.475734,0.0,0,Low Risk
+Guntur,Andhra Pradesh,16.3,80.45,33.01,21,1011,5.22,0,0,clear sky,2026-02-12 16:43:47.539494,0.0,0,Low Risk
+Guwahati,Assam,26.1862,91.751,26.95,47,1011,2.06,0,20,haze,2026-02-12 16:43:47.619383,0.0,0,Low Risk
+Gwalior,Madhya Pradesh,26.2236,78.1792,26.31,30,1015,2.71,0,12,few clouds,2026-02-12 16:43:47.667250,0.0,0,Low Risk
+Haridwar,Uttarakhand,29.9667,78.1667,23.26,30,1015,3.34,0,0,clear sky,2026-02-12 16:43:47.736673,0.0,0,Low Risk
+Hubli,Karnataka,15.35,75.1667,30.02,16,1012,3.6,0,0,clear sky,2026-02-12 16:43:47.788017,0.0,0,Low Risk
+Hyderabad,Telangana,17.3753,78.4744,29.23,23,1013,3.6,0,1,haze,2026-02-12 16:43:47.855223,0.0,0,Low Risk
+Imphal,Manipur,24.8167,93.95,24.95,25,1012,3.09,0,0,clear sky,2026-02-12 16:43:47.899086,0.0,0,Low Risk
+Indore,Madhya Pradesh,22.7179,75.8333,29.1,48,1013,1.54,0,20,few clouds,2026-02-12 16:43:47.963190,0.0,0,Low Risk
+Jabalpur,Madhya Pradesh,23.167,79.9501,29.47,30,1014,1.54,0,0,clear sky,2026-02-12 16:43:48.026112,0.0,0,Low Risk
+Jaipur,Rajasthan,26.9167,75.8167,25.62,29,1016,2.57,0,40,haze,2026-02-12 16:43:48.073711,0.0,0,Low Risk
+Jalandhar,Punjab,31.3256,75.5792,23.9,37,1016,1.25,0,7,clear sky,2026-02-12 16:43:48.137330,0.0,0,Low Risk
+Jammu,Jammu & Kashmir,32.7333,74.8667,24.61,23,1015,1.44,0,15,few clouds,2026-02-12 16:43:48.189581,0.0,0,Low Risk
+Jamnagar,Gujarat,22.4667,70.0667,29.45,25,1013,4.67,0,100,overcast clouds,2026-02-12 16:43:48.248958,0.0,0,Low Risk
+Jamshedpur,Jharkhand,22.8,86.1833,29.9,20,1012,2.06,0,0,haze,2026-02-12 16:43:48.305230,0.0,0,Low Risk
+Jhansi,Uttar Pradesh,25.4333,78.5833,27.44,26,1015,4.27,0,2,clear sky,2026-02-12 16:43:48.372338,0.0,0,Low Risk
+Jodhpur,Rajasthan,26.2867,73.03,28.38,17,1015,2.31,0,49,scattered clouds,2026-02-12 16:43:48.431519,0.0,0,Low Risk
+Kanpur,Uttar Pradesh,26.4667,80.35,25.7,32,1015,4.35,0,0,clear sky,2026-02-12 16:43:48.490750,0.0,0,Low Risk
+Kochi,Kerala,9.9399,76.2602,30.51,33,1010,2.24,0,0,clear sky,2026-02-12 16:43:48.535312,0.0,0,Low Risk
+Kolkata,West Bengal,22.5697,88.3697,26.97,32,1013,3.6,0,0,haze,2026-02-12 16:43:48.574081,0.0,0,Low Risk
+Kollam,Kerala,8.8833,76.6,27.0,60,1010,3.94,0,0,clear sky,2026-02-12 16:43:48.655480,0.0,0,Low Risk
+Kota,Rajasthan,25.1833,75.8333,28.07,26,1015,1.58,0,26,scattered clouds,2026-02-12 16:43:48.716933,0.0,0,Low Risk
+Kozhikode,Kerala,11.25,75.7667,30.65,54,1010,4.83,0,8,clear sky,2026-02-12 16:43:48.780982,0.0,0,Low Risk
+Lucknow,Uttar Pradesh,26.85,80.9167,25.99,34,1015,5.14,0,0,haze,2026-02-12 16:43:48.841823,0.0,0,Low Risk
+Ludhiana,Punjab,30.9,75.85,22.8,47,1016,1.74,0,12,few clouds,2026-02-12 16:43:48.902118,0.0,0,Low Risk
+Madurai,Tamil Nadu,9.9333,78.1167,31.01,48,1010,3.6,0,40,scattered clouds,2026-02-12 16:43:48.964923,0.0,0,Low Risk
+Mangalore,Karnataka,12.8667,74.8833,30.48,45,1010,4.12,0,0,clear sky,2026-02-12 16:43:49.011261,0.0,0,Low Risk
+Meerut,Uttar Pradesh,28.9833,77.7,24.89,23,1015,4.32,0,5,clear sky,2026-02-12 16:43:49.076146,0.0,0,Low Risk
+Mumbai,Maharashtra,19.0144,72.8479,29.99,51,1012,5.66,0,10,smoke,2026-02-12 16:43:49.139074,0.0,0,Low Risk
+Mysore,Karnataka,12.3072,76.6497,29.0,34,1011,1.54,0,0,clear sky,2026-02-12 16:43:49.204287,0.0,0,Low Risk
+Nagpur,Maharashtra,21.15,79.1,30.01,30,1013,1.54,0,1,haze,2026-02-12 16:43:49.268445,0.0,0,Low Risk
+Nashik,Maharashtra,19.9833,73.8,31.05,19,1012,2.3,0,6,clear sky,2026-02-12 16:43:49.330046,0.0,0,Low Risk
+Noida,Uttar Pradesh,28.58,77.33,24.16,22,1016,3.77,0,6,clear sky,2026-02-12 16:43:49.392579,0.0,0,Low Risk
+Patna,Bihar,25.6,85.1167,25.96,47,1014,3.6,0,0,clear sky,2026-02-12 16:43:49.454459,0.0,0,Low Risk
+Pune,Maharashtra,18.5196,73.8553,31.75,29,1012,0.45,0,56,broken clouds,2026-02-12 16:43:49.513036,0.0,0,Low Risk
+Raipur,Chhattisgarh,21.2333,81.6333,29.08,26,1013,1.03,0,4,haze,2026-02-12 16:43:49.576030,0.0,0,Low Risk
+Rajkot,Gujarat,22.3,70.7833,33.33,29,1013,1.97,0,100,overcast clouds,2026-02-12 16:43:49.633019,0.0,0,Low Risk
+Ranchi,Jharkhand,23.35,85.3333,24.06,20,1014,4.63,0,0,clear sky,2026-02-12 16:43:49.692168,0.0,0,Low Risk
+Salem,Tamil Nadu,11.65,78.1667,30.31,52,1011,1.03,0,40,scattered clouds,2026-02-12 16:43:49.751861,0.0,0,Low Risk
+Sambalpur,Odisha,21.45,83.9667,29.32,21,1013,1.59,0,0,clear sky,2026-02-12 16:43:49.815085,0.0,0,Low Risk
+Sangli,Maharashtra,16.8544,74.5642,31.38,16,1012,4.63,0,55,broken clouds,2026-02-12 16:43:49.883125,0.0,0,Low Risk
+Shimla,Himachal Pradesh,31.1,77.1667,13.18,27,1016,2.93,0,1,clear sky,2026-02-12 16:43:49.955828,0.003,0,Low Risk
+Silchar,Assam,24.8167,92.8,28.05,20,1011,2.31,0,0,clear sky,2026-02-12 16:43:50.013096,0.0,0,Low Risk
+Siliguri,West Bengal,26.7,88.4333,27.13,26,1012,2.6,0,0,clear sky,2026-02-12 16:43:50.099731,0.0,0,Low Risk
+Solapur,Maharashtra,17.6833,75.9167,31.56,16,1012,3.22,0,52,broken clouds,2026-02-12 16:43:50.158495,0.0,0,Low Risk
+Surat,Gujarat,21.1667,72.8333,31.99,29,1012,3.09,0,33,smoke,2026-02-12 16:43:50.211102,0.0,0,Low Risk
+Thane,Maharashtra,19.2,72.9667,32.09,93,1012,5.66,0,9,smoke,2026-02-12 16:43:50.282443,0.0,0,Low Risk
+Thiruvananthapuram,Kerala,8.4833,76.9167,30.99,58,1010,1.03,0,0,haze,2026-02-12 16:43:50.341597,0.0,0,Low Risk
+Tiruchirappalli,Tamil Nadu,10.8167,78.6833,31.06,58,1011,4.12,0,75,haze,2026-02-12 16:43:50.399988,0.0,0,Low Risk
+Tirunelveli,Tamil Nadu,8.7333,77.7,30.69,45,1010,3.74,0,78,broken clouds,2026-02-12 16:43:50.457975,0.0,0,Low Risk
+Tirupati,Andhra Pradesh,13.65,79.4167,28.57,51,1013,5.14,0,20,few clouds,2026-02-12 16:43:50.516256,0.0,0,Low Risk
+Udaipur,Rajasthan,24.5712,73.6918,26.5,22,1015,1.68,0,74,broken clouds,2026-02-12 16:43:50.581438,0.0,0,Low Risk
+Vadodara,Gujarat,22.3,73.2,33.98,27,1012,1.03,0,74,broken clouds,2026-02-12 16:43:50.625240,0.0,0,Low Risk
+Varanasi,Uttar Pradesh,25.3333,83.0,26.95,28,1014,4.02,0,0,clear sky,2026-02-12 16:43:50.672872,0.0,0,Low Risk
+Vijayawada,Andhra Pradesh,16.5167,80.6167,28.97,39,1011,4.63,0,1,clear sky,2026-02-12 16:43:50.736961,0.0,0,Low Risk
+Visakhapatnam,Andhra Pradesh,17.69,83.2093,28.94,34,1013,5.14,0,57,haze,2026-02-12 16:43:50.805809,0.0,0,Low Risk
+
+#data/combined_weather_data.csv
+
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Agra,Uttar Pradesh,27.1833,78.0167,26.19,29,1015,2.87,0,0,clear sky,2026-02-12 16:43:44.835997
+Ahmedabad,Gujarat,23.0333,72.6167,32.02,35,1012,4.12,0,96,smoke,2026-02-12 16:43:44.888623
+Ahmednagar,Maharashtra,19.0833,74.7333,30.35,19,1012,1.17,0,18,few clouds,2026-02-12 16:43:44.943785
+Aizawl,Mizoram,23.7333,92.7167,20.89,44,1012,1.54,0,0,haze,2026-02-12 16:43:44.990233
+Ajmer,Rajasthan,26.45,74.6333,26.75,18,1015,2.16,0,70,broken clouds,2026-02-12 16:43:45.054851
+Alappuzha,Kerala,9.49,76.3264,27.26,66,1010,6.66,0,0,clear sky,2026-02-12 16:43:45.138404
+Aligarh,Uttar Pradesh,27.8833,78.0833,24.68,31,1015,3.83,0,12,few clouds,2026-02-12 16:43:45.188087
+Ambala,Haryana,30.3783,76.7808,21.84,48,1016,3.43,0,2,clear sky,2026-02-12 16:43:45.268058
+Amravati,Maharashtra,20.9333,77.75,31.75,17,1013,1.72,0,1,clear sky,2026-02-12 16:43:45.336451
+Amritsar,Punjab,31.6331,74.8656,22.97,46,1015,2.06,0,40,haze,2026-02-12 16:43:45.390098
+Anantapur,Andhra Pradesh,14.6833,77.6,30.42,21,1012,4.76,0,3,clear sky,2026-02-12 16:43:45.454056
+Angul,Odisha,20.85,85.1,32.39,13,1012,2.39,0,0,clear sky,2026-02-12 16:43:45.800422
+Aurangabad,Maharashtra,19.8833,75.3333,31.05,27,1013,1.03,0,12,haze,2026-02-12 16:43:45.864457
+Ayodhya,Uttar Pradesh,26.8,82.2,25.79,27,1014,4.76,0,0,clear sky,2026-02-12 16:43:45.929935
+Azamgarh,Uttar Pradesh,26.06,83.1861,25.64,34,1014,3.66,0,0,clear sky,2026-02-12 16:43:45.991731
+Bagalkot,Karnataka,16.1833,75.7,30.54,18,1012,5.21,0,15,few clouds,2026-02-12 16:43:46.054866
+Bageshwar,Uttarakhand,29.85,79.7667,23.04,18,1013,2.4,0,0,clear sky,2026-02-12 16:43:46.126118
+Bangalore,Karnataka,12.9762,77.6033,27.48,41,1012,9.39,0,20,few clouds,2026-02-12 16:43:46.183126
+Bareilly,Uttar Pradesh,28.35,79.4167,23.84,33,1015,4.67,0,1,clear sky,2026-02-12 16:43:46.237151
+Barmer,Rajasthan,25.75,71.3833,28.15,17,1015,2.93,0,100,overcast clouds,2026-02-12 16:43:46.307902
+Belgaum,Karnataka,15.8667,74.5,28.95,18,1012,5.14,0,9,clear sky,2026-02-12 16:43:46.354470
+Bengaluru,Karnataka,12.9762,77.6033,27.48,41,1012,9.39,0,20,few clouds,2026-02-12 16:43:46.395964
+Bhopal,Madhya Pradesh,23.2667,77.4,27.13,39,1014,2.57,0,20,few clouds,2026-02-12 16:43:46.444010
+Bhubaneswar,Odisha,20.2333,85.8333,31.12,29,1012,2.06,0,3,haze,2026-02-12 16:43:46.507426
+Bikaner,Rajasthan,28.0167,73.3,26.58,17,1016,3.02,0,50,scattered clouds,2026-02-12 16:43:46.571485
+Bilaspur,Chhattisgarh,22.0833,82.15,32.04,16,1012,0.88,0,2,clear sky,2026-02-12 16:43:46.639018
+Chandigarh,Chandigarh,30.7343,76.7933,22.06,44,1016,4.33,0,1,clear sky,2026-02-12 16:43:46.700065
+Chennai,Tamil Nadu,13.0878,80.2785,28.42,61,1013,4.12,0,40,scattered clouds,2026-02-12 16:43:46.769521
+Coimbatore,Tamil Nadu,11.0,76.9667,30.88,30,1011,3.09,0,20,few clouds,2026-02-12 16:43:46.816975
+Cuttack,Odisha,20.465,85.8793,31.1,17,1012,0.75,0,1,clear sky,2026-02-12 16:43:46.884371
+Dehradun,Uttarakhand,30.3256,78.0437,21.59,33,1016,3.02,0,0,clear sky,2026-02-12 16:43:46.944090
+Delhi,Delhi,28.6667,77.2167,24.05,33,1016,3.6,0,20,haze,2026-02-12 16:43:47.007720
+Dhanbad,Jharkhand,23.8,86.45,28.27,13,1013,5.49,0,0,clear sky,2026-02-12 16:43:47.077774
+Dharwad,Karnataka,15.4667,75.0167,29.66,16,1012,3.6,0,0,clear sky,2026-02-12 16:43:47.136975
+Durgapur,West Bengal,23.4833,87.3167,27.16,21,1013,4.63,0,0,haze,2026-02-12 16:43:47.198959
+Ernakulam,Kerala,9.9833,76.2833,30.51,33,1010,2.24,0,0,clear sky,2026-02-12 16:43:47.292181
+Faridabad,Haryana,28.4333,77.3167,24.14,25,1016,3.81,0,3,clear sky,2026-02-12 16:43:47.365251
+Ghaziabad,Uttar Pradesh,28.6667,77.4333,24.67,24,1016,3.75,0,4,clear sky,2026-02-12 16:43:47.428067
+Gorakhpur,Uttar Pradesh,29.45,75.6833,26.21,17,1015,3.99,0,33,scattered clouds,2026-02-12 16:43:47.475734
+Guntur,Andhra Pradesh,16.3,80.45,33.01,21,1011,5.22,0,0,clear sky,2026-02-12 16:43:47.539494
+Guwahati,Assam,26.1862,91.751,26.95,47,1011,2.06,0,20,haze,2026-02-12 16:43:47.619383
+Gwalior,Madhya Pradesh,26.2236,78.1792,26.31,30,1015,2.71,0,12,few clouds,2026-02-12 16:43:47.667250
+Haridwar,Uttarakhand,29.9667,78.1667,23.26,30,1015,3.34,0,0,clear sky,2026-02-12 16:43:47.736673
+Hubli,Karnataka,15.35,75.1667,30.02,16,1012,3.6,0,0,clear sky,2026-02-12 16:43:47.788017
+Hyderabad,Telangana,17.3753,78.4744,29.23,23,1013,3.6,0,1,haze,2026-02-12 16:43:47.855223
+Imphal,Manipur,24.8167,93.95,24.95,25,1012,3.09,0,0,clear sky,2026-02-12 16:43:47.899086
+Indore,Madhya Pradesh,22.7179,75.8333,29.1,48,1013,1.54,0,20,few clouds,2026-02-12 16:43:47.963190
+Jabalpur,Madhya Pradesh,23.167,79.9501,29.47,30,1014,1.54,0,0,clear sky,2026-02-12 16:43:48.026112
+Jaipur,Rajasthan,26.9167,75.8167,25.62,29,1016,2.57,0,40,haze,2026-02-12 16:43:48.073711
+Jalandhar,Punjab,31.3256,75.5792,23.9,37,1016,1.25,0,7,clear sky,2026-02-12 16:43:48.137330
+Jammu,Jammu & Kashmir,32.7333,74.8667,24.61,23,1015,1.44,0,15,few clouds,2026-02-12 16:43:48.189581
+Jamnagar,Gujarat,22.4667,70.0667,29.45,25,1013,4.67,0,100,overcast clouds,2026-02-12 16:43:48.248958
+Jamshedpur,Jharkhand,22.8,86.1833,29.9,20,1012,2.06,0,0,haze,2026-02-12 16:43:48.305230
+Jhansi,Uttar Pradesh,25.4333,78.5833,27.44,26,1015,4.27,0,2,clear sky,2026-02-12 16:43:48.372338
+Jodhpur,Rajasthan,26.2867,73.03,28.38,17,1015,2.31,0,49,scattered clouds,2026-02-12 16:43:48.431519
+Kanpur,Uttar Pradesh,26.4667,80.35,25.7,32,1015,4.35,0,0,clear sky,2026-02-12 16:43:48.490750
+Kochi,Kerala,9.9399,76.2602,30.51,33,1010,2.24,0,0,clear sky,2026-02-12 16:43:48.535312
+Kolkata,West Bengal,22.5697,88.3697,26.97,32,1013,3.6,0,0,haze,2026-02-12 16:43:48.574081
+Kollam,Kerala,8.8833,76.6,27.0,60,1010,3.94,0,0,clear sky,2026-02-12 16:43:48.655480
+Kota,Rajasthan,25.1833,75.8333,28.07,26,1015,1.58,0,26,scattered clouds,2026-02-12 16:43:48.716933
+Kozhikode,Kerala,11.25,75.7667,30.65,54,1010,4.83,0,8,clear sky,2026-02-12 16:43:48.780982
+Lucknow,Uttar Pradesh,26.85,80.9167,25.99,34,1015,5.14,0,0,haze,2026-02-12 16:43:48.841823
+Ludhiana,Punjab,30.9,75.85,22.8,47,1016,1.74,0,12,few clouds,2026-02-12 16:43:48.902118
+Madurai,Tamil Nadu,9.9333,78.1167,31.01,48,1010,3.6,0,40,scattered clouds,2026-02-12 16:43:48.964923
+Mangalore,Karnataka,12.8667,74.8833,30.48,45,1010,4.12,0,0,clear sky,2026-02-12 16:43:49.011261
+Meerut,Uttar Pradesh,28.9833,77.7,24.89,23,1015,4.32,0,5,clear sky,2026-02-12 16:43:49.076146
+Mumbai,Maharashtra,19.0144,72.8479,29.99,51,1012,5.66,0,10,smoke,2026-02-12 16:43:49.139074
+Mysore,Karnataka,12.3072,76.6497,29.0,34,1011,1.54,0,0,clear sky,2026-02-12 16:43:49.204287
+Nagpur,Maharashtra,21.15,79.1,30.01,30,1013,1.54,0,1,haze,2026-02-12 16:43:49.268445
+Nashik,Maharashtra,19.9833,73.8,31.05,19,1012,2.3,0,6,clear sky,2026-02-12 16:43:49.330046
+Noida,Uttar Pradesh,28.58,77.33,24.16,22,1016,3.77,0,6,clear sky,2026-02-12 16:43:49.392579
+Patna,Bihar,25.6,85.1167,25.96,47,1014,3.6,0,0,clear sky,2026-02-12 16:43:49.454459
+Pune,Maharashtra,18.5196,73.8553,31.75,29,1012,0.45,0,56,broken clouds,2026-02-12 16:43:49.513036
+Raipur,Chhattisgarh,21.2333,81.6333,29.08,26,1013,1.03,0,4,haze,2026-02-12 16:43:49.576030
+Rajkot,Gujarat,22.3,70.7833,33.33,29,1013,1.97,0,100,overcast clouds,2026-02-12 16:43:49.633019
+Ranchi,Jharkhand,23.35,85.3333,24.06,20,1014,4.63,0,0,clear sky,2026-02-12 16:43:49.692168
+Salem,Tamil Nadu,11.65,78.1667,30.31,52,1011,1.03,0,40,scattered clouds,2026-02-12 16:43:49.751861
+Sambalpur,Odisha,21.45,83.9667,29.32,21,1013,1.59,0,0,clear sky,2026-02-12 16:43:49.815085
+Sangli,Maharashtra,16.8544,74.5642,31.38,16,1012,4.63,0,55,broken clouds,2026-02-12 16:43:49.883125
+Shimla,Himachal Pradesh,31.1,77.1667,13.18,27,1016,2.93,0,1,clear sky,2026-02-12 16:43:49.955828
+Silchar,Assam,24.8167,92.8,28.05,20,1011,2.31,0,0,clear sky,2026-02-12 16:43:50.013096
+Siliguri,West Bengal,26.7,88.4333,27.13,26,1012,2.6,0,0,clear sky,2026-02-12 16:43:50.099731
+Solapur,Maharashtra,17.6833,75.9167,31.56,16,1012,3.22,0,52,broken clouds,2026-02-12 16:43:50.158495
+Surat,Gujarat,21.1667,72.8333,31.99,29,1012,3.09,0,33,smoke,2026-02-12 16:43:50.211102
+Thane,Maharashtra,19.2,72.9667,32.09,93,1012,5.66,0,9,smoke,2026-02-12 16:43:50.282443
+Thiruvananthapuram,Kerala,8.4833,76.9167,30.99,58,1010,1.03,0,0,haze,2026-02-12 16:43:50.341597
+Tiruchirappalli,Tamil Nadu,10.8167,78.6833,31.06,58,1011,4.12,0,75,haze,2026-02-12 16:43:50.399988
+Tirunelveli,Tamil Nadu,8.7333,77.7,30.69,45,1010,3.74,0,78,broken clouds,2026-02-12 16:43:50.457975
+Tirupati,Andhra Pradesh,13.65,79.4167,28.57,51,1013,5.14,0,20,few clouds,2026-02-12 16:43:50.516256
+Udaipur,Rajasthan,24.5712,73.6918,26.5,22,1015,1.68,0,74,broken clouds,2026-02-12 16:43:50.581438
+Vadodara,Gujarat,22.3,73.2,33.98,27,1012,1.03,0,74,broken clouds,2026-02-12 16:43:50.625240
+Varanasi,Uttar Pradesh,25.3333,83.0,26.95,28,1014,4.02,0,0,clear sky,2026-02-12 16:43:50.672872
+Vijayawada,Andhra Pradesh,16.5167,80.6167,28.97,39,1011,4.63,0,1,clear sky,2026-02-12 16:43:50.736961
+Visakhapatnam,Andhra Pradesh,17.69,83.2093,28.94,34,1013,5.14,0,57,haze,2026-02-12 16:43:50.805809
+
+#data/indian_cities.csv
+
+City,State
+Agra,Uttar Pradesh
+Ahmedabad,Gujarat
+Ahmednagar,Maharashtra
+Aizawl,Mizoram
+Ajmer,Rajasthan
+Alappuzha,Kerala
+Aligarh,Uttar Pradesh
+Ambala,Haryana
+Amravati,Maharashtra
+Amritsar,Punjab
+Anantapur,Andhra Pradesh
+Andaman,Andaman & Nicobar Islands
+Angul,Odisha
+Aurangabad,Maharashtra
+Ayodhya,Uttar Pradesh
+Azamgarh,Uttar Pradesh
+Bagalkot,Karnataka
+Bageshwar,Uttarakhand
+Bangalore,Karnataka
+Bareilly,Uttar Pradesh
+Barmer,Rajasthan
+Belgaum,Karnataka
+Bengaluru,Karnataka
+Bhopal,Madhya Pradesh
+Bhubaneswar,Odisha
+Bikaner,Rajasthan
+Bilaspur,Chhattisgarh
+Chandigarh,Chandigarh
+Chennai,Tamil Nadu
+Coimbatore,Tamil Nadu
+Cuttack,Odisha
+Dehradun,Uttarakhand
+Delhi,Delhi
+Dhanbad,Jharkhand
+Dharwad,Karnataka
+Durgapur,West Bengal
+Ernakulam,Kerala
+Faridabad,Haryana
+Ghaziabad,Uttar Pradesh
+Gorakhpur,Uttar Pradesh
+Guntur,Andhra Pradesh
+Guwahati,Assam
+Gwalior,Madhya Pradesh
+Haridwar,Uttarakhand
+Hubli,Karnataka
+Hyderabad,Telangana
+Imphal,Manipur
+Indore,Madhya Pradesh
+Jabalpur,Madhya Pradesh
+Jaipur,Rajasthan
+Jalandhar,Punjab
+Jammu,Jammu & Kashmir
+Jamnagar,Gujarat
+Jamshedpur,Jharkhand
+Jhansi,Uttar Pradesh
+Jodhpur,Rajasthan
+Kanpur,Uttar Pradesh
+Kochi,Kerala
+Kolkata,West Bengal
+Kollam,Kerala
+Kota,Rajasthan
+Kozhikode,Kerala
+Lucknow,Uttar Pradesh
+Ludhiana,Punjab
+Madurai,Tamil Nadu
+Mangalore,Karnataka
+Meerut,Uttar Pradesh
+Mumbai,Maharashtra
+Mysore,Karnataka
+Nagpur,Maharashtra
+Nashik,Maharashtra
+Noida,Uttar Pradesh
+Patna,Bihar
+Pune,Maharashtra
+Raipur,Chhattisgarh
+Rajkot,Gujarat
+Ranchi,Jharkhand
+Salem,Tamil Nadu
+Sambalpur,Odisha
+Sangli,Maharashtra
+Shimla,Himachal Pradesh
+Silchar,Assam
+Siliguri,West Bengal
+Solapur,Maharashtra
+Surat,Gujarat
+Thane,Maharashtra
+Thiruvananthapuram,Kerala
+Tiruchirappalli,Tamil Nadu
+Tirunelveli,Tamil Nadu
+Tirupati,Andhra Pradesh
+Udaipur,Rajasthan
+Vadodara,Gujarat
+Varanasi,Uttar Pradesh
+Vijayawada,Andhra Pradesh
+Visakhapatnam,Andhra Pradesh
+
+#data/weather_data.csv
+
+District,State,Temperature,Humidity,Pressure,Wind Speed
+Adilabad,Telangana,23.35,32,1018,1.02
+Agra,Uttar Pradesh,14.5,47,1020,2.8
+Ahmedabad,Gujarat,23.02,56,1017,2.57
+Aizawl,Mizoram,10.59,57,1019,1.0
+Ajmer,Rajasthan,14.88,23,1021,2.94
+Alappuzha,Kerala,26.64,67,1015,1.7
+Alirajpur,Madhya Pradesh,23.72,34,1018,3.41
+Alipurduar,West Bengal,17.09,48,1017,1.38
+Almora,Uttarakhand,8.62,60,1021,0.28
+Alwar,Rajasthan,12.8,45,1021,1.72
+Ambala,Haryana,11.48,72,1020,3.59
+Amethi,Uttar Pradesh,13.88,55,1019,3.77
+Amreli,Gujarat,24.66,41,1018,4.2
+Amravati,Maharashtra,24.07,31,1018,0.98
+Amritsar,Punjab,10.97,82,1021,0.0
+Anantapur,Andhra Pradesh,22.9,46,1018,4.81
+Angul,Odisha,18.82,67,1018,3.02
+Anuppur,Madhya Pradesh,15.48,45,1020,2.04
+Araria,Bihar,15.35,46,1017,3.65
+Ariyalur,Tamil Nadu,23.3,87,1017,0.45
+Arwal,Bihar,14.34,47,1019,3.47
+Ashoknagar,Madhya Pradesh,16.46,42,1021,3.47
+Aurangabad,Bihar,20.05,64,1019,0.0
+Aurangabad,Maharashtra,20.05,64,1019,0.0
+Ayodhya,Uttar Pradesh,13.88,57,1018,4.0
+Azamgarh,Uttar Pradesh,13.53,51,1019,3.81
+Bagalkot,Karnataka,24.02,36,1018,3.7
+Bageshwar,Uttarakhand,11.34,43,1021,1.47
+Bagpat,Uttar Pradesh,12.67,59,1020,2.88
+Bahraich,Uttar Pradesh,14.35,57,1018,3.44
+Balaghat,Madhya Pradesh,20.58,43,1018,2.46
+Balangir,Odisha,21.5,38,1017,0.45
+Baleshwar,Odisha,19.39,70,1017,2.71
+Ballia,Uttar Pradesh,13.52,51,1018,3.71
+Balod,Chhattisgarh,21.07,39,1017,1.21
+Baloda Bazar,Chhattisgarh,22.05,36,1018,3.57
+Balrampur,Chhattisgarh,13.89,59,1018,3.5
+Banda,Uttar Pradesh,16.17,40,1020,2.65
+Banka,Bihar,15.44,38,1018,3.13
+Bankura,West Bengal,19.15,31,1018,2.84
+Banswara,Rajasthan,22.21,41,1019,2.56
+Barabanki,Uttar Pradesh,14.09,56,1019,3.55
+Baramulla,Jammu & Kashmir,-0.61,74,1032,2.0
+Baran,Rajasthan,18.01,42,1020,2.36
+Bardhaman,West Bengal,19.01,31,1018,3.1
+Bareilly,Uttar Pradesh,13.73,51,1019,3.81
+Bargarh,Odisha,23.82,35,1017,2.08
+Barpeta,Assam,17.3,42,1017,1.78
+Barwani,Madhya Pradesh,25.05,32,1018,1.95
+Bidar,Karnataka,21.41,36,1019,1.72
+Bijapur,Chhattisgarh,24.34,33,1018,4.16
+Bijapur,Karnataka,24.34,33,1018,4.16
+Bijnor,Uttar Pradesh,13.07,66,1019,3.49
+Bikaner,Rajasthan,16.7,25,1021,2.37
+Bilaspur,Chhattisgarh,19.8,37,1018,3.4
+Bilaspur,Himachal Pradesh,19.8,37,1018,3.4
+Bishnupur,Manipur,20.48,29,1018,3.6
+Buldhana,Maharashtra,22.82,28,1018,1.7
+Bulandshahr,Uttar Pradesh,12.9,54,1020,3.45
+Buxar,Bihar,13.76,49,1019,3.63
+Chamba,Himachal Pradesh,11.26,53,1023,4.05
+Champawat,Uttarakhand,6.37,65,1021,2.59
+Chandel,Manipur,9.38,61,1019,1.03
+Chatra,Jharkhand,13.25,37,1019,1.2
+Chennai,Tamil Nadu,24.67,79,1018,3.09
+Chhatarpur,Madhya Pradesh,16.36,40,1020,2.11
+Chhindwara,Madhya Pradesh,19.96,42,1020,3.57
+Chikkamagaluru,Karnataka,17.38,41,1019,2.44
+Chittoor,Andhra Pradesh,18.56,81,1019,1.18
+Coimbatore,Tamil Nadu,24.88,69,1017,1.03
+Cuddalore,Tamil Nadu,23.84,81,1017,5.91
+Daman,Daman & Diu,24.09,69,1017,1.58
+Damoh,Madhya Pradesh,17.05,37,1020,2.43
+Dantewada,Chhattisgarh,19.18,38,1018,0.52
+Darbhanga,Bihar,14.07,54,1018,3.74
+Darjeeling,West Bengal,7.39,80,1019,2.14
+Datia,Madhya Pradesh,15.61,38,1020,1.6
+Davanagere,Karnataka,22.06,42,1018,4.35
+Dehradun,Uttarakhand,12.39,47,1020,2.29
+Delhi,Delhi,13.05,82,1020,2.06
+Deoghar,Jharkhand,16.23,33,1018,3.66
+Dewas,Madhya Pradesh,18.51,48,1020,3.59
+Dhamtari,Chhattisgarh,20.17,41,1018,0.81
+Dhanbad,Jharkhand,18.19,26,1018,2.71
+Dhar,Madhya Pradesh,19.94,40,1020,2.89
+Dharmapuri,Tamil Nadu,20.46,64,1018,2.95
+Dharwad,Karnataka,22.05,37,1018,3.52
+Dhemaji,Assam,16.79,52,1017,2.23
+Dhenkanal,Odisha,17.81,73,1018,1.68
+Dibrugarh,Assam,16.03,88,1017,0.0
+Dimapur,Nagaland,15.56,50,1017,0.74
+Dindigul,Tamil Nadu,21.94,84,1018,1.44
+Diu,Dadra & Nagar Haveli,22.78,60,1018,3.12
+Eluru,Andhra Pradesh,19.01,81,1018,2.28
+Ernakulam,Kerala,24.99,75,1015,0.71
+Etah,Uttar Pradesh,13.27,53,1020,3.55
+Etawah,Uttar Pradesh,14.15,49,1020,3.17
+Faridabad,Haryana,13.14,45,1020,2.33
+Farrukhabad,Uttar Pradesh,13.93,51,1019,3.75
+Fatehgarh Sahib,Punjab,11.09,72,1020,3.29
+Fatehpur,Uttar Pradesh,14.1,49,1020,2.96
+Fazilka,Punjab,13.88,30,1020,1.59
+Firozabad,Uttar Pradesh,13.83,49,1020,3.27
+Gadag,Karnataka,22.61,39,1018,4.14
+Ganganagar,Rajasthan,14.87,34,1020,2.07
+Ganjam,Odisha,21.13,75,1018,1.81
+Garhwa,Jharkhand,15.1,41,1019,2.15
+Gaya,Bihar,13.95,72,1019,2.57
+Ghaziabad,Uttar Pradesh,14.84,50,1020,2.53
+Ghazipur,Uttar Pradesh,13.76,48,1019,3.68
+Giridih,Jharkhand,16.73,30,1018,4.29
+Goalpara,Assam,16.52,42,1017,1.35
+Godda,Jharkhand,14.28,39,1018,2.5
+Golaghat,Assam,17.21,49,1017,1.48
+Gonda,Uttar Pradesh,14.11,58,1018,3.74
+Gopalganj,Bihar,14.15,55,1018,3.59
+Gorakhpur,Uttar Pradesh,13.16,42,1020,1.21
+Gulbarga,Karnataka,24.06,35,1018,2.83
+Gumla,Jharkhand,15.99,36,1019,3.09
+Guna,Madhya Pradesh,17.16,42,1021,2.58
+Guntur,Andhra Pradesh,19.16,83,1019,1.18
+Gurgaon,Haryana,13.02,82,1020,2.06
+Gwalior,Madhya Pradesh,15.07,40,1020,1.82
+Hailakandi,Assam,15.12,50,1017,1.41
+Hamirpur,Himachal Pradesh,14.84,47,1020,2.31
+Hamirpur,Uttar Pradesh,14.84,47,1020,2.31
+Harda,Madhya Pradesh,20.92,42,1019,3.04
+Haridwar,Uttarakhand,12.4,59,1019,1.32
+Hassan,Karnataka,18.89,36,1018,3.58
+Haveri,Karnataka,22.48,39,1017,3.78
+Hingoli,Maharashtra,23.59,28,1018,3.15
+Hoshangabad,Madhya Pradesh,20.16,43,1019,2.52
+Hoshiarpur,Punjab,11.89,56,1020,2.13
+Howrah,West Bengal,19.0,59,1017,0.0
+Hyderabad,Telangana,20.73,83,1019,3.09
+Idukki,Kerala,17.86,85,1017,1.93
+Indore,Madhya Pradesh,19.1,72,1020,3.6
+Jabalpur,Madhya Pradesh,18.19,40,1020,3.74
+Jagatsinghpur,Odisha,18.59,82,1018,2.09
+Jaipur,Rajasthan,14.62,41,1021,0.0
+Jaisalmer,Rajasthan,20.04,17,1020,3.25
+Jajpur,Odisha,18.27,71,1018,1.71
+Jalandhar,Punjab,11.4,65,1021,2.04
+Jalgaon,Maharashtra,24.5,30,1018,3.27
+Jalna,Maharashtra,22.34,30,1019,2.97
+Jalore,Rajasthan,19.57,31,1020,2.88
+Jamtara,Jharkhand,17.59,28,1018,3.15
+Jamui,Bihar,13.81,45,1019,2.13
+Jaunpur,Uttar Pradesh,13.77,50,1019,3.77
+Jehanabad,Bihar,14.51,47,1018,3.5
+Jhabua,Madhya Pradesh,22.31,38,1019,3.5
+Jhajjar,Haryana,12.58,48,1020,2.17
+Jhalawar,Rajasthan,18.19,46,1020,2.52
+Jhansi,Uttar Pradesh,15.91,40,1021,1.32
+Jharsuguda,Odisha,18.06,68,1017,0.0
+Jodhpur,Rajasthan,18.39,20,1020,4.11
+Junagadh,Gujarat,22.66,53,1018,1.66
+Kadapa,Andhra Pradesh,20.32,65,1018,2.46
+Kaithal,Haryana,11.79,66,1020,2.48
+Kakinada,Andhra Pradesh,20.93,78,1018,1.61
+Kangra,Himachal Pradesh,11.7,53,1021,2.17
+Kanker,Chhattisgarh,18.68,45,1019,2.0
+Kannur,Kerala,23.6,69,1015,2.92
+Kargil,Jammu & Kashmir,-22.67,84,1057,1.79
+Karimganj,Assam,16.57,49,1017,1.05
+Karimnagar,Telangana,22.85,39,1018,0.35
+Karnal,Haryana,11.63,68,1020,3.16
+Karur,Tamil Nadu,23.24,73,1017,5.77
+Kasaragod,Kerala,22.3,82,1016,2.43
+Kathua,Jammu & Kashmir,11.98,57,1021,1.28
+Katihar,Bihar,15.02,41,1018,3.94
+Kendrapara,Odisha,18.63,80,1018,1.86
+Khagaria,Bihar,14.13,48,1018,3.75
+Khammam,Telangana,21.1,65,1018,3.51
+Khandwa,Madhya Pradesh,23.72,30,1018,2.26
+Khargone,Madhya Pradesh,24.27,31,1018,1.28
+Kheda,Gujarat,23.84,35,1017,3.39
+Khordha,Odisha,20.91,81,1018,0.77
+Khowai,Tripura,14.98,41,1017,0.19
+Kishanganj,Bihar,16.04,41,1017,3.55
+Kohima,Nagaland,10.61,59,1020,1.13
+Kokrajhar,Assam,17.13,46,1017,1.23
+Kolar,Karnataka,16.83,64,1020,2.85
+Kolhapur,Maharashtra,22.71,36,1017,0.85
+Kolkata,West Bengal,18.97,59,1017,0.0
+Kollam,Kerala,25.99,72,1015,3.76
+Koppal,Karnataka,23.43,42,1018,4.28
+Koraput,Odisha,16.96,56,1019,3.5
+Korba,Chhattisgarh,18.43,39,1019,2.93
+Kosi,Bihar,13.51,52,1020,3.03
+Kota,Rajasthan,17.45,46,1020,1.61
+Kothagudem,Telangana,21.77,60,1018,2.91
+Kozhikode,Kerala,26.65,74,1015,2.28
+Krishna,Andhra Pradesh,23.96,41,1018,3.86
+Kulgam,Jammu & Kashmir,-0.97,89,1032,1.41
+Kullu,Himachal Pradesh,0.8,60,1025,4.75
+Kupwara,Jammu & Kashmir,-7.77,71,1029,2.19
+Kurnool,Andhra Pradesh,23.15,49,1018,3.08
+Kurukshetra,Haryana,11.37,70,1020,2.97
+Kushinagar,Uttar Pradesh,13.93,56,1018,3.6
+Lakhimpur,Assam,14.78,53,1018,3.93
+Lakhisarai,Bihar,14.05,47,1018,2.82
+Lalitpur,Uttar Pradesh,16.58,38,1021,2.53
+Latur,Maharashtra,22.45,32,1019,2.97
+Lawngtlai,Mizoram,12.48,49,1018,1.59
+Leh,Ladakh,-20.02,63,1051,2.78
+Lohardaga,Jharkhand,15.41,34,1020,3.44
+Lucknow,Uttar Pradesh,12.99,100,1019,2.06
+Ludhiana,Punjab,11.29,69,1020,2.56
+Lunglei,Mizoram,12.23,47,1018,1.56
+Madhepura,Bihar,14.52,48,1018,3.91
+Madhubani,Bihar,14.28,54,1018,3.76
+Madurai,Tamil Nadu,25.01,73,1017,3.6
+Mahasamund,Chhattisgarh,21.16,40,1018,1.38
+Mainpuri,Uttar Pradesh,13.91,50,1020,3.5
+Malappuram,Kerala,26.09,83,1015,1.03
+Malkangiri,Odisha,19.37,43,1018,1.23
+Mamit,Mizoram,12.4,49,1018,1.27
+Mandi,Himachal Pradesh,7.87,49,1022,2.71
+Mandla,Madhya Pradesh,19.36,41,1019,2.18
+Mandsaur,Madhya Pradesh,18.73,49,1020,3.11
+Mandya,Karnataka,20.34,44,1018,3.18
+Mancherial,Telangana,24.42,34,1017,1.78
+Mangaluru,Karnataka,26.48,69,1016,0.0
+Mansa,Punjab,11.97,61,1021,1.2
+Marigaon,Assam,18.85,38,1017,3.51
+Mathura,Uttar Pradesh,13.69,51,1020,3.1
+Mau,Uttar Pradesh,13.53,50,1019,3.82
+Medak,Telangana,21.51,45,1019,2.34
+Meerut,Uttar Pradesh,13.55,60,1020,3.02
+Meghalaya,Meghalaya,6.83,59,1021,1.57
+Mirzapur,Uttar Pradesh,14.03,48,1019,2.94
+Moga,Punjab,11.16,64,1020,1.67
+Mokokchung,Nagaland,12.53,53,1019,1.95
+Mon,Nagaland,13.28,55,1019,2.16
+Moradabad,Uttar Pradesh,13.55,57,1019,3.93
+Morbi,Gujarat,23.62,47,1018,4.16
+Mumbai,Maharashtra,27.99,42,1017,2.06
+Munger,Bihar,13.91,48,1018,3.13
+Murshidabad,West Bengal,17.35,35,1018,3.39
+Muzaffarpur,Bihar,14.17,54,1018,3.82
+Mysuru,Karnataka,20.15,51,1018,2.73
+Nagapattinam,Tamil Nadu,24.24,82,1017,5.54
+Nagaur,Rajasthan,17.12,23,1021,3.02
+Nagpur,Maharashtra,18.01,72,1018,0.0
+Nainital,Uttarakhand,2.13,47,1020,2.62
+Nalbari,Assam,16.8,39,1017,1.57
+Nandurbar,Maharashtra,25.99,30,1017,3.21
+Narayanpur,Chhattisgarh,11.76,71,1020,3.1
+Narsinghpur,Madhya Pradesh,19.19,39,1020,2.32
+Nashik,Maharashtra,22.46,41,1019,2.88
+Navsari,Gujarat,24.94,50,1017,1.47
+Nawada,Bihar,13.71,46,1019,2.32
+Nellore,Andhra Pradesh,20.31,80,1018,1.25
+New Delhi,Delhi,13.09,82,1020,2.06
+Nizamabad,Telangana,22.14,39,1018,2.03
+Nuapada,Odisha,19.79,44,1018,1.41
+Ongole,Andhra Pradesh,22.45,71,1018,2.59
+Osmanabad,Maharashtra,22.9,30,1018,4.97
+Palakkad,Kerala,23.77,71,1016,2.75
+Pali,Rajasthan,18.35,25,1020,3.95
+Palwal,Haryana,13.19,52,1020,2.93
+Panchkula,Haryana,12.63,59,1020,2.55
+Panipat,Haryana,11.98,65,1020,2.76
+Panna,Madhya Pradesh,15.43,40,1020,1.83
+Parbhani,Maharashtra,22.7,31,1018,2.9
+Patan,Gujarat,21.55,41,1018,3.64
+Pathanamthitta,Kerala,22.62,77,1015,0.71
+Patiala,Punjab,11.32,70,1020,3.13
+Patna,Bihar,17.96,63,1018,3.09
+Perambalur,Tamil Nadu,22.97,83,1018,2.71
+Phek,Arunachal Pradesh,7.45,72,1021,0.31
+Pilibhit,Uttar Pradesh,13.57,54,1019,3.75
+Pithoragarh,Uttarakhand,3.93,58,1021,1.05
+Pudukkottai,Tamil Nadu,23.01,83,1017,4.64
+Pulwama,Jammu & Kashmir,-1.16,84,1032,1.84
+Pune,Maharashtra,24.11,34,1018,2.08
+Puri,Odisha,22.33,74,1018,1.89
+Purnia,Bihar,14.99,42,1018,3.8
+Raebareli,Uttar Pradesh,14.0,54,1019,3.43
+Raichur,Karnataka,23.17,43,1018,3.23
+Raigarh,Chhattisgarh,19.83,43,1018,2.07
+Raisen,Madhya Pradesh,17.76,47,1020,3.62
+Rajauri,Jammu & Kashmir,8.89,47,1022,1.93
+Rajgarh,Madhya Pradesh,17.09,30,1020,3.44
+Rajkot,Gujarat,26.67,50,1018,3.37
+Rajnandgaon,Chhattisgarh,22.38,36,1018,1.36
+Rajsamand,Rajasthan,16.63,38,1021,2.43
+Ramgarh,Jharkhand,16.78,29,1019,2.76
+Rampur,Uttar Pradesh,13.57,56,1019,3.99
+Ranchi,Jharkhand,16.06,55,1019,2.06
+Ratlam,Madhya Pradesh,18.97,49,1020,4.17
+Rayagada,Odisha,18.67,72,1019,1.84
+Reasi,Jammu & Kashmir,12.43,47,1021,3.52
+Rewa,Madhya Pradesh,15.11,40,1020,2.79
+Rohtak,Haryana,12.94,50,1020,1.53
+Rohtas,Bihar,16.19,38,1019,1.87
+Rudraprayag,Uttarakhand,12.6,37,1022,1.87
+Rupnagar,Punjab,11.91,64,1020,2.1
+Sagar,Madhya Pradesh,17.44,39,1020,2.77
+Saharanpur,Uttar Pradesh,11.8,73,1020,3.34
+Saharsa,Bihar,14.42,49,1018,3.96
+Sahibganj,Jharkhand,15.01,40,1018,2.63
+Salem,Tamil Nadu,20.96,71,1018,2.66
+Samastipur,Bihar,13.94,53,1018,3.72
+Samba,Jammu & Kashmir,12.64,49,1020,1.39
+Sambalpur,Odisha,21.54,43,1017,1.37
+Sangli,Maharashtra,24.16,32,1017,4.2
+Sangrur,Punjab,11.31,67,1021,1.89
+Satara,Maharashtra,22.13,35,1018,1.27
+Satna,Madhya Pradesh,15.22,40,1020,2.39
+Sawai Madhopur,Rajasthan,15.11,34,1020,1.07
+Sehore,Madhya Pradesh,16.15,44,1020,4.09
+Senapati,Manipur,9.27,70,1021,1.42
+Seoni,Madhya Pradesh,19.42,44,1019,3.55
+Shahjahanpur,Uttar Pradesh,13.88,51,1019,3.73
+Shajapur,Madhya Pradesh,18.27,48,1020,3.46
+Sheikhpura,Bihar,14.19,48,1018,3.18
+Sheohar,Bihar,14.21,57,1018,3.4
+Sheopur,Madhya Pradesh,17.26,34,1020,1.32
+Shimla,Himachal Pradesh,3.64,39,1022,2.49
+Shimoga,Karnataka,20.73,43,1018,2.13
+Shivpuri,Madhya Pradesh,15.6,37,1021,1.98
+Sidhi,Madhya Pradesh,15.67,40,1020,1.64
+Sikar,Rajasthan,12.35,33,1021,2.08
+Simdega,Jharkhand,17.38,36,1018,2.26
+Singrauli,Madhya Pradesh,14.92,43,1020,2.61
+Sirmaur,Himachal Pradesh,14.5,41,1020,1.78
+Sirohi,Rajasthan,18.68,41,1020,2.28
+Sirsa,Haryana,13.99,36,1020,2.68
+Sitamarhi,Bihar,14.13,60,1018,3.31
+Sitapur,Uttar Pradesh,14.15,55,1019,3.71
+Solan,Himachal Pradesh,7.93,38,1021,2.6
+Solapur,Maharashtra,25.81,27,1017,3.66
+Sonipat,Haryana,12.38,59,1020,2.66
+Srinagar,Jammu & Kashmir,0.46,72,1031,0.38
+Subarnapur,Odisha,21.19,40,1017,1.12
+Sultanpur,Uttar Pradesh,13.88,56,1019,3.74
+Supaul,Bihar,14.5,49,1018,3.94
+Surajpur,Chhattisgarh,13.51,57,1018,3.7
+Surendranagar,Gujarat,24.13,43,1018,3.9
+Suryapet,Telangana,20.86,63,1019,4.47
+Tamluk,West Bengal,20.74,52,1017,2.55
+Tarn Taran,Punjab,11.22,57,1021,1.55
+Tawang,Arunachal Pradesh,0.28,46,1023,3.0
+Thane,Maharashtra,27.95,42,1017,2.06
+Thanjavur,Tamil Nadu,22.2,89,1017,3.82
+Theni,Tamil Nadu,22.17,82,1018,1.51
+Thiruvananthapuram,Kerala,28.99,74,1015,1.03
+Thoothukudi,Tamil Nadu,25.46,80,1016,7.31
+Thoubal,Manipur,8.71,62,1020,0.81
+Thrissur,Kerala,23.3,76,1015,1.27
+Tikamgarh,Madhya Pradesh,16.44,38,1021,2.25
+Tinsukia,Assam,15.92,48,1017,2.1
+Tirap,Arunachal Pradesh,16.27,50,1018,1.5
+Tiruchirappalli,Tamil Nadu,23.06,88,1017,1.54
+Tirunelveli,Tamil Nadu,24.66,78,1016,3.45
+Tirupati,Andhra Pradesh,15.7,89,1019,1.08
+Tiruppur,Tamil Nadu,23.62,67,1017,4.48
+Tiruvallur,Tamil Nadu,24.86,85,1018,2.89
+Tiruvannamalai,Tamil Nadu,20.74,77,1018,1.91
+Tonk,Rajasthan,14.1,27,1021,2.57
+Tuensang,Nagaland,9.53,66,1021,1.44
+Tumkur,Karnataka,19.35,51,1019,4.03
+Udaipur,Rajasthan,17.32,44,1021,2.34
+Udalguri,Assam,17.49,46,1017,1.22
+Udupi,Karnataka,22.88,78,1016,1.53
+Ujjain,Madhya Pradesh,18.84,48,1020,3.96
+Umaria,Madhya Pradesh,16.33,40,1020,1.61
+Una,Himachal Pradesh,22.84,54,1018,2.81
+Unnao,Uttar Pradesh,14.09,51,1019,3.11
+Vadodara,Gujarat,21.98,73,1017,0.0
+Vaishali,Bihar,14.01,54,1018,3.71
+Vellore,Tamil Nadu,19.61,86,1019,0.68
+Vidisha,Madhya Pradesh,17.82,47,1020,3.36
+Virudhunagar,Tamil Nadu,25.16,70,1017,4.81
+Visakhapatnam,Andhra Pradesh,20.94,88,1019,1.03
+Vizianagaram,Andhra Pradesh,18.85,82,1019,1.07
+Vyara,Gujarat,24.96,38,1017,2.49
+Warangal,Telangana,22.72,41,1018,1.27
+Wardha,Maharashtra,23.51,30,1018,1.69
+Wokha,Nagaland,8.4,54,1019,1.84
+Yadgir,Karnataka,23.7,41,1017,2.98
+Yamunanagar,Haryana,11.52,74,1020,3.34
+Yanam,Puducherry,19.9,85,1018,1.13
+Yavatmal,Maharashtra,23.43,28,1018,2.38
+Zunheboto,Nagaland,8.3,57,1020,1.53

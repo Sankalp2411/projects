@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 75.0167,
+        "lat": 15.4667
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 21.38,
+        "feels_like": 20.62,
+        "temp_min": 21.38,
+        "temp_max": 21.38,
+        "pressure": 1018,
+        "humidity": 40,
+        "sea_level": 1018,
+        "grnd_level": 942
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.59,
+        "deg": 78,
+        "gust": 8.17
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314361,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254911,
+        "sunset": 1770296357
+    },
+    "timezone": 19800,
+    "id": 1272818,
+    "name": "Dharwad",
+    "cod": 200
+}

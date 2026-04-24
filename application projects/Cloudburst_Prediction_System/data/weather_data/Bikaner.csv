@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Bikaner,Rajasthan,28.0167,73.3,26.97,30,1018,2.91,0,0,clear sky,2026-02-20 13:37:27.040380

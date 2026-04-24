@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 77.1667,
+        "lat": 31.1
+    },
+    "weather": [
+        {
+            "id": 801,
+            "main": "Clouds",
+            "description": "few clouds",
+            "icon": "02n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 3.28,
+        "feels_like": 0.79,
+        "temp_min": 3.28,
+        "temp_max": 3.28,
+        "pressure": 1022,
+        "humidity": 39,
+        "sea_level": 1022,
+        "grnd_level": 855
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.58,
+        "deg": 68,
+        "gust": 2.14
+    },
+    "clouds": {
+        "all": 18
+    },
+    "dt": 1770314398,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255665,
+        "sunset": 1770294572
+    },
+    "timezone": 19800,
+    "id": 1256237,
+    "name": "Shimla",
+    "cod": 200
+}

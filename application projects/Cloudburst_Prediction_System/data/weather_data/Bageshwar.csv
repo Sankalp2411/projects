@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Bageshwar,Uttarakhand,29.85,79.7667,25.63,17,1016,2,0,1,clear sky,2026-02-20 13:37:26.620154

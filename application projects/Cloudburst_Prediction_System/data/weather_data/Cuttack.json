@@ -1,0 +1,46 @@
+{
+    "coord": {
+        "lon": 85.8793,
+        "lat": 20.465
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 21.1,
+        "feels_like": 21.33,
+        "temp_min": 21.1,
+        "temp_max": 21.1,
+        "pressure": 1018,
+        "humidity": 79,
+        "sea_level": 1018,
+        "grnd_level": 1013
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.38,
+        "deg": 247,
+        "gust": 2.34
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314221,
+    "sys": {
+        "type": 1,
+        "id": 9113,
+        "country": "IN",
+        "sunrise": 1770252681,
+        "sunset": 1770293374
+    },
+    "timezone": 19800,
+    "id": 1273780,
+    "name": "Cuttack",
+    "cod": 200
+}

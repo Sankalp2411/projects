@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 78.5833,
+        "lat": 25.4333
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 15.67,
+        "feels_like": 14.31,
+        "temp_min": 15.67,
+        "temp_max": 15.67,
+        "pressure": 1020,
+        "humidity": 39,
+        "sea_level": 1020,
+        "grnd_level": 991
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.53,
+        "deg": 290,
+        "gust": 1.55
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314384,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254829,
+        "sunset": 1770294727
+    },
+    "timezone": 19800,
+    "id": 1269006,
+    "name": "Jh\u0101nsi",
+    "cod": 200
+}

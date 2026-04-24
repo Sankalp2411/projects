@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 78.1667,
+        "lat": 29.9667
+    },
+    "weather": [
+        {
+            "id": 801,
+            "main": "Clouds",
+            "description": "few clouds",
+            "icon": "02n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 12.01,
+        "feels_like": 10.81,
+        "temp_min": 12.01,
+        "temp_max": 12.01,
+        "pressure": 1019,
+        "humidity": 59,
+        "sea_level": 1019,
+        "grnd_level": 975
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.42,
+        "deg": 13,
+        "gust": 1.69
+    },
+    "clouds": {
+        "all": 20
+    },
+    "dt": 1770314092,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255321,
+        "sunset": 1770294435
+    },
+    "timezone": 19800,
+    "id": 1270351,
+    "name": "Haridwar",
+    "cod": 200
+}

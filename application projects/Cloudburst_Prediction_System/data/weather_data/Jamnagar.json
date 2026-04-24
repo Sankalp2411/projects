@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 70.0667,
+        "lat": 22.4667
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 22.58,
+        "feels_like": 22.43,
+        "temp_min": 22.58,
+        "temp_max": 22.58,
+        "pressure": 1018,
+        "humidity": 59,
+        "sea_level": 1018,
+        "grnd_level": 1016
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.13,
+        "deg": 36,
+        "gust": 4.11
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314382,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770256631,
+        "sunset": 1770297013
+    },
+    "timezone": 19800,
+    "id": 1269317,
+    "name": "Jamnagar",
+    "cod": 200
+}

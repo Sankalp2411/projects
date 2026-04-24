@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 92.8,
+        "lat": 24.8167
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 14.87,
+        "feels_like": 13.69,
+        "temp_min": 14.87,
+        "temp_max": 14.87,
+        "pressure": 1017,
+        "humidity": 49,
+        "sea_level": 1017,
+        "grnd_level": 1013
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.5,
+        "deg": 65,
+        "gust": 1.5
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314281,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770251367,
+        "sunset": 1770291365
+    },
+    "timezone": 19800,
+    "id": 1256287,
+    "name": "Silchar",
+    "cod": 200
+}

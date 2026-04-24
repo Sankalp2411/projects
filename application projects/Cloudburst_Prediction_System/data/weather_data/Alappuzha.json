@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 76.3264,
+        "lat": 9.49
+    },
+    "weather": [
+        {
+            "id": 802,
+            "main": "Clouds",
+            "description": "scattered clouds",
+            "icon": "03n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 26.31,
+        "feels_like": 26.31,
+        "temp_min": 26.31,
+        "temp_max": 26.31,
+        "pressure": 1014,
+        "humidity": 69,
+        "sea_level": 1014,
+        "grnd_level": 1014
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.93,
+        "deg": 18,
+        "gust": 2.16
+    },
+    "clouds": {
+        "all": 44
+    },
+    "dt": 1770314328,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254169,
+        "sunset": 1770296471
+    },
+    "timezone": 19800,
+    "id": 1278985,
+    "name": "Alappuzha",
+    "cod": 200
+}

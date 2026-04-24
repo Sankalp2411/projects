@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 73.6918,
+        "lat": 24.5712
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 16.69,
+        "feels_like": 15.54,
+        "temp_min": 16.69,
+        "temp_max": 16.69,
+        "pressure": 1021,
+        "humidity": 43,
+        "sea_level": 1021,
+        "grnd_level": 946
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.34,
+        "deg": 39,
+        "gust": 1.31
+    },
+    "clouds": {
+        "all": 10
+    },
+    "dt": 1770314358,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255931,
+        "sunset": 1770295973
+    },
+    "timezone": 19800,
+    "id": 1253986,
+    "name": "Udaipur",
+    "cod": 200
+}

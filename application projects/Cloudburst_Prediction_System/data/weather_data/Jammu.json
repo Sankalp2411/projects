@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 74.8667,
+        "lat": 32.7333
+    },
+    "weather": [
+        {
+            "id": 803,
+            "main": "Clouds",
+            "description": "broken clouds",
+            "icon": "04n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 11.77,
+        "feels_like": 10.23,
+        "temp_min": 11.77,
+        "temp_max": 11.77,
+        "pressure": 1021,
+        "humidity": 47,
+        "sea_level": 1021,
+        "grnd_level": 981
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.24,
+        "deg": 23,
+        "gust": 1.12
+    },
+    "clouds": {
+        "all": 58
+    },
+    "dt": 1770314357,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770256370,
+        "sunset": 1770294970
+    },
+    "timezone": 19800,
+    "id": 1269321,
+    "name": "Jammu",
+    "cod": 200
+}

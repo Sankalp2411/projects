@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 71.3833,
+        "lat": 25.75
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 18.25,
+        "feels_like": 16.65,
+        "temp_min": 18.25,
+        "temp_max": 18.25,
+        "pressure": 1020,
+        "humidity": 20,
+        "sea_level": 1020,
+        "grnd_level": 997
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.43,
+        "deg": 27,
+        "gust": 3.35
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314346,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770256583,
+        "sunset": 1770296430
+    },
+    "timezone": 19800,
+    "id": 1276901,
+    "name": "B\u0101rmer",
+    "cod": 200
+}

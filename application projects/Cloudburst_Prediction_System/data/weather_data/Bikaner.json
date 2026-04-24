@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 73.3,
+        "lat": 28.0167
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 15.87,
+        "feels_like": 14.22,
+        "temp_min": 15.87,
+        "temp_max": 15.87,
+        "pressure": 1021,
+        "humidity": 27,
+        "sea_level": 1021,
+        "grnd_level": 995
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.88,
+        "deg": 57,
+        "gust": 1.89
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314352,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770256316,
+        "sunset": 1770295777
+    },
+    "timezone": 19800,
+    "id": 1275665,
+    "name": "Bikaner",
+    "cod": 200
+}

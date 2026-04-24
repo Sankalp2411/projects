@@ -1,0 +1,45 @@
+{
+    "coord": {
+        "lon": 76.9167,
+        "lat": 8.4833
+    },
+    "weather": [
+        {
+            "id": 801,
+            "main": "Clouds",
+            "description": "few clouds",
+            "icon": "02n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 27.99,
+        "feels_like": 31.19,
+        "temp_min": 27.99,
+        "temp_max": 27.99,
+        "pressure": 1014,
+        "humidity": 74,
+        "sea_level": 1014,
+        "grnd_level": 1014
+    },
+    "visibility": 6000,
+    "wind": {
+        "speed": 1.03,
+        "deg": 0
+    },
+    "clouds": {
+        "all": 20
+    },
+    "dt": 1770314265,
+    "sys": {
+        "type": 1,
+        "id": 9226,
+        "country": "IN",
+        "sunrise": 1770253957,
+        "sunset": 1770296399
+    },
+    "timezone": 19800,
+    "id": 1254163,
+    "name": "Trivandrum",
+    "cod": 200
+}

@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 75.9167,
+        "lat": 17.6833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 24.71,
+        "feels_like": 24.02,
+        "temp_min": 24.71,
+        "temp_max": 24.71,
+        "pressure": 1017,
+        "humidity": 30,
+        "sea_level": 1017,
+        "grnd_level": 963
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.2,
+        "deg": 83,
+        "gust": 4.44
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314249,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254860,
+        "sunset": 1770295977
+    },
+    "timezone": 19800,
+    "id": 1256436,
+    "name": "Solapur",
+    "cod": 200
+}

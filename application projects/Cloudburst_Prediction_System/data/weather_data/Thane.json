@@ -1,0 +1,45 @@
+{
+    "coord": {
+        "lon": 72.9667,
+        "lat": 19.2
+    },
+    "weather": [
+        {
+            "id": 711,
+            "main": "Smoke",
+            "description": "smoke",
+            "icon": "50n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 27.95,
+        "feels_like": 27.9,
+        "temp_min": 27.95,
+        "temp_max": 27.95,
+        "pressure": 1017,
+        "humidity": 44,
+        "sea_level": 1017,
+        "grnd_level": 1012
+    },
+    "visibility": 3000,
+    "wind": {
+        "speed": 2.06,
+        "deg": 180
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314396,
+    "sys": {
+        "type": 1,
+        "id": 9052,
+        "country": "IN",
+        "sunrise": 1770255682,
+        "sunset": 1770296571
+    },
+    "timezone": 19800,
+    "id": 1254661,
+    "name": "Th\u0101ne",
+    "cod": 200
+}

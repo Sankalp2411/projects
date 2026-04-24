@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 76.6,
+        "lat": 8.8833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 25.51,
+        "feels_like": 26.02,
+        "temp_min": 25.51,
+        "temp_max": 25.51,
+        "pressure": 1014,
+        "humidity": 73,
+        "sea_level": 1014,
+        "grnd_level": 1014
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 4.37,
+        "deg": 33,
+        "gust": 4.68
+    },
+    "clouds": {
+        "all": 3
+    },
+    "dt": 1770314391,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254061,
+        "sunset": 1770296447
+    },
+    "timezone": 19800,
+    "id": 1259091,
+    "name": "Kollam",
+    "cod": 200
+}

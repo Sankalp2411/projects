@@ -1,0 +1,95 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime,cloudburst_probability,cloudburst_prediction,cloudburst_risk
+Agra,Uttar Pradesh,27.1833,78.0167,29.01,26,1017,1.49,0,0,clear sky,2026-02-20 13:37:25.549569,0.0,0,Low Risk
+Ahmedabad,Gujarat,23.0333,72.6167,30.02,42,1013,5.66,0,4,smoke,2026-02-20 13:37:25.608706,0.0,0,Low Risk
+Ahmednagar,Maharashtra,19.0833,74.7333,31.75,26,1013,5.54,0,0,clear sky,2026-02-20 13:37:25.654808,0.0,0,Low Risk
+Aizawl,Mizoram,23.7333,92.7167,25.89,30,1012,2.57,0,40,haze,2026-02-20 13:37:25.696420,0.0,0,Low Risk
+Ajmer,Rajasthan,26.45,74.6333,26.13,33,1018,3.13,0,0,clear sky,2026-02-20 13:37:25.749157,0.0,0,Low Risk
+Alappuzha,Kerala,9.49,76.3264,28.96,68,1009,6.76,0,0,clear sky,2026-02-20 13:37:25.798963,0.0,0,Low Risk
+Aligarh,Uttar Pradesh,27.8833,78.0833,29.08,24,1017,2.4,0,0,clear sky,2026-02-20 13:37:25.857532,0.0,0,Low Risk
+Ambala,Haryana,30.3783,76.7808,26.68,34,1018,3.08,0,0,clear sky,2026-02-20 13:37:25.920380,0.0,0,Low Risk
+Amravati,Maharashtra,20.9333,77.75,32.98,23,1013,2.91,0,0,clear sky,2026-02-20 13:37:25.988124,0.0,0,Low Risk
+Amritsar,Punjab,31.6331,74.8656,23.97,57,1018,3.09,0,0,haze,2026-02-20 13:37:26.050543,0.0,0,Low Risk
+Anantapur,Andhra Pradesh,14.6833,77.6,32.77,33,1012,6.13,0,41,scattered clouds,2026-02-20 13:37:26.085187,0.0,0,Low Risk
+Angul,Odisha,20.85,85.1,34.58,13,1013,2.02,0,3,clear sky,2026-02-20 13:37:26.358016,0.0,0,Low Risk
+Aurangabad,Maharashtra,19.8833,75.3333,31.05,30,1013,0.0,0,1,haze,2026-02-20 13:37:26.402443,0.0,0,Low Risk
+Ayodhya,Uttar Pradesh,26.8,82.2,31.24,21,1015,3.66,0,0,clear sky,2026-02-20 13:37:26.459098,0.0,0,Low Risk
+Azamgarh,Uttar Pradesh,26.06,83.1861,30.49,25,1015,2.91,0,8,clear sky,2026-02-20 13:37:26.521885,0.0,0,Low Risk
+Bagalkot,Karnataka,16.1833,75.7,32.7,24,1012,5.05,0,7,clear sky,2026-02-20 13:37:26.569343,0.0,0,Low Risk
+Bageshwar,Uttarakhand,29.85,79.7667,25.63,17,1016,2.0,0,1,clear sky,2026-02-20 13:37:26.620154,0.001,0,Low Risk
+Bangalore,Karnataka,12.9762,77.6033,28.73,44,1012,13.86,0,20,few clouds,2026-02-20 13:37:26.648437,0.0,0,Low Risk
+Bareilly,Uttar Pradesh,28.35,79.4167,28.76,25,1016,3.4,0,0,clear sky,2026-02-20 13:37:26.695730,0.0,0,Low Risk
+Barmer,Rajasthan,25.75,71.3833,29.95,18,1016,4.25,0,0,clear sky,2026-02-20 13:37:26.758800,0.0,0,Low Risk
+Belgaum,Karnataka,15.8667,74.5,30.95,40,1012,3.6,0,6,clear sky,2026-02-20 13:37:26.822736,0.0,0,Low Risk
+Bengaluru,Karnataka,12.9762,77.6033,28.73,44,1012,13.86,0,20,few clouds,2026-02-20 13:37:26.878212,0.0,0,Low Risk
+Bhopal,Madhya Pradesh,23.2667,77.4,19.13,82,1017,2.06,0,75,haze,2026-02-20 13:37:26.934074,0.0,0,Low Risk
+Bhubaneswar,Odisha,20.2333,85.8333,33.12,25,1013,2.57,0,1,haze,2026-02-20 13:37:26.976920,0.0,0,Low Risk
+Bikaner,Rajasthan,28.0167,73.3,26.97,30,1018,2.91,0,0,clear sky,2026-02-20 13:37:27.040380,0.0,0,Low Risk
+Bilaspur,Chhattisgarh,22.0833,82.15,33.74,13,1013,2.75,0,0,clear sky,2026-02-20 13:37:27.106770,0.0,0,Low Risk
+Chandigarh,Chandigarh,30.7343,76.7933,26.75,31,1018,3.29,0,0,clear sky,2026-02-20 13:37:27.167386,0.0,0,Low Risk
+Chennai,Tamil Nadu,13.0878,80.2785,31.19,48,1013,5.14,0,20,few clouds,2026-02-20 13:37:27.214922,0.0,0,Low Risk
+Coimbatore,Tamil Nadu,11.0,76.9667,31.88,35,1011,6.17,0,40,scattered clouds,2026-02-20 13:37:27.278271,0.0,0,Low Risk
+Cuttack,Odisha,20.465,85.8793,33.1,13,1013,3.28,0,7,clear sky,2026-02-20 13:37:27.325609,0.0,0,Low Risk
+Dehradun,Uttarakhand,30.3256,78.0437,26.06,24,1018,3.77,0,0,clear sky,2026-02-20 13:37:27.396070,0.0,0,Low Risk
+Delhi,Delhi,28.6667,77.2167,26.05,44,1018,2.57,0,0,haze,2026-02-20 13:37:27.450934,0.0,0,Low Risk
+Dhanbad,Jharkhand,23.8,86.45,31.61,12,1014,3.32,0,6,clear sky,2026-02-20 13:37:27.509639,0.0,0,Low Risk
+Dharwad,Karnataka,15.4667,75.0167,31.66,37,1012,3.09,0,0,clear sky,2026-02-20 13:37:27.556956,0.0,0,Low Risk
+Durgapur,West Bengal,23.4833,87.3167,30.16,32,1014,4.12,0,40,haze,2026-02-20 13:37:27.620239,0.0,0,Low Risk
+Ernakulam,Kerala,9.9833,76.2833,31.62,52,1009,1.79,0,0,clear sky,2026-02-20 13:37:27.681324,0.0,0,Low Risk
+Faridabad,Haryana,28.4333,77.3167,26.14,23,1017,2.27,0,0,clear sky,2026-02-20 13:37:27.722642,0.0,0,Low Risk
+Ghaziabad,Uttar Pradesh,28.6667,77.4333,28.77,21,1017,2.67,0,0,clear sky,2026-02-20 13:37:27.761954,0.0,0,Low Risk
+Gorakhpur,Uttar Pradesh,29.45,75.6833,28.08,24,1018,1.85,0,0,clear sky,2026-02-20 13:37:27.805538,0.0,0,Low Risk
+Guntur,Andhra Pradesh,16.3,80.45,35.13,29,1012,4.71,0,5,clear sky,2026-02-20 13:37:27.840954,0.0,0,Low Risk
+Guwahati,Assam,26.1862,91.751,29.95,35,1012,2.57,0,40,haze,2026-02-20 13:37:27.904776,0.0,0,Low Risk
+Gwalior,Madhya Pradesh,26.2236,78.1792,27.52,34,1017,2.23,0,17,few clouds,2026-02-20 13:37:27.957086,0.0,0,Low Risk
+Haridwar,Uttarakhand,29.9667,78.1667,27.92,21,1017,3.81,0,0,clear sky,2026-02-20 13:37:28.011844,0.0,0,Low Risk
+Hubli,Karnataka,15.35,75.1667,32.02,37,1011,3.09,0,0,clear sky,2026-02-20 13:37:28.067107,0.0,0,Low Risk
+Hyderabad,Telangana,17.3753,78.4744,29.23,37,1013,5.66,0,0,clear sky,2026-02-20 13:37:28.126431,0.0,0,Low Risk
+Imphal,Manipur,24.8167,93.95,28.95,28,1012,1.54,0,40,haze,2026-02-20 13:37:28.177926,0.0,0,Low Risk
+Indore,Madhya Pradesh,22.7179,75.8333,23.1,68,1015,4.63,0,40,haze,2026-02-20 13:37:28.226580,0.0,0,Low Risk
+Jabalpur,Madhya Pradesh,23.167,79.9501,27.47,39,1014,5.66,0,20,few clouds,2026-02-20 13:37:28.289403,0.0,0,Low Risk
+Jaipur,Rajasthan,26.9167,75.8167,25.62,41,1018,2.06,0,0,haze,2026-02-20 13:37:28.355829,0.0,0,Low Risk
+Jalandhar,Punjab,31.3256,75.5792,27.62,26,1018,2.77,0,0,clear sky,2026-02-20 13:37:28.402128,0.0,0,Low Risk
+Jammu,Jammu & Kashmir,32.7333,74.8667,27.14,18,1019,2.99,0,0,clear sky,2026-02-20 13:37:28.464481,0.0,0,Low Risk
+Jamnagar,Gujarat,22.4667,70.0667,30.26,26,1014,5.71,0,0,clear sky,2026-02-20 13:37:28.527233,0.0,0,Low Risk
+Jamshedpur,Jharkhand,22.8,86.1833,31.9,29,1014,1.03,0,89,haze,2026-02-20 13:37:28.582580,0.0,0,Low Risk
+Jhansi,Uttar Pradesh,25.4333,78.5833,29.39,29,1016,2.67,0,17,few clouds,2026-02-20 13:37:28.636985,0.0,0,Low Risk
+Jodhpur,Rajasthan,26.2867,73.03,29.41,24,1016,4.17,0,0,clear sky,2026-02-20 13:37:28.700217,0.0,0,Low Risk
+Kanpur,Uttar Pradesh,26.4667,80.35,30.2,24,1016,2.67,0,6,clear sky,2026-02-20 13:37:28.747997,0.0,0,Low Risk
+Kochi,Kerala,9.9399,76.2602,31.62,52,1009,1.79,0,0,clear sky,2026-02-20 13:37:28.813662,0.0,0,Low Risk
+Kolkata,West Bengal,22.5697,88.3697,30.97,30,1013,3.09,0,67,haze,2026-02-20 13:37:28.859557,0.0,0,Low Risk
+Kollam,Kerala,8.8833,76.6,30.27,56,1009,3.89,0,11,few clouds,2026-02-20 13:37:28.922747,0.0,0,Low Risk
+Kota,Rajasthan,25.1833,75.8333,28.93,29,1016,2.93,0,45,scattered clouds,2026-02-20 13:37:28.985818,0.0,0,Low Risk
+Kozhikode,Kerala,11.25,75.7667,33.65,61,1009,5.63,0,7,clear sky,2026-02-20 13:37:29.039745,0.0,0,Low Risk
+Lucknow,Uttar Pradesh,26.85,80.9167,28.99,34,1016,2.57,0,3,haze,2026-02-20 13:37:29.092571,0.0,0,Low Risk
+Ludhiana,Punjab,30.9,75.85,24.05,57,1018,1.54,0,0,haze,2026-02-20 13:37:29.139778,0.0,0,Low Risk
+Madurai,Tamil Nadu,9.9333,78.1167,32.01,51,1010,6.17,0,40,scattered clouds,2026-02-20 13:37:29.187696,0.0,0,Low Risk
+Mangalore,Karnataka,12.8667,74.8833,31.48,66,1010,5.14,0,20,haze,2026-02-20 13:37:29.251091,0.0,0,Low Risk
+Meerut,Uttar Pradesh,28.9833,77.7,29.18,20,1017,2.73,0,0,clear sky,2026-02-20 13:37:29.315148,0.0,0,Low Risk
+Mumbai,Maharashtra,19.0144,72.8479,31.99,55,1012,4.63,0,20,smoke,2026-02-20 13:37:29.366084,0.0,0,Low Risk
+Mysore,Karnataka,12.3072,76.6497,30.0,48,1011,7.2,0,20,few clouds,2026-02-20 13:37:29.411217,0.0,0,Low Risk
+Nagpur,Maharashtra,21.15,79.1,32.01,37,1014,2.57,0,0,haze,2026-02-20 13:37:29.472760,0.0,0,Low Risk
+Nashik,Maharashtra,19.9833,73.8,32.63,24,1013,4.09,0,0,clear sky,2026-02-20 13:37:29.536390,0.0,0,Low Risk
+Noida,Uttar Pradesh,28.58,77.33,26.16,21,1018,2.23,0,0,clear sky,2026-02-20 13:37:29.592216,0.0,0,Low Risk
+Patna,Bihar,25.6,85.1167,27.96,42,1015,4.12,0,0,haze,2026-02-20 13:37:29.640451,0.0,0,Low Risk
+Pune,Maharashtra,18.5196,73.8553,33.97,21,1012,0.45,0,0,clear sky,2026-02-20 13:37:29.711069,0.0,0,Low Risk
+Raipur,Chhattisgarh,21.2333,81.6333,32.08,23,1014,0.0,0,5,haze,2026-02-20 13:37:29.751415,0.0,0,Low Risk
+Rajkot,Gujarat,22.3,70.7833,33.89,25,1013,3.78,0,0,clear sky,2026-02-20 13:37:29.814457,0.0,0,Low Risk
+Ranchi,Jharkhand,23.35,85.3333,27.06,34,1015,4.63,0,40,haze,2026-02-20 13:37:29.877642,0.0,0,Low Risk
+Salem,Tamil Nadu,11.65,78.1667,32.53,49,1011,1.54,0,40,haze,2026-02-20 13:37:29.925478,0.0,0,Low Risk
+Sambalpur,Odisha,21.45,83.9667,30.69,21,1014,3.12,0,8,clear sky,2026-02-20 13:37:29.972865,0.0,0,Low Risk
+Sangli,Maharashtra,16.8544,74.5642,33.0,22,1012,4.8,0,5,clear sky,2026-02-20 13:37:30.036569,0.0,0,Low Risk
+Shimla,Himachal Pradesh,31.1,77.1667,15.98,31,1019,3.06,0,1,clear sky,2026-02-20 13:37:30.100143,0.001,0,Low Risk
+Silchar,Assam,24.8167,92.8,34.02,14,1012,2.91,0,53,broken clouds,2026-02-20 13:37:30.157045,0.0,0,Low Risk
+Siliguri,West Bengal,26.7,88.4333,32.81,14,1012,3.83,0,0,clear sky,2026-02-20 13:37:30.198013,0.0,0,Low Risk
+Solapur,Maharashtra,17.6833,75.9167,33.0,20,1012,5.25,0,1,clear sky,2026-02-20 13:37:30.260534,0.0,0,Low Risk
+Surat,Gujarat,21.1667,72.8333,32.99,38,1012,0.0,0,20,smoke,2026-02-20 13:37:30.308195,0.0,0,Low Risk
+Thane,Maharashtra,19.2,72.9667,31.95,58,1012,3.6,0,20,smoke,2026-02-20 13:37:30.371921,0.0,0,Low Risk
+Thiruvananthapuram,Kerala,8.4833,76.9167,31.99,58,1009,3.09,0,20,few clouds,2026-02-20 13:37:30.419459,0.0,0,Low Risk
+Tiruchirappalli,Tamil Nadu,10.8167,78.6833,32.06,66,1011,5.14,0,75,haze,2026-02-20 13:37:30.486488,0.0,0,Low Risk
+Tirunelveli,Tamil Nadu,8.7333,77.7,31.66,46,1010,4.82,0,99,overcast clouds,2026-02-20 13:37:30.535925,0.0,0,Low Risk
+Tirupati,Andhra Pradesh,13.65,79.4167,29.57,54,1013,4.12,0,20,haze,2026-02-20 13:37:30.577541,0.0,0,Low Risk
+Udaipur,Rajasthan,24.5712,73.6918,25.5,28,1016,3.62,0,43,scattered clouds,2026-02-20 13:37:30.625098,0.0,0,Low Risk
+Vadodara,Gujarat,22.3,73.2,30.98,42,1012,3.6,0,32,smoke,2026-02-20 13:37:30.688026,0.0,0,Low Risk
+Varanasi,Uttar Pradesh,25.3333,83.0,31.18,25,1015,3.31,0,1,clear sky,2026-02-20 13:37:30.748150,0.0,0,Low Risk
+Vijayawada,Andhra Pradesh,16.5167,80.6167,30.97,35,1012,4.12,0,5,clear sky,2026-02-20 13:37:30.799380,0.0,0,Low Risk
+Visakhapatnam,Andhra Pradesh,17.69,83.2093,32.94,22,1014,5.14,0,2,haze,2026-02-20 13:37:30.857155,0.0,0,Low Risk

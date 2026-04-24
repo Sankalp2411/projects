@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Bilaspur,Chhattisgarh,22.0833,82.15,33.74,13,1013,2.75,0,0,clear sky,2026-02-20 13:37:27.106770

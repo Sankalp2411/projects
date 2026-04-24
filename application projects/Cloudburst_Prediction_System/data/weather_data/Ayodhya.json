@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 82.2,
+        "lat": 26.8
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 13.3,
+        "feels_like": 12.23,
+        "temp_min": 13.3,
+        "temp_max": 13.3,
+        "pressure": 1018,
+        "humidity": 59,
+        "sea_level": 1018,
+        "grnd_level": 1007
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.85,
+        "deg": 266,
+        "gust": 6.49
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314340,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254076,
+        "sunset": 1770293744
+    },
+    "timezone": 19800,
+    "id": 1278094,
+    "name": "Ayodhya",
+    "cod": 200
+}

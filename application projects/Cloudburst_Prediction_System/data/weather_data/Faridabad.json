@@ -1,0 +1,46 @@
+{
+    "coord": {
+        "lon": 77.3167,
+        "lat": 28.4333
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 13.14,
+        "feels_like": 11.71,
+        "temp_min": 13.14,
+        "temp_max": 13.14,
+        "pressure": 1020,
+        "humidity": 46,
+        "sea_level": 1020,
+        "grnd_level": 993
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.33,
+        "deg": 302,
+        "gust": 4.09
+    },
+    "clouds": {
+        "all": 4
+    },
+    "dt": 1770314104,
+    "sys": {
+        "type": 1,
+        "id": 9165,
+        "country": "IN",
+        "sunrise": 1770255389,
+        "sunset": 1770294776
+    },
+    "timezone": 19800,
+    "id": 1271951,
+    "name": "Faridabad",
+    "cod": 200
+}

@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Anantapur,Andhra Pradesh,14.6833,77.6,32.77,33,1012,6.13,0,41,scattered clouds,2026-02-20 13:37:26.085187

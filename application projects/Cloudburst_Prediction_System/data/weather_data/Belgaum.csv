@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Belgaum,Karnataka,15.8667,74.5,30.95,40,1012,3.6,0,6,clear sky,2026-02-20 13:37:26.822736

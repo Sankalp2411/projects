@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 83.1861,
+        "lat": 26.06
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 13.04,
+        "feels_like": 11.78,
+        "temp_min": 13.04,
+        "temp_max": 13.04,
+        "pressure": 1018,
+        "humidity": 53,
+        "sea_level": 1018,
+        "grnd_level": 1009
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.9,
+        "deg": 266,
+        "gust": 6.42
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314341,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770253777,
+        "sunset": 1770293570
+    },
+    "timezone": 19800,
+    "id": 1278083,
+    "name": "Azamgarh",
+    "cod": 200
+}

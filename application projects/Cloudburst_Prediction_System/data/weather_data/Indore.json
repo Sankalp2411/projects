@@ -1,0 +1,45 @@
+{
+    "coord": {
+        "lon": 75.8333,
+        "lat": 22.7179
+    },
+    "weather": [
+        {
+            "id": 721,
+            "main": "Haze",
+            "description": "haze",
+            "icon": "50n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 18.1,
+        "feels_like": 17.98,
+        "temp_min": 18.1,
+        "temp_max": 18.1,
+        "pressure": 1020,
+        "humidity": 77,
+        "sea_level": 1020,
+        "grnd_level": 955
+    },
+    "visibility": 4000,
+    "wind": {
+        "speed": 0,
+        "deg": 0
+    },
+    "clouds": {
+        "all": 1
+    },
+    "dt": 1770314126,
+    "sys": {
+        "type": 1,
+        "id": 9067,
+        "country": "IN",
+        "sunrise": 1770255268,
+        "sunset": 1770295609
+    },
+    "timezone": 19800,
+    "id": 1269743,
+    "name": "Indore",
+    "cod": 200
+}

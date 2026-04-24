@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Amritsar,Punjab,31.6331,74.8656,23.97,57,1018,3.09,0,0,haze,2026-02-20 13:37:26.050543

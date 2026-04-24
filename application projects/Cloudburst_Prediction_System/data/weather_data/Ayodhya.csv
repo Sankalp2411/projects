@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Ayodhya,Uttar Pradesh,26.8,82.2,31.24,21,1015,3.66,0,0,clear sky,2026-02-20 13:37:26.459098

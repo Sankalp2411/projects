@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 86.45,
+        "lat": 23.8
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 17.3,
+        "feels_like": 15.82,
+        "temp_min": 17.3,
+        "temp_max": 17.3,
+        "pressure": 1018,
+        "humidity": 28,
+        "sea_level": 1018,
+        "grnd_level": 994
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.9,
+        "deg": 339,
+        "gust": 2.13
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314360,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770252808,
+        "sunset": 1770292973
+    },
+    "timezone": 19800,
+    "id": 1272979,
+    "name": "Dhanbad",
+    "cod": 200
+}

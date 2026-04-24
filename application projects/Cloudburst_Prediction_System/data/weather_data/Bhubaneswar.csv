@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Bhubaneswar,Odisha,20.2333,85.8333,33.12,25,1013,2.57,0,1,haze,2026-02-20 13:37:26.976920

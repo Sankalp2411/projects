@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Mangalore,Karnataka,12.8667,74.8833,31.48,66,1010,5.14,0,20,haze,2026-02-20 13:37:29.251091

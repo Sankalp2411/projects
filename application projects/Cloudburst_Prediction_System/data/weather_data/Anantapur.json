@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 77.6,
+        "lat": 14.6833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 22.19,
+        "feels_like": 21.69,
+        "temp_min": 22.19,
+        "temp_max": 22.19,
+        "pressure": 1018,
+        "humidity": 47,
+        "sea_level": 1018,
+        "grnd_level": 975
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.61,
+        "deg": 118,
+        "gust": 7.2
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314334,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254234,
+        "sunset": 1770295794
+    },
+    "timezone": 19800,
+    "id": 1278672,
+    "name": "Anantapur",
+    "cod": 200
+}

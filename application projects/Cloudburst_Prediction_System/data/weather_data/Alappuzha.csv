@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Alappuzha,Kerala,9.49,76.3264,28.96,68,1009,6.76,0,0,clear sky,2026-02-20 13:37:25.798963

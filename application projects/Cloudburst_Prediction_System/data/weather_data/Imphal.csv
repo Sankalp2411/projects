@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Imphal,Manipur,24.8167,93.95,28.95,28,1012,1.54,0,40,haze,2026-02-20 13:37:28.177926

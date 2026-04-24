@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Guwahati,Assam,26.1862,91.751,29.95,35,1012,2.57,0,40,haze,2026-02-20 13:37:27.904776

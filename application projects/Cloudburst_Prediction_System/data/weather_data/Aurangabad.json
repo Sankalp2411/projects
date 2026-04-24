@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 75.3333,
+        "lat": 19.8833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 21.22,
+        "feels_like": 20.26,
+        "temp_min": 21.22,
+        "temp_max": 21.22,
+        "pressure": 1018,
+        "humidity": 33,
+        "sea_level": 1018,
+        "grnd_level": 949
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.04,
+        "deg": 75,
+        "gust": 2.04
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314339,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255166,
+        "sunset": 1770295950
+    },
+    "timezone": 19800,
+    "id": 1278149,
+    "name": "Aurangabad",
+    "cod": 200
+}

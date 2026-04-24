@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 87.3167,
+        "lat": 23.4833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 19.32,
+        "feels_like": 18.04,
+        "temp_min": 19.32,
+        "temp_max": 19.32,
+        "pressure": 1018,
+        "humidity": 28,
+        "sea_level": 1018,
+        "grnd_level": 1009
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.33,
+        "deg": 337,
+        "gust": 2.56
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314362,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770252574,
+        "sunset": 1770292790
+    },
+    "timezone": 19800,
+    "id": 1272175,
+    "name": "Durgapur",
+    "cod": 200
+}

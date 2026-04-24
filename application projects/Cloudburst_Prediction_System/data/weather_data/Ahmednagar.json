@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 74.7333,
+        "lat": 19.0833
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 22.97,
+        "feels_like": 22.11,
+        "temp_min": 22.97,
+        "temp_max": 22.97,
+        "pressure": 1018,
+        "humidity": 30,
+        "sea_level": 1018,
+        "grnd_level": 940
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.94,
+        "deg": 71,
+        "gust": 2.72
+    },
+    "clouds": {
+        "all": 1
+    },
+    "dt": 1770314048,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255249,
+        "sunset": 1770296156
+    },
+    "timezone": 19800,
+    "id": 1279228,
+    "name": "Ahmednagar",
+    "cod": 200
+}

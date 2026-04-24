@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Ahmednagar,Maharashtra,19.0833,74.7333,31.75,26,1013,5.54,0,0,clear sky,2026-02-20 13:37:25.654808

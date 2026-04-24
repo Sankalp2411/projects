@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Bagalkot,Karnataka,16.1833,75.7,32.7,24,1012,5.05,0,7,clear sky,2026-02-20 13:37:26.569343

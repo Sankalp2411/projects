@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Sangli,Maharashtra,16.8544,74.5642,33,22,1012,4.8,0,5,clear sky,2026-02-20 13:37:30.036569

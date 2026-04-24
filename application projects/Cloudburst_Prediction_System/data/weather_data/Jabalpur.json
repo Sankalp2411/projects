@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 79.9501,
+        "lat": 23.167
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 17.05,
+        "feels_like": 15.83,
+        "temp_min": 17.05,
+        "temp_max": 17.05,
+        "pressure": 1020,
+        "humidity": 39,
+        "sea_level": 1020,
+        "grnd_level": 973
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.23,
+        "deg": 30,
+        "gust": 6.63
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314377,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254316,
+        "sunset": 1770294584
+    },
+    "timezone": 19800,
+    "id": 1269633,
+    "name": "Jabalpur",
+    "cod": 200
+}

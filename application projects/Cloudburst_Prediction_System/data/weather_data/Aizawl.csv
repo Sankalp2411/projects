@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Aizawl,Mizoram,23.7333,92.7167,25.89,30,1012,2.57,0,40,haze,2026-02-20 13:37:25.696420

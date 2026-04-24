@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 75.85,
+        "lat": 30.9
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 10.73,
+        "feels_like": 9.69,
+        "temp_min": 10.73,
+        "temp_max": 10.73,
+        "pressure": 1021,
+        "humidity": 70,
+        "sea_level": 1021,
+        "grnd_level": 991
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.48,
+        "deg": 358,
+        "gust": 2.5
+    },
+    "clouds": {
+        "all": 2
+    },
+    "dt": 1770314180,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255962,
+        "sunset": 1770294906
+    },
+    "timezone": 19800,
+    "id": 1264728,
+    "name": "Ludhiana",
+    "cod": 200
+}

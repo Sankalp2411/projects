@@ -1,0 +1,30 @@
+header{
+    background-image:url("img/headline_background.jpg");
+    background-size:cover;
+    background-position:center;
+    align-content:center;
+    text-align:center;
+    margin: 0% 0% 0% 0%;
+    height: 80px;
+}
+#head_line {
+    color: white;
+
+}
+nav{
+    background-color: #000;
+    overflow: hidden;
+    text-align: center;
+    margin: 0% 0% 0% 0%;
+    padding: 3% 3% 3% 3%;
+}
+button{
+    background: transparent;
+    font: 60px;
+    color: white;
+    border-radius: 25%;
+    border-color: white;
+    margin-top: 5%;
+    margin-left: 6%;
+    height: 10%;
+}

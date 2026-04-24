@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Visakhapatnam,Andhra Pradesh,17.69,83.2093,32.94,22,1014,5.14,0,2,haze,2026-02-20 13:37:30.857155

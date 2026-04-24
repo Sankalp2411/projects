@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 74.5642,
+        "lat": 16.8544
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 23.46,
+        "feels_like": 22.75,
+        "temp_min": 23.46,
+        "temp_max": 23.46,
+        "pressure": 1017,
+        "humidity": 34,
+        "sea_level": 1017,
+        "grnd_level": 953
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.69,
+        "deg": 111,
+        "gust": 4.97
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314414,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770255122,
+        "sunset": 1770296364
+    },
+    "timezone": 19800,
+    "id": 1257416,
+    "name": "Sangli",
+    "cod": 200
+}

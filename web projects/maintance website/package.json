@@ -1,0 +1,9 @@
+{
+  "name": "reearthtech-website",
+  "version": "1.0.0",
+  "description": "REearthTech Innovation — Clean Energy & Tech Sustainability Website",
+  "scripts": {
+    "dev": "npx -y live-server --port=5500 --no-browser",
+    "start": "npx -y live-server --port=5500"
+  }
+}

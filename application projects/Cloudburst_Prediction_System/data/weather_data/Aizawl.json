@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 92.7167,
+        "lat": 23.7333
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 10.12,
+        "feels_like": 8.73,
+        "temp_min": 10.12,
+        "temp_max": 10.12,
+        "pressure": 1019,
+        "humidity": 59,
+        "sea_level": 1019,
+        "grnd_level": 952
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1,
+        "deg": 121,
+        "gust": 0.82
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314145,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770251299,
+        "sunset": 1770291473
+    },
+    "timezone": 19800,
+    "id": 1279186,
+    "name": "Aizawl",
+    "cod": 200
+}

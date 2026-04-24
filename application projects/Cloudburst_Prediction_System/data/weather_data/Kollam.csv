@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Kollam,Kerala,8.8833,76.6,30.27,56,1009,3.89,0,11,few clouds,2026-02-20 13:37:28.922747

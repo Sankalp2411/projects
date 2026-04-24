@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 78.1792,
+        "lat": 26.2236
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 14.59,
+        "feels_like": 13.18,
+        "temp_min": 14.59,
+        "temp_max": 14.59,
+        "pressure": 1020,
+        "humidity": 41,
+        "sea_level": 1020,
+        "grnd_level": 994
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.08,
+        "deg": 301,
+        "gust": 2.08
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314353,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254992,
+        "sunset": 1770294758
+    },
+    "timezone": 19800,
+    "id": 1270583,
+    "name": "Gwalior",
+    "cod": 200
+}

@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 88.4333,
+        "lat": 26.7
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 16.82,
+        "feels_like": 15.97,
+        "temp_min": 16.82,
+        "temp_max": 16.82,
+        "pressure": 1017,
+        "humidity": 54,
+        "sea_level": 1017,
+        "grnd_level": 1001
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.32,
+        "deg": 337,
+        "gust": 1.82
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314125,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770252572,
+        "sunset": 1770292256
+    },
+    "timezone": 19800,
+    "id": 1256525,
+    "name": "Siliguri",
+    "cod": 200
+}

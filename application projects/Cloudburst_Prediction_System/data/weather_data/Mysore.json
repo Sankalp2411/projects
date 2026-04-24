@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 76.6497,
+        "lat": 12.3072
+    },
+    "weather": [
+        {
+            "id": 801,
+            "main": "Clouds",
+            "description": "few clouds",
+            "icon": "02n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 19.3,
+        "feels_like": 18.59,
+        "temp_min": 19.3,
+        "temp_max": 19.3,
+        "pressure": 1017,
+        "humidity": 50,
+        "sea_level": 1017,
+        "grnd_level": 935
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.66,
+        "deg": 66,
+        "gust": 3.5
+    },
+    "clouds": {
+        "all": 17
+    },
+    "dt": 1770314392,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770254291,
+        "sunset": 1770296194
+    },
+    "timezone": 19800,
+    "id": 1262321,
+    "name": "Mysore",
+    "cod": 200
+}

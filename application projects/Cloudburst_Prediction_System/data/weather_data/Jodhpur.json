@@ -1,0 +1,44 @@
+{
+    "coord": {
+        "lon": 73.03,
+        "lat": 26.2867
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 17.98,
+        "feels_like": 16.36,
+        "temp_min": 17.98,
+        "temp_max": 17.98,
+        "pressure": 1020,
+        "humidity": 20,
+        "sea_level": 1020,
+        "grnd_level": 993
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 3.99,
+        "deg": 50,
+        "gust": 4.26
+    },
+    "clouds": {
+        "all": 0
+    },
+    "dt": 1770314235,
+    "sys": {
+        "country": "IN",
+        "sunrise": 1770256233,
+        "sunset": 1770295989
+    },
+    "timezone": 19800,
+    "id": 1268865,
+    "name": "Jodhpur",
+    "cod": 200
+}

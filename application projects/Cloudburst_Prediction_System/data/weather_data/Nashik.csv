@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Nashik,Maharashtra,19.9833,73.8,32.63,24,1013,4.09,0,0,clear sky,2026-02-20 13:37:29.536390

@@ -1,0 +1,2 @@
+city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
+Silchar,Assam,24.8167,92.8,34.02,14,1012,2.91,0,53,broken clouds,2026-02-20 13:37:30.157045

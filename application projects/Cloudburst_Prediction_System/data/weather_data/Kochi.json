@@ -1,0 +1,46 @@
+{
+    "coord": {
+        "lon": 76.2602,
+        "lat": 9.9399
+    },
+    "weather": [
+        {
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 24.99,
+        "feels_like": 25.45,
+        "temp_min": 24.99,
+        "temp_max": 24.99,
+        "pressure": 1015,
+        "humidity": 73,
+        "sea_level": 1015,
+        "grnd_level": 1014
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 1.04,
+        "deg": 39,
+        "gust": 1
+    },
+    "clouds": {
+        "all": 10
+    },
+    "dt": 1770314260,
+    "sys": {
+        "type": 1,
+        "id": 9211,
+        "country": "IN",
+        "sunrise": 1770254217,
+        "sunset": 1770296455
+    },
+    "timezone": 19800,
+    "id": 1273874,
+    "name": "Kochi",
+    "cod": 200
+}
