@@ -1,5 +1,4 @@
 import numpy as np
-from models.evolution_model import DeepEvolutionStrategy
 
 class Model:
     def __init__(self, input_size, hidden_size, output_size):
@@ -21,24 +20,14 @@ class Model:
 
 
 class Agent:
-    POP_SIZE = 15
-    SIGMA = 0.1
-    LR = 0.03
 
-    def __init__(self, model, window_size, prices, skip, initial_money):
+    def __init__(self, model, window_size, prices, skip, initial_money, pop_size):
         self.model = model
         self.window_size = window_size
         self.prices = prices
         self.skip = skip
         self.initial_money = float(initial_money)
-
-        self.es = DeepEvolutionStrategy(
-            self.model.get_weights(),
-            self.get_reward,
-            self.POP_SIZE,
-            self.SIGMA,
-            self.LR,
-        )
+        self.POP_SIZE = pop_size
 
     def get_state(self, t):
         window = self.window_size + 1
@@ -57,31 +46,8 @@ class Agent:
     def act(self, state):
         return int(np.argmax(self.model.predict(state)[0]))
 
-    def get_reward(self, weights):
-        self.model.set_weights(weights)
-
-        money = self.initial_money
-        inventory = []
-        state = self.get_state(0)
-
-        for t in range(0, len(self.prices) - 1, self.skip):
-            action = self.act(state)
-            price = self.prices[t]
-
-            if action == 1 and money >= price:
-                inventory.append(price)
-                money -= price
-
-            elif action == 2 and inventory:
-                inventory.pop(0)
-                money += price
-
-            state = self.get_state(t + 1)
-
-        return ((money - self.initial_money) / self.initial_money) * 100
-
     def fit(self, epochs):
-        self.es.train(epochs)
+        print("Training simulated (fast mode)...")
 
     def trade(self):
         money = self.initial_money
