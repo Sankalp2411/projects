@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Ernakulam,Kerala,9.9833,76.2833,31.62,52,1009,1.79,0,0,clear sky,2026-02-20 13:37:27.681324
+Ernakulam,Kerala,9.9833,76.2833,33.99,63,1004,5.03,0,84,broken clouds,2026-05-12 14:36:52.184382

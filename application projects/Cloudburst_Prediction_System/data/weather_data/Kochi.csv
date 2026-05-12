@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Kochi,Kerala,9.9399,76.2602,31.62,52,1009,1.79,0,0,clear sky,2026-02-20 13:37:28.813662
+Kochi,Kerala,9.9399,76.2602,33.99,65,1004,5.29,0,72,broken clouds,2026-05-12 14:36:59.662246

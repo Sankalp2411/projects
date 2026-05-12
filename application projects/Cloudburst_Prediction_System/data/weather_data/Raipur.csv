@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Raipur,Chhattisgarh,21.2333,81.6333,32.08,23,1014,0,0,5,haze,2026-02-20 13:37:29.751415
+Raipur,Chhattisgarh,21.2333,81.6333,37.08,32,1002,2.06,0,20,haze,2026-05-12 14:37:05.469780

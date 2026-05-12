@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Hyderabad,Telangana,17.3753,78.4744,29.23,37,1013,5.66,0,0,clear sky,2026-02-20 13:37:28.126431
+Hyderabad,Telangana,17.3753,78.4744,37.23,28,1006,4.12,0,40,scattered clouds,2026-05-12 14:36:55.265400

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Jamshedpur,Jharkhand,22.8,86.1833,31.9,29,1014,1.03,0,89,haze,2026-02-20 13:37:28.582580
+Jamshedpur,Jharkhand,22.8,86.1833,33.9,55,1002,2.06,0,75,haze,2026-05-12 14:36:58.279564

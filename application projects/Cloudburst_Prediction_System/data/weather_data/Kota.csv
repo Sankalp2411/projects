@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Kota,Rajasthan,25.1833,75.8333,28.93,29,1016,2.93,0,45,scattered clouds,2026-02-20 13:37:28.985818
+Kota,Rajasthan,25.1833,75.8333,43.43,11,1001,3.8,0,1,clear sky,2026-05-12 14:37:00.679090

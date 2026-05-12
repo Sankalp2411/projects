@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Bareilly,Uttar Pradesh,28.35,79.4167,28.76,25,1016,3.4,0,0,clear sky,2026-02-20 13:37:26.695730
+Bareilly,Uttar Pradesh,28.35,79.4167,39.91,19,1001,2.27,0,1,clear sky,2026-05-12 14:36:46.246162
