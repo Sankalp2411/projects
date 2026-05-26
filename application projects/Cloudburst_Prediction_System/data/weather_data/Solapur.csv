@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Solapur,Maharashtra,17.6833,75.9167,40.73,15,1001,3.32,0,100,overcast clouds,2026-05-12 14:37:08.606746
+Solapur,Maharashtra,17.6833,75.9167,33.08,39,1008,5.07,0,42,scattered clouds,2026-05-26 23:00:37.374941

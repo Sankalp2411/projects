@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Noida,Uttar Pradesh,28.58,77.33,37.16,15,1000,1.25,0,0,clear sky,2026-05-12 14:37:04.439997
+Noida,Uttar Pradesh,28.58,77.33,38.16,7,1000,2.44,0,0,clear sky,2026-05-26 23:00:23.978270

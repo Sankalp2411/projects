@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Patna,Bihar,25.6,85.1167,32.96,66,1001,4.12,0,40,haze,2026-05-12 14:37:04.782225
+Patna,Bihar,25.6,85.1167,29.96,70,1003,4.12,0,40,haze,2026-05-26 23:00:24.998530

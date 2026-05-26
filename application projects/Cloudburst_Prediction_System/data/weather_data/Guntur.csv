@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Guntur,Andhra Pradesh,16.3,80.45,38.91,33,1002,5,0,12,few clouds,2026-05-12 14:36:53.556767
+Guntur,Andhra Pradesh,16.3,80.45,34.24,47,1006,3.2,0,72,broken clouds,2026-05-26 22:59:51.517384

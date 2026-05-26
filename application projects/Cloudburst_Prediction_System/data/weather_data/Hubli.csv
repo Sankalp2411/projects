@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Hubli,Karnataka,15.35,75.1667,35.02,43,1006,3.6,0,40,scattered clouds,2026-05-12 14:36:54.930164
+Hubli,Karnataka,15.35,75.1667,22.98,77,1013,1.5,0,90,overcast clouds,2026-05-26 22:59:55.401647

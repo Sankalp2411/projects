@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Surat,Gujarat,21.1667,72.8333,39.95,20,1003,4.64,0,1,clear sky,2026-05-12 14:37:08.952103
+Surat,Gujarat,21.1667,72.8333,29.99,79,1009,7.2,0,40,scattered clouds,2026-05-26 23:00:38.734409

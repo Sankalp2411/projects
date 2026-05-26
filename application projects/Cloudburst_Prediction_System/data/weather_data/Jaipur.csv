@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Jaipur,Rajasthan,26.9167,75.8167,41.62,12,1000,7.2,0,20,haze,2026-05-12 14:36:56.892049
+Jaipur,Rajasthan,26.9167,75.8167,35.62,26,1003,1.03,0,20,haze,2026-05-26 23:00:00.216342

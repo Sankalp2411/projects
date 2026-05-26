@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Mysore,Karnataka,12.3072,76.6497,34,38,1003,2.57,0,20,few clouds,2026-05-12 14:37:03.421983
+Mysore,Karnataka,12.3072,76.6497,24.8,83,1014,2.14,0,100,overcast clouds,2026-05-26 23:00:21.515359

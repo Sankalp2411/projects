@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Ajmer,Rajasthan,26.45,74.6333,41.75,10,1002,8.36,0,1,clear sky,2026-05-12 14:36:40.520743
+Ajmer,Rajasthan,26.45,74.6333,34,24,1005,5.12,0,0,clear sky,2026-05-26 22:59:15.468435

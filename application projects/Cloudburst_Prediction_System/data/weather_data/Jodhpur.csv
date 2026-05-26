@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Jodhpur,Rajasthan,26.2867,73.03,43.84,10,1001,8.47,0,9,clear sky,2026-05-12 14:36:58.970514
+Jodhpur,Rajasthan,26.2867,73.03,35.04,32,1004,8.02,0,0,clear sky,2026-05-26 23:00:08.919898

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Jhansi,Uttar Pradesh,25.4333,78.5833,43.01,12,1000,3.44,0,5,clear sky,2026-05-12 14:36:58.626669
+Jhansi,Uttar Pradesh,25.4333,78.5833,37.62,14,1002,3.33,0,1,clear sky,2026-05-26 23:00:07.895791

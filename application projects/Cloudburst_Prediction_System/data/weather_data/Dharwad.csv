@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Dharwad,Karnataka,15.4667,75.0167,34.66,46,1006,2.57,0,20,few clouds,2026-05-12 14:36:51.480428
+Dharwad,Karnataka,15.4667,75.0167,24.98,72,1013,5.17,0,100,overcast clouds,2026-05-26 22:59:45.470679

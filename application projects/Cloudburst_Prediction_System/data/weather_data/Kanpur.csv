@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Kanpur,Uttar Pradesh,26.4667,80.35,40.09,19,1001,3.77,0,2,clear sky,2026-05-12 14:36:59.320874
+Kanpur,Uttar Pradesh,26.4667,80.35,37.06,7,1000,2.65,0,19,few clouds,2026-05-26 23:00:09.737658

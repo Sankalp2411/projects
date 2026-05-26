@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Ludhiana,Punjab,30.9,75.85,36.05,41,1001,1.54,0,40,haze,2026-05-12 14:37:01.695996
+Ludhiana,Punjab,30.9,75.85,33.51,11,1001,3.16,0,0,clear sky,2026-05-26 23:00:17.007051

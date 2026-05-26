@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Ambala,Haryana,30.3783,76.7808,39.49,18,1001,2.96,0,0,clear sky,2026-05-12 14:36:41.590066
+Ambala,Haryana,30.3783,76.7808,33.68,10,1000,3.02,0,0,clear sky,2026-05-26 22:59:18.029764

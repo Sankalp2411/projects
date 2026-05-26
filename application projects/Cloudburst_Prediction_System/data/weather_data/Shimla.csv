@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Shimla,Himachal Pradesh,31.1,77.1667,25.53,26,1006,4.84,0,1,clear sky,2026-05-12 14:37:07.583347
+Shimla,Himachal Pradesh,31.1,77.1667,16.68,19,1009,2.88,0,0,clear sky,2026-05-26 23:00:32.679254

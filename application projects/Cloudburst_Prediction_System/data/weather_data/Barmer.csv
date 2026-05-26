@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Barmer,Rajasthan,25.75,71.3833,43.83,9,1001,8.67,0,0,clear sky,2026-05-12 14:36:46.608868
+Barmer,Rajasthan,25.75,71.3833,31.83,52,1004,8.34,0,0,clear sky,2026-05-26 22:59:30.209970

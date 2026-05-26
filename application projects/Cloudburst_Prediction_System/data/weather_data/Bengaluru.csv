@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Bengaluru,Karnataka,12.9762,77.6033,33.03,38,1005,12.96,0,40,scattered clouds,2026-05-12 14:36:47.324210
+Bengaluru,Karnataka,12.9762,77.6033,21.98,92,1015,3.09,0,75,broken clouds,2026-05-26 22:59:31.956636

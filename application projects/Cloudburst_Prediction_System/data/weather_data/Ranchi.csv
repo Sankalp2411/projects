@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Ranchi,Jharkhand,23.35,85.3333,31.06,55,1003,5.14,0,75,haze,2026-05-12 14:37:06.159255
+Ranchi,Jharkhand,23.35,85.3333,29.06,70,1005,1.03,0,20,haze,2026-05-26 23:00:28.888832

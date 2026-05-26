@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Vadodara,Gujarat,22.3,73.2,44.81,12,1001,3.83,0,0,clear sky,2026-05-12 14:37:11.383381
+Vadodara,Gujarat,22.3,73.2,30.97,58,1008,5.96,0,0,clear sky,2026-05-26 23:00:46.888337

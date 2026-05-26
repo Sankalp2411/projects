@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Mumbai,Maharashtra,19.0144,72.8479,32.99,58,1004,7.2,0,6,smoke,2026-05-12 14:37:03.078437
+Mumbai,Maharashtra,19.0144,72.8479,30.99,74,1010,4.63,0,40,haze,2026-05-26 23:00:20.390006

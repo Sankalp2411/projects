@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Chennai,Tamil Nadu,13.0878,80.2785,33.86,64,1002,6.17,0,40,scattered clouds,2026-05-12 14:36:49.392994
+Chennai,Tamil Nadu,13.0878,80.2785,30.71,64,1008,5.14,0,40,haze,2026-05-26 22:59:40.657974

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Agra,Uttar Pradesh,27.1833,78.0167,40.26,14,1000,0.09,0,28,scattered clouds,2026-05-12 14:36:39.091649
+Agra,Uttar Pradesh,27.1833,78.0167,36.03,28,1000,9.26,0,40,scattered clouds,2026-05-26 22:59:10.757159

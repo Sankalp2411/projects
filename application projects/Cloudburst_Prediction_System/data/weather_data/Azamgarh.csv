@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Azamgarh,Uttar Pradesh,26.06,83.1861,40.65,17,1000,2.75,0,5,clear sky,2026-05-12 14:36:44.878945
+Azamgarh,Uttar Pradesh,26.06,83.1861,31.89,29,1001,4.79,0,0,clear sky,2026-05-26 22:59:24.682591

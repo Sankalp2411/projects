@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Dehradun,Uttarakhand,30.3256,78.0437,36.16,22,1003,4.88,0,0,clear sky,2026-05-12 14:36:50.459681
+Dehradun,Uttarakhand,30.3256,78.0437,27.78,12,1003,3.55,0,0,clear sky,2026-05-26 22:59:43.116022

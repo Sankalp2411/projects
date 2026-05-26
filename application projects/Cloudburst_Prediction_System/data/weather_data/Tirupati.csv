@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Tirupati,Andhra Pradesh,13.65,79.4167,36.57,39,1004,5.66,0,20,few clouds,2026-05-12 14:37:10.696653
+Tirupati,Andhra Pradesh,13.65,79.4167,26.25,61,1009,2.73,0,88,overcast clouds,2026-05-26 23:00:44.963709

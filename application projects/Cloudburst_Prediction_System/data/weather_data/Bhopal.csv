@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Bhopal,Madhya Pradesh,23.2667,77.4,41.91,12,1002,1.98,0,15,few clouds,2026-05-12 14:36:47.672100
+Bhopal,Madhya Pradesh,23.2667,77.4,35.13,15,1005,5.66,0,0,clear sky,2026-05-26 22:59:34.719186

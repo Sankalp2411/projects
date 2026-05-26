@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Sambalpur,Odisha,21.45,83.9667,37.73,30,1002,3.04,0,0,clear sky,2026-05-12 14:37:06.874303
+Sambalpur,Odisha,21.45,83.9667,30.47,36,1002,1.57,0,11,few clouds,2026-05-26 23:00:31.038447
