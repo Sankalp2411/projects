@@ -1,0 +1,8 @@
+{
+    "window": {
+        "title": "MindWar Arena",
+        "width": 1280,
+        "height": 720,
+        "fps_limit": 60
+    }
+}

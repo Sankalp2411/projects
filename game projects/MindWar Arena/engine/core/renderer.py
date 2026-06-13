@@ -2,22 +2,29 @@
 
 import moderngl
 
+from engine.utils.logger import Logger
+
 
 class Renderer:
-    """
-    Core rendering system.
-    """
 
     def __init__(self):
+
         self.ctx = None
 
     def initialize(self):
+
         self.ctx = moderngl.create_context()
 
-        print("[Renderer] OpenGL Version:")
-        print(self.ctx.info["GL_VERSION"])
+        Logger.info(
+            "[Renderer] OpenGL Version:"
+        )
+
+        Logger.info(
+            self.ctx.info["GL_VERSION"]
+        )
 
     def clear(self):
+
         self.ctx.clear(
             red=0.08,
             green=0.08,
@@ -26,4 +33,7 @@ class Renderer:
         )
 
     def shutdown(self):
-        print("[Renderer] Shutdown")
+
+        Logger.info(
+            "[Renderer] Shutdown"
+        )

@@ -2,15 +2,18 @@
 
 import pygame
 
+from engine.utils.logger import Logger
+
 
 class Window:
 
     def __init__(
         self,
-        width=1280,
-        height=720,
-        title="MindWar Arena"
+        width,
+        height,
+        title
     ):
+
         self.width = width
         self.height = height
         self.title = title
@@ -42,20 +45,32 @@ class Window:
             pygame.OPENGL | pygame.DOUBLEBUF
         )
 
-        pygame.display.set_caption(self.title)
+        pygame.display.set_caption(
+            self.title
+        )
 
         self.clock = pygame.time.Clock()
 
-        print(
-            f"[Window] Created {self.width}x{self.height}"
+        Logger.info(
+            f"[Window] Created "
+            f"{self.width}x{self.height}"
         )
 
     def update(self):
+
         pygame.display.flip()
 
-    def tick(self, fps=60):
+    def tick(
+        self,
+        fps=60
+    ):
+
         self.clock.tick(fps)
 
     def destroy(self):
+
         pygame.quit()
-        print("[Window] Destroyed")
+
+        Logger.info(
+            "[Window] Destroyed"
+        )

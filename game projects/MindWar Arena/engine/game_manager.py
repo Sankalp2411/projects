@@ -4,6 +4,14 @@ import pygame
 
 from engine.core.window import Window
 from engine.core.renderer import Renderer
+from engine.core.time import TimeManager
+from engine.core.input import Input
+from engine.core.scene_manager import SceneManager
+
+from engine.utils.config import Config
+from engine.utils.logger import Logger
+
+from game.scenes.boot_scene import BootScene
 
 
 class GameManager:
@@ -12,40 +20,124 @@ class GameManager:
 
         self.running = False
 
-        self.window = Window()
+        self.window = None
 
         self.renderer = Renderer()
 
+        self.time_manager = TimeManager()
+
+        self.scene_manager = SceneManager()
+
+        self.fps_limit = 60
+
     def initialize(self):
 
-        print("[GameManager] Initializing...")
+        Logger.initialize()
+
+        Logger.info(
+            "[GameManager] Initializing..."
+        )
+
+        Config.load()
+
+        title = Config.get(
+            "window",
+            "title"
+        )
+
+        width = Config.get(
+            "window",
+            "width"
+        )
+
+        height = Config.get(
+            "window",
+            "height"
+        )
+
+        self.fps_limit = Config.get(
+            "window",
+            "fps_limit",
+            60
+        )
+
+        self.window = Window(
+            width=width,
+            height=height,
+            title=title
+        )
 
         self.window.create()
 
         self.renderer.initialize()
 
+        Input.initialize()
+
+        self.scene_manager.change_scene(
+            BootScene()
+        )
+
         self.running = True
+
+    def process_events(self):
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                self.running = False
+
+    def update(self):
+
+        self.time_manager.update()
+
+        Input.update()
+
+        self.scene_manager.update()
+
+    def render(self):
+
+        self.renderer.clear()
+
+        self.scene_manager.render()
+
+        self.window.update()
 
     def run(self):
 
-        print("[GameManager] Running...")
+        Logger.info(
+            "[GameManager] Running..."
+        )
 
         while self.running:
 
-            for event in pygame.event.get():
+            self.process_events()
 
-                if event.type == pygame.QUIT:
-                    self.running = False
+            self.update()
 
-            self.renderer.clear()
+            self.render()
 
-            self.window.update()
+            self.window.tick(
+                self.fps_limit
+            )
 
-            self.window.tick(60)
+            fps = self.time_manager.get_fps()
+
+            if fps > 0:
+
+                pygame.display.set_caption(
+                    f"MindWar Arena | FPS: {fps}"
+                )
 
     def shutdown(self):
 
-        print("[GameManager] Shutting down...")
+        Logger.info(
+            "[GameManager] Shutting down..."
+        )
+
+        Logger.info(
+            f"[GameManager] Runtime: "
+            f"{self.time_manager.get_runtime():.2f}s"
+        )
 
         self.renderer.shutdown()
 

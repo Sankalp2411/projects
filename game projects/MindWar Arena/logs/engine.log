@@ -1,0 +1,16 @@
+
+============================================================
+2026-06-13 17:06:34 [INFO] Logger Initialized
+2026-06-13 17:06:34 [INFO] [GameManager] Initializing...
+2026-06-13 17:06:34 [INFO] [Config] Loaded
+2026-06-13 17:06:35 [INFO] [Window] Created 1280x720
+2026-06-13 17:06:35 [INFO] [Renderer] OpenGL Version:
+2026-06-13 17:06:35 [INFO] 3.3.0 - Build 32.0.101.7084
+2026-06-13 17:06:35 [INFO] [Input] Initialized
+2026-06-13 17:06:35 [INFO] [Scene] Enter: Boot Scene
+2026-06-13 17:06:35 [INFO] [BootScene] Engine startup checks complete
+2026-06-13 17:06:35 [INFO] [GameManager] Running...
+2026-06-13 17:06:44 [INFO] [GameManager] Shutting down...
+2026-06-13 17:06:44 [INFO] [GameManager] Runtime: 9.25s
+2026-06-13 17:06:44 [INFO] [Renderer] Shutdown
+2026-06-13 17:06:44 [INFO] [Window] Destroyed
