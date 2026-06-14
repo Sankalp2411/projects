@@ -1469,16 +1469,790 @@
         [✓] Input migrated
     }
     09(asset management system){
-
+        01(create file asset_manager.py){
+            "|"
+            from pathlib import Path
+            import pygame
+            from engine.utils.logger import Logger
+            class AssetManager:
+            _images = {}
+            _fonts = {}
+            @classmethod
+            def initialize(cls):
+                Logger.info(
+                    "[AssetManager] Initialized"
+                )
+            @classmethod
+            def load_image(
+                cls,
+                asset_name,
+                relative_path
+            ):
+                if asset_name in cls._images:
+                    Logger.warning(
+                        f"[AssetManager] Image already loaded: {asset_name}"
+                    )
+                    return
+                path = Path(relative_path)
+                if not path.exists():
+                    Logger.error(
+                        f"[AssetManager] Missing image: {relative_path}"
+                    )
+                    return
+                cls._images[asset_name] = pygame.image.load(
+                    path
+                )
+                Logger.info(
+                    f"[AssetManager] Loaded image: {asset_name}"
+                )
+            @classmethod
+            def get_image(
+                cls,
+                asset_name
+            ):
+                return cls._images.get(
+                    asset_name
+                )
+            @classmethod
+            def load_font(
+                cls,
+                asset_name,
+                relative_path,
+                size
+            ):
+                key = f"{asset_name}_{size}"
+                if key in cls._fonts:
+                    Logger.warning(
+                        f"[AssetManager] Font already loaded: {key}"
+                    )
+                    return
+                path = Path(relative_path)
+                if not path.exists():
+                    Logger.error(
+                        f"[AssetManager] Missing font: {relative_path}"
+                    )
+                    return
+                cls._fonts[key] = pygame.font.Font(
+                    path,
+                    size
+                )
+                Logger.info(
+                    f"[AssetManager] Loaded font: {key}"
+                )
+            @classmethod
+            def get_font(
+                cls,
+                asset_name,
+                size
+            ):
+                key = f"{asset_name}_{size}"
+                return cls._fonts.get(
+                    key
+                )
+            @classmethod
+            def get_loaded_image_count(cls):
+                return len(
+                    cls._images
+                )
+            @classmethod
+            def get_loaded_font_count(cls):
+                return len(
+                    cls._fonts
+                )
+            "|"
+        }
+        02(update boot_scene.py){
+            "|"
+            from engine.core.scene import Scene
+            from engine.utils.logger import Logger
+            from engine.utils.asset_manager import AssetManager
+            class BootScene(Scene):
+                def __init__(self):
+                    super().__init__(
+                        "Boot Scene"
+                    )
+                def enter(self):
+                    super().enter()
+                    Logger.info(
+                        "[BootScene] Engine startup checks complete"
+                    )
+                    Logger.info(
+                        f"[BootScene] Images Loaded: "
+                        f"{AssetManager.get_loaded_image_count()}"
+                    )
+                    Logger.info(
+                        f"[BootScene] Fonts Loaded: "
+                        f"{AssetManager.get_loaded_font_count()}"
+                    )
+                def update(self):
+                    pass
+                def render(self):
+                    pass
+            "|"
+        }
+        03(update game_manager.py){
+            "|"
+            import pygame
+            from engine.core.window import Window
+            from engine.core.renderer import Renderer
+            from engine.core.time import TimeManager
+            from engine.core.input import Input
+            from engine.core.scene_manager import SceneManager
+            from engine.utils.config import Config
+            from engine.utils.logger import Logger
+            from engine.utils.asset_manager import AssetManager
+            from game.scenes.boot_scene import BootScene
+            class GameManager:
+                def __init__(self):
+                    self.running = False
+                    self.window = None
+                    self.renderer = Renderer()
+                    self.time_manager = TimeManager()
+                    self.scene_manager = SceneManager()
+                    self.fps_limit = 60
+                def initialize(self):
+                    Logger.initialize()
+                    Logger.info(
+                        "[GameManager] Initializing..."
+                    )
+                    Config.load()
+                    title = Config.get(
+                        "window",
+                        "title"
+                    )
+                    width = Config.get(
+                        "window",
+                        "width"
+                    )
+                    height = Config.get(
+                        "window",
+                        "height"
+                    )
+                    self.fps_limit = Config.get(
+                        "window",
+                        "fps_limit",
+                        60
+                    )
+                    self.window = Window(
+                        width=width,
+                        height=height,
+                        title=title
+                    )
+                    self.window.create()
+                    self.renderer.initialize()
+                    Input.initialize()
+                    AssetManager.initialize()
+                    self.scene_manager.change_scene(
+                        BootScene()
+                    )
+                    self.running = True
+                def process_events(self):
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            self.running = False
+                def update(self):
+                    self.time_manager.update()
+                    Input.update()
+                    self.scene_manager.update()
+                def render(self):
+                    self.renderer.clear()
+                    self.scene_manager.render()
+                    self.window.update()
+                def run(self):
+                    Logger.info(
+                        "[GameManager] Running..."
+                    )
+                    while self.running:
+                        self.process_events()
+                        self.update()
+                        self.render()
+                        self.window.tick(
+                            self.fps_limit
+                        )
+                        fps = self.time_manager.get_fps()
+                        if fps > 0:
+                            pygame.display.set_caption(
+                                f"MindWar Arena | FPS: {fps}"
+                            )
+                def shutdown(self):
+                    Logger.info(
+                        "[GameManager] Shutting down..."
+                    )
+                    Logger.info(
+                        f"[GameManager] Runtime: "
+                        f"{self.time_manager.get_runtime():.2f}s"
+                    )
+                    self.renderer.shutdown()
+                    self.window.destroy()
+                    self.running = False
+            "|"
+        }
+        04(testing){
+            run main.py
+            output =
+            python main.py
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-06-13 22:54:59 [INFO] Logger Initialized
+            2026-06-13 22:54:59 [INFO] [GameManager] Initializing...
+            2026-06-13 22:54:59 [INFO] [Config] Loaded
+            2026-06-13 22:54:59 [INFO] [Window] Created 1280x720
+            2026-06-13 22:54:59 [INFO] [Renderer] OpenGL Version:
+            2026-06-13 22:54:59 [INFO] 3.3.0 - Build 32.0.101.7084
+            2026-06-13 22:54:59 [INFO] [Input] Initialized
+            2026-06-13 22:54:59 [INFO] [AssetManager] Initialized
+            2026-06-13 22:54:59 [INFO] [Scene] Enter: Boot Scene
+            2026-06-13 22:54:59 [INFO] [BootScene] Engine startup checks complete
+            2026-06-13 22:54:59 [INFO] [BootScene] Images Loaded: 0
+            2026-06-13 22:54:59 [INFO] [BootScene] Fonts Loaded: 0
+            2026-06-13 22:54:59 [INFO] [GameManager] Running...
+            2026-06-13 22:55:04 [INFO] [GameManager] Shutting down...
+            2026-06-13 22:55:04 [INFO] [GameManager] Runtime: 5.61s
+            2026-06-13 22:55:04 [INFO] [Renderer] Shutdown
+            2026-06-13 22:55:04 [INFO] [Window] Destroyed
+        }
+        [✓] AssetManager initialized
+        [✓] Asset cache system exists
+        [✓] Image cache exists
+        [✓] Font cache exists
+        [✓] BootScene connected
+        [✓] Asset statistics reported
+        [✓] Engine startup successful
+        [✓] Clean shutdown successful
     }
     10(base game and ai interfaces){
-
+        01(adding game_interface.py){
+            "|"
+            from abc import ABC
+            from abc import abstractmethod
+            class GameInterface(ABC):
+                @abstractmethod
+                def initialize(self):
+                    pass
+                @abstractmethod
+                def reset(self):
+                    pass
+                @abstractmethod
+                def update(self):
+                    pass
+                @abstractmethod
+                def render(self):
+                    pass
+                @abstractmethod
+                def get_state(self):
+                    pass
+                @abstractmethod
+                def is_game_over(self):
+                    pass
+                @abstractmethod
+                def get_winner(self):
+                    pass
+            "|"
+        }
+        02(adding ai_interface.py){
+            "|"
+            from abc import ABC
+            from abc import abstractmethod
+            class AIInterface(ABC):
+                @abstractmethod
+                def initialize(self):
+                    pass
+                @abstractmethod
+                def select_action(
+                    self,
+                    game_state
+                ):
+                    pass
+                @abstractmethod
+                def learn(
+                    self,
+                    state,
+                    action,
+                    reward,
+                    next_state
+                ):
+                    pass
+                @abstractmethod
+                def reset(self):
+                    pass
+            "|"
+        }
+        03(adding test_game.py){
+            "|"
+            from engine.interfaces.game_interface import (
+                GameInterface
+            )
+            from engine.utils.logger import Logger
+            class TestGame(GameInterface):
+                def initialize(self):
+                    Logger.info(
+                        "[TestGame] Initialized"
+                    )
+                def reset(self):
+                    Logger.info(
+                        "[TestGame] Reset"
+                    )
+                def update(self):
+                    pass
+                def render(self):
+                    pass
+                def get_state(self):
+                    return {}
+                def is_game_over(self):
+                    return False
+                def get_winner(self):
+                    return None
+            "|"
+        }
+        04(adding test_ai.py){
+            "|"
+            from engine.interfaces.ai_interface import (
+                AIInterface
+            )
+            from engine.utils.logger import Logger
+            class TestAI(AIInterface):
+                def initialize(self):
+                    Logger.info(
+                        "[TestAI] Initialized"
+                    )
+                def select_action(
+                    self,
+                    game_state
+                ):
+                    return None
+                def learn(
+                    self,
+                    state,
+                    action,
+                    reward,
+                    next_state
+                ):
+                    pass
+                def reset(self):
+                    Logger.info(
+                        "[TestAI] Reset"
+                    )
+            "|"
+        }
+        05(updating boot_scene.py){
+            "|"
+            from engine.core.scene import Scene
+            from engine.utils.logger import Logger
+            from engine.utils.asset_manager import AssetManager
+            from engine.games.test_game import TestGame
+            from engine.ai.test_ai import TestAI
+            class BootScene(Scene):
+                def __init__(self):
+                    super().__init__(
+                        "Boot Scene"
+                    )
+                def enter(self):
+                    super().enter()
+                    Logger.info(
+                        "[BootScene] Engine startup checks complete"
+                    )
+                    Logger.info(
+                        f"[BootScene] Images Loaded: "
+                        f"{AssetManager.get_loaded_image_count()}"
+                    )
+                    Logger.info(
+                        f"[BootScene] Fonts Loaded: "
+                        f"{AssetManager.get_loaded_font_count()}"
+                    )
+                    game = TestGame()
+                    ai = TestAI()
+                    game.initialize()
+                    ai.initialize()
+                    Logger.info(
+                        "[BootScene] Interface validation complete"
+                    )
+                def update(self):
+                    pass
+                def render(self):
+                    pass
+            "|"
+        }
+        06(testing){
+            run main.py
+            output = 
+            python main.py
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-06-14 12:57:51 [INFO] Logger Initialized
+            2026-06-14 12:57:51 [INFO] [GameManager] Initializing...
+            2026-06-14 12:57:51 [INFO] [Config] Loaded
+            2026-06-14 12:57:53 [INFO] [Window] Created 1280x720
+            2026-06-14 12:57:53 [INFO] [Renderer] OpenGL Version:
+            2026-06-14 12:57:53 [INFO] 3.3.0 - Build 32.0.101.7084
+            2026-06-14 12:57:53 [INFO] [Input] Initialized
+            2026-06-14 12:57:53 [INFO] [AssetManager] Initialized
+            2026-06-14 12:57:53 [INFO] [Scene] Enter: Boot Scene
+            2026-06-14 12:57:53 [INFO] [BootScene] Engine startup checks complete
+            2026-06-14 12:57:53 [INFO] [BootScene] Images Loaded: 0
+            2026-06-14 12:57:53 [INFO] [BootScene] Fonts Loaded: 0
+            2026-06-14 12:57:53 [INFO] [TestGame] Initialized
+            2026-06-14 12:57:53 [INFO] [TestAI] Initialized
+            2026-06-14 12:57:53 [INFO] [BootScene] Interface validation complete
+            2026-06-14 12:57:53 [INFO] [GameManager] Running...
+            2026-06-14 12:57:56 [INFO] [GameManager] Shutting down...
+            2026-06-14 12:57:56 [INFO] [GameManager] Runtime: 4.48s
+            2026-06-14 12:57:56 [INFO] [Renderer] Shutdown
+            2026-06-14 12:57:56 [INFO] [Window] Destroyed
+        }
+        [✓] interfaces package created
+        [✓] GameInterface implemented
+        [✓] AIInterface implemented
+        [✓] games package created
+        [✓] ai package created
+        [✓] TestGame created
+        [✓] TestAI created
+        [✓] BootScene validation works
+        [✓] Game interface initialization works
+        [✓] AI interface initialization works
     }
     11(exception and crash handling){
-
+        01(add crash_handler.py){
+            "|"
+            import traceback
+            from pathlib import Path
+            from datetime import datetime
+            class CrashHandler:
+                @staticmethod
+                def handle_exception(exception):
+                    crash_dir = Path("logs")
+                    crash_dir.mkdir(
+                        exist_ok=True
+                    )
+                    crash_file = crash_dir / "crash.log"
+                    timestamp = datetime.now().strftime(
+                        "%Y-%m-%d %H:%M:%S"
+                    )
+                    traceback_text = traceback.format_exc()
+                    print(
+                        f"[CRITICAL] Fatal Exception: {exception}"
+                    )
+                    with open(
+                        crash_file,
+                        "a",
+                        encoding="utf-8"
+                    ) as file:
+                        file.write(
+                            "\n"
+                            + "=" * 80
+                            + "\n"
+                        )
+                        file.write(
+                            f"Timestamp: {timestamp}\n\n"
+                        )
+                        file.write(
+                            f"Exception: {exception}\n\n"
+                        )
+                        file.write(
+                            traceback_text
+                        )
+                        file.write(
+                            "\n"
+                        )
+                    print(
+                        "[CRITICAL] Crash report written to logs/crash.log"
+                    )
+            "|"
+        }
+        02(update main.py){
+            "|"
+            from launcher import Launcher
+            from engine.utils.crash_handler import (
+                CrashHandler
+            )
+            def main():
+                launcher = Launcher()
+                try:
+                    launcher.start()
+                except Exception as exception:
+                    CrashHandler.handle_exception(
+                    exception
+                )
+            if __name__ == "__main__":
+                main()
+            "|"
+        }
+        03(update game_manager.py){
+            "|"
+            import pygame
+            from engine.core.window import Window
+            from engine.core.renderer import Renderer
+            from engine.core.time import TimeManager
+            from engine.core.input import Input
+            from engine.core.scene_manager import SceneManager
+            from engine.utils.config import Config
+            from engine.utils.logger import Logger
+            from engine.utils.asset_manager import AssetManager
+            from game.scenes.boot_scene import BootScene
+            class GameManager:
+                def __init__(self):
+                    self.running = False
+                    self.window = None
+                    self.renderer = Renderer()
+                    self.time_manager = TimeManager()
+                    self.scene_manager = SceneManager()
+                    self.fps_limit = 60
+                def initialize(self):
+                    Logger.initialize()
+                    Logger.info(
+                        "[GameManager] Initializing..."
+                    )
+                    Config.load()
+                    title = Config.get(
+                        "window",
+                        "title"
+                    )
+                    width = Config.get(
+                        "window",
+                        "width"
+                    )
+                    height = Config.get(
+                        "window",
+                        "height"
+                    )
+                    self.fps_limit = Config.get(
+                        "window",
+                        "fps_limit",
+                        60
+                    )
+                    self.window = Window(
+                        width=width,
+                        height=height,
+                        title=title
+                    )
+                    self.window.create()
+                    self.renderer.initialize()
+                    Input.initialize()
+                    AssetManager.initialize()
+                    self.scene_manager.change_scene(
+                        BootScene()
+                    )
+                    self.running = True
+                def process_events(self):
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            self.running = False
+                def update(self):
+                    self.time_manager.update()
+                    Input.update()
+                    self.scene_manager.update()
+                def render(self):
+                    self.renderer.clear()
+                    self.scene_manager.render()
+                    self.window.update()
+                def run(self):
+                    Logger.info(
+                        "[GameManager] Running..."
+                    )
+                    while self.running:
+                        self.process_events()
+                        self.update()
+                        self.render()
+                        self.window.tick(
+                            self.fps_limit
+                        )
+                        fps = self.time_manager.get_fps()
+                        if fps > 0:
+                            pygame.display.set_caption(
+                                f"MindWar Arena | FPS: {fps}"
+                            )
+                def shutdown(self):
+                    Logger.info(
+                        "[GameManager] Shutting down..."
+                    )
+                    Logger.info(
+                        f"[GameManager] Runtime: "
+                        f"{self.time_manager.get_runtime():.2f}s"
+                    )
+                    try:
+                        self.renderer.shutdown()
+                    except Exception as exception:
+                        Logger.error(
+                            f"[GameManager] Renderer shutdown error: {exception}"
+                        )
+                    try:
+                        self.window.destroy()
+                    except Exception as exception:
+                        Logger.error(
+                            f"[GameManager] Window shutdown error: {exception}"
+                        )
+                    self.running = False
+            "|"
+        }
+        04(testing){
+            run main.py
+            output = before crash code
+            python main.py
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-06-14 13:56:01 [INFO] Logger Initialized
+            2026-06-14 13:56:01 [INFO] [GameManager] Initializing...
+            2026-06-14 13:56:01 [INFO] [Config] Loaded
+            2026-06-14 13:56:02 [INFO] [Window] Created 1280x720
+            2026-06-14 13:56:02 [INFO] [Renderer] OpenGL Version:
+            2026-06-14 13:56:02 [INFO] 3.3.0 - Build 32.0.101.7084
+            2026-06-14 13:56:02 [INFO] [Input] Initialized
+            2026-06-14 13:56:02 [INFO] [AssetManager] Initialized
+            2026-06-14 13:56:02 [INFO] [Scene] Enter: Boot Scene
+            2026-06-14 13:56:02 [INFO] [BootScene] Engine startup checks complete
+            2026-06-14 13:56:02 [INFO] [BootScene] Images Loaded: 0
+            2026-06-14 13:56:02 [INFO] [BootScene] Fonts Loaded: 0
+            2026-06-14 13:56:02 [INFO] [TestGame] Initialized
+            2026-06-14 13:56:02 [INFO] [TestAI] Initialized
+            2026-06-14 13:56:02 [INFO] [BootScene] Interface validation complete
+            2026-06-14 13:56:02 [INFO] [GameManager] Running...
+            2026-06-14 13:56:05 [INFO] [GameManager] Shutting down...
+            2026-06-14 13:56:05 [INFO] [GameManager] Runtime: 4.45s
+            2026-06-14 13:56:05 [INFO] [Renderer] Shutdown
+            2026-06-14 13:56:05 [INFO] [Window] Destroyed
+            
+            output = after crash code in boot_scene.py
+            python main.py
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-06-14 13:57:02 [INFO] Logger Initialized
+            2026-06-14 13:57:02 [INFO] [GameManager] Initializing...
+            2026-06-14 13:57:02 [INFO] [Config] Loaded
+            2026-06-14 13:57:04 [INFO] [Window] Created 1280x720
+            2026-06-14 13:57:04 [INFO] [Renderer] OpenGL Version:
+            2026-06-14 13:57:04 [INFO] 3.3.0 - Build 32.0.101.7084
+            2026-06-14 13:57:04 [INFO] [Input] Initialized
+            2026-06-14 13:57:04 [INFO] [AssetManager] Initialized
+            2026-06-14 13:57:04 [INFO] [Scene] Enter: Boot Scene
+            [CRITICAL] Fatal Exception: Crash Handler Test
+            [CRITICAL] Crash report written to logs/crash.log
+        }
+        [✓] Global exception handler works
+        [✓] Exception was intercepted
+        [✓] Program did not show raw Python traceback
+        [✓] crash.log was generated
+        [✓] Exception details were written
+        [✓] Fatal crash message displayed
     }
     12(testing the entire foundation){
-
+        01(update boot_scene.py){
+            "|"
+            from engine.core.scene import Scene
+            from engine.utils.logger import Logger
+            from engine.utils.asset_manager import AssetManager
+            from engine.games.test_game import TestGame
+            from engine.ai.test_ai import TestAI
+            from engine.utils.config import Config
+            class BootScene(Scene):
+                def __init__(self):
+                    super().__init__(
+                        "Boot Scene"
+                    )
+                def enter(self):
+                    super().enter()
+                    Logger.info(
+                        "[BootScene] Starting Integration Tests"
+                    )
+                    self.test_config()
+                    self.test_assets()
+                    self.test_interfaces()
+                    self.test_complete()
+                def test_config(self):
+                    title = Config.get(
+                        "window",
+                        "title"
+                    )
+                    width = Config.get(
+                        "window",
+                        "width"
+                    )
+                    height = Config.get(
+                        "window",
+                        "height"
+                    )
+                    Logger.info(
+                        f"[TEST PASS] Config Title = {title}"
+                    )
+                    Logger.info(
+                        f"[TEST PASS] Resolution = {width}x{height}"
+                    )
+                def test_assets(self):
+                    Logger.info(
+                        f"[TEST PASS] Images Loaded = "
+                        f"{AssetManager.get_loaded_image_count()}"
+                    )
+                    Logger.info(
+                        f"[TEST PASS] Fonts Loaded = "
+                        f"{AssetManager.get_loaded_font_count()}"
+                    )
+                def test_interfaces(self):
+                    game = TestGame()
+                    ai = TestAI()
+                    game.initialize()
+                    ai.initialize()
+                    state = game.get_state()
+                    ai.select_action(
+                        state
+                    )
+                    Logger.info(
+                        "[TEST PASS] Game Interface"
+                    )
+                    Logger.info(
+                        "[TEST PASS] AI Interface"
+                    )
+                def test_complete(self):
+                    Logger.info(
+                        "=" * 50
+                    )
+                    Logger.info(
+                        "[BOOT VALIDATION COMPLETE]"
+                    )
+                    Logger.info(
+                        "[PHASE 1 FOUNDATION VERIFIED]"
+                    )
+                    Logger.info(
+                        "=" * 50
+                    )
+                def update(self):
+                    pass
+                def render(self):
+                    pass
+            "|"
+        }
+        02(testing){
+            run main.py
+            output =
+            python main.py       
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-06-14 18:21:08 [INFO] Logger Initialized
+            2026-06-14 18:21:08 [INFO] [GameManager] Initializing...
+            2026-06-14 18:21:08 [INFO] [Config] Loaded
+            2026-06-14 18:21:08 [INFO] [Window] Created 1280x720
+            2026-06-14 18:21:08 [INFO] [Renderer] OpenGL Version:
+            2026-06-14 18:21:08 [INFO] 3.3.0 - Build 32.0.101.7084
+            2026-06-14 18:21:08 [INFO] [Input] Initialized
+            2026-06-14 18:21:08 [INFO] [AssetManager] Initialized
+            2026-06-14 18:21:08 [INFO] [Scene] Enter: Boot Scene
+            2026-06-14 18:21:08 [INFO] [BootScene] Starting Integration Tests
+            2026-06-14 18:21:08 [INFO] [TEST PASS] Config Title = MindWar Arena
+            2026-06-14 18:21:08 [INFO] [TEST PASS] Resolution = 1280x720
+            2026-06-14 18:21:08 [INFO] [TEST PASS] Images Loaded = 0
+            2026-06-14 18:21:08 [INFO] [TEST PASS] Fonts Loaded = 0
+            2026-06-14 18:21:08 [INFO] [TestGame] Initialized
+            2026-06-14 18:21:08 [INFO] [TestAI] Initialized
+            2026-06-14 18:21:08 [INFO] [TEST PASS] Game Interface
+            2026-06-14 18:21:08 [INFO] [TEST PASS] AI Interface
+            2026-06-14 18:21:08 [INFO] ==================================================
+            2026-06-14 18:21:08 [INFO] [BOOT VALIDATION COMPLETE]
+            2026-06-14 18:21:08 [INFO] [PHASE 1 FOUNDATION VERIFIED]
+            2026-06-14 18:21:08 [INFO] ==================================================
+            2026-06-14 18:21:08 [INFO] [GameManager] Running...
+            2026-06-14 18:21:16 [INFO] [GameManager] Shutting down...
+            2026-06-14 18:21:16 [INFO] [GameManager] Runtime: 7.48s
+            2026-06-14 18:21:16 [INFO] [Renderer] Shutdown
+            2026-06-14 18:21:16 [INFO] [Window] Destroyed
+        }
+        [✓] everything working fine
     }
 }
 02(tic-tac-toe){
