@@ -1,205 +1,34 @@
 
 ============================================================
-2026-06-13 17:06:34 [INFO] Logger Initialized
-2026-06-13 17:06:34 [INFO] [GameManager] Initializing...
-2026-06-13 17:06:34 [INFO] [Config] Loaded
-2026-06-13 17:06:35 [INFO] [Window] Created 1280x720
-2026-06-13 17:06:35 [INFO] [Renderer] OpenGL Version:
-2026-06-13 17:06:35 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-13 17:06:35 [INFO] [Input] Initialized
-2026-06-13 17:06:35 [INFO] [Scene] Enter: Boot Scene
-2026-06-13 17:06:35 [INFO] [BootScene] Engine startup checks complete
-2026-06-13 17:06:35 [INFO] [GameManager] Running...
-2026-06-13 17:06:44 [INFO] [GameManager] Shutting down...
-2026-06-13 17:06:44 [INFO] [GameManager] Runtime: 9.25s
-2026-06-13 17:06:44 [INFO] [Renderer] Shutdown
-2026-06-13 17:06:44 [INFO] [Window] Destroyed
+2026-06-14 23:24:45 [INFO] Logger Initialized
+2026-06-14 23:24:45 [INFO] [GameManager] Initializing...
+2026-06-14 23:24:45 [INFO] [Config] Loaded
+2026-06-14 23:24:47 [INFO] [Window] Created 1280x720
+2026-06-14 23:24:47 [INFO] [Renderer] OpenGL Version:
+2026-06-14 23:24:47 [INFO] 3.3.0 - Build 32.0.101.7084
+2026-06-14 23:24:47 [INFO] [Input] Initialized
+2026-06-14 23:24:47 [INFO] [AssetManager] Initialized
+2026-06-14 23:24:47 [INFO] [Scene] Enter: Boot Scene
+2026-06-14 23:24:47 [INFO] [BootScene] Starting Integration Tests
+2026-06-14 23:24:47 [INFO] [GameManager] Running...
+2026-06-14 23:24:53 [INFO] [GameManager] Shutting down...
+2026-06-14 23:24:53 [INFO] [GameManager] Runtime: 7.13s
+2026-06-14 23:24:53 [INFO] [Renderer] Shutdown
+2026-06-14 23:24:53 [INFO] [Window] Destroyed
 
 ============================================================
-2026-06-13 22:45:56 [INFO] Logger Initialized
-2026-06-13 22:45:56 [INFO] [GameManager] Initializing...
-2026-06-13 22:45:56 [INFO] [Config] Loaded
-2026-06-13 22:45:56 [INFO] [Window] Created 1280x720
-2026-06-13 22:45:56 [INFO] [Renderer] OpenGL Version:
-2026-06-13 22:45:56 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-13 22:45:56 [INFO] [Input] Initialized
-2026-06-13 22:45:56 [INFO] [Scene] Enter: Boot Scene
-2026-06-13 22:45:56 [INFO] [BootScene] Engine startup checks complete
-2026-06-13 22:45:56 [INFO] [GameManager] Running...
-2026-06-13 22:46:00 [INFO] [GameManager] Shutting down...
-2026-06-13 22:46:00 [INFO] [GameManager] Runtime: 4.41s
-2026-06-13 22:46:00 [INFO] [Renderer] Shutdown
-2026-06-13 22:46:00 [INFO] [Window] Destroyed
-
-============================================================
-2026-06-13 22:54:59 [INFO] Logger Initialized
-2026-06-13 22:54:59 [INFO] [GameManager] Initializing...
-2026-06-13 22:54:59 [INFO] [Config] Loaded
-2026-06-13 22:54:59 [INFO] [Window] Created 1280x720
-2026-06-13 22:54:59 [INFO] [Renderer] OpenGL Version:
-2026-06-13 22:54:59 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-13 22:54:59 [INFO] [Input] Initialized
-2026-06-13 22:54:59 [INFO] [AssetManager] Initialized
-2026-06-13 22:54:59 [INFO] [Scene] Enter: Boot Scene
-2026-06-13 22:54:59 [INFO] [BootScene] Engine startup checks complete
-2026-06-13 22:54:59 [INFO] [BootScene] Images Loaded: 0
-2026-06-13 22:54:59 [INFO] [BootScene] Fonts Loaded: 0
-2026-06-13 22:54:59 [INFO] [GameManager] Running...
-2026-06-13 22:55:04 [INFO] [GameManager] Shutting down...
-2026-06-13 22:55:04 [INFO] [GameManager] Runtime: 5.61s
-2026-06-13 22:55:04 [INFO] [Renderer] Shutdown
-2026-06-13 22:55:04 [INFO] [Window] Destroyed
-
-============================================================
-2026-06-14 11:26:09 [INFO] Logger Initialized
-2026-06-14 11:26:09 [INFO] [GameManager] Initializing...
-2026-06-14 11:26:09 [INFO] [Config] Loaded
-2026-06-14 11:26:10 [INFO] [Window] Created 1280x720
-2026-06-14 11:26:10 [INFO] [Renderer] OpenGL Version:
-2026-06-14 11:26:10 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-14 11:26:10 [INFO] [Input] Initialized
-2026-06-14 11:26:10 [INFO] [AssetManager] Initialized
-2026-06-14 11:26:10 [INFO] [Scene] Enter: Boot Scene
-2026-06-14 11:26:10 [INFO] [BootScene] Engine startup checks complete
-2026-06-14 11:26:10 [INFO] [BootScene] Images Loaded: 0
-2026-06-14 11:26:10 [INFO] [BootScene] Fonts Loaded: 0
-2026-06-14 11:26:10 [INFO] [GameManager] Running...
-2026-06-14 11:26:14 [INFO] [GameManager] Shutting down...
-2026-06-14 11:26:14 [INFO] [GameManager] Runtime: 4.70s
-2026-06-14 11:26:14 [INFO] [Renderer] Shutdown
-2026-06-14 11:26:14 [INFO] [Window] Destroyed
-
-============================================================
-2026-06-14 12:57:51 [INFO] Logger Initialized
-2026-06-14 12:57:51 [INFO] [GameManager] Initializing...
-2026-06-14 12:57:51 [INFO] [Config] Loaded
-2026-06-14 12:57:53 [INFO] [Window] Created 1280x720
-2026-06-14 12:57:53 [INFO] [Renderer] OpenGL Version:
-2026-06-14 12:57:53 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-14 12:57:53 [INFO] [Input] Initialized
-2026-06-14 12:57:53 [INFO] [AssetManager] Initialized
-2026-06-14 12:57:53 [INFO] [Scene] Enter: Boot Scene
-2026-06-14 12:57:53 [INFO] [BootScene] Engine startup checks complete
-2026-06-14 12:57:53 [INFO] [BootScene] Images Loaded: 0
-2026-06-14 12:57:53 [INFO] [BootScene] Fonts Loaded: 0
-2026-06-14 12:57:53 [INFO] [TestGame] Initialized
-2026-06-14 12:57:53 [INFO] [TestAI] Initialized
-2026-06-14 12:57:53 [INFO] [BootScene] Interface validation complete
-2026-06-14 12:57:53 [INFO] [GameManager] Running...
-2026-06-14 12:57:56 [INFO] [GameManager] Shutting down...
-2026-06-14 12:57:56 [INFO] [GameManager] Runtime: 4.48s
-2026-06-14 12:57:56 [INFO] [Renderer] Shutdown
-2026-06-14 12:57:56 [INFO] [Window] Destroyed
-
-============================================================
-2026-06-14 13:56:01 [INFO] Logger Initialized
-2026-06-14 13:56:01 [INFO] [GameManager] Initializing...
-2026-06-14 13:56:01 [INFO] [Config] Loaded
-2026-06-14 13:56:02 [INFO] [Window] Created 1280x720
-2026-06-14 13:56:02 [INFO] [Renderer] OpenGL Version:
-2026-06-14 13:56:02 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-14 13:56:02 [INFO] [Input] Initialized
-2026-06-14 13:56:02 [INFO] [AssetManager] Initialized
-2026-06-14 13:56:02 [INFO] [Scene] Enter: Boot Scene
-2026-06-14 13:56:02 [INFO] [BootScene] Engine startup checks complete
-2026-06-14 13:56:02 [INFO] [BootScene] Images Loaded: 0
-2026-06-14 13:56:02 [INFO] [BootScene] Fonts Loaded: 0
-2026-06-14 13:56:02 [INFO] [TestGame] Initialized
-2026-06-14 13:56:02 [INFO] [TestAI] Initialized
-2026-06-14 13:56:02 [INFO] [BootScene] Interface validation complete
-2026-06-14 13:56:02 [INFO] [GameManager] Running...
-2026-06-14 13:56:05 [INFO] [GameManager] Shutting down...
-2026-06-14 13:56:05 [INFO] [GameManager] Runtime: 4.45s
-2026-06-14 13:56:05 [INFO] [Renderer] Shutdown
-2026-06-14 13:56:05 [INFO] [Window] Destroyed
-
-============================================================
-2026-06-14 13:57:02 [INFO] Logger Initialized
-2026-06-14 13:57:02 [INFO] [GameManager] Initializing...
-2026-06-14 13:57:02 [INFO] [Config] Loaded
-2026-06-14 13:57:04 [INFO] [Window] Created 1280x720
-2026-06-14 13:57:04 [INFO] [Renderer] OpenGL Version:
-2026-06-14 13:57:04 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-14 13:57:04 [INFO] [Input] Initialized
-2026-06-14 13:57:04 [INFO] [AssetManager] Initialized
-2026-06-14 13:57:04 [INFO] [Scene] Enter: Boot Scene
-
-============================================================
-2026-06-14 14:28:49 [INFO] Logger Initialized
-2026-06-14 14:28:49 [INFO] [GameManager] Initializing...
-2026-06-14 14:28:49 [INFO] [Config] Loaded
-2026-06-14 14:28:50 [INFO] [Window] Created 1280x720
-2026-06-14 14:28:50 [INFO] [Renderer] OpenGL Version:
-2026-06-14 14:28:50 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-14 14:28:50 [INFO] [Input] Initialized
-2026-06-14 14:28:50 [INFO] [AssetManager] Initialized
-2026-06-14 14:28:50 [INFO] [Scene] Enter: Boot Scene
-2026-06-14 14:28:50 [INFO] [BootScene] Engine startup checks complete
-2026-06-14 14:28:50 [INFO] [BootScene] Images Loaded: 0
-2026-06-14 14:28:50 [INFO] [BootScene] Fonts Loaded: 0
-2026-06-14 14:28:50 [INFO] [TestGame] Initialized
-2026-06-14 14:28:50 [INFO] [TestAI] Initialized
-2026-06-14 14:28:50 [INFO] [BootScene] Interface validation complete
-2026-06-14 14:28:50 [INFO] [GameManager] Running...
-2026-06-14 14:28:55 [INFO] [GameManager] Shutting down...
-2026-06-14 14:28:55 [INFO] [GameManager] Runtime: 6.73s
-2026-06-14 14:28:55 [INFO] [Renderer] Shutdown
-2026-06-14 14:28:56 [INFO] [Window] Destroyed
-
-============================================================
-2026-06-14 18:21:08 [INFO] Logger Initialized
-2026-06-14 18:21:08 [INFO] [GameManager] Initializing...
-2026-06-14 18:21:08 [INFO] [Config] Loaded
-2026-06-14 18:21:08 [INFO] [Window] Created 1280x720
-2026-06-14 18:21:08 [INFO] [Renderer] OpenGL Version:
-2026-06-14 18:21:08 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-14 18:21:08 [INFO] [Input] Initialized
-2026-06-14 18:21:08 [INFO] [AssetManager] Initialized
-2026-06-14 18:21:08 [INFO] [Scene] Enter: Boot Scene
-2026-06-14 18:21:08 [INFO] [BootScene] Starting Integration Tests
-2026-06-14 18:21:08 [INFO] [TEST PASS] Config Title = MindWar Arena
-2026-06-14 18:21:08 [INFO] [TEST PASS] Resolution = 1280x720
-2026-06-14 18:21:08 [INFO] [TEST PASS] Images Loaded = 0
-2026-06-14 18:21:08 [INFO] [TEST PASS] Fonts Loaded = 0
-2026-06-14 18:21:08 [INFO] [TestGame] Initialized
-2026-06-14 18:21:08 [INFO] [TestAI] Initialized
-2026-06-14 18:21:08 [INFO] [TEST PASS] Game Interface
-2026-06-14 18:21:08 [INFO] [TEST PASS] AI Interface
-2026-06-14 18:21:08 [INFO] ==================================================
-2026-06-14 18:21:08 [INFO] [BOOT VALIDATION COMPLETE]
-2026-06-14 18:21:08 [INFO] [PHASE 1 FOUNDATION VERIFIED]
-2026-06-14 18:21:08 [INFO] ==================================================
-2026-06-14 18:21:08 [INFO] [GameManager] Running...
-2026-06-14 18:21:16 [INFO] [GameManager] Shutting down...
-2026-06-14 18:21:16 [INFO] [GameManager] Runtime: 7.48s
-2026-06-14 18:21:16 [INFO] [Renderer] Shutdown
-2026-06-14 18:21:16 [INFO] [Window] Destroyed
-
-============================================================
-2026-06-14 21:57:36 [INFO] Logger Initialized
-2026-06-14 21:57:36 [INFO] [GameManager] Initializing...
-2026-06-14 21:57:36 [INFO] [Config] Loaded
-2026-06-14 21:57:38 [INFO] [Window] Created 1280x720
-2026-06-14 21:57:38 [INFO] [Renderer] OpenGL Version:
-2026-06-14 21:57:38 [INFO] 3.3.0 - Build 32.0.101.7084
-2026-06-14 21:57:38 [INFO] [Input] Initialized
-2026-06-14 21:57:38 [INFO] [AssetManager] Initialized
-2026-06-14 21:57:38 [INFO] [Scene] Enter: Boot Scene
-2026-06-14 21:57:38 [INFO] [BootScene] Starting Integration Tests
-2026-06-14 21:57:38 [INFO] [TEST PASS] Config Title = MindWar Arena
-2026-06-14 21:57:38 [INFO] [TEST PASS] Resolution = 1280x720
-2026-06-14 21:57:38 [INFO] [TEST PASS] Images Loaded = 0
-2026-06-14 21:57:38 [INFO] [TEST PASS] Fonts Loaded = 0
-2026-06-14 21:57:38 [INFO] [TestGame] Initialized
-2026-06-14 21:57:38 [INFO] [TestAI] Initialized
-2026-06-14 21:57:38 [INFO] [TEST PASS] Game Interface
-2026-06-14 21:57:38 [INFO] [TEST PASS] AI Interface
-2026-06-14 21:57:38 [INFO] ==================================================
-2026-06-14 21:57:38 [INFO] [BOOT VALIDATION COMPLETE]
-2026-06-14 21:57:38 [INFO] [PHASE 1 FOUNDATION VERIFIED]
-2026-06-14 21:57:38 [INFO] ==================================================
-2026-06-14 21:57:38 [INFO] [GameManager] Running...
-2026-06-14 21:57:45 [INFO] [GameManager] Shutting down...
-2026-06-14 21:57:45 [INFO] [GameManager] Runtime: 8.52s
-2026-06-14 21:57:45 [INFO] [Renderer] Shutdown
-2026-06-14 21:57:45 [INFO] [Window] Destroyed
+2026-06-14 23:28:13 [INFO] Logger Initialized
+2026-06-14 23:28:13 [INFO] [GameManager] Initializing...
+2026-06-14 23:28:13 [INFO] [Config] Loaded
+2026-06-14 23:28:14 [INFO] [Window] Created 1280x720
+2026-06-14 23:28:14 [INFO] [Renderer] OpenGL Version:
+2026-06-14 23:28:14 [INFO] 3.3.0 - Build 32.0.101.7084
+2026-06-14 23:28:14 [INFO] [Input] Initialized
+2026-06-14 23:28:14 [INFO] [AssetManager] Initialized
+2026-06-14 23:28:14 [INFO] [Scene] Enter: Boot Scene
+2026-06-14 23:28:14 [INFO] [BootScene] Starting Integration Tests
+2026-06-14 23:28:14 [INFO] [GameManager] Running...
+2026-06-14 23:28:18 [INFO] [GameManager] Shutting down...
+2026-06-14 23:28:18 [INFO] [GameManager] Runtime: 5.26s
+2026-06-14 23:28:18 [INFO] [Renderer] Shutdown
+2026-06-14 23:28:18 [INFO] [Window] Destroyed

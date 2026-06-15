@@ -61,12 +61,13 @@ MINDWAR ARENA/
     |   |--ai_base.py
     |   |--game_base.py
     |   |--game_manager.py
+    |   |--version.py
     |   
     |--game/
     |   |--scenes
     |   |   |--__init__.py
     |   |   |--boot_scene.py
-    |   |   |--main_menu_screen.py
+    |   |   |--main_menu_scene.py
     |
     |--games/
     |   |--checkers/
