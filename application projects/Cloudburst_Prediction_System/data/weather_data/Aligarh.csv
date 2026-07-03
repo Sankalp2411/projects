@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Aligarh,Uttar Pradesh,27.8833,78.0833,36.7,11,1000,2.84,0,72,broken clouds,2026-05-26 22:59:17.005666
+Aligarh,Uttar Pradesh,27.8833,78.0833,33.74,34,998,3.87,0,63,broken clouds,2026-06-24 00:06:45.506748

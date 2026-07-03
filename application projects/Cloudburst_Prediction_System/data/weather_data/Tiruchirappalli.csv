@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Tiruchirappalli,Tamil Nadu,10.8167,78.6833,31.06,74,1010,3.09,0,40,mist,2026-05-26 23:00:42.917169
+Tiruchirappalli,Tamil Nadu,10.8167,78.6833,27.33,66,1008,6.09,0,100,overcast clouds,2026-06-24 00:07:26.302799

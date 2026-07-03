@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Imphal,Manipur,24.8167,93.95,20.07,89,1010,1.33,0,1,clear sky,2026-05-26 22:59:57.449809
+Imphal,Manipur,24.8167,93.95,21.04,97,1005,0.59,0,90,overcast clouds,2026-06-24 00:07:06.971390

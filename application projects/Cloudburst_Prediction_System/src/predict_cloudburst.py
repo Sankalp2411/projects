@@ -1,4 +1,3 @@
-# src/predict_cloudburst.py
 import sys
 from pathlib import Path
 import pandas as pd
@@ -22,9 +21,7 @@ if df.empty:
     exit()
 model_path = ROOT_DIR / MODEL_PATH
 if not model_path.exists():
-    raise FileNotFoundError(
-        f"Model not found. Train the model first: {model_path}"
-    )
+    raise FileNotFoundError(f"Model not found. Train the model first: {model_path}")
 with open(model_path, "rb") as f:
     model = pickle.load(f)
 missing_cols = [c for c in FEATURE_COLUMNS if c not in df.columns]

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Aurangabad,Maharashtra,19.8833,75.3333,34.05,40,1009,1.03,0,75,haze,2026-05-26 22:59:23.044612
+Aurangabad,Maharashtra,19.8833,75.3333,25.29,77,1006,3.51,0,100,overcast clouds,2026-06-24 00:06:49.914987

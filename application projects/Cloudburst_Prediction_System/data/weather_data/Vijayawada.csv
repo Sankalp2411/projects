@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Vijayawada,Andhra Pradesh,16.5167,80.6167,33.97,43,1006,2.57,0,40,scattered clouds,2026-05-26 23:00:49.370253
+Vijayawada,Andhra Pradesh,16.5167,80.6167,31.01,58,1005,3.51,0,100,overcast clouds,2026-06-24 00:07:29.152019

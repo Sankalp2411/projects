@@ -1,4 +1,3 @@
-# src/model_training.py
 import sys
 from pathlib import Path
 import pandas as pd
@@ -14,9 +13,7 @@ from config.project_config import (
 )
 data_path = ROOT_DIR / PROCESSED_DATA
 if not data_path.exists():
-    raise FileNotFoundError(
-        f"ML-ready dataset not found. Run feature_engineering.py first: {data_path}"
-    )
+    raise FileNotFoundError(f"ML-ready dataset not found. Run feature_engineering.py first: {data_path}")
 df = pd.read_csv(data_path)
 X = df[FEATURE_COLUMNS]
 y = df["cloudburst_label"]

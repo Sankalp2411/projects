@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Meerut,Uttar Pradesh,28.9833,77.7,34.9,9,1000,2.9,0,0,clear sky,2026-05-26 23:00:19.161008
+Meerut,Uttar Pradesh,28.9833,77.7,32.73,36,999,0.77,0,2,clear sky,2026-06-24 00:07:16.377693

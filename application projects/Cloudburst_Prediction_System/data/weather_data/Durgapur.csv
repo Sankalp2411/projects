@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Durgapur,West Bengal,23.4833,87.3167,28.69,70,1005,5.88,0,9,clear sky,2026-05-26 22:59:46.597264
+Durgapur,West Bengal,23.4833,87.3167,30.13,61,1000,2.96,0,97,overcast clouds,2026-06-24 00:07:01.494548

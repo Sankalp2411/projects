@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Thiruvananthapuram,Kerala,8.4833,76.9167,27.99,83,1013,1.54,0,75,mist,2026-05-26 23:00:41.937493
+Thiruvananthapuram,Kerala,8.4833,76.9167,25.65,87,1011,3.41,0,100,overcast clouds,2026-06-24 00:07:25.695311

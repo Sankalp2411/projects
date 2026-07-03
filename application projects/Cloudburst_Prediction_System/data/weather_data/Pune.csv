@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Pune,Maharashtra,18.5196,73.8553,29.11,47,1011,4.52,0,8,clear sky,2026-05-26 23:00:25.815505
+Pune,Maharashtra,18.5196,73.8553,23.08,85,1007,5.47,0,100,overcast clouds,2026-06-24 00:07:19.576843

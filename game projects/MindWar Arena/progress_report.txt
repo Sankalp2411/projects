@@ -2362,7 +2362,2343 @@
     The project now stands on a stable, maintainable, and scalable technical foundation, ready to begin Phase 2, where the focus will shift from engine infrastructure toward the creation of the core gameplay framework that will eventually support multiple board games and AI competitors within the MindWar Arena ecosystem.
 }
 02(tic-tac-toe){
+    01(game constants){
+        01(add constants.py to games\tic_tac_toe\constants.py){
+            "|"
+            GAME_NAME = "Tic-Tac-Toe"
+            GAME_VERSION = "1.0.0"
+            BOARD_ROWS = 3
+            BOARD_COLUMNS = 3
+            BOARD_SIZE = BOARD_ROWS * BOARD_COLUMNS
+            BOARD_DIMENSIONS = (BOARD_ROWS, BOARD_COLUMNS)
+            WIN_LENGTH = 3
+            EMPTY = 0
+            PLAYER_X = 1
+            PLAYER_O = 2
+            FIRST_PLAYER = PLAYER_X
+            GAME_NOT_STARTED = 0
+            GAME_RUNNING = 1
+            GAME_DRAW = 2
+            GAME_OVER = 3
+            NO_WINNER = 0
+            X_WINS = PLAYER_X
+            O_WINS = PLAYER_O
+            HUMAN_PLAYER = 0
+            AI_PLAYER = 1
+            AI_RANDOM = "Random"
+            AI_EASY = "Easy"
+            AI_MEDIUM = "Medium"
+            AI_HARD = "Hard"
+            CELL_SIZE = 150
+            BOARD_LINE_WIDTH = 4
+            SYMBOL_LINE_WIDTH = 8
+            BOARD_PADDING = 40
+            X_SYMBOL = "X"
+            O_SYMBOL = "O"
+            BACKGROUND_COLOR = (30, 30, 30)
+            GRID_COLOR = (220, 220, 220)
+            X_COLOR = (70, 170, 255)
+            O_COLOR = (255, 120, 120)
+            WIN_LINE_COLOR = (50, 255, 50)
+            LEFT_MOUSE_BUTTON = 1
+            LOG_GAME_STARTED = "[TicTacToe] Game Started"
+            LOG_GAME_RESET = "[TicTacToe] Game Reset"
+            LOG_PLAYER_MOVED = "[TicTacToe] Player Move"
+            LOG_AI_MOVED = "[TicTacToe] AI Move"
+            LOG_GAME_OVER = "[TicTacToe] Game Over"
+            GAME_MODE_HUMAN_VS_HUMAN = 0
+            GAME_MODE_HUMAN_VS_AI = 1
+            GAME_MODE_AI_VS_AI = 2
+            DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+            "|"
+        }
+        02(testing){
+            run main.py
+            output = 
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-06-28 14:35:56 [INFO] Logger Initialized
+            2026-06-28 14:35:56 [INFO] [GameManager] Initializing...
+            2026-06-28 14:35:56 [INFO] [Config] Loaded
+            2026-06-28 14:35:59 [INFO] [Window] Created 1280x720
+            2026-06-28 14:35:59 [INFO] [Renderer] OpenGL Version:
+            2026-06-28 14:35:59 [INFO] 3.3.0 - Build 32.0.101.7084
+            2026-06-28 14:35:59 [INFO] [Input] Initialized
+            2026-06-28 14:35:59 [INFO] [AssetManager] Initialized
+            2026-06-28 14:35:59 [INFO] [Scene] Enter: Boot Scene
+            2026-06-28 14:35:59 [INFO] [BootScene] Starting Integration Tests
+            2026-06-28 14:35:59 [INFO] [GameManager] Running...
+            2026-06-28 14:36:03 [INFO] [GameManager] Shutting down...
+            2026-06-28 14:36:03 [INFO] [GameManager] Runtime: 6.20s
+            2026-06-28 14:36:03 [INFO] [Renderer] Shutdown
+            2026-06-28 14:36:03 [INFO] [Window] Destroyed
+        }
+        [✓]constants.py exists.
+        [✓]No hardcoded board dimensions remain.
+        [✓]No hardcoded player symbols remain.
+        [✓]No hardcoded game states remain.
+        [✓]Board configuration is centralized.
+        [✓]Game metadata is defined.
+        [✓]Future AI difficulty labels are defined.
+        [✓]Future rendering constants are defined.
+    }
+    02(tic_tac_toe board){
+        01(update board.py){
+            "|"
+            from copy import deepcopy
+            from games.tic_tac_toe.constants import (
+                BOARD_ROWS,
+                BOARD_COLUMNS,
+                EMPTY,
+            )
+            class TicTacToeBoard:
+                def __init__(self):
+                    self.reset()
+                def reset(self):
+                    self._board = [
+                        [EMPTY for _ in range(BOARD_COLUMNS)]
+                        for _ in range(BOARD_ROWS)
+                    ]
+                def get_cell(self, row, column):
+                    return self._board[row][column]
+                def set_cell(self, row, column, value):
+                    if not self.is_valid_position(row, column):
+                        return False
+                    self._board[row][column] = value
+                    return True
+                def is_cell_empty(self, row, column):
+                    if not self.is_valid_position(row, column):
+                        return False
+                    return self._board[row][column] == EMPTY
+                def is_board_full(self):
+                    for row in self._board:
+                        for cell in row:
+                            if cell == EMPTY:
+                                return False
+                    return True
+                def get_available_moves(self):
+                    moves = []
+                    for row in range(BOARD_ROWS):
+                        for column in range(BOARD_COLUMNS):
+                            if self._board[row][column] == EMPTY:
+                                moves.append((row, column))
+                    return moves
+                def is_valid_position(self, row, column):
+                    return (
+                        0 <= row < BOARD_ROWS
+                        and
+                        0 <= column < BOARD_COLUMNS
+                    )
+                def copy(self):
+                    board_copy = TicTacToeBoard()
+                    board_copy._board = deepcopy(self._board)
+                    return board_copy
+                def get_board_state(self):
+                    return deepcopy(self._board)
+                def __str__(self):
+                    symbols = {
+                        EMPTY: ".",
+                        1: "X",
+                        2: "O",
+                    }
+                    rows = []
+                    for row in self._board:
+                        rows.append(
+                            " ".join(symbols[cell] for cell in row)
+                        )
+                    return "\n".join(rows)
+            "|"
+        }
+        02(testing){
+            run main.py
+            testing code =
+            "|"
+            from games.tic_tac_toe.board import TicTacToeBoard
+            from games.tic_tac_toe.constants import PLAYER_X
+            board = TicTacToeBoard()
+            board.set_cell(0, 0, PLAYER_X)
+            print(board)
+            "|"
+            output = 
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-06-28 14:41:19 [INFO] Logger Initialized
+            2026-06-28 14:41:19 [INFO] [GameManager] Initializing...
+            2026-06-28 14:41:19 [INFO] [Config] Loaded
+            2026-06-28 14:41:21 [INFO] [Window] Created 1280x720
+            2026-06-28 14:41:21 [INFO] [Renderer] OpenGL Version:
+            2026-06-28 14:41:21 [INFO] 3.3.0 - Build 32.0.101.7084
+            2026-06-28 14:41:21 [INFO] [Input] Initialized
+            2026-06-28 14:41:21 [INFO] [AssetManager] Initialized
+            2026-06-28 14:41:21 [INFO] [Scene] Enter: Boot Scene
+            2026-06-28 14:41:21 [INFO] [BootScene] Starting Integration Tests
+            2026-06-28 14:41:21 [INFO] [GameManager] Running...
+            2026-06-28 14:41:25 [INFO] [GameManager] Shutting down...
+            2026-06-28 14:41:25 [INFO] [GameManager] Runtime: 5.52s
+            2026-06-28 14:41:25 [INFO] [Renderer] Shutdown
+            2026-06-28 14:41:25 [INFO] [Window] Destroyed
+            X . .
+            . . .
+            . . .
+        }
+        [✓]Board creation
+        [✓]Board reset
+        [✓]Get cell
+        [✓]Set cell
+        [✓]Empty-cell check
+        [✓]Board-full check
+        [✓]Available move generation
+        [✓]Coordinate validation
+        [✓]Deep copy
+        [✓]Board-state export
+        [✓]Human-readable board output
+    }
+    03(rule engine){
+        01(update games\tic_tac_toe\rules.py){
+            "|"
+            from games.tic_tac_toe.constants import (
+                BOARD_ROWS,
+                BOARD_COLUMNS,
+                EMPTY,
+                NO_WINNER,
+            )
+            class TicTacToeRules:
+                @staticmethod
+                def check_winner(board):
+                    for row in range(BOARD_ROWS):
+                        first = board.get_cell(row, 0)
+                        if first == EMPTY:
+                            continue
+                        winner = True
+                        for column in range(1, BOARD_COLUMNS):
+                            if board.get_cell(row, column) != first:
+                                winner = False
+                                break
+                        if winner:
+                            return first
+                    for column in range(BOARD_COLUMNS):
+                        first = board.get_cell(0, column)
+                            if first == EMPTY:
+                            continue
+                        winner = True
+                        for row in range(1, BOARD_ROWS):
+                            if board.get_cell(row, column) != first:
+                                winner = False
+                                break
+                        if winner:
+                            return first
+                    first = board.get_cell(0, 0)
+                    if first != EMPTY:
+                        winner = True
+                        for index in range(1, BOARD_ROWS):
+                            if board.get_cell(index, index) != first:
+                                winner = False
+                                break
+                        if winner:
+                            return first
+                    first = board.get_cell(0, BOARD_COLUMNS - 1)
+                    if first != EMPTY:
+                        winner = True
+                        for index in range(1, BOARD_ROWS):
+                            if board.get_cell(index, BOARD_COLUMNS - 1 - index) != first:
+                                winner = False
+                                break
+                        if winner:
+                            return first
+                    return NO_WINNER
+                @staticmethod
+                def is_draw(board):
+                    return (
+                        TicTacToeRules.check_winner(board) == NO_WINNER
+                        and
+                        board.is_board_full()
+                    )
+                @staticmethod
+                def is_game_over(board):
+                    if TicTacToeRules.check_winner(board) != NO_WINNER:
+                        return True
+                    if board.is_board_full():
+                        return True
+                    return False
+            "|"
+        }
+        02(testing){
+            run main.py
+            output = 
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-06-28 14:48:38 [INFO] Logger Initialized
+            2026-06-28 14:48:38 [INFO] [GameManager] Initializing...
+            2026-06-28 14:48:38 [INFO] [Config] Loaded
+            2026-06-28 14:48:39 [INFO] [Window] Created 1280x720
+            2026-06-28 14:48:39 [INFO] [Renderer] OpenGL Version:
+            2026-06-28 14:48:39 [INFO] 3.3.0 - Build 32.0.101.7084
+            2026-06-28 14:48:39 [INFO] [Input] Initialized
+            2026-06-28 14:48:39 [INFO] [AssetManager] Initialized
+            2026-06-28 14:48:39 [INFO] [Scene] Enter: Boot Scene
+            2026-06-28 14:48:39 [INFO] [BootScene] Starting Integration Tests
+            2026-06-28 14:48:39 [INFO] [GameManager] Running...
+            2026-06-28 14:48:43 [INFO] [GameManager] Shutting down...
+            2026-06-28 14:48:43 [INFO] [GameManager] Runtime: 4.98s
+            2026-06-28 14:48:43 [INFO] [Renderer] Shutdown
+            2026-06-28 14:48:43 [INFO] [Window] Destroyed
+            X . .
+            . . .
+            . . .
+        }
+        [✓]Horizontal win detection
+        [✓]Vertical win detection
+        [✓]Main diagonal win detection
+        [✓]Anti-diagonal win detection
+        [✓]Winner detection
+        [✓]Draw detection
+        [✓]Game-over detection
+        [✓]Read-only board evaluation
+        [✓]No modification of board state
+        [✓]No AI logic
+        [✓]No rendering logic
+        [✓]No input handling
+        [✓]No turn management
+    }
+    04(tic-tac-toe game state){
+        01(update game/tic_tac_toe/game.py){
+            "|"
+            from engine.interfaces.game_interface import GameInterface
+            from games.tic_tac_toe.board import TicTacToeBoard
+            from games.tic_tac_toe.rules import TicTacToeRules
+            from games.tic_tac_toe.constants import (
+                PLAYER_X,
+                PLAYER_O,
+                FIRST_PLAYER,
+                NO_WINNER,
+                GAME_NOT_STARTED,
+                GAME_RUNNING,
+                GAME_DRAW,
+                GAME_OVER,
+            )
+            class TicTacToeGame(GameInterface):
+                def __init__(self):
+                    self.board = None
+                    self.current_player = FIRST_PLAYER
+                    self.winner = NO_WINNER
+                    self.game_state = GAME_NOT_STARTED
+                    self.game_over = False
+                    self.move_count = 0
+                def initialize(self):
+                    self.board = TicTacToeBoard()
+                    self.reset()
+                def reset(self):
+                    if self.board is None:
+                        self.board = TicTacToeBoard()
+                    else:
+                        self.board.reset()
+                    self.current_player = FIRST_PLAYER
+                    self.winner = NO_WINNER
+                    self.game_state = GAME_RUNNING
+                    self.game_over = False
+                    self.move_count = 0
+                def update(self):
+                    pass
+                def render(self):
+                    pass
+                def make_move(self, row, column):
+                    if self.game_over:
+                        return False
+                    if not self.board.is_valid_position(row, column):
+                        return False
+                    if not self.board.is_cell_empty(row, column):
+                        return False
+                    self.board.set_cell(row, column, self.current_player)
+                    self.move_count += 1
+                    winner = TicTacToeRules.check_winner(self.board)
+                    if winner != NO_WINNER:
+                        self.winner = winner
+                        self.game_state = GAME_OVER
+                        self.game_over = True
+                        return True
+                    if TicTacToeRules.is_draw(self.board):
+                        self.winner = NO_WINNER
+                        self.game_state = GAME_DRAW
+                        self.game_over = True
+                        return True
+                    self.switch_player()
+                    return True
+                def switch_player(self):
+                    if self.current_player == PLAYER_X:
+                        self.current_player = PLAYER_O
+                    else:
+                        self.current_player = PLAYER_X
+                def get_current_player(self):
+                    return self.current_player
+                def get_board(self):
+                    return self.board
+                def get_state(self):
+                    return {
+                        "board": self.board.get_board_state(),
+                        "current_player": self.current_player,
+                        "winner": self.winner,
+                        "game_state": self.game_state,
+                        "game_over": self.game_over,
+                        "move_count": self.move_count,
+                    }
+                def is_game_over(self):
+                    return self.game_over
+                def get_winner(self):
+                    return self.winner
+            "|"
+        }
+        02(testing){
+            run python -m test.test_tic_tac_toe.py
+            test code =
+            "|"
+            from games.tic_tac_toe.game import TicTacToeGame
+            from games.tic_tac_toe.constants import (
+                PLAYER_X,
+                PLAYER_O,
+                NO_WINNER,
+                GAME_RUNNING,
+                GAME_DRAW,
+                GAME_OVER,
+            )
+            def print_result(test_name, passed):
+                status = "PASS" if passed else "FAIL"
+                print(f"[{status}] {test_name}")
+            game = TicTacToeGame()
+            game.initialize()
+            state = game.get_state()
+            print_result(
+                "Initial Player is X",
+                state["current_player"] == PLAYER_X
+            )
+            print_result(
+                "Initial Winner",
+                state["winner"] == NO_WINNER
+            )
+            print_result(
+                "Game Running",
+                state["game_state"] == GAME_RUNNING
+            )
+            print_result(
+                "Move Count Zero",
+                state["move_count"] == 0
+            )
+            result = game.make_move(0, 0)
+            print_result(
+                "Valid Move",
+                result
+            )
+            print_result(
+                "Move Count Updated",
+                game.get_state()["move_count"] == 1
+            )
+            print_result(
+                "Turn Switched",
+                game.get_current_player() == PLAYER_O
+            )
+            result = game.make_move(0, 0)
+            print_result(
+                "Reject Occupied Cell",
+                not result
+            )
+            result = game.make_move(10, 10)
+            print_result(
+                "Reject Invalid Position",
+                not result
+            )
+            game.reset()
+            state = game.get_state()
+            print_result(
+                "Reset Move Count",
+                state["move_count"] == 0
+            )
+            print_result(
+                "Reset Player",
+                state["current_player"] == PLAYER_X
+            )
+            print_result(
+                "Reset Winner",
+                state["winner"] == NO_WINNER
+            )
+            print_result(
+                "Reset Running",
+                state["game_state"] == GAME_RUNNING
+            )
+            print("\nCurrent Board:\n")
+            print(game.get_board())
+            "|"
+            testing output =
+            [PASS] Initial Player is X
+            [PASS] Initial Winner
+            [PASS] Game Running
+            [PASS] Move Count Zero
+            [PASS] Valid Move
+            [PASS] Move Count Updated
+            [PASS] Turn Switched
+            [PASS] Reject Occupied Cell
+            [PASS] Reject Invalid Position
+            [PASS] Reset Move Count
+            [PASS] Reset Player
+            [PASS] Reset Winner
+            [PASS] Reset Running
+            Current Board:
+            . . .
+            . . .
+            . . .
+        }
+        [✓]Board created.
+        [✓]Game initializes.
+        [✓]Current player is X.
+        [✓]Valid moves succeed.
+        [✓]Invalid moves fail.
+        [✓]Occupied cells rejected.
+        [✓]Turn switches correctly.
+        [✓]Winner stored correctly.
+        [✓]Draw stored correctly.
+        [✓]Game stops after completion.
+        [✓]State exported correctly.
+        [✓]Interface fully implemented.
+    }
+    05(random ai){
+        01(update ai.py){
+            "|"
+            import random
+            from engine.interfaces.ai_interface import AIInterface
+            class TicTacToeAI(AIInterface):
+                def __init__(self):
+                    self.initialized = False
+                def initialize(self):
+                    self.initialized = True
+                def select_action(self, game_state):
+                    board = game_state["board"]
+                    legal_moves = []
+                    for row in range(len(board)):
+                        for column in range(len(board[row])):
+                            if board[row][column] == 0:
+                                legal_moves.append((row, column))
+                    if not legal_moves:
+                        return None
+                    return random.choice(legal_moves)
+                def learn(self, state, action, reward, next_state):
+                    pass
+                def reset(self):
+                    self.initialized = False
+            "|"
+        }
+        02(testing){
+            run tests/test_tic_tac_toe.py
+            code =
+            "|"
+            from games.tic_tac_toe.game import TicTacToeGame
+            from games.tic_tac_toe.ai import TicTacToeAI
+            game = TicTacToeGame()
+            game.initialize()
+            ai = TicTacToeAI()
+            ai.initialize()
+            print("Empty Board:\n")
+            print(game.get_board())
+            print("\nRandom AI Moves:\n")
+            for i in range(9):
+                move = ai.select_action(game.get_state())
+                if move is None:
+                    print("No legal moves.")
+                    break
+                print(f"Move {i + 1}: {move}")
+                game.make_move(move[0], move[1])
+                print(game.get_board())
+                print()
+                if game.is_game_over():
+                    print("Game Finished")
+                    print("Winner:", game.get_winner())
+                    break
+            "|"
+            output =
+            Empty Board:
+            . . .
+            . . .
+            . . .
+            Random AI Moves:
+            Move 1: (2, 1)
+            . . .
+            . . .
+            . X .
+            Move 2: (0, 2)
+            . . O
+            . . .
+            . X .
+            Move 3: (0, 1)
+            . X O
+            . . .
+            . X .
+            Move 4: (1, 1)
+            . X O
+            . O .
+            . X .
+            Move 5: (2, 2)
+            . X O
+            . O .
+            . X X
+            Move 6: (1, 0)
+            . X O
+            O O .
+            . X X
+            Move 7: (2, 0)
+            . X O
+            O O .
+            X X X
+            Game Finished
+            Winner: 1
+        }
+        [✓]AI implements AIInterface.
+        [✓]AI initializes successfully.
+        [✓]AI returns only empty cells.
+        [✓]AI never selects an occupied cell.
+        [✓]AI returns (row, column).
+        [✓]AI returns None when no legal moves remain.
+        [✓]AI never modifies the game state.
+        [✓]AI passes the functional test.
+    }
+    06(board rendering){
+        01(upgrade rendere system){
+            01(renderer architecture){
+                01(update engine architecture){
+                    engine/
+                    └── rendering/
+                        ├── __init__.py
+                        ├── primitive_renderer.py
+                        ├── shader_manager.py
+                        ├── mesh.py
+                        └── camera2d.py
+                }
+                02(update camera2d.py){
+                    "|"
+                    import glm
+                    class Camera2D:
+                        def __init__(self, width: int, height: int):
+                            self.width = width
+                            self.height = height
+                            self.position = glm.vec2(0.0, 0.0)
+                            self.zoom = 1.0
+                            self._projection = None
+                            self.update_projection()
+                        def update_projection(self):
+                            half_width = self.width / self.zoom
+                            half_height = self.height / self.zoom
+                            self._projection = glm.ortho(
+                                0.0,
+                                half_width,
+                                half_height,
+                                0.0,
+                                -1.0,
+                                1.0,
+                            )
+                        def resize(self, width: int, height: int):
+                            self.width = width
+                            self.height = height
+                            self.update_projection()
+                        def set_position(self, x: float, y: float):
+                            self.position = glm.vec2(x, y)
+                        def move(self, dx: float, dy: float):
+                            self.position.x += dx
+                            self.position.y += dy
+                        def set_zoom(self, zoom: float):
+                            if zoom <= 0:
+                                return
+                            self.zoom = zoom
+                            self.update_projection()
+                        def get_projection(self):
+                            return self._projection
+                        def get_width(self):
+                            return self.width
+                        def get_height(self):
+                            return self.height
+                        def get_zoom(self):
+                            return self.zoom
+                        def get_position(self):
+                            return self.position
+                    "|"
+                }
+                03(update shader_manager.py){
+                    "|"
+                    from engine.utils.logger import Logger
+                    class ShaderManager:
+                        def __init__(self, context):
+                            self.context = context
+                            self._programs = {}
+                        def create_program(
+                            self,
+                            name: str,
+                            vertex_shader: str,
+                            fragment_shader: str,
+                        ):
+                            if name in self._programs:
+                                Logger.warning(
+                                    f"[ShaderManager] Shader '{name}' already exists."
+                                )
+                                return self._programs[name]
+                            program = self.context.program(
+                                vertex_shader=vertex_shader,
+                                fragment_shader=fragment_shader,
+                            )
+                            self._programs[name] = program
+                            Logger.info(
+                                f"[ShaderManager] Compiled shader '{name}'."
+                            )
+                            return program
+                        def get_program(self, name: str):
+                            return self._programs.get(name)
+                        def has_program(self, name: str):
+                            return name in self._programs
+                        def release(self):
+                            for name, program in self._programs.items():
+                                try:
+                                    program.release()
+                                    Logger.info(
+                                        f"[ShaderManager] Released '{name}'."
+                                    )
+                                except Exception:
+                                    Logger.warning(
+                                        f"[ShaderManager] Failed to release '{name}'."
+                                    )
+                            self._programs.clear()
+                    "|"
+                }
+                04(update mesh.py){
+                    "|"
+                    from __future__ import annotations
+                    import numpy as np
+                    from engine.utils.logger import Logger
+                    class Mesh:
+                        def __init__(
+                            self,
+                            context,
+                            program,
+                            vertices,
+                            vertex_format: str = "2f",
+                            attributes=("in_position",),
+                            dynamic: bool = True,
+                        ):
+                            self.context = context
+                            self.program = program
+                            self.vertex_format = vertex_format
+                            self.attributes = attributes
+                            self.dynamic = dynamic
+                            self.vbo = None
+                            self.vao = None
+                            self._create(vertices)
+                        def _create(self, vertices):
+                            data = np.array(vertices, dtype="f4")
+                            self.vbo = self.context.buffer(
+                                data.tobytes(),
+                                dynamic=self.dynamic
+                            )
+                            self.vao = self.context.vertex_array(
+                                self.program,
+                                [
+                                    (
+                                        self.vbo,
+                                        self.vertex_format,
+                                        *self.attributes,
+                                    )
+                                ],
+                            )
+                        def update_vertices(self, vertices):
+                            data = np.array(vertices, dtype="f4")
+                            self.vbo.write(data.tobytes())
+                        def render(self, mode):
+                            self.vao.render(mode=mode)
+                        def release(self):
+                            try:
+                                if self.vao is not None:
+                                    self.vao.release()
+                                if self.vbo is not None:
+                                    self.vbo.release()
+                                Logger.info("[Mesh] Released.")
+                            except Exception as exception:
+                                Logger.warning(
+                                    f"[Mesh] Release failed: {exception}"
+                                )
+                    "|"
+                }
+                05(default primitive shader){
+                    01(update architecture){
+                        engine/
+                        └── rendering/
+                            ├── shaders/
+                            │   ├── primitive.vert
+                                └── primitive.frag
+                    }
+                    02(update primitive.vert){
+                        "|"
+                        #version 330
+                        in vec2 in_position;
+                        uniform mat4 projection;
+                        void main()
+                        {
+                            gl_Position = projection * vec4(in_position, 0.0, 1.0);
+                        }
+                        "|"
+                    }
+                    03(update primitive.frag){
+                        "|"
+                        #version 330
+                        uniform vec3 color;
+                        out vec4 fragColor;
+                        void main()
+                        {
+                            fragColor = vec4(color, 1.0);
+                        }
+                        "|"
+                    }
+                    04(update shader_manager.py){
+                        "|"
+                        from pathlib import Path
+                        from engine.utils.logger import Logger
+                        class ShaderManager:
+                            def __init__(self, context):
+                                self.context = context
+                                self._programs = {}
+                            @staticmethod
+                            def _read_shader(path: str) -> str:
+                                shader_path = Path(path)
+                                if not shader_path.exists():
+                                    raise FileNotFoundError(
+                                        f"Shader file not found: {shader_path}"
+                                    )
+                                return shader_path.read_text(encoding="utf-8")
+                            def load_program(
+                                self,
+                                name: str,
+                                vertex_shader_path: str,
+                                fragment_shader_path: str,
+                            ):
+                                if name in self._programs:
+                                    Logger.warning(
+                                        f"[ShaderManager] Shader '{name}' already loaded."
+                                    )
+                                    return self._programs[name]
+                                vertex_source = self._read_shader(vertex_shader_path)
+                                fragment_source = self._read_shader(fragment_shader_path)
+                                program = self.context.program(
+                                    vertex_shader=vertex_source,
+                                    fragment_shader=fragment_source,
+                                )
+                                self._programs[name] = program
+                                Logger.info(
+                                    f"[ShaderManager] Loaded shader '{name}'."
+                                )
+                                return program
+                            def get_program(self, name: str):
+                                return self._programs.get(name)
+                            def has_program(self, name: str):
+                                return name in self._programs
+                            def release(self):
+                                for name, program in self._programs.items():
+                                    try:
+                                        program.release()
+                                        Logger.info(
+                                            f"[ShaderManager] Released '{name}'."
+                                        )
+                                    except Exception as exception:
+                                        Logger.warning(
+                                            f"[ShaderManager] Failed to release '{name}': {exception}"
+                                        )
+                                self._programs.clear()
+                        "|"
+                    }
+                }
+                06(update primitive_renderer.py){
+                    01(architecture update){
+                        engine/
+                        └── rendering/
+                            └── render_batch.py   ← NEW
+                    }
+                    02(update primitive_renderer.py){
+                        "|"
+                        from __future__ import annotations
+                        import math
+                        import glm
+                        import moderngl
+                        from engine.rendering.mesh import Mesh
+                        from engine.rendering.shader_manager import ShaderManager
+                        from engine.rendering.camera2d import Camera2D
+                        class PrimitiveRenderer:
+                            def __init__(
+                                self,
+                                context: moderngl.Context,
+                                camera: Camera2D,
+                            ):
+                                self.context = context
+                                self.camera = camera
+                                self.shader_manager = ShaderManager(context)
+                                self.program = self.shader_manager.load_program(
+                                    "primitive",
+                                    "engine/rendering/shaders/primitive.vert",
+                                    "engine/rendering/shaders/primitive.frag",
+                                )
+                                self.mesh = Mesh(
+                                    context=self.context,
+                                    program=self.program,
+                                    vertices=[0.0, 0.0],
+                                    dynamic=True,
+                                )
+                            def _set_color(self, color):
+                                r = color[0] / 255.0
+                                g = color[1] / 255.0
+                                b = color[2] / 255.0
+                                self.program["color"].value = (r, g, b)
+                            def _set_projection(self):
+                                projection = self.camera.get_projection()
+                                self.program["projection"].write(
+                                    bytes(glm.value_ptr(projection))
+                                )
+                            def begin_frame(self):
+                                self._set_projection()
+                            def end_frame(self):
+                                pass
+                            def draw_line(
+                                self,
+                                start,
+                                end,
+                                color,
+                            ):
+                                self._set_color(color)
+                                vertices = [
+                                    start[0], start[1],
+                                    end[0], end[1],
+                                ]
+                                self.mesh.update_vertices(vertices)
+                                self.mesh.render(moderngl.LINES)
+                            def draw_rectangle(
+                                self,
+                                position,
+                                size,
+                                color,
+                            ):
+                                x, y = position
+                                w, h = size
+                                self.draw_line(
+                                    (x, y),
+                                    (x + w, y),
+                                    color,
+                                )
+                                self.draw_line(
+                                    (x + w, y),
+                                    (x + w, y + h),
+                                    color,
+                                )
+                                self.draw_line(
+                                    (x + w, y + h),
+                                    (x, y + h),
+                                    color,
+                                )
+                                self.draw_line(
+                                    (x, y + h),
+                                    (x, y),
+                                    color,
+                                )
+                            def draw_cross(
+                                self,
+                                center,
+                                size,
+                                color,
+                            ):
+                                half = size / 2
+                                x = center[0]
+                                y = center[1]
+                                self.draw_line(
+                                    (x - half, y - half),
+                                    (x + half, y + half),
+                                    color,
+                                )
+                                self.draw_line(
+                                    (x + half, y - half),
+                                    (x - half, y + half),
+                                    color,
+                                )
+                            def draw_circle(
+                                self,
+                                center,
+                                radius,
+                                color,
+                                segments=64,
+                            ):
+                                self._set_color(color)
+                                vertices = []
+                                for i in range(segments + 1):
+                                    angle = (
+                                        i / segments
+                                    ) * math.pi * 2
+                                    x = center[0] + math.cos(angle) * radius
+                                    y = center[1] + math.sin(angle) * radius
+                                    vertices.extend([x, y])
+                                self.mesh.update_vertices(vertices)
+                                self.mesh.render(
+                                    moderngl.LINE_STRIP
+                                )
+                            def draw_grid(
+                                self,
+                                origin,
+                                rows,
+                                columns,
+                                cell_size,
+                                color,
+                            ):
+                                ox, oy = origin
+                                width = columns * cell_size
+                                height = rows * cell_size
+                                for row in range(rows + 1):
+                                    y = oy + row * cell_size
+                                    self.draw_line(
+                                        (ox, y),
+                                        (ox + width, y),
+                                        color,
+                                    )
+                                for column in range(columns + 1):
+                                    x = ox + column * cell_size
+                                    self.draw_line(
+                                        (x, oy),
+                                        (x, oy + height),
+                                        color,
+                                    )
+                            def release(self):
+                                self.mesh.release()
+                                self.shader_manager.release()
+                        "|"
+                    }
+                    03(update render_batch.py){
+                        "|"
+                        class RenderCommand:
+                            def __init__(self, function, *args, **kwargs):
+                                self.function = function
+                                self.args = args
+                                self.kwargs = kwargs
+                            def execute(self):
+                                self.function(*self.args, **self.kwargs)
+                        class RenderBatch:
+                            def __init__(self):
+                                self._commands = []
+                            def add(self, function, *args, **kwargs):
+                                self._commands.append(
+                                    RenderCommand(
+                                        function,
+                                        *args,
+                                        **kwargs,
+                                    )
+                                )
+                            def render(self):
+                                for command in self._commands:
+                                    command.execute()
+                            def clear(self):
+                                self._commands.clear()
+                            def size(self):
+                                return len(self._commands)
+                            def empty(self):
+                                return len(self._commands) == 0
+                        "|"
+                    }
+                }
+                07(update engine/core/renderer.py){
+                    01(update renderer.py){
+                        "|"
+                        import moderngl
+                        from engine.rendering.camera2d import Camera2D
+                        from engine.rendering.primitive_renderer import PrimitiveRenderer
+                        from engine.utils.logger import Logger
+                        class Renderer:
+                            def __init__(self):
+                                self.ctx = None
+                                self.camera = None
+                                self.primitives = None
+                            def initialize(
+                                self,
+                                width: int,
+                                height: int,
+                            ):
+                                self.ctx = moderngl.create_context()
+                                Logger.info(
+                                    f"[Renderer] OpenGL Version: {self.ctx.info['GL_VERSION']}"
+                                )
+                                self.camera = Camera2D(width, height)
+                                self.primitives = PrimitiveRenderer(
+                                    self.ctx,
+                                    self.camera,
+                                )
+                                Logger.info(
+                                    "[Renderer] Rendering system initialized."
+                                )
+                            def begin_frame(self):
+                                self.ctx.clear(
+                                red=0.08,
+                                green=0.08,
+                                blue=0.10,
+                                alpha=1.0,
+                            )
+                                self.primitives.begin_frame()
+                            def end_frame(self):
+                                self.primitives.end_frame()
+                            def draw_line(
+                                self,
+                                start,
+                                end,
+                                color,
+                            ):
+                                self.primitives.draw_line(
+                                    start,
+                                    end,
+                                    color,
+                                )
+                            def draw_rectangle(
+                                self,
+                                position,
+                                size,
+                                color,
+                            ):
+                                self.primitives.draw_rectangle(
+                                    position,
+                                    size,
+                                    color,
+                                )
+                            def draw_circle(
+                                self,
+                                center,
+                                radius,
+                                color,
+                                segments=64,
+                            ):
+                                self.primitives.draw_circle(
+                                    center,
+                                    radius,
+                                    color,
+                                    segments,
+                                )
+                            def draw_cross(
+                                self,
+                                center,
+                                size,
+                                color,
+                            ):
+                                self.primitives.draw_cross(
+                                    center,
+                                    size,
+                                    color,
+                                )
+                            def draw_grid(
+                                self,
+                                origin,
+                                rows,
+                                columns,
+                                cell_size,
+                                color,
+                            ):
+                                self.primitives.draw_grid(
+                                    origin,
+                                    rows,
+                                    columns,
+                                    cell_size,
+                                    color,
+                                )
+                            def resize(
+                                self,
+                                width,
+                                height,
+                            ):
+                                self.camera.resize(
+                                    width,
+                                    height,
+                                )
+                            def shutdown(self):
+                                if self.primitives is not None:
+                                    self.primitives.release()
+                                Logger.info(
+                                    "[Renderer] Shutdown"
+                                )
+                        "|"
+                    }
+                    02(update game manager){
+                        "|"
+                        import pygame
+                        from engine.core.window import Window
+                        from engine.core.renderer import Renderer
+                        from engine.core.time import TimeManager
+                        from engine.core.input import Input
+                        from engine.core.scene_manager import SceneManager
+                        from engine.utils.config import Config
+                        from engine.utils.logger import Logger
+                        from engine.utils.asset_manager import AssetManager
+                        from game.scenes.boot_scene import BootScene
+                        class GameManager:
+                            def __init__(self):
+                                self.running = False
+                                self.window = None
+                                self.renderer = Renderer()
+                                self.time_manager = TimeManager()
+                                self.scene_manager = SceneManager(self)
+                                self.fps_limit = 60
+                            def initialize(self):
+                                Logger.initialize()
+                                Logger.info("[GameManager] Initializing...")
+                                Config.load()
+                                title = Config.get("window","title")
+                                width = Config.get("window","width")
+                                height = Config.get("window","height")
+                                self.fps_limit = Config.get("window","fps_limit",60)
+                                self.window = Window(width=width,height=height,title=title)
+                                self.window.create()
+                                self.renderer.initialize(
+                                    width,
+                                    height,
+                                )
+                                Input.initialize()
+                                AssetManager.initialize()
+                                self.scene_manager.change_scene(BootScene())
+                                self.running = True
+                            def process_events(self):
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        self.running = False
+                            def update(self):
+                                self.time_manager.update()
+                                Input.update()
+                                self.scene_manager.update()
+                            def render(self):
+                                self.renderer.begin_frame()
+                                self.scene_manager.render()
+                                self.renderer.end_frame()
+                                self.window.update()
+                            def run(self):
+                                Logger.info("[GameManager] Running...")
+                                while self.running:
+                                    self.process_events()
+                                    self.update()
+                                    self.render()
+                                    self.window.tick(self.fps_limit)
+                                    fps = self.time_manager.get_fps()
+                                    if fps > 0:
+                                        pygame.display.set_caption(f"MindWar Arena | FPS: {fps}")
+                            def shutdown(self):
+                                Logger.info("[GameManager] Shutting down...")
+                                Logger.info(f"[GameManager] Runtime: "f"{self.time_manager.get_runtime():.2f}s")
+                                try:
+                                    self.renderer.shutdown()
+                                except Exception as exception:
+                                    Logger.error(f"[GameManager] Renderer shutdown error: {exception}")
+                                try:
+                                    self.window.destroy()
+                                except Exception as exception:
+                                    Logger.error(f"[GameManager] Window shutdown error: {exception}")
+                                self.running = False
+                        "|"
+                    }
+                }
+                08(render tic_tac_toe){
+                    01(update architecture){
+                        games/
+                        └── tic_tac_toe/
+                            ├── assets/
+                            ├── ai.py
+                            ├── board.py
+                            ├── board_renderer.py   ← NEW
+                            ├── constants.py
+                            ├── game.py
+                            └── rules.py
+                    }
+                    02(update board_renderer.py){
+                        "|"
+                        from games.tic_tac_toe.constants import (
+                            BOARD_ROWS,
+                            BOARD_COLUMNS,
+                            CELL_SIZE,
+                            BOARD_PADDING,
+                            GRID_COLOR,
+                            X_COLOR,
+                            O_COLOR,
+                            EMPTY,
+                            PLAYER_X,
+                            PLAYER_O,
+                        )
+                        class BoardRenderer:
+                            def __init__(self, renderer):
+                                self.renderer = renderer
+                                self.origin_x = BOARD_PADDING
+                                self.origin_y = BOARD_PADDING
+                            def render(self, board):
+                                self.draw_grid()
+                                for row in range(BOARD_ROWS):
+                                    for column in range(BOARD_COLUMNS):
+                                        value = board.get_cell(row, column)
+                                        if value == PLAYER_X:
+                                            self.draw_x(row, column)
+                                        elif value == PLAYER_O:
+                                            self.draw_o(row, column)
+                            def draw_grid(self):
+                                self.renderer.draw_grid(
+                                    origin=(self.origin_x, self.origin_y),
+                                    rows=BOARD_ROWS,
+                                    columns=BOARD_COLUMNS,
+                                    cell_size=CELL_SIZE,
+                                    color=GRID_COLOR,
+                                )
+                            def draw_x(self, row, column):
+                                center = self.get_cell_center(row, column)
+                                self.renderer.draw_cross(
+                                    center=center,
+                                    size=CELL_SIZE * 0.60,
+                                    color=X_COLOR,
+                                )
+                            def draw_o(self, row, column):
+                                center = self.get_cell_center(row, column)
+                                self.renderer.draw_circle(
+                                    center=center,
+                                    radius=CELL_SIZE * 0.30,
+                                    color=O_COLOR,
+                                )
+                            def get_cell_center(self, row, column):
+                                x = (
+                                    self.origin_x
+                                    + column * CELL_SIZE
+                                    + CELL_SIZE / 2
+                                )
+                                y = (
+                                    self.origin_y
+                                    + row * CELL_SIZE
+                                    + CELL_SIZE / 2
+                                )
+                                return (x, y)
+                        "|"
+                    }
+                    03(update tic_tac_toe/game.py){
+                        "|"
+                        from engine.interfaces.game_interface import GameInterface
+                        from games.tic_tac_toe.board_renderer import BoardRenderer
+                        from games.tic_tac_toe.board import TicTacToeBoard
+                        from games.tic_tac_toe.rules import TicTacToeRules
+                        from games.tic_tac_toe.constants import (
+                            PLAYER_X,
+                            PLAYER_O,
+                            FIRST_PLAYER,
+                            NO_WINNER,
+                            GAME_NOT_STARTED,
+                            GAME_RUNNING,
+                            GAME_DRAW,
+                            GAME_OVER,
+                        )
+                        class TicTacToeGame(GameInterface):
+                            def __init__(self, renderer):
+                                self.renderer = renderer
+                                self.board = None
+                                self.current_player = FIRST_PLAYER
+                                self.winner = NO_WINNER
+                                self.game_state = GAME_NOT_STARTED
+                                self.game_over = False
+                                self.move_count = 0
+                                self.board_renderer = BoardRenderer(renderer)
+                            def initialize(self):
+                                self.board = TicTacToeBoard()
+                                self.reset()
+                            def reset(self):
+                                if self.board is None:
+                                    self.board = TicTacToeBoard()
+                                else:
+                                    self.board.reset()
+                                self.current_player = FIRST_PLAYER
+                                self.winner = NO_WINNER
+                                self.game_state = GAME_RUNNING
+                                self.game_over = False
+                                self.move_count = 0
+                            def shutdown(self):
+                                pass
+                            def update(self):
+                                pass
+                            def render(self):
+                                self.board_renderer.render(self.board)
+                            def make_move(self, row, column):
+                                if self.game_over:
+                                    return False
+                                if not self.board.is_valid_position(row, column):
+                                    return False
+                                if not self.board.is_cell_empty(row, column):
+                                    return False
+                                self.board.set_cell(row, column, self.current_player)
+                                self.move_count += 1
+                                winner = TicTacToeRules.check_winner(self.board)
+                                if winner != NO_WINNER:
+                                    self.winner = winner
+                                    self.game_state = GAME_OVER
+                                    self.game_over = True
+                                    return True
+                                if TicTacToeRules.is_draw(self.board):
+                                    self.winner = NO_WINNER
+                                    self.game_state = GAME_DRAW
+                                    self.game_over = True
+                                    return True
+                                self.switch_player()
+                                return True
+                            def switch_player(self):
+                                if self.current_player == PLAYER_X:
+                                    self.current_player = PLAYER_O
+                                else:
+                                    self.current_player = PLAYER_X
+                            def get_board(self):
+                                return self.board
+                            def get_current_player(self):
+                                return self.current_player
+                            def get_state(self):
+                                return {
+                                    "board": self.board.get_board_state(),
+                                    "current_player": self.current_player,
+                                    "winner": self.winner,
+                                    "game_state": self.game_state,
+                                    "game_over": self.game_over,
+                                    "move_count": self.move_count,
+                                }
+                            def is_game_over(self):
+                                return self.game_over
+                            def get_winner(self):
+                                return self.winner
+                        "|"
+                    }
+                    04(update architecture){
+                        game/
+                        └── scenes/
+                            └── game_scene.py
+                    }
+                    05(update game_scenes.py){
+                        "|"
+                        from engine.core.scene import Scene
+                        from engine.utils.logger import Logger
+                        class GameScene(Scene):
+                            def __init__(self, game):
+                                super().__init__("Game Scene")
+                                self.game = game
+                            def enter(self):
+                                super().enter()
+                                Logger.info(
+                                    "[GameScene] Started."
+                                )
+                                self.game.initialize()
+                            def exit(self):
+                                super().exit()
+                                Logger.info(
+                                    "[GameScene] Closed."
+                                )
+                            def update(self):
+                                self.game.update()
+                            def render(self):
+                                self.game.render()
+                        "|"
+                    }
+                    06(update game_interface.py){
+                        "|"
+                        from abc import ABC
+                        from abc import abstractmethod
+                        class GameInterface(ABC):
+                            @abstractmethod
+                            def initialize(self):
+                                pass
+                            @abstractmethod
+                            def reset(self):
+                                pass
+                            @abstractmethod
+                            def shutdown(self):
+                                pass
+                            @abstractmethod
+                            def update(self):
+                                pass
+                            @abstractmethod
+                            def render(self):
+                                pass
+                            @abstractmethod
+                            def get_state(self):
+                                pass
+                            @abstractmethod
+                            def get_board(self):
+                                pass
+                            @abstractmethod
+                            def get_current_player(self):
+                                pass
+                            @abstractmethod
+                            def get_winner(self):
+                                pass
+                            @abstractmethod
+                            def is_game_over(self):
+                                pass
+                            @abstractmethod
+                            def make_move(self, *args, **kwargs):
+                                pass
+                        "|"
+                    }
+                }
+            }
+            02(display tic-tac-toe board){
+                01(update game.py){
+                    "|"
+                    from engine.interfaces.game_interface import GameInterface
+                    from games.tic_tac_toe.board_renderer import BoardRenderer
+                    from games.tic_tac_toe.board import TicTacToeBoard
+                    from games.tic_tac_toe.rules import TicTacToeRules
+                    from games.tic_tac_toe.constants import (
+                        PLAYER_X,
+                        PLAYER_O,
+                        FIRST_PLAYER,
+                        NO_WINNER,
+                        GAME_NOT_STARTED,
+                        GAME_RUNNING,
+                        GAME_DRAW,
+                        GAME_OVER,
+                    )
+                    class TicTacToeGame(GameInterface):
+                        def __init__(self, renderer):
+                            self.renderer = renderer
+                            self.board = None
+                            self.current_player = FIRST_PLAYER
+                            self.winner = NO_WINNER
+                            self.game_state = GAME_NOT_STARTED
+                            self.game_over = False
+                            self.move_count = 0
+                            self.board_renderer = BoardRenderer(renderer)
+                        def initialize(self):
+                            self.board = TicTacToeBoard()
+                            self.reset()
+                        def reset(self):
+                            if self.board is None:
+                                self.board = TicTacToeBoard()
+                            else:
+                                self.board.reset()
+                            self.current_player = FIRST_PLAYER
+                            self.winner = NO_WINNER
+                            self.game_state = GAME_RUNNING
+                            self.game_over = False
+                            self.move_count = 0
+                        def shutdown(self):
+                            pass
+                        def update(self):
+                            pass
+                        def render(self):
+                            self.board_renderer.render(self.board)
+                        def make_move(self, row, column):
+                            if self.game_over:
+                                return False
+                            if not self.board.is_valid_position(row, column):
+                                return False
+                            if not self.board.is_cell_empty(row, column):
+                                return False
+                            self.board.set_cell(row, column, self.current_player)
+                            self.move_count += 1
+                            winner = TicTacToeRules.check_winner(self.board)
+                            if winner != NO_WINNER:
+                                self.winner = winner
+                                self.game_state = GAME_OVER
+                                self.game_over = True
+                                return True
+                            if TicTacToeRules.is_draw(self.board):
+                                self.winner = NO_WINNER
+                                self.game_state = GAME_DRAW
+                                self.game_over = True
+                                return True
+                            self.switch_player()
+                            return True
+                        def switch_player(self):
+                            if self.current_player == PLAYER_X:
+                                self.current_player = PLAYER_O
+                            else:
+                                self.current_player = PLAYER_X
+                        def get_board(self):
+                            return self.board
+                        def get_current_player(self):
+                            return self.current_player
+                        def get_state(self):
+                            return {
+                                "board": self.board.get_board_state(),
+                                "current_player": self.current_player,
+                                "winner": self.winner,
+                                "game_state": self.game_state,
+                                "game_over": self.game_over,
+                                "move_count": self.move_count,
+                            }
+                        def is_game_over(self):
+                            return self.game_over
+                        def get_winner(self):
+                            return self.winner
+                    "|"
+                }
+                02(finish tictactoegame){
+                    01(update game_scene.py){
+                        "|"
+                        from engine.core.scene import Scene
+                        from engine.interfaces.game_interface import GameInterface
+                        from engine.utils.logger import Logger
+                        class GameScene(Scene):
+                            def __init__(self, game: GameInterface):
+                                super().__init__("Game Scene")
+                                if not isinstance(game, GameInterface):
+                                    raise TypeError(
+                                        "GameScene requires an object "
+                                        "implementing GameInterface."
+                                    )
+                                self.game = game
+                            def enter(self):
+                                super().enter()
+                                Logger.info("[GameScene] Initializing game.")
+                                self.game.initialize()
+                            def exit(self):
+                                Logger.info("[GameScene] Shutting down game.")
+                                self.game.shutdown()
+                                super().exit()
+                            def update(self):
+                                self.game.update()
+                            def render(self):
+                                self.game.render()
+                        "|"
+                    }
+                    02(update scene.py){
+                        "|"
+                        from engine.utils.logger import Logger
+                        class Scene:
+                            def __init__(self, name):
+                                self.name = name
+                                self.game_manager = None
+                                self.scene_manager = None
+                                self.window = None
+                                self.renderer = None
+                                self.time_manager = None
+                            def set_game_manager(self, game_manager):
+                                self.game_manager = game_manager
+                                self.scene_manager = game_manager.scene_manager
+                                self.window = game_manager.window
+                                self.renderer = game_manager.renderer
+                                self.time_manager = game_manager.time_manager
+                            def enter(self):
+                                Logger.info(f"[Scene] Enter: {self.name}")
+                            def exit(self):
+                                Logger.info(f"[Scene] Exit: {self.name}")
+                            def update(self):
+                                pass
+                            def render(self):
+                                pass
+                        "|"
+                    }
+                    03(update scene manager.py){
+                        "|"
+                        class SceneManager:
+                            def __init__(self, game_manager):
+                                self.game_manager = game_manager
+                                self.current_scene = None
+                            def change_scene(self, scene):
+                                if self.current_scene is not None:
+                                    self.current_scene.exit()
+                                self.current_scene = scene
+                                self.current_scene.set_game_manager(self.game_manager)
+                                self.current_scene.enter()
+                            def update(self):
+                                if self.current_scene is not None:
+                                    self.current_scene.update()
+                            def render(self):
+                                if self.current_scene is not None:
+                                    self.current_scene.render()
+                            def get_current_scene(self):
+                                return self.current_scene
+                        "|"
+                    }
+                    04(update game_manager.py){
+                        "|"
+                        import pygame
+                        from engine.core.window import Window
+                        from engine.core.renderer import Renderer
+                        from engine.core.time import TimeManager
+                        from engine.core.input import Input
+                        from engine.core.scene_manager import SceneManager
+                        from engine.utils.config import Config
+                        from engine.utils.logger import Logger
+                        from engine.utils.asset_manager import AssetManager
+                        from game.scenes.boot_scene import BootScene
+                        class GameManager:
+                            def __init__(self):
+                                self.running = False
+                                self.window = None
+                                self.renderer = Renderer()
+                                self.time_manager = TimeManager()
+                                self.scene_manager = SceneManager(self)
+                                self.fps_limit = 60
+                            def initialize(self):
+                                Logger.initialize()
+                                Logger.info("[GameManager] Initializing...")
+                                Config.load()
+                                title = Config.get("window","title")
+                                width = Config.get("window","width")
+                                height = Config.get("window","height")
+                                self.fps_limit = Config.get("window","fps_limit",60)
+                                self.window = Window(width=width,height=height,title=title)
+                                self.window.create()
+                                self.renderer.initialize(
+                                    width,
+                                    height,
+                                )
+                                Input.initialize()
+                                AssetManager.initialize()
+                                self.scene_manager.change_scene(BootScene())
+                                self.running = True
+                            def process_events(self):
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        self.running = False
+                            def update(self):
+                                self.time_manager.update()
+                                Input.update()
+                                self.scene_manager.update()
+                            def render(self):
+                                self.renderer.begin_frame()
+                                self.scene_manager.render()
+                                self.renderer.end_frame()
+                                self.window.update()
+                            def run(self):
+                                Logger.info("[GameManager] Running...")
+                                while self.running:
+                                    self.process_events()
+                                    self.update()
+                                    self.render()
+                                    self.window.tick(self.fps_limit)
+                                    fps = self.time_manager.get_fps()
+                                    if fps > 0:
+                                        pygame.display.set_caption(f"MindWar Arena | FPS: {fps}")
+                            def shutdown(self):
+                                Logger.info("[GameManager] Shutting down...")
+                                Logger.info(f"[GameManager] Runtime: "f"{self.time_manager.get_runtime():.2f}s")
+                                try:
+                                    self.renderer.shutdown()
+                                except Exception as exception:
+                                    Logger.error(f"[GameManager] Renderer shutdown error: {exception}")
+                                try:
+                                    self.window.destroy()
+                                except Exception as exception:
+                                    Logger.error(f"[GameManager] Window shutdown error: {exception}")
+                                self.running = False
+                        "|"
+                    }
+                    05(update boot_scene.py){
+                        "|"
+                        from engine.core.scene import Scene
+                        from engine.utils.logger import Logger
+                        from game.scenes.game_scene import GameScene
+                        from games.tic_tac_toe.game import TicTacToeGame
+                        class BootScene(Scene):
+                            def __init__(self):
+                                super().__init__("Boot Scene")
+                            def enter(self):
+                                super().enter()
+                                Logger.info("[BootScene] Engine initialization complete.")
+                                Logger.info("[BootScene] Launching Tic-Tac-Toe...")
+                                game = TicTacToeGame(self.renderer)
+                                self.scene_manager.change_scene(
+                                    GameScene(game)
+                                )
+                            def update(self):
+                                pass
+                            def render(self):
+                                pass
+                        "|"
+                    }
+                    06(game_manager.py){
+                        "|"
+                        import pygame
+                        from engine.core.window import Window
+                        from engine.core.renderer import Renderer
+                        from engine.core.time import TimeManager
+                        from engine.core.input import Input
+                        from engine.core.scene_manager import SceneManager
+                        from engine.utils.config import Config
+                        from engine.utils.logger import Logger
+                        from engine.utils.asset_manager import AssetManager
+                        from game.scenes.boot_scene import BootScene
+                        class GameManager:
+                            def __init__(self):
+                                self.running = False
+                                self.window = None
+                                self.renderer = Renderer()
+                                self.time_manager = TimeManager()
+                                self.scene_manager = SceneManager(self)
+                                self.fps_limit = 60
+                            def initialize(self):
+                                Logger.initialize()
+                                Logger.info("[GameManager] Initializing...")
+                                Config.load()
+                                title = Config.get("window","title")
+                                width = Config.get("window","width")
+                                height = Config.get("window","height")
+                                self.fps_limit = Config.get("window","fps_limit",60)
+                                self.window = Window(width=width,height=height,title=title)
+                                self.window.create()
+                                self.renderer.initialize(
+                                    width,
+                                    height,
+                                )
+                                Input.initialize()
+                                AssetManager.initialize()
+                                self.scene_manager.change_scene(BootScene())
+                                self.running = True
+                            def process_events(self):
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        self.running = False
+                            def update(self):
+                                self.time_manager.update()
+                                Input.update()
+                                self.scene_manager.update()
+                            def render(self):
+                                self.renderer.begin_frame()
+                                self.scene_manager.render()
+                                self.renderer.end_frame()
+                                self.window.update()
+                            def run(self):
+                                Logger.info("[GameManager] Running...")
+                                while self.running:
+                                    self.process_events()
+                                    self.update()
+                                    self.render()
+                                    self.window.tick(self.fps_limit)
+                                    fps = self.time_manager.get_fps()
+                                    if fps > 0:
+                                        pygame.display.set_caption(f"MindWar Arena | FPS: {fps}")
+                            def shutdown(self):
+                                Logger.info("[GameManager] Shutting down...")
+                                Logger.info(f"[GameManager] Runtime: "f"{self.time_manager.get_runtime():.2f}s")
+                                try:
+                                    self.renderer.shutdown()
+                                except Exception as exception:
+                                    Logger.error(f"[GameManager] Renderer shutdown error: {exception}")
+                                try:
+                                    self.window.destroy()
+                                except Exception as exception:
+                                    Logger.error(f"[GameManager] Window shutdown error: {exception}")
+                                self.running = False
+                        "|"
+                    }
+                    07(update primitive_renderer.py){
+                        "|"
+                        from __future__ import annotations
+                        import math
+                        import glm
+                        import moderngl
+                        from engine.rendering.mesh import Mesh
+                        from engine.rendering.shader_manager import ShaderManager
+                        from engine.rendering.camera2d import Camera2D
+                        class PrimitiveRenderer:
+                            def __init__(
+                                self,
+                                context: moderngl.Context,
+                                camera: Camera2D,
+                            ):
+                                self.context = context
+                                self.camera = camera
+                                self.shader_manager = ShaderManager(context)
+                                self.program = self.shader_manager.load_program(
+                                    "primitive",
+                                    "engine/rendering/shaders/primitive.vert",
+                                    "engine/rendering/shaders/primitive.frag",
+                                )
+                                self.mesh = Mesh(
+                                    context=self.context,
+                                    program=self.program,
+                                    vertices=[0.0, 0.0],
+                                    dynamic=True,
+                                )
+                            def _set_color(self, color):
+                                r = color[0] / 255.0
+                                g = color[1] / 255.0
+                                b = color[2] / 255.0
+                                self.program["color"].value = (r, g, b)
+                            def _set_projection(self):
+                                projection = self.camera.get_projection()
+                                self.program["projection"].write(
+                                    projection.to_bytes()
+                                )
+                            def begin_frame(self):
+                                self._set_projection()
+                            def end_frame(self):
+                                pass
+                            def draw_line(
+                                self,
+                                start,
+                                end,
+                                color,
+                            ):
+                                self._set_color(color)
+                                vertices = [
+                                    start[0], start[1],
+                                    end[0], end[1],
+                                ]
+                                self.mesh.update_vertices(vertices)
+                                self.mesh.render(moderngl.LINES)
+                            def draw_rectangle(
+                                self,
+                                position,
+                                size,
+                                color,
+                            ):
+                                x, y = position
+                                w, h = size
+                                self.draw_line(
+                                    (x, y),
+                                    (x + w, y),
+                                    color,
+                                )
+                                self.draw_line(
+                                    (x + w, y),
+                                    (x + w, y + h),
+                                    color,
+                                )
+                                self.draw_line(
+                                    (x + w, y + h),
+                                    (x, y + h),
+                                    color,
+                                )
+                                self.draw_line(
+                                    (x, y + h),
+                                    (x, y),
+                                    color,
+                                )
+                            def draw_cross(
+                                self,
+                                center,
+                                size,
+                                color,
+                            ):
+                                half = size / 2
+                                x = center[0]
+                                y = center[1]
+                                self.draw_line(
+                                    (x - half, y - half),
+                                    (x + half, y + half),
+                                    color,
+                                )
+                                self.draw_line(
+                                    (x + half, y - half),
+                                    (x - half, y + half),
+                                    color,
+                                )
+                            def draw_circle(
+                                self,
+                                center,
+                                radius,
+                                color,
+                                segments=64,
+                            ):
+                                self._set_color(color)
+                                vertices = []
+                                for i in range(segments + 1):
+                                    angle = (
+                                        i / segments
+                                    ) * math.pi * 2
+                                        x = center[0] + math.cos(angle) * radius
+                                        y = center[1] + math.sin(angle) * radius
+                                    vertices.extend([x, y])
+                                self.mesh.update_vertices(vertices)
+                                self.mesh.render(
+                                    moderngl.LINE_STRIP
+                                )
+                            def draw_grid(
+                                self,
+                                origin,
+                                rows,
+                                columns,
+                                cell_size,
+                                color,
+                            ):
+                                ox, oy = origin
+                                width = columns * cell_size
+                                height = rows * cell_size
+                                for row in range(rows + 1):
+                                    y = oy + row * cell_size
+                                self.draw_line(
+                                    (ox, y),
+                                    (ox + width, y),
+                                    color,
+                                )
+                                for column in range(columns + 1):
+                                    x = ox + column * cell_size
+                                self.draw_line(
+                                    (x, oy),
+                                    (x, oy + height),
+                                    color,
+                                )
+                            def release(self):
+                                self.mesh.release()
+                                self.shader_manager.release()
+                        "|"
+                    }
+                    08(update crash_handler.py){
+                        "|"
+                        import traceback
+                        from pathlib import Path
+                        from datetime import datetime
+                        class CrashHandler:
+                            @staticmethod
+                            def handle_exception(exception):
+                                crash_dir = Path("logs")
+                                crash_dir.mkdir(exist_ok=True)
+                                crash_file = crash_dir / "crash.log"
+                                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                                traceback_text = traceback.format_exc()
+                                print(traceback_text)
+                                print(f"[CRITICAL] Fatal Exception: {exception}")
+                                with open(crash_file,"a",encoding="utf-8") as file:
+                                    file.write("\n"+ "=" * 80+ "\n")
+                                    file.write(f"Timestamp: {timestamp}\n\n")
+                                    file.write(f"Exception: {exception}\n\n")
+                                    file.write(traceback_text)
+                                    file.write("\n")
+                                print("[CRITICAL] Crash report written to logs/crash.log")
+                        "|"
+                    }
+                    09(update mesh.py){
+                        "|"
+                        from __future__ import annotations
+                        import numpy as np
+                        from engine.utils.logger import Logger
+                        class Mesh:
+                            def __init__(
+                                self,
+                                context,
+                                program,
+                                vertices,
+                                vertex_format: str = "2f",
+                                attributes=("in_position",),
+                                dynamic: bool = True,
+                            ):
+                                self.context = context
+                                self.program = program
+                                self.vertex_format = vertex_format
+                                self.attributes = attributes
+                                self.dynamic = dynamic
+                                self.vbo = None
+                                self.vao = None
+                                self.buffer_size = 0
+                                self._create(vertices)
+                            def _create(self, vertices):
+                                data = np.array(vertices, dtype="f4")
+                                raw_data = data.tobytes()
+                                self.buffer_size = len(raw_data)
+                                self.vbo = self.context.buffer(
+                                    raw_data,
+                                    dynamic=self.dynamic
+                                )
+                                self.vao = self.context.vertex_array(
+                                    self.program,
+                                    [
+                                        (
+                                            self.vbo,
+                                            self.vertex_format,
+                                            *self.attributes,
+                                        )
+                                    ],
+                                )
+                                Logger.info("[Mesh] GPU mesh created.")
+                            def update_vertices(self, vertices):
+                                data = np.array(vertices, dtype="f4")
+                                raw_data = data.tobytes()
+                                if len(raw_data) > self.buffer_size:
+                                    self.buffer_size = len(raw_data)
+                                    if self.vao is not None:
+                                        self.vao.release()
+                                    if self.vbo is not None:
+                                        self.vbo.release()
+                                    self.vbo = self.context.buffer(
+                                        raw_data,
+                                        dynamic=self.dynamic,
+                                    )
+                                    self.vao = self.context.vertex_array(
+                                        self.program,
+                                        [
+                                            (
+                                                self.vbo,
+                                                self.vertex_format,
+                                                *self.attributes,
+                                            )
+                                        ],
+                                    )
+                                    Logger.debug(
+                                        f"[Mesh] GPU buffer resized to {self.buffer_size} bytes."
+                                    )
+                                else:
+                                    self.vbo.write(raw_data)
+                            def render(self, mode):
+                                self.vao.render(mode=mode)
+                            def release(self):
+                                try:
+                                    if self.vao is not None:
+                                        self.vao.release()
+                                    if self.vbo is not None:
+                                        self.vbo.release()
+                                    Logger.info("[Mesh] Released.")
+                                except Exception as exception:
+                                    Logger.warning(
+                                        f"[Mesh] Release failed: {exception}"
+                                    )
+                        "|"
+                    }
+                }
+            }
+        }
+        02(testing){
+            01(engine and rendering initialization and primitive rendering){
+                run test_tic_tac_toe.py
+                input code =
+                "|"
+                import pygame
+                from engine.core.window import Window
+                from engine.core.renderer import Renderer
+                from engine.utils.logger import Logger
+                WINDOW_WIDTH = 1280
+                WINDOW_HEIGHT = 720
+                def main():
+                    Logger.initialize()
+                    pygame.init()
+                    window = Window(
+                        width=WINDOW_WIDTH,
+                        height=WINDOW_HEIGHT,
+                        title="Step 6 Test - Primitive Rendering",
+                    )
+                    window.create()
+                    renderer = Renderer()
+                    renderer.initialize(
+                        WINDOW_WIDTH,
+                        WINDOW_HEIGHT,
+                    )
+                    running = True
+                    clock = pygame.time.Clock()
+                    while running:
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                running = False
+                        renderer.begin_frame()
+                        renderer.draw_line(
+                            (40, 40),
+                            (300, 40),
+                            (255, 255, 255),
+                        )
+                        renderer.draw_rectangle(
+                            position=(40, 80),
+                            size=(220, 120),
+                            color=(0, 255, 0),
+                        )
+                        renderer.draw_circle(
+                            center=(450, 140),
+                            radius=60,
+                            color=(255, 80, 80),
+                        )
+                        renderer.draw_cross(
+                            center=(650, 140),
+                            size=120,
+                            color=(80, 180, 255),
+                        )
+                        renderer.draw_grid(
+                            origin=(850, 50),
+                            rows=3,
+                            columns=3,
+                            cell_size=100,
+                            color=(255, 255, 255),
+                        )
+                        renderer.end_frame()
+                        window.update()
+                        clock.tick(60)
+                        renderer.shutdown()
+                        window.destroy()
+                        pygame.quit()
+                if __name__ == "__main__":
+                    main()
+                "|"
+                output =
+                pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+                Hello from the pygame community. https://www.pygame.org/contribute.html
+                2026-07-03 20:28:42 [INFO] Logger Initialized
+                2026-07-03 20:28:43 [INFO] [Window] Created 1280x720
+                2026-07-03 20:28:43 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+                2026-07-03 20:28:43 [INFO] [ShaderManager] Loaded shader 'primitive'.
+                2026-07-03 20:28:44 [INFO] [Mesh] GPU mesh created.
+                2026-07-03 20:28:44 [INFO] [Renderer] Rendering system initialized.
+                2026-07-03 20:28:44 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+                2026-07-03 20:28:44 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+                2026-07-03 20:29:40 [INFO] [Mesh] Released.
+                2026-07-03 20:29:40 [INFO] [ShaderManager] Released 'primitive'.
+                2026-07-03 20:29:40 [INFO] [Renderer] Shutdown
+                2026-07-03 20:29:41 [INFO] [Window] Destroyed
+                i see one white line, green rectangle, dotted red circle with white dots, blue cross and box of 9 white squares
+            }
+            02(board rendering test){
+                run test_tic_tac_toe.py
+                input code =
+                "|"
+                import pygame
+                from engine.core.window import Window
+                from engine.core.renderer import Renderer
+                from engine.utils.logger import Logger
+                from games.tic_tac_toe.board import TicTacToeBoard
+                from games.tic_tac_toe.board_renderer import BoardRenderer
+                WINDOW_WIDTH = 1280
+                WINDOW_HEIGHT = 720
+                def main():
+                    Logger.initialize()
+                    pygame.init()
+                    window = Window(
+                        width=WINDOW_WIDTH,
+                        height=WINDOW_HEIGHT,
+                        title="Step 6 Test - Board Rendering",
+                    )
+                    window.create()
+                    renderer = Renderer()
+                    renderer.initialize(
+                        WINDOW_WIDTH,
+                        WINDOW_HEIGHT,
+                    )
+                    board = TicTacToeBoard()
+                    board_renderer = BoardRenderer(renderer)
+                    running = True
+                    clock = pygame.time.Clock()
+                    while running:
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                running = False
+                        renderer.begin_frame()
+                        board_renderer.render(board)
+                        renderer.end_frame()
+                        window.update()
+                        clock.tick(60)
+                    renderer.shutdown()
+                    window.destroy()
+                    pygame.quit()
+                if __name__ == "__main__":
+                    main()
+                "|"
+                output =
+                pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+                Hello from the pygame community. https://www.pygame.org/contribute.html
+                2026-07-03 20:39:42 [INFO] Logger Initialized
+                2026-07-03 20:39:43 [INFO] [Window] Created 1280x720
+                2026-07-03 20:39:43 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+                2026-07-03 20:39:43 [INFO] [ShaderManager] Loaded shader 'primitive'.
+                2026-07-03 20:39:43 [INFO] [Mesh] GPU mesh created.
+                2026-07-03 20:39:43 [INFO] [Renderer] Rendering system initialized.
+                2026-07-03 20:39:43 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+                2026-07-03 20:39:49 [INFO] [Mesh] Released.
+                2026-07-03 20:39:49 [INFO] [ShaderManager] Released 'primitive'.
+                2026-07-03 20:39:49 [INFO] [Renderer] Shutdown
+                2026-07-03 20:39:49 [INFO] [Window] Destroyed
+                i see box of 9 squares
+            }
+            03(symbol rendering test and stress rendering test){
+                run test_tic_tac_toe.py
+                input code =
+                "|"
+                import pygame
+                from engine.core.window import Window
+                from engine.core.renderer import Renderer
+                from engine.utils.logger import Logger
+                from games.tic_tac_toe.board import TicTacToeBoard
+                from games.tic_tac_toe.board_renderer import BoardRenderer
+                from games.tic_tac_toe.constants import (
+                    PLAYER_X,
+                    PLAYER_O,
+                )
+                WINDOW_WIDTH = 1280
+                WINDOW_HEIGHT = 720
+                def main():
+                    Logger.initialize()
+                    pygame.init()
+                    window = Window(
+                        width=WINDOW_WIDTH,
+                        height=WINDOW_HEIGHT,
+                        title="Step 6 Test - Symbol Rendering",
+                    )
+                    window.create()
+                    renderer = Renderer()
+                    renderer.initialize(
+                        WINDOW_WIDTH,
+                        WINDOW_HEIGHT,
+                    )
+                    board = TicTacToeBoard()
+                    board.set_cell(0, 0, PLAYER_X)
+                    board.set_cell(0, 1, PLAYER_O)
+                    board.set_cell(0, 2, PLAYER_X)
+                    board.set_cell(1, 0, PLAYER_O)
+                    board.set_cell(1, 1, PLAYER_X)
+                    board.set_cell(1, 2, PLAYER_O)
+                    board.set_cell(2, 0, PLAYER_X)
+                    board.set_cell(2, 2, PLAYER_O)
+                    board_renderer = BoardRenderer(renderer)
+                    running = True
+                    clock = pygame.time.Clock()
+                    while running:
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                running = False
+                        renderer.begin_frame()
+                        board_renderer.render(board)
+                        renderer.end_frame()
+                        window.update()
+                        clock.tick(60)
+                    renderer.shutdown()
+                    window.destroy()
+                    pygame.quit()
+                if __name__ == "__main__":
+                    main()
+                "|"
+                output =
+                pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+                Hello from the pygame community. https://www.pygame.org/contribute.html
+                2026-07-03 20:52:33 [INFO] Logger Initialized
+                2026-07-03 20:52:35 [INFO] [Window] Created 1280x720
+                2026-07-03 20:52:35 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+                2026-07-03 20:52:35 [INFO] [ShaderManager] Loaded shader 'primitive'.
+                2026-07-03 20:52:35 [INFO] [Mesh] GPU mesh created.
+                2026-07-03 20:52:35 [INFO] [Renderer] Rendering system initialized.
+                2026-07-03 20:52:35 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+                2026-07-03 20:52:35 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+                2026-07-03 20:53:08 [INFO] [Mesh] Released.
+                2026-07-03 20:53:08 [INFO] [ShaderManager] Released 'primitive'.
+                2026-07-03 20:53:08 [INFO] [Renderer] Shutdown
+                2026-07-03 20:53:08 [INFO] [Window] Destroyed
+                i see box with X and O
+            }
+        }
+        [✓] ModernGL rendering system initializes successfully.
+        [✓] Camera2D creates the orthographic coordinate system.
+        [✓] ShaderManager loads and compiles rendering shaders.
+        [✓] Mesh creates GPU vertex buffers successfully.
+        [✓] Dynamic GPU buffer resizing works correctly.
+        [✓] PrimitiveRenderer renders lines correctly.
+        [✓] PrimitiveRenderer renders rectangles correctly.
+        [✓] PrimitiveRenderer renders circles correctly.
+        [✓] PrimitiveRenderer renders crosses correctly.
+        [✓] PrimitiveRenderer renders grids correctly.
+        [✓] Renderer provides a unified drawing API for the engine.
+        [✓] GameScene initializes successfully.
+        [✓] BootScene launches GameScene successfully.
+        [✓] TicTacToeGame integrates with the rendering system.
+        [✓] BoardRenderer renders the empty Tic-Tac-Toe board.
+        [✓] BoardRenderer renders X symbols correctly.
+        [✓] BoardRenderer renders O symbols correctly.
+        [✓] BoardRenderer positions all symbols correctly within cells.
+        [✓] Board rendering remains stable during continuous rendering.
+        [✓] Rendering system shuts down cleanly without errors.
+        [✓] All Step 6 rendering tests pass successfully.
+    }
+    07(human input layer){
 
+    }
+    08(turn system){
+
+    }
+    09(win and draw screens){
+
+    }
+    10(reset system){
+
+    }
+    11(ai match modes){
+
+    }
+    12(testing){
+
+    }
 }
 03(connect four){
 

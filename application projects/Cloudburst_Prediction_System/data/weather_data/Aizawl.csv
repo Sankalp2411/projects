@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Aizawl,Mizoram,23.7333,92.7167,21.26,98,1010,0.51,0,2,clear sky,2026-05-26 22:59:13.931429
+Aizawl,Mizoram,23.7333,92.7167,20.82,99,1005,1.22,0,100,overcast clouds,2026-06-24 00:06:43.782128

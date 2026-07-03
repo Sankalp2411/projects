@@ -1,0 +1,114 @@
+
+================================================================================
+Timestamp: 2026-07-02 11:13:46
+
+Exception: invalid uniform size
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 6, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 7, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 58, in run
+    self.render()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 46, in render
+    self.renderer.begin_frame()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\renderer.py", line 74, in begin_frame
+    self.primitives.begin_frame()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\rendering\primitive_renderer.py", line 83, in begin_frame
+    self._set_projection()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\rendering\primitive_renderer.py", line 73, in _set_projection
+    self.program["projection"].write(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        bytes(glm.value_ptr(projection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\venv\Lib\site-packages\_moderngl.py", line 95, in write
+    self.ctx._write_uniform(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self.program_obj, self.location, self.gl_type, self.array_length, self.element_size, data,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+_moderngl.Error: invalid uniform size
+
+
+================================================================================
+Timestamp: 2026-07-02 11:36:04
+
+Exception: out of range offset = 0 or size = 16
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 6, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 7, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 58, in run
+    self.render()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 48, in render
+    self.scene_manager.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 59, in render
+    self.current_scene.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 104, in render
+    self.game.render()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\tic_tac_toe\game.py", line 128, in render
+    self.board_renderer.render(self.board)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\tic_tac_toe\board_renderer.py", line 49, in render
+    self.draw_grid()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\tic_tac_toe\board_renderer.py", line 68, in draw_grid
+    self.renderer.draw_grid(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        origin=(self.origin_x, self.origin_y),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        color=GRID_COLOR,
+        ^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\renderer.py", line 147, in draw_grid
+    self.primitives.draw_grid(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        origin,
+        ^^^^^^^
+    ...<3 lines>...
+        color,
+        ^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\rendering\primitive_renderer.py", line 232, in draw_grid
+    self.draw_line(
+    ~~~~~~~~~~~~~~^
+        (ox, y),
+        ^^^^^^^^
+        (ox + width, y),
+        ^^^^^^^^^^^^^^^^
+        color,
+        ^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\rendering\primitive_renderer.py", line 107, in draw_line
+    self.mesh.update_vertices(vertices)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\rendering\mesh.py", line 93, in update_vertices
+    self.vbo.write(data.tobytes())
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\venv\Lib\site-packages\moderngl\__init__.py", line 88, in write
+    self.mglo.write(data, offset)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+_moderngl.Error: out of range offset = 0 or size = 16
+

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Jamnagar,Gujarat,22.4667,70.0667,29.29,76,1008,6.78,0,0,clear sky,2026-05-26 23:00:05.893268
+Jamnagar,Gujarat,22.4667,70.0667,30.06,62,1004,7.79,0,31,scattered clouds,2026-06-24 00:07:09.895395

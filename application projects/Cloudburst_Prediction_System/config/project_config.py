@@ -1,13 +1,4 @@
-# config/project_config.py
-"""
-Central configuration file for Cloudburst Prediction Project
-This file acts as a SINGLE SOURCE OF TRUTH
-"""
-FEATURE_COLUMNS = [
-    "temperature",
-    "humidity",
-    "rainfall"
-]
+FEATURE_COLUMNS = ["temperature","humidity","rainfall"]
 RAIN_THRESHOLD_MM = 100
 HUMIDITY_THRESHOLD = 85
 HIGH_RISK_PROBABILITY = 0.7

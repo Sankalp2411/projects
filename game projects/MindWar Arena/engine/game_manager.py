@@ -14,7 +14,7 @@ class GameManager:
         self.window = None
         self.renderer = Renderer()
         self.time_manager = TimeManager()
-        self.scene_manager = SceneManager()
+        self.scene_manager = SceneManager(self)
         self.fps_limit = 60
     def initialize(self):
         Logger.initialize()
@@ -26,7 +26,10 @@ class GameManager:
         self.fps_limit = Config.get("window","fps_limit",60)
         self.window = Window(width=width,height=height,title=title)
         self.window.create()
-        self.renderer.initialize()
+        self.renderer.initialize(
+            width,
+            height,
+        )
         Input.initialize()
         AssetManager.initialize()
         self.scene_manager.change_scene(BootScene())
@@ -40,8 +43,12 @@ class GameManager:
         Input.update()
         self.scene_manager.update()
     def render(self):
-        self.renderer.clear()
+        self.renderer.begin_frame()
+
         self.scene_manager.render()
+
+        self.renderer.end_frame()
+
         self.window.update()
     def run(self):
         Logger.info("[GameManager] Running...")

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Ghaziabad,Uttar Pradesh,28.6667,77.4333,38,8,1000,2.94,0,0,clear sky,2026-05-26 22:59:49.770264
+Ghaziabad,Uttar Pradesh,28.6667,77.4333,35.64,29,998,0.25,0,77,broken clouds,2026-06-24 00:07:02.930970

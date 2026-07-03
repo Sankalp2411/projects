@@ -1,4 +1,3 @@
-# src/fetch_weather.py
 import os
 import requests
 import pandas as pd
@@ -16,11 +15,7 @@ all_weather_records = []
 for _, row in cities_df.iterrows():
     city = row["City"]
     state = row["State"]
-    params = {
-        "q": f"{city},IN",
-        "appid": API_KEY,
-        "units": "metric"
-    }
+    params = {"q": f"{city},IN","appid": API_KEY,"units": "metric"}
     response = requests.get(BASE_URL, params=params)
     if response.status_code != 200:
         continue

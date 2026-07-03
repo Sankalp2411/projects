@@ -9,6 +9,7 @@ class CrashHandler:
         crash_file = crash_dir / "crash.log"
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         traceback_text = traceback.format_exc()
+        print(traceback_text)
         print(f"[CRITICAL] Fatal Exception: {exception}")
         with open(crash_file,"a",encoding="utf-8") as file:
             file.write("\n"+ "=" * 80+ "\n")
