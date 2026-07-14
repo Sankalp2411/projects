@@ -1,95 +1,95 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime,cloudburst_probability,cloudburst_prediction,cloudburst_risk
-Agra,Uttar Pradesh,27.1833,78.0167,35.1,33,999,3.83,0.0,100,overcast clouds,2026-06-24 00:06:42.176135,0.0,0,Low Risk
-Ahmedabad,Gujarat,23.0333,72.6167,31.92,53,1003,4.08,0.0,6,clear sky,2026-06-24 00:06:42.687593,0.0,0,Low Risk
-Ahmednagar,Maharashtra,19.0833,74.7333,25.59,70,1006,3.9,0.0,100,overcast clouds,2026-06-24 00:06:43.196518,0.0,0,Low Risk
-Aizawl,Mizoram,23.7333,92.7167,20.82,99,1005,1.22,0.0,100,overcast clouds,2026-06-24 00:06:43.782128,0.0,0,Low Risk
-Ajmer,Rajasthan,26.45,74.6333,31.36,40,1001,1.4,0.0,1,clear sky,2026-06-24 00:06:44.379843,0.0,0,Low Risk
-Alappuzha,Kerala,9.49,76.3264,26.42,84,1011,3.53,0.0,100,overcast clouds,2026-06-24 00:06:44.986973,0.0,0,Low Risk
-Aligarh,Uttar Pradesh,27.8833,78.0833,33.74,34,998,3.87,0.0,63,broken clouds,2026-06-24 00:06:45.506748,0.0,0,Low Risk
-Ambala,Haryana,30.3783,76.7808,33.01,29,998,0.97,0.0,0,clear sky,2026-06-24 00:06:46.052713,0.0,0,Low Risk
-Amravati,Maharashtra,20.9333,77.75,28.18,67,1004,6.86,0.0,76,broken clouds,2026-06-24 00:06:46.537896,0.0,0,Low Risk
-Amritsar,Punjab,31.6331,74.8656,34.32,30,997,2.52,0.0,0,clear sky,2026-06-24 00:06:47.071011,0.0,0,Low Risk
-Anantapur,Andhra Pradesh,14.6833,77.6,26.98,59,1008,7.57,0.0,92,overcast clouds,2026-06-24 00:06:47.677370,0.0,0,Low Risk
-Angul,Odisha,20.85,85.1,29.14,67,1002,0.56,0.0,100,overcast clouds,2026-06-24 00:06:49.143615,0.0,0,Low Risk
-Aurangabad,Maharashtra,19.8833,75.3333,25.29,77,1006,3.51,0.0,100,overcast clouds,2026-06-24 00:06:49.914987,0.0,0,Low Risk
-Ayodhya,Uttar Pradesh,26.8,82.2,35.94,21,997,1.56,0.0,0,clear sky,2026-06-24 00:06:50.445243,0.0,0,Low Risk
-Azamgarh,Uttar Pradesh,26.06,83.1861,37.08,20,997,2.24,0.0,2,clear sky,2026-06-24 00:06:50.950335,0.0,0,Low Risk
-Bagalkot,Karnataka,16.1833,75.7,25.08,70,1008,8.93,0.0,99,overcast clouds,2026-06-24 00:06:51.485889,0.0,0,Low Risk
-Bageshwar,Uttarakhand,29.85,79.7667,22.73,62,1006,0.26,0.0,100,overcast clouds,2026-06-24 00:06:52.074375,0.0,0,Low Risk
-Bangalore,Karnataka,12.9762,77.6033,22.45,78,1011,5.75,0.0,100,overcast clouds,2026-06-24 00:06:52.579455,0.0,0,Low Risk
-Bareilly,Uttar Pradesh,28.35,79.4167,35.07,27,998,1.92,0.0,91,overcast clouds,2026-06-24 00:06:53.114212,0.0,0,Low Risk
-Barmer,Rajasthan,25.75,71.3833,29.49,64,1001,10.31,0.0,0,clear sky,2026-06-24 00:06:53.649772,0.0,0,Low Risk
-Belgaum,Karnataka,15.8667,74.5,21.33,91,1010,5.62,0.0,100,overcast clouds,2026-06-24 00:06:54.151086,0.0,0,Low Risk
-Bengaluru,Karnataka,12.9762,77.6033,22.45,78,1011,5.75,0.0,100,overcast clouds,2026-06-24 00:06:54.958498,0.0,0,Low Risk
-Bhopal,Madhya Pradesh,23.2667,77.4,26.87,74,1003,2.83,0.0,91,overcast clouds,2026-06-24 00:06:55.507043,0.0,0,Low Risk
-Bhubaneswar,Odisha,20.2333,85.8333,27.77,96,1002,2.08,0.0,100,overcast clouds,2026-06-24 00:06:56.058326,0.0,0,Low Risk
-Bikaner,Rajasthan,28.0167,73.3,35.67,29,998,3.68,0.0,60,broken clouds,2026-06-24 00:06:56.566186,0.0,0,Low Risk
-Bilaspur,Chhattisgarh,22.0833,82.15,31.32,54,1002,0.71,0.0,100,overcast clouds,2026-06-24 00:06:57.078901,0.0,0,Low Risk
-Chandigarh,Chandigarh,30.7343,76.7933,32.58,30,998,2.54,0.0,0,clear sky,2026-06-24 00:06:57.568294,0.0,0,Low Risk
-Chennai,Tamil Nadu,13.0878,80.2785,29.37,86,1006,2.24,4.21,100,heavy intensity rain,2026-06-24 00:06:58.055706,0.0,0,Low Risk
-Coimbatore,Tamil Nadu,11.0,76.9667,23.79,81,1010,4.39,0.0,100,overcast clouds,2026-06-24 00:06:58.544323,0.0,0,Low Risk
-Cuttack,Odisha,20.465,85.8793,28.05,82,1002,2.74,0.0,100,overcast clouds,2026-06-24 00:06:59.080097,0.0,0,Low Risk
-Dehradun,Uttarakhand,30.3256,78.0437,27.4,43,1002,1.82,0.0,90,overcast clouds,2026-06-24 00:06:59.575441,0.0,0,Low Risk
-Delhi,Delhi,28.6667,77.2167,36.25,28,999,2.6,0.0,16,few clouds,2026-06-24 00:07:00.017014,0.0,0,Low Risk
-Dhanbad,Jharkhand,23.8,86.45,31.26,51,999,2.74,0.0,0,clear sky,2026-06-24 00:07:00.461983,0.0,0,Low Risk
-Dharwad,Karnataka,15.4667,75.0167,22.38,82,1009,7.35,0.0,100,overcast clouds,2026-06-24 00:07:00.950097,0.0,0,Low Risk
-Durgapur,West Bengal,23.4833,87.3167,30.13,61,1000,2.96,0.0,97,overcast clouds,2026-06-24 00:07:01.494548,0.0,0,Low Risk
-Ernakulam,Kerala,9.9833,76.2833,25.55,88,1011,1.72,0.0,100,overcast clouds,2026-06-24 00:07:01.999425,0.0,0,Low Risk
-Faridabad,Haryana,28.4333,77.3167,35.03,31,999,2.18,0.0,77,broken clouds,2026-06-24 00:07:02.475895,0.0,0,Low Risk
-Ghaziabad,Uttar Pradesh,28.6667,77.4333,35.64,29,998,0.25,0.0,77,broken clouds,2026-06-24 00:07:02.930970,0.0,0,Low Risk
-Gorakhpur,Uttar Pradesh,29.45,75.6833,34.14,38,998,1.19,0.0,0,clear sky,2026-06-24 00:07:03.387446,0.0,0,Low Risk
-Guntur,Andhra Pradesh,16.3,80.45,29.44,68,1005,1.03,0.0,100,overcast clouds,2026-06-24 00:07:03.850245,0.0,0,Low Risk
-Guwahati,Assam,26.1862,91.751,25.53,93,1001,1.11,0.0,8,clear sky,2026-06-24 00:07:04.334914,0.0,0,Low Risk
-Gwalior,Madhya Pradesh,26.2236,78.1792,34.16,31,1000,3.02,0.0,100,overcast clouds,2026-06-24 00:07:04.805653,0.0,0,Low Risk
-Haridwar,Uttarakhand,29.9667,78.1667,27.35,44,1000,2.7,0.0,19,few clouds,2026-06-24 00:07:05.308808,0.0,0,Low Risk
-Hubli,Karnataka,15.35,75.1667,22.9,81,1009,8.28,0.0,100,overcast clouds,2026-06-24 00:07:05.845909,0.0,0,Low Risk
-Hyderabad,Telangana,17.3753,78.4744,28.27,59,1007,7.26,0.0,94,overcast clouds,2026-06-24 00:07:06.504583,0.0,0,Low Risk
-Imphal,Manipur,24.8167,93.95,21.04,97,1005,0.59,0.0,90,overcast clouds,2026-06-24 00:07:06.971390,0.0,0,Low Risk
-Indore,Madhya Pradesh,22.7179,75.8333,26.53,75,1004,2.93,0.0,99,overcast clouds,2026-06-24 00:07:07.480848,0.0,0,Low Risk
-Jabalpur,Madhya Pradesh,23.167,79.9501,29.54,54,1002,2.69,0.0,43,scattered clouds,2026-06-24 00:07:07.939643,0.0,0,Low Risk
-Jaipur,Rajasthan,26.9167,75.8167,30.51,46,1001,0.68,0.0,71,broken clouds,2026-06-24 00:07:08.409471,0.0,0,Low Risk
-Jalandhar,Punjab,31.3256,75.5792,34.1,31,997,2.66,0.0,0,clear sky,2026-06-24 00:07:08.995753,0.0,0,Low Risk
-Jammu,Jammu & Kashmir,32.7333,74.8667,32.68,26,998,1.61,0.0,0,clear sky,2026-06-24 00:07:09.458967,0.0,0,Low Risk
-Jamnagar,Gujarat,22.4667,70.0667,30.06,62,1004,7.79,0.0,31,scattered clouds,2026-06-24 00:07:09.895395,0.0,0,Low Risk
-Jamshedpur,Jharkhand,22.8,86.1833,30.07,60,1000,4.68,0.0,100,overcast clouds,2026-06-24 00:07:10.420350,0.0,0,Low Risk
-Jhansi,Uttar Pradesh,25.4333,78.5833,33.95,38,1000,4.17,0.0,82,broken clouds,2026-06-24 00:07:10.887565,0.0,0,Low Risk
-Jodhpur,Rajasthan,26.2867,73.03,32.59,44,1000,6.86,0.0,0,clear sky,2026-06-24 00:07:11.320102,0.0,0,Low Risk
-Kanpur,Uttar Pradesh,26.4667,80.35,35.36,28,998,1.76,0.0,42,scattered clouds,2026-06-24 00:07:11.767817,0.0,0,Low Risk
-Kochi,Kerala,9.9399,76.2602,26.11,85,1011,2.46,0.0,100,overcast clouds,2026-06-24 00:07:12.235526,0.0,0,Low Risk
-Kolkata,West Bengal,22.5697,88.3697,30.14,67,1000,3.07,0.0,100,overcast clouds,2026-06-24 00:07:12.783868,0.0,0,Low Risk
-Kollam,Kerala,8.8833,76.6,26.22,85,1011,4.33,0.0,99,overcast clouds,2026-06-24 00:07:13.238613,0.0,0,Low Risk
-Kota,Rajasthan,25.1833,75.8333,34.06,38,1000,7.76,0.0,25,scattered clouds,2026-06-24 00:07:13.695033,0.0,0,Low Risk
-Kozhikode,Kerala,11.25,75.7667,25.67,80,1010,1.61,0.0,100,overcast clouds,2026-06-24 00:07:14.130894,0.0,0,Low Risk
-Lucknow,Uttar Pradesh,26.85,80.9167,35.72,23,998,0.4,0.0,24,few clouds,2026-06-24 00:07:14.565655,0.0,0,Low Risk
-Ludhiana,Punjab,30.9,75.85,34.16,32,997,2.13,0.0,0,clear sky,2026-06-24 00:07:15.067299,0.0,0,Low Risk
-Madurai,Tamil Nadu,9.9333,78.1167,27.02,73,1009,3.21,0.0,100,overcast clouds,2026-06-24 00:07:15.491304,0.0,0,Low Risk
-Mangalore,Karnataka,12.8667,74.8833,26.49,80,1010,1.01,0.0,91,overcast clouds,2026-06-24 00:07:15.943297,0.0,0,Low Risk
-Meerut,Uttar Pradesh,28.9833,77.7,32.73,36,999,0.77,0.0,2,clear sky,2026-06-24 00:07:16.377693,0.0,0,Low Risk
-Mumbai,Maharashtra,19.0144,72.8479,27.23,80,1006,7.35,0.0,100,overcast clouds,2026-06-24 00:07:16.821441,0.0,0,Low Risk
-Mysore,Karnataka,12.3072,76.6497,21.65,80,1011,3.6,0.0,100,overcast clouds,2026-06-24 00:07:17.290122,0.0,0,Low Risk
-Nagpur,Maharashtra,21.15,79.1,30.7,52,1003,6.31,0.0,96,overcast clouds,2026-06-24 00:07:17.764853,0.0,0,Low Risk
-Nashik,Maharashtra,19.9833,73.8,24.25,84,1007,3.21,0.0,100,overcast clouds,2026-06-24 00:07:18.220469,0.0,0,Low Risk
-Noida,Uttar Pradesh,28.58,77.33,35.87,29,999,1.39,0.0,63,broken clouds,2026-06-24 00:07:18.654926,0.0,0,Low Risk
-Patna,Bihar,25.6,85.1167,35.31,35,997,2.35,0.0,2,clear sky,2026-06-24 00:07:19.097331,0.0,0,Low Risk
-Pune,Maharashtra,18.5196,73.8553,23.08,85,1007,5.47,0.0,100,overcast clouds,2026-06-24 00:07:19.576843,0.0,0,Low Risk
-Raipur,Chhattisgarh,21.2333,81.6333,29.82,59,1004,3.36,0.0,100,overcast clouds,2026-06-24 00:07:20.062069,0.0,0,Low Risk
-Rajkot,Gujarat,22.3,70.7833,30.0,58,1004,7.04,0.0,0,clear sky,2026-06-24 00:07:20.577171,0.0,0,Low Risk
-Ranchi,Jharkhand,23.35,85.3333,29.75,46,1001,4.85,0.0,87,overcast clouds,2026-06-24 00:07:21.054441,0.0,0,Low Risk
-Salem,Tamil Nadu,11.65,78.1667,25.03,81,1010,1.72,0.0,100,overcast clouds,2026-06-24 00:07:21.535952,0.0,0,Low Risk
-Sambalpur,Odisha,21.45,83.9667,28.4,66,1003,3.68,0.0,100,overcast clouds,2026-06-24 00:07:22.052592,0.0,0,Low Risk
-Sangli,Maharashtra,16.8544,74.5642,23.14,86,1008,7.63,0.0,100,overcast clouds,2026-06-24 00:07:22.527240,0.0,0,Low Risk
-Shimla,Himachal Pradesh,31.1,77.1667,17.41,50,1004,1.85,0.0,41,scattered clouds,2026-06-24 00:07:23.022466,0.0,0,Low Risk
-Silchar,Assam,24.8167,92.8,24.98,96,1003,0.73,0.97,100,light rain,2026-06-24 00:07:23.471866,0.0,0,Low Risk
-Siliguri,West Bengal,26.7,88.4333,24.05,93,1002,2.49,1.63,5,moderate rain,2026-06-24 00:07:23.938472,0.0,0,Low Risk
-Solapur,Maharashtra,17.6833,75.9167,25.78,69,1007,9.27,0.0,61,broken clouds,2026-06-24 00:07:24.386690,0.0,0,Low Risk
-Surat,Gujarat,21.1667,72.8333,29.37,70,1004,6.14,0.0,100,overcast clouds,2026-06-24 00:07:24.829691,0.0,0,Low Risk
-Thane,Maharashtra,19.2,72.9667,28.33,72,1006,3.71,0.24,100,light rain,2026-06-24 00:07:25.255842,0.0,0,Low Risk
-Thiruvananthapuram,Kerala,8.4833,76.9167,25.65,87,1011,3.41,0.0,100,overcast clouds,2026-06-24 00:07:25.695311,0.0,0,Low Risk
-Tiruchirappalli,Tamil Nadu,10.8167,78.6833,27.33,66,1008,6.09,0.0,100,overcast clouds,2026-06-24 00:07:26.302799,0.0,0,Low Risk
-Tirunelveli,Tamil Nadu,8.7333,77.7,28.15,63,1008,4.63,0.0,100,overcast clouds,2026-06-24 00:07:26.843428,0.0,0,Low Risk
-Tirupati,Andhra Pradesh,13.65,79.4167,26.99,54,1008,3.58,0.0,96,overcast clouds,2026-06-24 00:07:27.280072,0.0,0,Low Risk
-Udaipur,Rajasthan,24.5712,73.6918,29.33,51,1003,7.04,0.0,50,scattered clouds,2026-06-24 00:07:27.754475,0.0,0,Low Risk
-Vadodara,Gujarat,22.3,73.2,30.94,62,1003,5.59,0.0,0,clear sky,2026-06-24 00:07:28.221647,0.0,0,Low Risk
-Varanasi,Uttar Pradesh,25.3333,83.0,36.1,36,998,0.44,0.0,30,scattered clouds,2026-06-24 00:07:28.691760,0.0,0,Low Risk
-Vijayawada,Andhra Pradesh,16.5167,80.6167,31.01,58,1005,3.51,0.0,100,overcast clouds,2026-06-24 00:07:29.152019,0.0,0,Low Risk
-Visakhapatnam,Andhra Pradesh,17.69,83.2093,25.8,92,1004,2.27,0.0,100,overcast clouds,2026-06-24 00:07:29.707979,0.0,0,Low Risk
+Agra,Uttar Pradesh,27.1833,78.0167,37.9,36,996,5.83,0.0,48,scattered clouds,2026-07-06 22:46:32.373948,0.0,0,Low Risk
+Ahmedabad,Gujarat,23.0333,72.6167,27.57,75,1000,5.42,0.0,100,overcast clouds,2026-07-06 22:46:32.784167,0.0,0,Low Risk
+Ahmednagar,Maharashtra,19.0833,74.7333,23.09,92,1002,11.15,0.0,100,overcast clouds,2026-07-06 22:46:33.197618,0.0,0,Low Risk
+Aizawl,Mizoram,23.7333,92.7167,22.09,99,1007,1.23,0.0,100,overcast clouds,2026-07-06 22:46:33.634451,0.0,0,Low Risk
+Ajmer,Rajasthan,26.45,74.6333,30.59,61,997,1.16,0.0,100,overcast clouds,2026-07-06 22:46:34.058191,0.0,0,Low Risk
+Alappuzha,Kerala,9.49,76.3264,26.83,86,1012,4.36,0.0,80,broken clouds,2026-07-06 22:46:34.475684,0.0,0,Low Risk
+Aligarh,Uttar Pradesh,27.8833,78.0833,36.8,38,997,4.61,0.0,73,broken clouds,2026-07-06 22:46:34.903032,0.0,0,Low Risk
+Ambala,Haryana,30.3783,76.7808,35.15,43,996,2.71,0.0,7,clear sky,2026-07-06 22:46:35.550643,0.0,0,Low Risk
+Amravati,Maharashtra,20.9333,77.75,26.6,81,1000,4.34,0.0,88,overcast clouds,2026-07-06 22:46:35.965026,0.0,0,Low Risk
+Amritsar,Punjab,31.6331,74.8656,35.17,43,995,4.04,0.0,3,clear sky,2026-07-06 22:46:36.384828,0.0,0,Low Risk
+Anantapur,Andhra Pradesh,14.6833,77.6,26.54,66,1007,11.17,0.0,100,overcast clouds,2026-07-06 22:46:36.804529,0.0,0,Low Risk
+Angul,Odisha,20.85,85.1,25.1,89,1001,1.58,0.0,100,overcast clouds,2026-07-06 22:46:37.838799,0.0,0,Low Risk
+Aurangabad,Maharashtra,19.8833,75.3333,23.73,85,1001,7.94,0.0,100,overcast clouds,2026-07-06 22:46:38.274826,0.0,0,Low Risk
+Ayodhya,Uttar Pradesh,26.8,82.2,28.32,54,998,4.1,0.0,50,scattered clouds,2026-07-06 22:46:38.706273,0.0,0,Low Risk
+Azamgarh,Uttar Pradesh,26.06,83.1861,31.41,57,997,7.02,0.14,20,light rain,2026-07-06 22:46:39.125737,0.0,0,Low Risk
+Bagalkot,Karnataka,16.1833,75.7,24.44,81,1006,10.47,0.0,100,overcast clouds,2026-07-06 22:46:39.556230,0.0,0,Low Risk
+Bageshwar,Uttarakhand,29.85,79.7667,24.45,84,1004,0.76,0.0,53,broken clouds,2026-07-06 22:46:41.084608,0.0,0,Low Risk
+Bangalore,Karnataka,12.9762,77.6033,22.72,82,1011,7.6,0.0,100,overcast clouds,2026-07-06 22:46:41.497522,0.0,0,Low Risk
+Bareilly,Uttar Pradesh,28.35,79.4167,35.05,41,997,3.21,0.0,7,clear sky,2026-07-06 22:46:41.926647,0.0,0,Low Risk
+Barmer,Rajasthan,25.75,71.3833,28.93,67,998,9.12,0.0,85,overcast clouds,2026-07-06 22:46:42.360527,0.0,0,Low Risk
+Belgaum,Karnataka,15.8667,74.5,21.51,94,1008,6.61,0.0,100,overcast clouds,2026-07-06 22:46:42.799373,0.0,0,Low Risk
+Bengaluru,Karnataka,12.9762,77.6033,22.45,82,1011,7.6,0.0,100,overcast clouds,2026-07-06 22:46:43.230800,0.0,0,Low Risk
+Bhopal,Madhya Pradesh,23.2667,77.4,27.44,82,998,4.15,0.0,53,broken clouds,2026-07-06 22:46:43.655744,0.0,0,Low Risk
+Bhubaneswar,Odisha,20.2333,85.8333,27.77,92,1001,4.47,0.0,100,overcast clouds,2026-07-06 22:46:44.174710,0.0,0,Low Risk
+Bikaner,Rajasthan,28.0167,73.3,35.17,47,996,10.62,0.0,82,broken clouds,2026-07-06 22:46:44.765141,0.0,0,Low Risk
+Bilaspur,Chhattisgarh,22.0833,82.15,25.03,91,999,6.36,0.6,100,light rain,2026-07-06 22:46:45.229928,0.0,0,Low Risk
+Chandigarh,Chandigarh,30.7343,76.7933,32.64,51,997,3.04,0.0,10,clear sky,2026-07-06 22:46:45.840787,0.0,0,Low Risk
+Chennai,Tamil Nadu,13.0878,80.2785,33.59,50,1007,1.34,0.0,100,overcast clouds,2026-07-06 22:46:46.463274,0.0,0,Low Risk
+Coimbatore,Tamil Nadu,11.0,76.9667,23.45,80,1011,5.6,0.0,100,overcast clouds,2026-07-06 22:46:46.991914,0.0,0,Low Risk
+Cuttack,Odisha,20.465,85.8793,26.7,77,1001,3.13,0.0,100,overcast clouds,2026-07-06 22:46:47.541425,0.0,0,Low Risk
+Dehradun,Uttarakhand,30.3256,78.0437,28.58,59,1000,2.32,0.0,63,broken clouds,2026-07-06 22:46:48.183608,0.0,0,Low Risk
+Delhi,Delhi,28.6667,77.2167,38.51,31,996,2.85,0.0,1,clear sky,2026-07-06 22:46:48.610048,0.0,0,Low Risk
+Dhanbad,Jharkhand,23.8,86.45,26.65,83,999,4.52,0.0,100,overcast clouds,2026-07-06 22:46:49.049296,0.0,0,Low Risk
+Dharwad,Karnataka,15.4667,75.0167,21.84,91,1008,8.68,0.0,100,overcast clouds,2026-07-06 22:46:49.485015,0.0,0,Low Risk
+Durgapur,West Bengal,23.4833,87.3167,26.81,85,1000,4.53,0.0,100,overcast clouds,2026-07-06 22:46:49.929065,0.0,0,Low Risk
+Ernakulam,Kerala,9.9833,76.2833,26.12,88,1012,3.74,0.0,99,overcast clouds,2026-07-06 22:46:50.367476,0.0,0,Low Risk
+Faridabad,Haryana,28.4333,77.3167,37.31,34,997,2.98,0.0,1,clear sky,2026-07-06 22:46:50.789464,0.0,0,Low Risk
+Ghaziabad,Uttar Pradesh,28.6667,77.4333,37.12,34,997,2.62,0.0,2,clear sky,2026-07-06 22:46:51.215446,0.0,0,Low Risk
+Gorakhpur,Uttar Pradesh,29.45,75.6833,37.29,35,996,3.77,0.0,11,few clouds,2026-07-06 22:46:51.877558,0.0,0,Low Risk
+Guntur,Andhra Pradesh,16.3,80.45,31.18,54,1004,6.95,0.0,100,overcast clouds,2026-07-06 22:46:52.313132,0.0,0,Low Risk
+Guwahati,Assam,26.1862,91.751,26.77,94,1003,1.06,0.12,100,light rain,2026-07-06 22:46:52.755691,0.0,0,Low Risk
+Gwalior,Madhya Pradesh,26.2236,78.1792,36.32,41,997,6.94,0.0,58,broken clouds,2026-07-06 22:46:53.210157,0.0,0,Low Risk
+Haridwar,Uttarakhand,29.9667,78.1667,31.06,48,998,2.0,0.0,39,scattered clouds,2026-07-06 22:46:53.649761,0.0,0,Low Risk
+Hubli,Karnataka,15.35,75.1667,22.61,87,1008,9.57,0.0,100,overcast clouds,2026-07-06 22:46:54.115791,0.0,0,Low Risk
+Hyderabad,Telangana,17.3753,78.4744,25.66,74,1004,9.14,0.0,100,overcast clouds,2026-07-06 22:46:54.589550,0.0,0,Low Risk
+Imphal,Manipur,24.8167,93.95,22.66,97,1007,0.1,0.0,99,overcast clouds,2026-07-06 22:46:55.040475,0.0,0,Low Risk
+Indore,Madhya Pradesh,22.7179,75.8333,27.34,81,999,2.84,0.0,83,broken clouds,2026-07-06 22:46:55.474292,0.0,0,Low Risk
+Jabalpur,Madhya Pradesh,23.167,79.9501,25.12,92,999,2.95,0.0,100,overcast clouds,2026-07-06 22:46:55.900540,0.0,0,Low Risk
+Jaipur,Rajasthan,26.9167,75.8167,36.01,36,996,2.31,0.0,76,broken clouds,2026-07-06 22:46:56.326768,0.0,0,Low Risk
+Jalandhar,Punjab,31.3256,75.5792,34.45,45,995,2.73,0.0,6,clear sky,2026-07-06 22:46:56.747197,0.0,0,Low Risk
+Jammu,Jammu & Kashmir,32.7333,74.8667,34.56,45,996,4.87,0.0,40,scattered clouds,2026-07-06 22:46:57.176764,0.0,0,Low Risk
+Jamnagar,Gujarat,22.4667,70.0667,29.77,76,999,8.2,0.0,85,overcast clouds,2026-07-06 22:46:57.601453,0.0,0,Low Risk
+Jamshedpur,Jharkhand,22.8,86.1833,26.25,86,1000,4.42,0.0,100,overcast clouds,2026-07-06 22:46:58.032480,0.0,0,Low Risk
+Jhansi,Uttar Pradesh,25.4333,78.5833,34.5,47,997,7.23,0.0,64,broken clouds,2026-07-06 22:46:58.458970,0.0,0,Low Risk
+Jodhpur,Rajasthan,26.2867,73.03,27.77,68,998,7.59,0.0,100,overcast clouds,2026-07-06 22:46:59.117781,0.0,0,Low Risk
+Kanpur,Uttar Pradesh,26.4667,80.35,33.55,51,997,5.36,0.0,79,broken clouds,2026-07-06 22:46:59.806672,0.0,0,Low Risk
+Kochi,Kerala,9.9399,76.2602,26.77,86,1012,4.63,0.0,99,overcast clouds,2026-07-06 22:47:00.229431,0.0,0,Low Risk
+Kolkata,West Bengal,22.5697,88.3697,27.98,79,1001,4.61,0.0,99,overcast clouds,2026-07-06 22:47:00.659861,0.0,0,Low Risk
+Kollam,Kerala,8.8833,76.6,26.67,84,1012,4.83,0.0,71,broken clouds,2026-07-06 22:47:01.090506,0.0,0,Low Risk
+Kota,Rajasthan,25.1833,75.8333,31.21,62,997,5.7,0.0,87,overcast clouds,2026-07-06 22:47:02.568859,0.0,0,Low Risk
+Kozhikode,Kerala,11.25,75.7667,26.11,87,1011,4.59,0.0,90,overcast clouds,2026-07-06 22:47:03.099289,0.0,0,Low Risk
+Lucknow,Uttar Pradesh,26.85,80.9167,33.08,50,997,3.45,0.0,56,broken clouds,2026-07-06 22:47:03.612117,0.0,0,Low Risk
+Ludhiana,Punjab,30.9,75.85,34.78,43,996,2.56,0.0,12,few clouds,2026-07-06 22:47:04.033637,0.0,0,Low Risk
+Madurai,Tamil Nadu,9.9333,78.1167,28.33,54,1009,5.04,0.0,71,broken clouds,2026-07-06 22:47:04.454394,0.0,0,Low Risk
+Mangalore,Karnataka,12.8667,74.8833,26.94,84,1010,7.11,0.0,100,overcast clouds,2026-07-06 22:47:04.970966,0.0,0,Low Risk
+Meerut,Uttar Pradesh,28.9833,77.7,35.78,37,997,1.43,0.0,5,clear sky,2026-07-06 22:47:05.401380,0.0,0,Low Risk
+Mumbai,Maharashtra,19.0144,72.8479,27.22,93,1001,12.96,0.0,100,overcast clouds,2026-07-06 22:47:06.110187,0.0,0,Low Risk
+Mysore,Karnataka,12.3072,76.6497,21.94,84,1011,6.49,0.0,100,overcast clouds,2026-07-06 22:47:06.773553,0.0,0,Low Risk
+Nagpur,Maharashtra,21.15,79.1,26.16,83,1000,5.57,0.0,100,overcast clouds,2026-07-06 22:47:07.256813,0.0,0,Low Risk
+Nashik,Maharashtra,19.9833,73.8,23.19,96,1000,6.25,0.0,100,overcast clouds,2026-07-06 22:47:07.687532,0.0,0,Low Risk
+Noida,Uttar Pradesh,28.58,77.33,38.13,32,997,2.95,0.0,1,clear sky,2026-07-06 22:47:08.115206,0.0,0,Low Risk
+Patna,Bihar,25.6,85.1167,29.61,74,998,7.17,0.0,91,overcast clouds,2026-07-06 22:47:08.540212,0.0,0,Low Risk
+Pune,Maharashtra,18.5196,73.8553,24.11,89,1004,6.37,0.0,100,overcast clouds,2026-07-06 22:47:09.280294,0.0,0,Low Risk
+Raipur,Chhattisgarh,21.2333,81.6333,25.11,89,1000,6.06,0.0,100,overcast clouds,2026-07-06 22:47:09.703362,0.0,0,Low Risk
+Rajkot,Gujarat,22.3,70.7833,29.44,73,999,7.48,11.53,99,heavy intensity rain,2026-07-06 22:47:10.114449,0.0,0,Low Risk
+Ranchi,Jharkhand,23.35,85.3333,22.76,96,1000,7.43,0.0,100,overcast clouds,2026-07-06 22:47:10.519642,0.0,0,Low Risk
+Salem,Tamil Nadu,11.65,78.1667,27.53,70,1010,2.15,0.0,100,overcast clouds,2026-07-06 22:47:11.031958,0.0,0,Low Risk
+Sambalpur,Odisha,21.45,83.9667,24.64,90,1001,4.93,0.0,100,overcast clouds,2026-07-06 22:47:11.493332,0.0,0,Low Risk
+Sangli,Maharashtra,16.8544,74.5642,23.43,88,1006,9.83,0.0,100,overcast clouds,2026-07-06 22:47:12.296584,0.0,0,Low Risk
+Shimla,Himachal Pradesh,31.1,77.1667,17.88,85,1003,2.1,0.0,8,clear sky,2026-07-06 22:47:12.744206,0.0,0,Low Risk
+Silchar,Assam,24.8167,92.8,25.26,96,1006,2.07,0.0,100,overcast clouds,2026-07-06 22:47:13.201561,0.0,0,Low Risk
+Siliguri,West Bengal,26.7,88.4333,26.35,94,1003,3.4,0.0,100,overcast clouds,2026-07-06 22:47:13.683517,0.0,0,Low Risk
+Solapur,Maharashtra,17.6833,75.9167,24.77,82,1004,9.91,0.0,100,overcast clouds,2026-07-06 22:47:14.124583,0.0,0,Low Risk
+Surat,Gujarat,21.1667,72.8333,28.01,87,999,7.41,0.0,100,overcast clouds,2026-07-06 22:47:14.674092,0.0,0,Low Risk
+Thane,Maharashtra,19.2,72.9667,26.02,94,1001,9.72,0.69,100,light rain,2026-07-06 22:47:16.478705,0.0,0,Low Risk
+Thiruvananthapuram,Kerala,8.4833,76.9167,26.55,81,1012,4.61,0.0,100,overcast clouds,2026-07-06 22:47:16.914050,0.0,0,Low Risk
+Tiruchirappalli,Tamil Nadu,10.8167,78.6833,29.11,52,1009,9.27,0.0,99,overcast clouds,2026-07-06 22:47:17.542145,0.0,0,Low Risk
+Tirunelveli,Tamil Nadu,8.7333,77.7,28.07,63,1010,4.06,0.0,79,broken clouds,2026-07-06 22:47:18.154727,0.0,0,Low Risk
+Tirupati,Andhra Pradesh,13.65,79.4167,27.17,51,1007,4.95,0.0,100,overcast clouds,2026-07-06 22:47:18.769438,0.0,0,Low Risk
+Udaipur,Rajasthan,24.5712,73.6918,24.67,81,1000,1.32,0.0,100,overcast clouds,2026-07-06 22:47:19.210507,0.0,0,Low Risk
+Vadodara,Gujarat,22.3,73.2,28.49,80,999,7.29,0.0,87,overcast clouds,2026-07-06 22:47:19.657186,0.0,0,Low Risk
+Varanasi,Uttar Pradesh,25.3333,83.0,32.71,55,996,4.17,0.0,100,overcast clouds,2026-07-06 22:47:20.104431,0.0,0,Low Risk
+Vijayawada,Andhra Pradesh,16.5167,80.6167,31.05,54,1004,6.42,0.0,100,overcast clouds,2026-07-06 22:47:20.528593,0.0,0,Low Risk
+Visakhapatnam,Andhra Pradesh,17.69,83.2093,29.71,73,1003,6.19,0.0,100,overcast clouds,2026-07-06 22:47:23.097050,0.0,0,Low Risk

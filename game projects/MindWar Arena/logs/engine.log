@@ -279,3 +279,2172 @@
 2026-07-03 20:53:08 [INFO] [ShaderManager] Released 'primitive'.
 2026-07-03 20:53:08 [INFO] [Renderer] Shutdown
 2026-07-03 20:53:08 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 13:40:06 [INFO] Logger Initialized
+2026-07-05 13:40:07 [INFO] [Window] Created 800x600
+2026-07-05 13:40:07 [INFO] [Input] Initialized
+2026-07-05 13:40:18 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 13:53:25 [INFO] Logger Initialized
+2026-07-05 13:53:26 [INFO] [Window] Created 1280x720
+2026-07-05 13:53:26 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 13:53:26 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 13:53:26 [INFO] [Mesh] GPU mesh created.
+2026-07-05 13:53:26 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 13:53:26 [INFO] [Input] Initialized
+2026-07-05 13:53:26 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 13:53:41 [INFO] [Mesh] Released.
+2026-07-05 13:53:42 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 13:53:42 [INFO] [Renderer] Shutdown
+2026-07-05 13:53:42 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 14:36:47 [INFO] Logger Initialized
+2026-07-05 14:36:47 [INFO] [GameManager] Initializing...
+2026-07-05 14:36:47 [INFO] [Config] Loaded
+2026-07-05 14:36:47 [INFO] [Window] Created 1280x720
+2026-07-05 14:36:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 14:36:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 14:36:47 [INFO] [Mesh] GPU mesh created.
+2026-07-05 14:36:47 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 14:36:47 [INFO] [Input] Initialized
+2026-07-05 14:36:47 [INFO] [AssetManager] Initialized
+2026-07-05 14:36:47 [INFO] [Scene] Enter: Boot Scene
+2026-07-05 14:36:47 [INFO] [BootScene] Engine initialization complete.
+2026-07-05 14:36:47 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-05 14:36:47 [INFO] [Scene] Exit: Boot Scene
+2026-07-05 14:36:47 [INFO] [Scene] Enter: Game Scene
+2026-07-05 14:36:47 [INFO] [GameScene] Initializing game.
+2026-07-05 14:36:47 [INFO] [GameManager] Running...
+2026-07-05 14:36:47 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 14:37:09 [INFO] [GameManager] Shutting down...
+2026-07-05 14:37:09 [INFO] [GameManager] Runtime: 22.49s
+2026-07-05 14:37:09 [INFO] [Mesh] Released.
+2026-07-05 14:37:09 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 14:37:09 [INFO] [Renderer] Shutdown
+2026-07-05 14:37:09 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 14:37:58 [INFO] Logger Initialized
+2026-07-05 14:37:58 [INFO] [GameManager] Initializing...
+2026-07-05 14:37:58 [INFO] [Config] Loaded
+2026-07-05 14:37:59 [INFO] [Window] Created 1280x720
+2026-07-05 14:37:59 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 14:37:59 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 14:37:59 [INFO] [Mesh] GPU mesh created.
+2026-07-05 14:37:59 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 14:37:59 [INFO] [Input] Initialized
+2026-07-05 14:37:59 [INFO] [AssetManager] Initialized
+2026-07-05 14:37:59 [INFO] [Scene] Enter: Boot Scene
+2026-07-05 14:37:59 [INFO] [BootScene] Engine initialization complete.
+2026-07-05 14:37:59 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-05 14:37:59 [INFO] [Scene] Exit: Boot Scene
+2026-07-05 14:37:59 [INFO] [Scene] Enter: Game Scene
+2026-07-05 14:37:59 [INFO] [GameScene] Initializing game.
+2026-07-05 14:37:59 [INFO] [GameManager] Running...
+2026-07-05 14:37:59 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 14:38:08 [INFO] [GameManager] Shutting down...
+2026-07-05 14:38:08 [INFO] [GameManager] Runtime: 10.12s
+2026-07-05 14:38:08 [INFO] [Mesh] Released.
+2026-07-05 14:38:08 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 14:38:08 [INFO] [Renderer] Shutdown
+2026-07-05 14:38:09 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 14:43:06 [INFO] Logger Initialized
+2026-07-05 14:43:06 [INFO] [GameManager] Initializing...
+2026-07-05 14:43:06 [INFO] [Config] Loaded
+2026-07-05 14:43:07 [INFO] [Window] Created 1280x720
+2026-07-05 14:43:07 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 14:43:07 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 14:43:07 [INFO] [Mesh] GPU mesh created.
+2026-07-05 14:43:07 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 14:43:07 [INFO] [Input] Initialized
+2026-07-05 14:43:07 [INFO] [AssetManager] Initialized
+2026-07-05 14:43:07 [INFO] [Scene] Enter: Boot Scene
+2026-07-05 14:43:07 [INFO] [BootScene] Engine initialization complete.
+2026-07-05 14:43:07 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-05 14:43:07 [INFO] [Scene] Exit: Boot Scene
+2026-07-05 14:43:07 [INFO] [Scene] Enter: Game Scene
+2026-07-05 14:43:07 [INFO] [GameScene] Initializing game.
+2026-07-05 14:43:07 [INFO] [GameManager] Running...
+2026-07-05 14:43:07 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 14:43:14 [INFO] [GameManager] Shutting down...
+2026-07-05 14:43:14 [INFO] [GameManager] Runtime: 7.86s
+2026-07-05 14:43:14 [INFO] [Mesh] Released.
+2026-07-05 14:43:14 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 14:43:14 [INFO] [Renderer] Shutdown
+2026-07-05 14:43:14 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 14:43:59 [INFO] Logger Initialized
+2026-07-05 14:43:59 [INFO] [GameManager] Initializing...
+2026-07-05 14:43:59 [INFO] [Config] Loaded
+2026-07-05 14:44:00 [INFO] [Window] Created 1280x720
+2026-07-05 14:44:00 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 14:44:00 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 14:44:00 [INFO] [Mesh] GPU mesh created.
+2026-07-05 14:44:00 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 14:44:00 [INFO] [Input] Initialized
+2026-07-05 14:44:00 [INFO] [AssetManager] Initialized
+2026-07-05 14:44:00 [INFO] [Scene] Enter: Boot Scene
+2026-07-05 14:44:00 [INFO] [BootScene] Engine initialization complete.
+2026-07-05 14:44:00 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-05 14:44:00 [INFO] [Scene] Exit: Boot Scene
+2026-07-05 14:44:00 [INFO] [Scene] Enter: Game Scene
+2026-07-05 14:44:00 [INFO] [GameScene] Initializing game.
+2026-07-05 14:44:00 [INFO] [GameManager] Running...
+2026-07-05 14:44:00 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 14:44:05 [INFO] [GameManager] Shutting down...
+2026-07-05 14:44:05 [INFO] [GameManager] Runtime: 6.31s
+2026-07-05 14:44:05 [INFO] [Mesh] Released.
+2026-07-05 14:44:05 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 14:44:05 [INFO] [Renderer] Shutdown
+2026-07-05 14:44:05 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 14:48:12 [INFO] Logger Initialized
+2026-07-05 14:48:12 [INFO] [GameManager] Initializing...
+2026-07-05 14:48:12 [INFO] [Config] Loaded
+2026-07-05 14:48:13 [INFO] [Window] Created 1280x720
+2026-07-05 14:48:13 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 14:48:13 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 14:48:13 [INFO] [Mesh] GPU mesh created.
+2026-07-05 14:48:13 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 14:48:13 [INFO] [Input] Initialized
+2026-07-05 14:48:13 [INFO] [AssetManager] Initialized
+2026-07-05 14:48:13 [INFO] [Scene] Enter: Boot Scene
+2026-07-05 14:48:13 [INFO] [BootScene] Engine initialization complete.
+2026-07-05 14:48:13 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-05 14:48:13 [INFO] [Scene] Exit: Boot Scene
+2026-07-05 14:48:13 [INFO] [Scene] Enter: Game Scene
+2026-07-05 14:48:13 [INFO] [GameScene] Initializing game.
+2026-07-05 14:48:13 [INFO] [GameManager] Running...
+2026-07-05 14:48:13 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 14:48:21 [INFO] [GameManager] Shutting down...
+2026-07-05 14:48:21 [INFO] [GameManager] Runtime: 8.60s
+2026-07-05 14:48:21 [INFO] [Mesh] Released.
+2026-07-05 14:48:21 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 14:48:21 [INFO] [Renderer] Shutdown
+2026-07-05 14:48:21 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 14:59:59 [INFO] Logger Initialized
+2026-07-05 14:59:59 [INFO] [GameManager] Initializing...
+2026-07-05 14:59:59 [INFO] [Config] Loaded
+2026-07-05 15:00:00 [INFO] [Window] Created 1280x720
+2026-07-05 15:00:00 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 15:00:00 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 15:00:00 [INFO] [Mesh] GPU mesh created.
+2026-07-05 15:00:00 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 15:00:00 [INFO] [Input] Initialized
+2026-07-05 15:00:00 [INFO] [AssetManager] Initialized
+2026-07-05 15:00:00 [INFO] [Scene] Enter: Boot Scene
+2026-07-05 15:00:00 [INFO] [BootScene] Engine initialization complete.
+2026-07-05 15:00:00 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-05 15:00:00 [INFO] [Scene] Exit: Boot Scene
+2026-07-05 15:00:00 [INFO] [Scene] Enter: Game Scene
+2026-07-05 15:00:00 [INFO] [GameScene] Initializing game.
+2026-07-05 15:00:00 [INFO] [GameManager] Running...
+2026-07-05 15:00:00 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 15:00:10 [INFO] [GameManager] Shutting down...
+2026-07-05 15:00:10 [INFO] [GameManager] Runtime: 11.70s
+2026-07-05 15:00:10 [INFO] [Mesh] Released.
+2026-07-05 15:00:10 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 15:00:10 [INFO] [Renderer] Shutdown
+2026-07-05 15:00:10 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 15:08:45 [INFO] Logger Initialized
+2026-07-05 15:08:45 [INFO] [GameManager] Initializing...
+2026-07-05 15:08:45 [INFO] [Config] Loaded
+2026-07-05 15:08:46 [INFO] [Window] Created 1280x720
+2026-07-05 15:08:46 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 15:08:46 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 15:08:46 [INFO] [Mesh] GPU mesh created.
+2026-07-05 15:08:46 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 15:08:46 [INFO] [Input] Initialized
+2026-07-05 15:08:46 [INFO] [AssetManager] Initialized
+2026-07-05 15:08:46 [INFO] [Scene] Enter: Boot Scene
+2026-07-05 15:08:46 [INFO] [BootScene] Engine initialization complete.
+2026-07-05 15:08:46 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-05 15:08:46 [INFO] [Scene] Exit: Boot Scene
+2026-07-05 15:08:46 [INFO] [Scene] Enter: Game Scene
+2026-07-05 15:08:46 [INFO] [GameScene] Initializing game.
+2026-07-05 15:08:46 [INFO] [GameManager] Running...
+2026-07-05 15:08:46 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 15:08:50 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-05 15:09:29 [INFO] [GameManager] Shutting down...
+2026-07-05 15:09:29 [INFO] [GameManager] Runtime: 43.65s
+2026-07-05 15:09:29 [INFO] [Mesh] Released.
+2026-07-05 15:09:29 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 15:09:29 [INFO] [Renderer] Shutdown
+2026-07-05 15:09:29 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-05 22:40:03 [INFO] Logger Initialized
+2026-07-05 22:40:03 [INFO] [GameManager] Initializing...
+2026-07-05 22:40:03 [INFO] [Config] Loaded
+2026-07-05 22:40:04 [INFO] [Window] Created 1280x720
+2026-07-05 22:40:04 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-05 22:40:04 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-05 22:40:04 [INFO] [Mesh] GPU mesh created.
+2026-07-05 22:40:04 [INFO] [Renderer] Rendering system initialized.
+2026-07-05 22:40:04 [INFO] [Input] Initialized
+2026-07-05 22:40:04 [INFO] [AssetManager] Initialized
+2026-07-05 22:40:04 [INFO] [Scene] Enter: Boot Scene
+2026-07-05 22:40:04 [INFO] [BootScene] Engine initialization complete.
+2026-07-05 22:40:04 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-05 22:40:04 [INFO] [Scene] Exit: Boot Scene
+2026-07-05 22:40:04 [INFO] [Scene] Enter: Game Scene
+2026-07-05 22:40:04 [INFO] [GameScene] Initializing game.
+2026-07-05 22:40:04 [INFO] [GameManager] Running...
+2026-07-05 22:40:04 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-05 22:40:08 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-05 22:40:19 [INFO] [GameManager] Shutting down...
+2026-07-05 22:40:19 [INFO] [GameManager] Runtime: 15.82s
+2026-07-05 22:40:19 [INFO] [Mesh] Released.
+2026-07-05 22:40:19 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-05 22:40:19 [INFO] [Renderer] Shutdown
+2026-07-05 22:40:19 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 13:34:33 [INFO] Logger Initialized
+2026-07-06 13:34:33 [INFO] [GameManager] Initializing...
+2026-07-06 13:34:33 [INFO] [Config] Loaded
+2026-07-06 13:34:35 [INFO] [Window] Created 1280x720
+2026-07-06 13:34:35 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 13:34:35 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 13:34:35 [INFO] [Mesh] GPU mesh created.
+2026-07-06 13:34:35 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 13:34:35 [INFO] [Input] Initialized
+2026-07-06 13:34:35 [INFO] [AssetManager] Initialized
+2026-07-06 13:34:35 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 13:34:35 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 13:34:35 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 13:34:35 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 13:34:35 [INFO] [Scene] Enter: Game Scene
+2026-07-06 13:34:35 [INFO] [GameScene] Initializing game.
+2026-07-06 13:34:35 [INFO] [GameManager] Running...
+2026-07-06 13:34:35 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 13:34:40 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 13:35:03 [INFO] [GameManager] Shutting down...
+2026-07-06 13:35:03 [INFO] [GameManager] Runtime: 29.51s
+2026-07-06 13:35:03 [INFO] [Mesh] Released.
+2026-07-06 13:35:03 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 13:35:03 [INFO] [Renderer] Shutdown
+2026-07-06 13:35:03 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 14:00:53 [INFO] Logger Initialized
+2026-07-06 14:00:53 [INFO] [GameManager] Initializing...
+2026-07-06 14:00:53 [INFO] [Config] Loaded
+2026-07-06 14:00:54 [INFO] [Window] Created 1280x720
+2026-07-06 14:00:54 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 14:00:54 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 14:00:54 [INFO] [Mesh] GPU mesh created.
+2026-07-06 14:00:54 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 14:00:54 [INFO] [Input] Initialized
+2026-07-06 14:00:54 [INFO] [AssetManager] Initialized
+2026-07-06 14:00:54 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 14:00:54 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 14:00:54 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 14:00:54 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 14:00:54 [INFO] [Scene] Enter: Game Scene
+2026-07-06 14:00:54 [INFO] [GameScene] Initializing game.
+2026-07-06 14:00:54 [INFO] [GameManager] Running...
+2026-07-06 14:00:54 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 14:05:20 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 14:05:33 [INFO] [GameManager] Shutting down...
+2026-07-06 14:05:33 [INFO] [GameManager] Runtime: 280.00s
+2026-07-06 14:05:33 [INFO] [Mesh] Released.
+2026-07-06 14:05:33 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 14:05:33 [INFO] [Renderer] Shutdown
+2026-07-06 14:05:33 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 17:16:07 [INFO] Logger Initialized
+2026-07-06 17:16:08 [INFO] [Window] Created 1280x720
+2026-07-06 17:16:08 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:16:08 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:16:08 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:16:08 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:16:08 [INFO] [Input] Initialized
+2026-07-06 17:16:08 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 17:16:26 [INFO] [Mesh] Released.
+2026-07-06 17:16:26 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 17:16:26 [INFO] [Renderer] Shutdown
+2026-07-06 17:16:27 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 17:30:22 [INFO] Logger Initialized
+2026-07-06 17:30:23 [INFO] [Window] Created 1280x720
+2026-07-06 17:30:23 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:30:23 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:30:23 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:30:23 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:30:23 [INFO] [Input] Initialized
+2026-07-06 17:30:23 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 17:30:35 [INFO] [Mesh] Released.
+2026-07-06 17:30:35 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 17:30:35 [INFO] [Renderer] Shutdown
+2026-07-06 17:30:35 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 17:34:02 [INFO] Logger Initialized
+2026-07-06 17:34:04 [INFO] [Window] Created 1280x720
+2026-07-06 17:34:04 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:34:04 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:34:04 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:34:04 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:34:04 [INFO] [Input] Initialized
+2026-07-06 17:34:04 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 17:34:07 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 17:34:16 [INFO] [Mesh] Released.
+2026-07-06 17:34:16 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 17:34:16 [INFO] [Renderer] Shutdown
+2026-07-06 17:34:16 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 17:34:20 [INFO] Logger Initialized
+2026-07-06 17:34:20 [INFO] [Window] Created 1280x720
+2026-07-06 17:34:20 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:34:20 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:34:20 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:34:20 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:34:20 [INFO] [Input] Initialized
+2026-07-06 17:34:20 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 17:34:22 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 17:34:28 [INFO] [Mesh] Released.
+2026-07-06 17:34:28 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 17:34:28 [INFO] [Renderer] Shutdown
+2026-07-06 17:34:28 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 17:34:31 [INFO] Logger Initialized
+2026-07-06 17:34:32 [INFO] [Window] Created 1280x720
+2026-07-06 17:34:32 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:34:32 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:34:32 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:34:32 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:34:32 [INFO] [Input] Initialized
+2026-07-06 17:34:32 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 17:34:34 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 17:34:53 [INFO] [Mesh] Released.
+2026-07-06 17:34:53 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 17:34:53 [INFO] [Renderer] Shutdown
+2026-07-06 17:34:54 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 17:41:46 [INFO] Logger Initialized
+2026-07-06 17:41:47 [INFO] [Window] Created 1280x720
+2026-07-06 17:41:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:41:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:41:47 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:41:47 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:41:47 [INFO] [Input] Initialized
+
+============================================================
+2026-07-06 17:42:16 [INFO] Logger Initialized
+2026-07-06 17:42:16 [INFO] [GameManager] Initializing...
+2026-07-06 17:42:16 [INFO] [Config] Loaded
+2026-07-06 17:42:17 [INFO] [Window] Created 1280x720
+2026-07-06 17:42:17 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:42:17 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:42:17 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:42:17 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:42:17 [INFO] [Input] Initialized
+2026-07-06 17:42:17 [INFO] [AssetManager] Initialized
+2026-07-06 17:42:17 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 17:42:17 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 17:42:17 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 17:42:17 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 17:42:17 [INFO] [Scene] Enter: Game Scene
+2026-07-06 17:42:17 [INFO] [GameScene] Initializing game.
+2026-07-06 17:42:17 [INFO] [GameManager] Running...
+
+============================================================
+2026-07-06 17:46:08 [INFO] Logger Initialized
+2026-07-06 17:46:08 [INFO] [GameManager] Initializing...
+2026-07-06 17:46:08 [INFO] [Config] Loaded
+2026-07-06 17:46:09 [INFO] [Window] Created 1280x720
+2026-07-06 17:46:09 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:46:09 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:46:09 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:46:09 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:46:09 [INFO] [Input] Initialized
+2026-07-06 17:46:09 [INFO] [AssetManager] Initialized
+2026-07-06 17:46:09 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 17:46:09 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 17:46:09 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 17:46:09 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 17:46:09 [INFO] [Scene] Enter: Game Scene
+2026-07-06 17:46:09 [INFO] [GameScene] Initializing game.
+2026-07-06 17:46:09 [INFO] [GameManager] Running...
+2026-07-06 17:46:09 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 17:46:13 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 17:46:27 [INFO] [GameManager] Shutting down...
+2026-07-06 17:46:27 [INFO] [GameManager] Runtime: 19.19s
+2026-07-06 17:46:27 [INFO] [Mesh] Released.
+2026-07-06 17:46:27 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 17:46:27 [INFO] [Renderer] Shutdown
+2026-07-06 17:46:27 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 17:50:23 [INFO] Logger Initialized
+2026-07-06 17:50:24 [INFO] [Window] Created 1280x720
+2026-07-06 17:50:24 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 17:50:24 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 17:50:24 [INFO] [Mesh] GPU mesh created.
+2026-07-06 17:50:24 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 17:50:24 [INFO] [Input] Initialized
+2026-07-06 17:50:24 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 17:50:26 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 17:50:33 [INFO] [Mesh] Released.
+2026-07-06 17:50:33 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 17:50:33 [INFO] [Renderer] Shutdown
+2026-07-06 17:50:33 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 19:55:29 [INFO] Logger Initialized
+2026-07-06 19:55:29 [INFO] [GameManager] Initializing...
+2026-07-06 19:55:29 [INFO] [Config] Loaded
+2026-07-06 19:55:30 [INFO] [Window] Created 1280x720
+2026-07-06 19:55:30 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 19:55:30 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 19:55:30 [INFO] [Mesh] GPU mesh created.
+2026-07-06 19:55:30 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 19:55:30 [INFO] [Input] Initialized
+2026-07-06 19:55:30 [INFO] [AssetManager] Initialized
+2026-07-06 19:55:30 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 19:55:30 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 19:55:30 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 19:55:30 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 19:55:30 [INFO] [Scene] Enter: Game Scene
+2026-07-06 19:55:30 [INFO] [GameScene] Initializing game.
+2026-07-06 19:55:30 [INFO] [GameManager] Running...
+2026-07-06 19:55:30 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 19:55:32 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 19:55:44 [INFO] [GameManager] Shutting down...
+2026-07-06 19:55:44 [INFO] [GameManager] Runtime: 15.87s
+2026-07-06 19:55:44 [INFO] [Mesh] Released.
+2026-07-06 19:55:44 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 19:55:44 [INFO] [Renderer] Shutdown
+2026-07-06 19:55:45 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 19:55:49 [INFO] Logger Initialized
+2026-07-06 19:55:50 [INFO] [Window] Created 1280x720
+2026-07-06 19:55:50 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 19:55:50 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 19:55:50 [INFO] [Mesh] GPU mesh created.
+2026-07-06 19:55:50 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 19:55:50 [INFO] [Input] Initialized
+2026-07-06 19:55:50 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 19:55:53 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 19:56:03 [INFO] [Mesh] Released.
+2026-07-06 19:56:03 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 19:56:03 [INFO] [Renderer] Shutdown
+2026-07-06 19:56:03 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 22:41:33 [INFO] Logger Initialized
+2026-07-06 22:41:33 [INFO] [GameManager] Initializing...
+2026-07-06 22:41:33 [INFO] [Config] Loaded
+2026-07-06 22:41:34 [INFO] [Window] Created 1280x720
+2026-07-06 22:41:34 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 22:41:34 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 22:41:34 [INFO] [Mesh] GPU mesh created.
+2026-07-06 22:41:34 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 22:41:34 [INFO] [Input] Initialized
+2026-07-06 22:41:34 [INFO] [AssetManager] Initialized
+2026-07-06 22:41:34 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 22:41:34 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 22:41:34 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 22:41:34 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 22:41:34 [INFO] [Scene] Enter: Game Scene
+2026-07-06 22:41:34 [INFO] [GameScene] Initializing game.
+2026-07-06 22:41:34 [INFO] [GameManager] Running...
+2026-07-06 22:41:34 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 22:41:46 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 22:42:20 [INFO] [GameManager] Shutting down...
+2026-07-06 22:42:20 [INFO] [GameManager] Runtime: 46.99s
+2026-07-06 22:42:20 [INFO] [Mesh] Released.
+2026-07-06 22:42:20 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 22:42:20 [INFO] [Renderer] Shutdown
+2026-07-06 22:42:20 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 22:42:24 [INFO] Logger Initialized
+2026-07-06 22:42:24 [INFO] [GameManager] Initializing...
+2026-07-06 22:42:24 [INFO] [Config] Loaded
+2026-07-06 22:42:24 [INFO] [Window] Created 1280x720
+2026-07-06 22:42:24 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 22:42:24 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 22:42:24 [INFO] [Mesh] GPU mesh created.
+2026-07-06 22:42:24 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 22:42:24 [INFO] [Input] Initialized
+2026-07-06 22:42:24 [INFO] [AssetManager] Initialized
+2026-07-06 22:42:24 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 22:42:24 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 22:42:24 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 22:42:24 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 22:42:24 [INFO] [Scene] Enter: Game Scene
+2026-07-06 22:42:24 [INFO] [GameScene] Initializing game.
+2026-07-06 22:42:24 [INFO] [GameManager] Running...
+2026-07-06 22:42:24 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 22:42:28 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 22:42:59 [INFO] [GameManager] Shutting down...
+2026-07-06 22:42:59 [INFO] [GameManager] Runtime: 34.99s
+2026-07-06 22:42:59 [INFO] [Mesh] Released.
+2026-07-06 22:42:59 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 22:42:59 [INFO] [Renderer] Shutdown
+2026-07-06 22:42:59 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 22:43:02 [INFO] Logger Initialized
+2026-07-06 22:43:02 [INFO] [GameManager] Initializing...
+2026-07-06 22:43:02 [INFO] [Config] Loaded
+2026-07-06 22:43:02 [INFO] [Window] Created 1280x720
+2026-07-06 22:43:02 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 22:43:02 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 22:43:02 [INFO] [Mesh] GPU mesh created.
+2026-07-06 22:43:02 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 22:43:02 [INFO] [Input] Initialized
+2026-07-06 22:43:02 [INFO] [AssetManager] Initialized
+2026-07-06 22:43:02 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 22:43:02 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 22:43:02 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 22:43:02 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 22:43:02 [INFO] [Scene] Enter: Game Scene
+2026-07-06 22:43:02 [INFO] [GameScene] Initializing game.
+2026-07-06 22:43:02 [INFO] [GameManager] Running...
+2026-07-06 22:43:02 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 22:43:12 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 22:43:46 [INFO] [GameManager] Shutting down...
+2026-07-06 22:43:46 [INFO] [GameManager] Runtime: 44.80s
+2026-07-06 22:43:46 [INFO] [Mesh] Released.
+2026-07-06 22:43:46 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 22:43:46 [INFO] [Renderer] Shutdown
+2026-07-06 22:43:47 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 22:43:48 [INFO] Logger Initialized
+2026-07-06 22:43:48 [INFO] [GameManager] Initializing...
+2026-07-06 22:43:48 [INFO] [Config] Loaded
+2026-07-06 22:43:49 [INFO] [Window] Created 1280x720
+2026-07-06 22:43:49 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 22:43:49 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 22:43:49 [INFO] [Mesh] GPU mesh created.
+2026-07-06 22:43:49 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 22:43:49 [INFO] [Input] Initialized
+2026-07-06 22:43:49 [INFO] [AssetManager] Initialized
+2026-07-06 22:43:49 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 22:43:49 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 22:43:49 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 22:43:49 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 22:43:49 [INFO] [Scene] Enter: Game Scene
+2026-07-06 22:43:49 [INFO] [GameScene] Initializing game.
+2026-07-06 22:43:49 [INFO] [GameManager] Running...
+2026-07-06 22:43:49 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 22:44:00 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 22:44:31 [INFO] [GameManager] Shutting down...
+2026-07-06 22:44:31 [INFO] [GameManager] Runtime: 42.77s
+2026-07-06 22:44:31 [INFO] [Mesh] Released.
+2026-07-06 22:44:31 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 22:44:31 [INFO] [Renderer] Shutdown
+2026-07-06 22:44:31 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 22:44:33 [INFO] Logger Initialized
+2026-07-06 22:44:33 [INFO] [GameManager] Initializing...
+2026-07-06 22:44:33 [INFO] [Config] Loaded
+2026-07-06 22:44:33 [INFO] [Window] Created 1280x720
+2026-07-06 22:44:33 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 22:44:33 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 22:44:33 [INFO] [Mesh] GPU mesh created.
+2026-07-06 22:44:33 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 22:44:33 [INFO] [Input] Initialized
+2026-07-06 22:44:33 [INFO] [AssetManager] Initialized
+2026-07-06 22:44:33 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 22:44:33 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 22:44:33 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 22:44:33 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 22:44:33 [INFO] [Scene] Enter: Game Scene
+2026-07-06 22:44:33 [INFO] [GameScene] Initializing game.
+2026-07-06 22:44:33 [INFO] [GameManager] Running...
+2026-07-06 22:44:33 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 22:44:37 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 22:45:14 [INFO] [GameManager] Shutting down...
+2026-07-06 22:45:14 [INFO] [GameManager] Runtime: 41.23s
+2026-07-06 22:45:14 [INFO] [Mesh] Released.
+2026-07-06 22:45:14 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 22:45:14 [INFO] [Renderer] Shutdown
+2026-07-06 22:45:14 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-06 22:45:17 [INFO] Logger Initialized
+2026-07-06 22:45:17 [INFO] [GameManager] Initializing...
+2026-07-06 22:45:17 [INFO] [Config] Loaded
+2026-07-06 22:45:17 [INFO] [Window] Created 1280x720
+2026-07-06 22:45:17 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-06 22:45:17 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-06 22:45:17 [INFO] [Mesh] GPU mesh created.
+2026-07-06 22:45:17 [INFO] [Renderer] Rendering system initialized.
+2026-07-06 22:45:17 [INFO] [Input] Initialized
+2026-07-06 22:45:17 [INFO] [AssetManager] Initialized
+2026-07-06 22:45:17 [INFO] [Scene] Enter: Boot Scene
+2026-07-06 22:45:17 [INFO] [BootScene] Engine initialization complete.
+2026-07-06 22:45:17 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-06 22:45:17 [INFO] [Scene] Exit: Boot Scene
+2026-07-06 22:45:17 [INFO] [Scene] Enter: Game Scene
+2026-07-06 22:45:17 [INFO] [GameScene] Initializing game.
+2026-07-06 22:45:17 [INFO] [GameManager] Running...
+2026-07-06 22:45:17 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-06 22:45:23 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-06 22:45:51 [INFO] [GameManager] Shutting down...
+2026-07-06 22:45:51 [INFO] [GameManager] Runtime: 34.52s
+2026-07-06 22:45:51 [INFO] [Mesh] Released.
+2026-07-06 22:45:51 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-06 22:45:51 [INFO] [Renderer] Shutdown
+2026-07-06 22:45:51 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-07 12:31:18 [INFO] Logger Initialized
+2026-07-07 12:31:18 [INFO] [GameManager] Initializing...
+2026-07-07 12:31:18 [INFO] [Config] Loaded
+2026-07-07 12:31:20 [INFO] [Window] Created 1280x720
+2026-07-07 12:31:20 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-07 12:31:20 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-07 12:31:20 [INFO] [Mesh] GPU mesh created.
+2026-07-07 12:31:20 [INFO] [Renderer] Rendering system initialized.
+2026-07-07 12:31:20 [INFO] [Input] Initialized
+2026-07-07 12:31:20 [INFO] [AssetManager] Initialized
+2026-07-07 12:31:20 [INFO] [Scene] Enter: Boot Scene
+2026-07-07 12:31:20 [INFO] [BootScene] Engine initialization complete.
+2026-07-07 12:31:20 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-07 12:31:20 [INFO] [Scene] Exit: Boot Scene
+2026-07-07 12:31:20 [INFO] [Scene] Enter: Game Scene
+2026-07-07 12:31:20 [INFO] [GameScene] Initializing game.
+2026-07-07 12:31:20 [INFO] [GameManager] Running...
+2026-07-07 12:31:20 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-07 12:31:23 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-07 12:31:33 [INFO] [GameManager] Shutting down...
+2026-07-07 12:31:33 [INFO] [GameManager] Runtime: 15.32s
+2026-07-07 12:31:33 [INFO] [Mesh] Released.
+2026-07-07 12:31:33 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-07 12:31:33 [INFO] [Renderer] Shutdown
+2026-07-07 12:31:34 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-08 19:36:49 [INFO] Logger Initialized
+2026-07-08 19:36:49 [INFO] [GameManager] Initializing...
+2026-07-08 19:36:49 [INFO] [Config] Loaded
+2026-07-08 19:36:51 [INFO] [Window] Created 1280x720
+2026-07-08 19:36:51 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-08 19:36:51 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-08 19:36:51 [INFO] [Mesh] GPU mesh created.
+2026-07-08 19:36:51 [INFO] [Renderer] Rendering system initialized.
+2026-07-08 19:36:51 [INFO] [Input] Initialized
+2026-07-08 19:36:51 [INFO] [AssetManager] Initialized
+2026-07-08 19:36:51 [INFO] [Scene] Enter: Boot Scene
+2026-07-08 19:36:51 [INFO] [BootScene] Engine initialization complete.
+2026-07-08 19:36:51 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-08 19:36:51 [INFO] [Scene] Exit: Boot Scene
+2026-07-08 19:36:51 [INFO] [Scene] Enter: Game Scene
+2026-07-08 19:36:51 [INFO] [GameScene] Initializing game.
+2026-07-08 19:36:51 [INFO] [GameManager] Running...
+2026-07-08 19:36:51 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-08 19:38:45 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-08 19:38:55 [INFO] [GameManager] Shutting down...
+2026-07-08 19:38:55 [INFO] [GameManager] Runtime: 125.94s
+2026-07-08 19:38:55 [INFO] [Mesh] Released.
+2026-07-08 19:38:55 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-08 19:38:55 [INFO] [Renderer] Shutdown
+2026-07-08 19:38:55 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-08 21:53:20 [INFO] Logger Initialized
+2026-07-08 21:53:20 [INFO] [GameManager] Initializing...
+2026-07-08 21:53:20 [INFO] [Config] Loaded
+2026-07-08 21:53:21 [INFO] [Window] Created 1280x720
+2026-07-08 21:53:21 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-08 21:53:21 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-08 21:53:21 [INFO] [Mesh] GPU mesh created.
+2026-07-08 21:53:21 [INFO] [Renderer] Rendering system initialized.
+2026-07-08 21:53:21 [INFO] [Input] Initialized
+2026-07-08 21:53:21 [INFO] [AssetManager] Initialized
+2026-07-08 21:53:21 [INFO] [Scene] Enter: Boot Scene
+2026-07-08 21:53:21 [INFO] [BootScene] Engine initialization complete.
+2026-07-08 21:53:21 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-08 21:53:21 [INFO] [Scene] Exit: Boot Scene
+2026-07-08 21:53:21 [INFO] [Scene] Enter: Game Scene
+2026-07-08 21:53:21 [INFO] [GameScene] Initializing game.
+2026-07-08 21:53:21 [INFO] [GameManager] Running...
+2026-07-08 21:53:21 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-08 21:53:25 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-08 21:53:36 [INFO] [GameManager] Shutting down...
+2026-07-08 21:53:36 [INFO] [GameManager] Runtime: 16.00s
+2026-07-08 21:53:36 [INFO] [Mesh] Released.
+2026-07-08 21:53:36 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-08 21:53:36 [INFO] [Renderer] Shutdown
+2026-07-08 21:53:36 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-08 22:28:26 [INFO] Logger Initialized
+2026-07-08 22:28:26 [INFO] [GameManager] Initializing...
+2026-07-08 22:28:26 [INFO] [Config] Loaded
+2026-07-08 22:28:27 [INFO] [Window] Created 1280x720
+2026-07-08 22:28:27 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-08 22:28:27 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-08 22:28:27 [INFO] [Mesh] GPU mesh created.
+2026-07-08 22:28:27 [INFO] [Renderer] Rendering system initialized.
+2026-07-08 22:28:27 [INFO] [Input] Initialized
+2026-07-08 22:28:27 [INFO] [AssetManager] Initialized
+2026-07-08 22:28:27 [INFO] [Scene] Enter: Boot Scene
+2026-07-08 22:28:27 [INFO] [BootScene] Engine initialization complete.
+2026-07-08 22:28:27 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-08 22:28:27 [INFO] [Scene] Exit: Boot Scene
+2026-07-08 22:28:27 [INFO] [Scene] Enter: Game Scene
+2026-07-08 22:28:27 [INFO] [GameScene] Initializing game.
+2026-07-08 22:28:27 [INFO] [GameManager] Running...
+2026-07-08 22:28:27 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-08 22:28:29 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-08 22:28:43 [INFO] [GameManager] Shutting down...
+2026-07-08 22:28:43 [INFO] [GameManager] Runtime: 17.01s
+2026-07-08 22:28:43 [INFO] [Mesh] Released.
+2026-07-08 22:28:43 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-08 22:28:43 [INFO] [Renderer] Shutdown
+2026-07-08 22:28:43 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-08 22:28:46 [INFO] Logger Initialized
+2026-07-08 22:28:46 [INFO] [GameManager] Initializing...
+2026-07-08 22:28:46 [INFO] [Config] Loaded
+2026-07-08 22:28:47 [INFO] [Window] Created 1280x720
+2026-07-08 22:28:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-08 22:28:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-08 22:28:47 [INFO] [Mesh] GPU mesh created.
+2026-07-08 22:28:47 [INFO] [Renderer] Rendering system initialized.
+2026-07-08 22:28:47 [INFO] [Input] Initialized
+2026-07-08 22:28:47 [INFO] [AssetManager] Initialized
+2026-07-08 22:28:47 [INFO] [Scene] Enter: Boot Scene
+2026-07-08 22:28:47 [INFO] [BootScene] Engine initialization complete.
+2026-07-08 22:28:47 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-08 22:28:47 [INFO] [Scene] Exit: Boot Scene
+2026-07-08 22:28:47 [INFO] [Scene] Enter: Game Scene
+2026-07-08 22:28:47 [INFO] [GameScene] Initializing game.
+2026-07-08 22:28:47 [INFO] [GameManager] Running...
+2026-07-08 22:28:47 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-08 22:28:49 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-08 22:29:01 [INFO] [GameManager] Shutting down...
+2026-07-08 22:29:01 [INFO] [GameManager] Runtime: 15.76s
+2026-07-08 22:29:01 [INFO] [Mesh] Released.
+2026-07-08 22:29:01 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-08 22:29:01 [INFO] [Renderer] Shutdown
+2026-07-08 22:29:02 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-08 22:29:04 [INFO] Logger Initialized
+2026-07-08 22:29:04 [INFO] [GameManager] Initializing...
+2026-07-08 22:29:04 [INFO] [Config] Loaded
+2026-07-08 22:29:05 [INFO] [Window] Created 1280x720
+2026-07-08 22:29:05 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-08 22:29:05 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-08 22:29:05 [INFO] [Mesh] GPU mesh created.
+2026-07-08 22:29:05 [INFO] [Renderer] Rendering system initialized.
+2026-07-08 22:29:05 [INFO] [Input] Initialized
+2026-07-08 22:29:05 [INFO] [AssetManager] Initialized
+2026-07-08 22:29:05 [INFO] [Scene] Enter: Boot Scene
+2026-07-08 22:29:05 [INFO] [BootScene] Engine initialization complete.
+2026-07-08 22:29:05 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-08 22:29:05 [INFO] [Scene] Exit: Boot Scene
+2026-07-08 22:29:05 [INFO] [Scene] Enter: Game Scene
+2026-07-08 22:29:05 [INFO] [GameScene] Initializing game.
+2026-07-08 22:29:05 [INFO] [GameManager] Running...
+2026-07-08 22:29:05 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-08 22:29:08 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-08 22:29:13 [INFO] [GameManager] Shutting down...
+2026-07-08 22:29:13 [INFO] [GameManager] Runtime: 8.77s
+2026-07-08 22:29:13 [INFO] [Mesh] Released.
+2026-07-08 22:29:13 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-08 22:29:13 [INFO] [Renderer] Shutdown
+2026-07-08 22:29:13 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-08 22:29:21 [INFO] Logger Initialized
+2026-07-08 22:29:21 [INFO] [GameManager] Initializing...
+2026-07-08 22:29:21 [INFO] [Config] Loaded
+2026-07-08 22:29:23 [INFO] [Window] Created 1280x720
+2026-07-08 22:29:23 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-08 22:29:23 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-08 22:29:23 [INFO] [Mesh] GPU mesh created.
+2026-07-08 22:29:23 [INFO] [Renderer] Rendering system initialized.
+2026-07-08 22:29:23 [INFO] [Input] Initialized
+2026-07-08 22:29:23 [INFO] [AssetManager] Initialized
+2026-07-08 22:29:23 [INFO] [Scene] Enter: Boot Scene
+2026-07-08 22:29:23 [INFO] [BootScene] Engine initialization complete.
+2026-07-08 22:29:23 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-08 22:29:23 [INFO] [Scene] Exit: Boot Scene
+2026-07-08 22:29:23 [INFO] [Scene] Enter: Game Scene
+2026-07-08 22:29:23 [INFO] [GameScene] Initializing game.
+2026-07-08 22:29:23 [INFO] [GameManager] Running...
+2026-07-08 22:29:23 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-08 22:29:28 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-08 22:29:36 [INFO] [GameManager] Shutting down...
+2026-07-08 22:29:36 [INFO] [GameManager] Runtime: 14.63s
+2026-07-08 22:29:36 [INFO] [Mesh] Released.
+2026-07-08 22:29:36 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-08 22:29:36 [INFO] [Renderer] Shutdown
+2026-07-08 22:29:36 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-08 23:15:25 [INFO] Logger Initialized
+2026-07-08 23:15:25 [INFO] [GameManager] Initializing...
+2026-07-08 23:15:25 [INFO] [Config] Loaded
+2026-07-08 23:15:26 [INFO] [Window] Created 1280x720
+2026-07-08 23:15:26 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-08 23:15:27 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-08 23:15:27 [INFO] [Mesh] GPU mesh created.
+2026-07-08 23:15:27 [INFO] [Renderer] Rendering system initialized.
+2026-07-08 23:15:27 [INFO] [Input] Initialized
+2026-07-08 23:15:27 [INFO] [AssetManager] Initialized
+2026-07-08 23:15:27 [INFO] [Scene] Enter: Boot Scene
+2026-07-08 23:15:27 [INFO] [BootScene] Engine initialization complete.
+2026-07-08 23:15:27 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-08 23:15:27 [INFO] [Scene] Exit: Boot Scene
+2026-07-08 23:15:27 [INFO] [Scene] Enter: Game Scene
+2026-07-08 23:15:27 [INFO] [GameScene] Initializing game.
+2026-07-08 23:15:27 [INFO] [GameManager] Running...
+2026-07-08 23:15:27 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-08 23:15:31 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-08 23:15:52 [INFO] [GameManager] Shutting down...
+2026-07-08 23:15:52 [INFO] [GameManager] Runtime: 26.96s
+2026-07-08 23:15:52 [INFO] [Mesh] Released.
+2026-07-08 23:15:52 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-08 23:15:52 [INFO] [Renderer] Shutdown
+2026-07-08 23:15:52 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-09 11:54:34 [INFO] Logger Initialized
+2026-07-09 11:54:34 [INFO] [GameManager] Initializing...
+2026-07-09 11:54:34 [INFO] [Config] Loaded
+2026-07-09 11:54:35 [INFO] [Window] Created 1280x720
+2026-07-09 11:54:35 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-09 11:54:35 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-09 11:54:35 [INFO] [Mesh] GPU mesh created.
+2026-07-09 11:54:35 [INFO] [Renderer] Rendering system initialized.
+2026-07-09 11:54:35 [INFO] [Input] Initialized
+2026-07-09 11:54:35 [INFO] [AssetManager] Initialized
+2026-07-09 11:54:35 [INFO] [Scene] Enter: Boot Scene
+2026-07-09 11:54:35 [INFO] [BootScene] Engine initialization complete.
+2026-07-09 11:54:35 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-09 11:54:35 [INFO] [Scene] Exit: Boot Scene
+2026-07-09 11:54:35 [INFO] [Scene] Enter: Game Scene
+2026-07-09 11:54:35 [INFO] [GameScene] Initializing game.
+2026-07-09 11:54:35 [INFO] [GameManager] Running...
+2026-07-09 11:54:35 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-09 11:54:38 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-09 11:54:45 [INFO] [GameManager] Shutting down...
+2026-07-09 11:54:45 [INFO] [GameManager] Runtime: 10.86s
+2026-07-09 11:54:45 [INFO] [Mesh] Released.
+2026-07-09 11:54:45 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-09 11:54:45 [INFO] [Renderer] Shutdown
+2026-07-09 11:54:45 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 14:29:57 [INFO] Logger Initialized
+2026-07-10 14:29:57 [INFO] [Window] Created 1280x720
+2026-07-10 14:29:58 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 14:29:58 [INFO] [ShaderManager] Loaded shader 'primitive'.
+
+============================================================
+2026-07-10 14:47:53 [INFO] Logger Initialized
+2026-07-10 14:47:53 [INFO] [Window] Created 1280x720
+2026-07-10 14:47:53 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 14:47:53 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 14:47:53 [INFO] [Mesh] GPU mesh created.
+2026-07-10 14:47:53 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 14:47:53 [INFO] [Mesh] GPU mesh created.
+2026-07-10 14:47:53 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 14:47:53 [INFO] [Input] Initialized
+
+============================================================
+2026-07-10 14:56:46 [INFO] Logger Initialized
+2026-07-10 14:56:46 [INFO] [Window] Created 1280x720
+2026-07-10 14:56:46 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 14:56:46 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 14:56:46 [INFO] [Mesh] GPU mesh created.
+2026-07-10 14:56:46 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 14:56:46 [INFO] [Mesh] GPU mesh created.
+2026-07-10 14:56:46 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 14:56:46 [INFO] [Input] Initialized
+
+============================================================
+2026-07-10 15:00:21 [INFO] Logger Initialized
+2026-07-10 15:00:21 [INFO] [Window] Created 1280x720
+2026-07-10 15:00:21 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 15:00:21 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 15:00:21 [INFO] [Mesh] GPU mesh created.
+2026-07-10 15:00:21 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 15:00:21 [INFO] [Mesh] GPU mesh created.
+2026-07-10 15:00:21 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 15:00:21 [INFO] [Input] Initialized
+2026-07-10 15:07:15 [INFO] [Mesh] Released.
+2026-07-10 15:07:15 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 15:07:15 [INFO] [Mesh] Released.
+2026-07-10 15:07:15 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 15:07:15 [INFO] [Renderer] Shutdown
+2026-07-10 15:07:16 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 15:14:37 [INFO] Logger Initialized
+2026-07-10 15:14:37 [INFO] [Window] Created 1280x720
+2026-07-10 15:14:37 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 15:14:37 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 15:14:37 [INFO] [Mesh] GPU mesh created.
+2026-07-10 15:14:37 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 15:14:37 [INFO] [Mesh] GPU mesh created.
+2026-07-10 15:14:37 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 15:14:37 [INFO] [Input] Initialized
+2026-07-10 15:14:42 [INFO] [Mesh] Released.
+2026-07-10 15:14:42 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 15:14:42 [INFO] [Mesh] Released.
+2026-07-10 15:14:42 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 15:14:42 [INFO] [Renderer] Shutdown
+2026-07-10 15:14:42 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 15:44:41 [INFO] Logger Initialized
+2026-07-10 15:44:41 [INFO] [Window] Created 1280x720
+2026-07-10 15:44:41 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 15:44:41 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 15:44:41 [INFO] [Mesh] GPU mesh created.
+2026-07-10 15:44:41 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 15:44:41 [INFO] [Mesh] GPU mesh created.
+2026-07-10 15:44:41 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 15:44:41 [INFO] [Input] Initialized
+2026-07-10 15:49:34 [INFO] [Mesh] Released.
+2026-07-10 15:49:34 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 15:49:34 [INFO] [Mesh] Released.
+2026-07-10 15:49:34 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 15:49:34 [INFO] [Renderer] Shutdown
+2026-07-10 15:49:34 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 15:52:32 [INFO] Logger Initialized
+2026-07-10 15:52:32 [INFO] [Window] Created 1280x720
+2026-07-10 15:52:32 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 15:52:32 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 15:52:32 [INFO] [Mesh] GPU mesh created.
+2026-07-10 15:52:32 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 15:52:32 [INFO] [Mesh] GPU mesh created.
+2026-07-10 15:52:32 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 15:52:32 [INFO] [Input] Initialized
+2026-07-10 15:53:50 [INFO] [Mesh] Released.
+2026-07-10 15:53:50 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 15:53:50 [INFO] [Mesh] Released.
+2026-07-10 15:53:50 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 15:53:50 [INFO] [Renderer] Shutdown
+2026-07-10 15:53:50 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 16:35:42 [INFO] Logger Initialized
+2026-07-10 16:35:42 [INFO] [GameManager] Initializing...
+2026-07-10 16:35:42 [INFO] [Config] Loaded
+2026-07-10 16:35:42 [INFO] [Window] Created 1280x720
+2026-07-10 16:35:42 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 16:35:42 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 16:35:42 [INFO] [Mesh] GPU mesh created.
+2026-07-10 16:35:42 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 16:35:42 [INFO] [Mesh] GPU mesh created.
+2026-07-10 16:35:42 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 16:35:42 [INFO] [Input] Initialized
+2026-07-10 16:35:42 [INFO] [AssetManager] Initialized
+2026-07-10 16:35:42 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 16:35:42 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 16:35:42 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 16:35:42 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 16:35:42 [INFO] [Scene] Enter: Game Scene
+2026-07-10 16:35:42 [INFO] [GameScene] Initializing game.
+2026-07-10 16:35:42 [INFO] [GameManager] Running...
+2026-07-10 16:35:42 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 16:35:46 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 16:35:54 [INFO] [GameManager] Shutting down...
+2026-07-10 16:35:54 [INFO] [GameManager] Runtime: 11.68s
+2026-07-10 16:35:54 [INFO] [Mesh] Released.
+2026-07-10 16:35:54 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 16:35:54 [INFO] [Mesh] Released.
+2026-07-10 16:35:54 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 16:35:54 [INFO] [Renderer] Shutdown
+2026-07-10 16:35:54 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 16:35:58 [INFO] Logger Initialized
+2026-07-10 16:35:58 [INFO] [GameManager] Initializing...
+2026-07-10 16:35:58 [INFO] [Config] Loaded
+2026-07-10 16:35:58 [INFO] [Window] Created 1280x720
+2026-07-10 16:35:58 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 16:35:58 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 16:35:58 [INFO] [Mesh] GPU mesh created.
+2026-07-10 16:35:58 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 16:35:58 [INFO] [Mesh] GPU mesh created.
+2026-07-10 16:35:58 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 16:35:58 [INFO] [Input] Initialized
+2026-07-10 16:35:58 [INFO] [AssetManager] Initialized
+2026-07-10 16:35:58 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 16:35:58 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 16:35:58 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 16:35:58 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 16:35:58 [INFO] [Scene] Enter: Game Scene
+2026-07-10 16:35:58 [INFO] [GameScene] Initializing game.
+2026-07-10 16:35:58 [INFO] [GameManager] Running...
+2026-07-10 16:35:58 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 16:36:01 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 16:36:09 [INFO] [GameManager] Shutting down...
+2026-07-10 16:36:09 [INFO] [GameManager] Runtime: 10.91s
+2026-07-10 16:36:09 [INFO] [Mesh] Released.
+2026-07-10 16:36:09 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 16:36:09 [INFO] [Mesh] Released.
+2026-07-10 16:36:09 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 16:36:09 [INFO] [Renderer] Shutdown
+2026-07-10 16:36:09 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 16:39:43 [INFO] Logger Initialized
+2026-07-10 16:39:43 [INFO] [GameManager] Initializing...
+2026-07-10 16:39:43 [INFO] [Config] Loaded
+2026-07-10 16:39:43 [INFO] [Window] Created 1280x720
+2026-07-10 16:39:43 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 16:39:43 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 16:39:43 [INFO] [Mesh] GPU mesh created.
+2026-07-10 16:39:43 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 16:39:43 [INFO] [Mesh] GPU mesh created.
+2026-07-10 16:39:43 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 16:39:43 [INFO] [Input] Initialized
+2026-07-10 16:39:43 [INFO] [AssetManager] Initialized
+2026-07-10 16:39:43 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 16:39:43 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 16:39:43 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 16:39:43 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 16:39:43 [INFO] [Scene] Enter: Game Scene
+2026-07-10 16:39:43 [INFO] [GameScene] Initializing game.
+2026-07-10 16:39:43 [INFO] [GameManager] Running...
+2026-07-10 16:39:43 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 16:39:47 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 16:39:58 [INFO] [GameManager] Shutting down...
+2026-07-10 16:39:58 [INFO] [GameManager] Runtime: 15.20s
+2026-07-10 16:39:58 [INFO] [Mesh] Released.
+2026-07-10 16:39:58 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 16:39:58 [INFO] [Mesh] Released.
+2026-07-10 16:39:58 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 16:39:58 [INFO] [Renderer] Shutdown
+2026-07-10 16:39:58 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 17:12:25 [INFO] Logger Initialized
+2026-07-10 17:12:25 [INFO] [GameManager] Initializing...
+2026-07-10 17:12:25 [INFO] [Config] Loaded
+2026-07-10 17:12:26 [INFO] [Window] Created 1280x720
+2026-07-10 17:12:26 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 17:12:26 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 17:12:26 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:12:26 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 17:12:26 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:12:26 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 17:12:26 [INFO] [Input] Initialized
+2026-07-10 17:12:26 [INFO] [AssetManager] Initialized
+2026-07-10 17:12:26 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 17:12:26 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 17:12:26 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 17:12:26 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 17:12:26 [INFO] [Scene] Enter: Game Scene
+2026-07-10 17:12:26 [INFO] [GameScene] Initializing game.
+2026-07-10 17:12:26 [INFO] [GameManager] Running...
+2026-07-10 17:12:26 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 17:12:28 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 17:12:44 [INFO] [GameManager] Shutting down...
+2026-07-10 17:12:44 [INFO] [GameManager] Runtime: 18.89s
+2026-07-10 17:12:44 [INFO] [Mesh] Released.
+2026-07-10 17:12:44 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 17:12:44 [INFO] [Mesh] Released.
+2026-07-10 17:12:44 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 17:12:44 [INFO] [Renderer] Shutdown
+2026-07-10 17:12:44 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 17:12:49 [INFO] Logger Initialized
+2026-07-10 17:12:49 [INFO] [GameManager] Initializing...
+2026-07-10 17:12:49 [INFO] [Config] Loaded
+2026-07-10 17:12:49 [INFO] [Window] Created 1280x720
+2026-07-10 17:12:49 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 17:12:49 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 17:12:49 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:12:49 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 17:12:49 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:12:49 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 17:12:49 [INFO] [Input] Initialized
+2026-07-10 17:12:49 [INFO] [AssetManager] Initialized
+2026-07-10 17:12:49 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 17:12:49 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 17:12:49 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 17:12:49 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 17:12:49 [INFO] [Scene] Enter: Game Scene
+2026-07-10 17:12:49 [INFO] [GameScene] Initializing game.
+2026-07-10 17:12:49 [INFO] [GameManager] Running...
+2026-07-10 17:12:49 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 17:12:52 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 17:13:13 [INFO] [GameManager] Shutting down...
+2026-07-10 17:13:13 [INFO] [GameManager] Runtime: 24.27s
+2026-07-10 17:13:13 [INFO] [Mesh] Released.
+2026-07-10 17:13:13 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 17:13:13 [INFO] [Mesh] Released.
+2026-07-10 17:13:13 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 17:13:13 [INFO] [Renderer] Shutdown
+2026-07-10 17:13:13 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 17:13:16 [INFO] Logger Initialized
+2026-07-10 17:13:16 [INFO] [GameManager] Initializing...
+2026-07-10 17:13:16 [INFO] [Config] Loaded
+2026-07-10 17:13:16 [INFO] [Window] Created 1280x720
+2026-07-10 17:13:16 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 17:13:16 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 17:13:16 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:13:16 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 17:13:16 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:13:16 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 17:13:16 [INFO] [Input] Initialized
+2026-07-10 17:13:16 [INFO] [AssetManager] Initialized
+2026-07-10 17:13:16 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 17:13:16 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 17:13:16 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 17:13:16 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 17:13:16 [INFO] [Scene] Enter: Game Scene
+2026-07-10 17:13:16 [INFO] [GameScene] Initializing game.
+2026-07-10 17:13:16 [INFO] [GameManager] Running...
+2026-07-10 17:13:16 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 17:13:18 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 17:13:29 [INFO] [GameManager] Shutting down...
+2026-07-10 17:13:29 [INFO] [GameManager] Runtime: 13.71s
+2026-07-10 17:13:29 [INFO] [Mesh] Released.
+2026-07-10 17:13:29 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 17:13:29 [INFO] [Mesh] Released.
+2026-07-10 17:13:29 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 17:13:29 [INFO] [Renderer] Shutdown
+2026-07-10 17:13:29 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 17:50:27 [INFO] Logger Initialized
+2026-07-10 17:50:27 [INFO] [Window] Created 1280x720
+2026-07-10 17:50:27 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 17:50:27 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 17:50:27 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:50:27 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 17:50:27 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:50:27 [INFO] [Renderer] Rendering system initialized.
+
+============================================================
+2026-07-10 17:50:34 [INFO] Logger Initialized
+2026-07-10 17:50:34 [INFO] [Window] Created 1280x720
+2026-07-10 17:50:34 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 17:50:34 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 17:50:34 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:50:34 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 17:50:34 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:50:34 [INFO] [Renderer] Rendering system initialized.
+
+============================================================
+2026-07-10 17:54:40 [INFO] Logger Initialized
+2026-07-10 17:54:41 [INFO] [Window] Created 1280x720
+2026-07-10 17:54:41 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 17:54:41 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 17:54:41 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:54:41 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 17:54:41 [INFO] [Mesh] GPU mesh created.
+2026-07-10 17:54:41 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 17:54:41 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-07-10 17:54:45 [INFO] [Mesh] Released.
+2026-07-10 17:54:45 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 17:54:45 [INFO] [Mesh] Released.
+2026-07-10 17:54:45 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 17:54:45 [INFO] [Renderer] Shutdown
+2026-07-10 17:54:45 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 19:01:43 [INFO] Logger Initialized
+2026-07-10 19:01:45 [INFO] [Window] Created 1280x720
+2026-07-10 19:01:45 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 19:01:45 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 19:01:45 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:01:45 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 19:01:45 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:01:45 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 19:01:45 [INFO] [Input] Initialized
+2026-07-10 19:01:45 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 19:01:45 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 19:01:56 [INFO] [Mesh] Released.
+2026-07-10 19:01:56 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 19:01:56 [INFO] [Mesh] Released.
+2026-07-10 19:01:56 [INFO] [ShaderManager] Released 'text'.
+
+============================================================
+2026-07-10 19:14:18 [INFO] Logger Initialized
+2026-07-10 19:14:20 [INFO] [Window] Created 1280x720
+2026-07-10 19:14:20 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 19:14:20 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 19:14:20 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:14:20 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 19:14:20 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:14:20 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 19:14:20 [INFO] [Input] Initialized
+2026-07-10 19:14:20 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 19:14:20 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 19:14:25 [INFO] [Mesh] Released.
+2026-07-10 19:14:25 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 19:14:25 [INFO] [Mesh] Released.
+2026-07-10 19:14:25 [INFO] [ShaderManager] Released 'text'.
+
+============================================================
+2026-07-10 19:18:57 [INFO] Logger Initialized
+2026-07-10 19:18:58 [INFO] [Window] Created 1280x720
+2026-07-10 19:18:58 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 19:18:58 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 19:18:58 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:18:58 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 19:18:58 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:18:58 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 19:18:58 [INFO] [Input] Initialized
+2026-07-10 19:18:58 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 19:18:58 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 19:19:00 [INFO] [Mesh] Released.
+2026-07-10 19:19:00 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 19:19:00 [INFO] [Mesh] Released.
+2026-07-10 19:19:00 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 19:19:00 [INFO] [Renderer] Shutdown
+2026-07-10 19:19:01 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 19:26:31 [INFO] Logger Initialized
+2026-07-10 19:26:31 [INFO] [GameManager] Initializing...
+2026-07-10 19:26:31 [INFO] [Config] Loaded
+2026-07-10 19:26:32 [INFO] [Window] Created 1280x720
+2026-07-10 19:26:32 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 19:26:32 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 19:26:32 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:26:32 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 19:26:32 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:26:32 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 19:26:32 [INFO] [Input] Initialized
+2026-07-10 19:26:32 [INFO] [AssetManager] Initialized
+2026-07-10 19:26:32 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 19:26:32 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 19:26:32 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 19:26:32 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 19:26:32 [INFO] [Scene] Enter: Game Scene
+2026-07-10 19:26:32 [INFO] [GameScene] Initializing game.
+2026-07-10 19:26:32 [INFO] [GameManager] Running...
+2026-07-10 19:26:32 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 19:26:35 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 19:26:47 [INFO] [GameManager] Shutting down...
+2026-07-10 19:26:47 [INFO] [GameManager] Runtime: 16.65s
+2026-07-10 19:26:47 [INFO] [Mesh] Released.
+2026-07-10 19:26:47 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 19:26:47 [INFO] [Mesh] Released.
+2026-07-10 19:26:47 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 19:26:47 [INFO] [Renderer] Shutdown
+2026-07-10 19:26:48 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 19:26:52 [INFO] Logger Initialized
+2026-07-10 19:26:52 [INFO] [GameManager] Initializing...
+2026-07-10 19:26:52 [INFO] [Config] Loaded
+2026-07-10 19:26:53 [INFO] [Window] Created 1280x720
+2026-07-10 19:26:53 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 19:26:53 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 19:26:53 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:26:53 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 19:26:53 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:26:53 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 19:26:53 [INFO] [Input] Initialized
+2026-07-10 19:26:53 [INFO] [AssetManager] Initialized
+2026-07-10 19:26:53 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 19:26:53 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 19:26:53 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 19:26:53 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 19:26:53 [INFO] [Scene] Enter: Game Scene
+2026-07-10 19:26:53 [INFO] [GameScene] Initializing game.
+2026-07-10 19:26:53 [INFO] [GameManager] Running...
+2026-07-10 19:26:53 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 19:26:55 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 19:27:01 [INFO] [GameManager] Shutting down...
+2026-07-10 19:27:01 [INFO] [GameManager] Runtime: 8.97s
+2026-07-10 19:27:01 [INFO] [Mesh] Released.
+2026-07-10 19:27:01 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 19:27:01 [INFO] [Mesh] Released.
+2026-07-10 19:27:01 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 19:27:01 [INFO] [Renderer] Shutdown
+2026-07-10 19:27:01 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 19:27:06 [INFO] Logger Initialized
+2026-07-10 19:27:06 [INFO] [GameManager] Initializing...
+2026-07-10 19:27:06 [INFO] [Config] Loaded
+2026-07-10 19:27:07 [INFO] [Window] Created 1280x720
+2026-07-10 19:27:07 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 19:27:07 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 19:27:07 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:27:07 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 19:27:07 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:27:07 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 19:27:07 [INFO] [Input] Initialized
+2026-07-10 19:27:07 [INFO] [AssetManager] Initialized
+2026-07-10 19:27:07 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 19:27:07 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 19:27:07 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 19:27:07 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 19:27:07 [INFO] [Scene] Enter: Game Scene
+2026-07-10 19:27:07 [INFO] [GameScene] Initializing game.
+2026-07-10 19:27:07 [INFO] [GameManager] Running...
+2026-07-10 19:27:07 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 19:27:10 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 19:27:22 [INFO] [GameManager] Shutting down...
+2026-07-10 19:27:22 [INFO] [GameManager] Runtime: 16.05s
+2026-07-10 19:27:22 [INFO] [Mesh] Released.
+2026-07-10 19:27:22 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 19:27:22 [INFO] [Mesh] Released.
+2026-07-10 19:27:22 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 19:27:22 [INFO] [Renderer] Shutdown
+2026-07-10 19:27:23 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 19:32:15 [INFO] Logger Initialized
+2026-07-10 19:32:17 [INFO] [Window] Created 1280x720
+2026-07-10 19:32:17 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 19:32:17 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 19:32:17 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:32:17 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 19:32:17 [INFO] [Mesh] GPU mesh created.
+2026-07-10 19:32:17 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 19:32:17 [INFO] [Input] Initialized
+2026-07-10 19:32:17 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 19:32:17 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 19:32:29 [INFO] [Mesh] Released.
+2026-07-10 19:32:29 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 19:32:29 [INFO] [Mesh] Released.
+2026-07-10 19:32:29 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 19:32:29 [INFO] [Renderer] Shutdown
+2026-07-10 19:32:29 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 20:18:38 [INFO] Logger Initialized
+2026-07-10 20:18:38 [INFO] [GameManager] Initializing...
+2026-07-10 20:18:38 [INFO] [Config] Loaded
+2026-07-10 20:18:40 [INFO] [Window] Created 1280x720
+2026-07-10 20:18:40 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 20:18:40 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 20:18:40 [INFO] [Mesh] GPU mesh created.
+2026-07-10 20:18:40 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 20:18:40 [INFO] [Mesh] GPU mesh created.
+2026-07-10 20:18:40 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 20:18:40 [INFO] [Input] Initialized
+2026-07-10 20:18:40 [INFO] [AssetManager] Initialized
+2026-07-10 20:18:40 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 20:18:40 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 20:18:40 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 20:18:40 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 20:18:40 [INFO] [Scene] Enter: Game Scene
+2026-07-10 20:18:40 [INFO] [GameScene] Initializing game.
+2026-07-10 20:18:40 [INFO] [GameManager] Running...
+2026-07-10 20:18:40 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 20:18:50 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 20:19:14 [INFO] [GameManager] Shutting down...
+2026-07-10 20:19:14 [INFO] [GameManager] Runtime: 35.74s
+2026-07-10 20:19:14 [INFO] [Mesh] Released.
+2026-07-10 20:19:14 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 20:19:14 [INFO] [Mesh] Released.
+2026-07-10 20:19:14 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 20:19:14 [INFO] [Renderer] Shutdown
+2026-07-10 20:19:14 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-10 20:30:08 [INFO] Logger Initialized
+2026-07-10 20:30:08 [INFO] [GameManager] Initializing...
+2026-07-10 20:30:08 [INFO] [Config] Loaded
+2026-07-10 20:30:09 [INFO] [Window] Created 1280x720
+2026-07-10 20:30:09 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-10 20:30:09 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-10 20:30:09 [INFO] [Mesh] GPU mesh created.
+2026-07-10 20:30:09 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-10 20:30:09 [INFO] [Mesh] GPU mesh created.
+2026-07-10 20:30:09 [INFO] [Renderer] Rendering system initialized.
+2026-07-10 20:30:09 [INFO] [Input] Initialized
+2026-07-10 20:30:09 [INFO] [AssetManager] Initialized
+2026-07-10 20:30:09 [INFO] [Scene] Enter: Boot Scene
+2026-07-10 20:30:09 [INFO] [BootScene] Engine initialization complete.
+2026-07-10 20:30:09 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-10 20:30:09 [INFO] [Scene] Exit: Boot Scene
+2026-07-10 20:30:09 [INFO] [Scene] Enter: Game Scene
+2026-07-10 20:30:09 [INFO] [GameScene] Initializing game.
+2026-07-10 20:30:09 [INFO] [GameManager] Running...
+2026-07-10 20:30:09 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-10 20:30:16 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-10 20:30:34 [INFO] [GameManager] Shutting down...
+2026-07-10 20:30:34 [INFO] [GameManager] Runtime: 25.69s
+2026-07-10 20:30:34 [INFO] [Mesh] Released.
+2026-07-10 20:30:34 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-10 20:30:34 [INFO] [Mesh] Released.
+2026-07-10 20:30:34 [INFO] [ShaderManager] Released 'text'.
+2026-07-10 20:30:34 [INFO] [Renderer] Shutdown
+2026-07-10 20:30:34 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-12 19:29:56 [INFO] Logger Initialized
+2026-07-12 19:29:56 [INFO] [GameManager] Initializing...
+2026-07-12 19:29:56 [INFO] [Config] Loaded
+2026-07-12 19:29:57 [INFO] [Window] Created 1280x720
+2026-07-12 19:29:57 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-12 19:29:57 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-12 19:29:57 [INFO] [Mesh] GPU mesh created.
+2026-07-12 19:29:57 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-12 19:29:57 [INFO] [Mesh] GPU mesh created.
+2026-07-12 19:29:57 [INFO] [Renderer] Rendering system initialized.
+2026-07-12 19:29:57 [INFO] [Input] Initialized
+2026-07-12 19:29:57 [INFO] [AssetManager] Initialized
+2026-07-12 19:29:57 [INFO] [Scene] Enter: Boot Scene
+2026-07-12 19:29:57 [INFO] [BootScene] Engine initialization complete.
+2026-07-12 19:29:57 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-12 19:29:57 [INFO] [Scene] Exit: Boot Scene
+2026-07-12 19:29:57 [INFO] [Scene] Enter: Game Scene
+2026-07-12 19:29:57 [INFO] [GameScene] Initializing game.
+2026-07-12 19:29:57 [INFO] [GameManager] Running...
+2026-07-12 19:29:57 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-12 19:30:00 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-12 19:30:15 [INFO] [GameManager] Shutting down...
+2026-07-12 19:30:15 [INFO] [GameManager] Runtime: 19.25s
+2026-07-12 19:30:15 [INFO] [Mesh] Released.
+2026-07-12 19:30:15 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-12 19:30:15 [INFO] [Mesh] Released.
+2026-07-12 19:30:15 [INFO] [ShaderManager] Released 'text'.
+2026-07-12 19:30:15 [INFO] [Renderer] Shutdown
+2026-07-12 19:30:15 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-12 20:17:45 [INFO] Logger Initialized
+2026-07-12 20:17:45 [INFO] [GameManager] Initializing...
+2026-07-12 20:17:45 [INFO] [Config] Loaded
+2026-07-12 20:17:46 [INFO] [Window] Created 1280x720
+2026-07-12 20:17:46 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-12 20:17:46 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-12 20:17:46 [INFO] [Mesh] GPU mesh created.
+2026-07-12 20:17:46 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-12 20:17:46 [INFO] [Mesh] GPU mesh created.
+2026-07-12 20:17:46 [INFO] [Renderer] Rendering system initialized.
+2026-07-12 20:17:46 [INFO] [Input] Initialized
+2026-07-12 20:17:46 [INFO] [AssetManager] Initialized
+2026-07-12 20:17:46 [INFO] [Scene] Enter: Boot Scene
+2026-07-12 20:17:46 [INFO] [BootScene] Engine initialization complete.
+2026-07-12 20:17:46 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-12 20:17:46 [INFO] [Scene] Exit: Boot Scene
+2026-07-12 20:17:46 [INFO] [Scene] Enter: Game Scene
+2026-07-12 20:17:46 [INFO] [GameScene] Initializing game.
+2026-07-12 20:17:46 [INFO] [GameManager] Running...
+2026-07-12 20:17:46 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-12 20:17:48 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-12 20:18:25 [INFO] [GameManager] Shutting down...
+2026-07-12 20:18:25 [INFO] [GameManager] Runtime: 40.44s
+2026-07-12 20:18:25 [INFO] [Mesh] Released.
+2026-07-12 20:18:25 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-12 20:18:25 [INFO] [Mesh] Released.
+2026-07-12 20:18:25 [INFO] [ShaderManager] Released 'text'.
+2026-07-12 20:18:25 [INFO] [Renderer] Shutdown
+2026-07-12 20:18:26 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-12 20:22:26 [INFO] Logger Initialized
+2026-07-12 20:22:26 [INFO] [GameManager] Initializing...
+2026-07-12 20:22:26 [INFO] [Config] Loaded
+2026-07-12 20:22:28 [INFO] [Window] Created 1280x720
+2026-07-12 20:22:28 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-12 20:22:28 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-12 20:22:28 [INFO] [Mesh] GPU mesh created.
+2026-07-12 20:22:28 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-12 20:22:28 [INFO] [Mesh] GPU mesh created.
+2026-07-12 20:22:28 [INFO] [Renderer] Rendering system initialized.
+2026-07-12 20:22:28 [INFO] [Input] Initialized
+2026-07-12 20:22:28 [INFO] [AssetManager] Initialized
+2026-07-12 20:22:28 [INFO] [Scene] Enter: Boot Scene
+2026-07-12 20:22:28 [INFO] [BootScene] Engine initialization complete.
+2026-07-12 20:22:28 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-12 20:22:28 [INFO] [Scene] Exit: Boot Scene
+2026-07-12 20:22:28 [INFO] [Scene] Enter: Game Scene
+2026-07-12 20:22:28 [INFO] [GameScene] Initializing game.
+2026-07-12 20:22:28 [INFO] [GameManager] Running...
+2026-07-12 20:22:28 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-12 20:22:31 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-12 20:22:41 [INFO] [GameManager] Shutting down...
+2026-07-12 20:22:41 [INFO] [GameManager] Runtime: 14.74s
+2026-07-12 20:22:41 [INFO] [Mesh] Released.
+2026-07-12 20:22:41 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-12 20:22:41 [INFO] [Mesh] Released.
+2026-07-12 20:22:41 [INFO] [ShaderManager] Released 'text'.
+2026-07-12 20:22:41 [INFO] [Renderer] Shutdown
+2026-07-12 20:22:41 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:31:05 [INFO] Logger Initialized
+2026-07-13 12:31:05 [INFO] [GameManager] Initializing...
+2026-07-13 12:31:05 [INFO] [Config] Loaded
+2026-07-13 12:31:07 [INFO] [Window] Created 1280x720
+2026-07-13 12:31:07 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:31:07 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:31:07 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:31:07 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:31:07 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:31:07 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:31:07 [INFO] [Input] Initialized
+2026-07-13 12:31:07 [INFO] [AssetManager] Initialized
+2026-07-13 12:31:07 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:31:07 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:31:07 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:31:07 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:31:07 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:31:07 [INFO] [GameScene] Initializing game.
+2026-07-13 12:31:07 [INFO] [GameManager] Running...
+2026-07-13 12:31:07 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:31:09 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:31:34 [INFO] [GameManager] Shutting down...
+2026-07-13 12:31:34 [INFO] [GameManager] Runtime: 29.58s
+2026-07-13 12:31:34 [INFO] [Mesh] Released.
+2026-07-13 12:31:34 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:31:34 [INFO] [Mesh] Released.
+2026-07-13 12:31:34 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:31:34 [INFO] [Renderer] Shutdown
+2026-07-13 12:31:34 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:32:18 [INFO] Logger Initialized
+2026-07-13 12:32:18 [INFO] [GameManager] Initializing...
+2026-07-13 12:32:18 [INFO] [Config] Loaded
+2026-07-13 12:32:20 [INFO] [Window] Created 1280x720
+2026-07-13 12:32:20 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:32:20 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:32:20 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:32:20 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:32:20 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:32:20 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:32:20 [INFO] [Input] Initialized
+2026-07-13 12:32:20 [INFO] [AssetManager] Initialized
+2026-07-13 12:32:20 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:32:20 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:32:20 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:32:20 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:32:20 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:32:20 [INFO] [GameScene] Initializing game.
+2026-07-13 12:32:20 [INFO] [GameManager] Running...
+2026-07-13 12:32:20 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:32:22 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:32:34 [INFO] [GameManager] Shutting down...
+2026-07-13 12:32:34 [INFO] [GameManager] Runtime: 15.57s
+2026-07-13 12:32:34 [INFO] [Mesh] Released.
+2026-07-13 12:32:34 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:32:34 [INFO] [Mesh] Released.
+2026-07-13 12:32:34 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:32:34 [INFO] [Renderer] Shutdown
+2026-07-13 12:32:34 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:33:56 [INFO] Logger Initialized
+2026-07-13 12:33:56 [INFO] [GameManager] Initializing...
+2026-07-13 12:33:56 [INFO] [Config] Loaded
+2026-07-13 12:33:58 [INFO] [Window] Created 1280x720
+2026-07-13 12:33:58 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:33:58 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:33:58 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:33:58 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:33:58 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:33:58 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:33:58 [INFO] [Input] Initialized
+2026-07-13 12:33:58 [INFO] [AssetManager] Initialized
+2026-07-13 12:33:58 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:33:58 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:33:58 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:33:58 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:33:58 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:33:58 [INFO] [GameScene] Initializing game.
+2026-07-13 12:33:58 [INFO] [GameManager] Running...
+2026-07-13 12:33:58 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:34:00 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:34:21 [INFO] [GameManager] Shutting down...
+2026-07-13 12:34:21 [INFO] [GameManager] Runtime: 24.51s
+2026-07-13 12:34:21 [INFO] [Mesh] Released.
+2026-07-13 12:34:21 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:34:21 [INFO] [Mesh] Released.
+2026-07-13 12:34:21 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:34:21 [INFO] [Renderer] Shutdown
+2026-07-13 12:34:21 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:38:42 [INFO] Logger Initialized
+2026-07-13 12:38:42 [INFO] [GameManager] Initializing...
+2026-07-13 12:38:42 [INFO] [Config] Loaded
+2026-07-13 12:38:44 [INFO] [Window] Created 1280x720
+2026-07-13 12:38:44 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:38:44 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:38:44 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:38:44 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:38:44 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:38:44 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:38:44 [INFO] [Input] Initialized
+2026-07-13 12:38:44 [INFO] [AssetManager] Initialized
+2026-07-13 12:38:44 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:38:44 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:38:44 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:38:44 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:38:44 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:38:44 [INFO] [GameScene] Initializing game.
+2026-07-13 12:38:44 [INFO] [GameManager] Running...
+2026-07-13 12:38:44 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:38:46 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:38:57 [INFO] [GameManager] Shutting down...
+2026-07-13 12:38:57 [INFO] [GameManager] Runtime: 14.96s
+2026-07-13 12:38:57 [INFO] [Mesh] Released.
+2026-07-13 12:38:57 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:38:57 [INFO] [Mesh] Released.
+2026-07-13 12:38:57 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:38:57 [INFO] [Renderer] Shutdown
+2026-07-13 12:38:58 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:45:48 [INFO] Logger Initialized
+2026-07-13 12:45:48 [INFO] [GameManager] Initializing...
+2026-07-13 12:45:48 [INFO] [Config] Loaded
+2026-07-13 12:45:50 [INFO] [Window] Created 1280x720
+2026-07-13 12:45:50 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:45:50 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:45:50 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:45:50 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:45:50 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:45:50 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:45:50 [INFO] [Input] Initialized
+2026-07-13 12:45:50 [INFO] [AssetManager] Initialized
+2026-07-13 12:45:50 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:45:50 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:45:50 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:45:50 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:45:50 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:45:50 [INFO] [GameScene] Initializing game.
+2026-07-13 12:45:50 [INFO] [GameManager] Running...
+2026-07-13 12:45:50 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:45:52 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:46:06 [INFO] [GameManager] Shutting down...
+2026-07-13 12:46:06 [INFO] [GameManager] Runtime: 18.11s
+2026-07-13 12:46:06 [INFO] [Mesh] Released.
+2026-07-13 12:46:06 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:46:06 [INFO] [Mesh] Released.
+2026-07-13 12:46:06 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:46:06 [INFO] [Renderer] Shutdown
+2026-07-13 12:46:06 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:47:13 [INFO] Logger Initialized
+2026-07-13 12:47:13 [INFO] [GameManager] Initializing...
+2026-07-13 12:47:13 [INFO] [Config] Loaded
+2026-07-13 12:47:15 [INFO] [Window] Created 1280x720
+2026-07-13 12:47:15 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:47:15 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:47:15 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:47:15 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:47:15 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:47:15 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:47:15 [INFO] [Input] Initialized
+2026-07-13 12:47:15 [INFO] [AssetManager] Initialized
+2026-07-13 12:47:15 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:47:15 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:47:15 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:47:15 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:47:15 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:47:15 [INFO] [GameScene] Initializing game.
+2026-07-13 12:47:15 [INFO] [GameManager] Running...
+2026-07-13 12:47:15 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:47:17 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:47:32 [INFO] [GameManager] Shutting down...
+2026-07-13 12:47:32 [INFO] [GameManager] Runtime: 18.42s
+2026-07-13 12:47:32 [INFO] [Mesh] Released.
+2026-07-13 12:47:32 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:47:32 [INFO] [Mesh] Released.
+2026-07-13 12:47:32 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:47:32 [INFO] [Renderer] Shutdown
+2026-07-13 12:47:32 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:47:38 [INFO] Logger Initialized
+2026-07-13 12:47:38 [INFO] [GameManager] Initializing...
+2026-07-13 12:47:38 [INFO] [Config] Loaded
+2026-07-13 12:47:40 [INFO] [Window] Created 1280x720
+2026-07-13 12:47:40 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:47:40 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:47:40 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:47:40 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:47:40 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:47:40 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:47:40 [INFO] [Input] Initialized
+2026-07-13 12:47:40 [INFO] [AssetManager] Initialized
+2026-07-13 12:47:40 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:47:40 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:47:40 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:47:40 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:47:40 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:47:40 [INFO] [GameScene] Initializing game.
+2026-07-13 12:47:40 [INFO] [GameManager] Running...
+2026-07-13 12:47:40 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:47:41 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:47:51 [INFO] [GameManager] Shutting down...
+2026-07-13 12:47:51 [INFO] [GameManager] Runtime: 12.93s
+2026-07-13 12:47:51 [INFO] [Mesh] Released.
+2026-07-13 12:47:51 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:47:51 [INFO] [Mesh] Released.
+2026-07-13 12:47:51 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:47:51 [INFO] [Renderer] Shutdown
+2026-07-13 12:47:51 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:52:57 [INFO] Logger Initialized
+2026-07-13 12:52:57 [INFO] [GameManager] Initializing...
+2026-07-13 12:52:57 [INFO] [Config] Loaded
+2026-07-13 12:52:58 [INFO] [Window] Created 1280x720
+2026-07-13 12:52:58 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:52:58 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:52:58 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:52:58 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:52:58 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:52:58 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:52:58 [INFO] [Input] Initialized
+2026-07-13 12:52:58 [INFO] [AssetManager] Initialized
+2026-07-13 12:52:58 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:52:58 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:52:58 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:52:58 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:52:58 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:52:58 [INFO] [GameScene] Initializing game.
+2026-07-13 12:52:58 [INFO] [GameManager] Running...
+2026-07-13 12:52:58 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:53:00 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:53:13 [INFO] [GameManager] Shutting down...
+2026-07-13 12:53:13 [INFO] [GameManager] Runtime: 16.36s
+2026-07-13 12:53:13 [INFO] [Mesh] Released.
+2026-07-13 12:53:13 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:53:13 [INFO] [Mesh] Released.
+2026-07-13 12:53:13 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:53:13 [INFO] [Renderer] Shutdown
+2026-07-13 12:53:13 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 12:54:16 [INFO] Logger Initialized
+2026-07-13 12:54:16 [INFO] [GameManager] Initializing...
+2026-07-13 12:54:16 [INFO] [Config] Loaded
+2026-07-13 12:54:17 [INFO] [Window] Created 1280x720
+2026-07-13 12:54:17 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 12:54:17 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 12:54:17 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:54:17 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 12:54:17 [INFO] [Mesh] GPU mesh created.
+2026-07-13 12:54:17 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 12:54:17 [INFO] [Input] Initialized
+2026-07-13 12:54:17 [INFO] [AssetManager] Initialized
+2026-07-13 12:54:17 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 12:54:17 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 12:54:17 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 12:54:17 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 12:54:17 [INFO] [Scene] Enter: Game Scene
+2026-07-13 12:54:17 [INFO] [GameScene] Initializing game.
+2026-07-13 12:54:17 [INFO] [GameManager] Running...
+2026-07-13 12:54:17 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 12:54:19 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 12:54:28 [INFO] [GameManager] Shutting down...
+2026-07-13 12:54:28 [INFO] [GameManager] Runtime: 12.84s
+2026-07-13 12:54:28 [INFO] [Mesh] Released.
+2026-07-13 12:54:28 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 12:54:28 [INFO] [Mesh] Released.
+2026-07-13 12:54:28 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 12:54:28 [INFO] [Renderer] Shutdown
+2026-07-13 12:54:29 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-13 19:24:58 [INFO] Logger Initialized
+2026-07-13 19:24:58 [INFO] [GameManager] Initializing...
+2026-07-13 19:24:58 [INFO] [Config] Loaded
+2026-07-13 19:25:01 [INFO] [Window] Created 1280x720
+2026-07-13 19:25:01 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-13 19:25:01 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-13 19:25:01 [INFO] [Mesh] GPU mesh created.
+2026-07-13 19:25:01 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-13 19:25:01 [INFO] [Mesh] GPU mesh created.
+2026-07-13 19:25:01 [INFO] [Renderer] Rendering system initialized.
+2026-07-13 19:25:01 [INFO] [Input] Initialized
+2026-07-13 19:25:01 [INFO] [AssetManager] Initialized
+2026-07-13 19:25:01 [INFO] [Scene] Enter: Boot Scene
+2026-07-13 19:25:01 [INFO] [BootScene] Engine initialization complete.
+2026-07-13 19:25:01 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-13 19:25:01 [INFO] [Scene] Exit: Boot Scene
+2026-07-13 19:25:01 [INFO] [Scene] Enter: Game Scene
+2026-07-13 19:25:01 [INFO] [GameScene] Initializing game.
+2026-07-13 19:25:01 [INFO] [GameManager] Running...
+2026-07-13 19:25:01 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-13 19:25:03 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-13 19:25:17 [INFO] [GameManager] Shutting down...
+2026-07-13 19:25:17 [INFO] [GameManager] Runtime: 18.50s
+2026-07-13 19:25:17 [INFO] [Mesh] Released.
+2026-07-13 19:25:17 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-13 19:25:17 [INFO] [Mesh] Released.
+2026-07-13 19:25:17 [INFO] [ShaderManager] Released 'text'.
+2026-07-13 19:25:17 [INFO] [Renderer] Shutdown
+2026-07-13 19:25:17 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 12:02:27 [INFO] Logger Initialized
+2026-07-14 12:02:27 [INFO] [GameManager] Initializing...
+2026-07-14 12:02:27 [INFO] [Config] Loaded
+2026-07-14 12:02:29 [INFO] [Window] Created 1280x720
+2026-07-14 12:02:29 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 12:02:29 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 12:02:29 [INFO] [Mesh] GPU mesh created.
+2026-07-14 12:02:29 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 12:02:29 [INFO] [Mesh] GPU mesh created.
+2026-07-14 12:02:29 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 12:02:29 [INFO] [Input] Initialized
+2026-07-14 12:02:29 [INFO] [AssetManager] Initialized
+2026-07-14 12:02:29 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 12:02:29 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 12:02:29 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 12:02:29 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 12:02:29 [INFO] [Scene] Enter: Game Scene
+2026-07-14 12:02:29 [INFO] [GameScene] Initializing game.
+2026-07-14 12:02:29 [INFO] [GameManager] Running...
+2026-07-14 12:02:29 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 12:02:32 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 12:02:56 [INFO] [GameManager] Shutting down...
+2026-07-14 12:02:56 [INFO] [GameManager] Runtime: 28.96s
+2026-07-14 12:02:56 [INFO] [Mesh] Released.
+2026-07-14 12:02:56 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 12:02:56 [INFO] [Mesh] Released.
+2026-07-14 12:02:56 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 12:02:56 [INFO] [Renderer] Shutdown
+2026-07-14 12:02:56 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 15:04:36 [INFO] Logger Initialized
+2026-07-14 15:04:36 [INFO] [GameManager] Initializing...
+2026-07-14 15:04:36 [INFO] [Config] Loaded
+2026-07-14 15:04:38 [INFO] [Window] Created 1280x720
+2026-07-14 15:04:38 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 15:04:38 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 15:04:38 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:04:38 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 15:04:38 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:04:38 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 15:04:38 [INFO] [Input] Initialized
+2026-07-14 15:04:38 [INFO] [AssetManager] Initialized
+2026-07-14 15:04:38 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 15:04:38 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 15:04:38 [INFO] [BootScene] Launching Tic-Tac-Toe...
+
+============================================================
+2026-07-14 15:10:24 [INFO] Logger Initialized
+2026-07-14 15:10:24 [INFO] [GameManager] Initializing...
+2026-07-14 15:10:24 [INFO] [Config] Loaded
+2026-07-14 15:10:25 [INFO] [Window] Created 1280x720
+2026-07-14 15:10:25 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 15:10:25 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 15:10:25 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:10:25 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 15:10:25 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:10:25 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 15:10:25 [INFO] [Input] Initialized
+2026-07-14 15:10:25 [INFO] [AssetManager] Initialized
+2026-07-14 15:10:25 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 15:10:25 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 15:10:25 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 15:10:25 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 15:10:25 [INFO] [Scene] Enter: Game Scene
+2026-07-14 15:10:25 [INFO] [GameScene] Initializing game.
+
+============================================================
+2026-07-14 15:13:16 [INFO] Logger Initialized
+2026-07-14 15:13:16 [INFO] [GameManager] Initializing...
+2026-07-14 15:13:16 [INFO] [Config] Loaded
+2026-07-14 15:13:17 [INFO] [Window] Created 1280x720
+2026-07-14 15:13:17 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 15:13:17 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 15:13:17 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:13:17 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 15:13:17 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:13:17 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 15:13:17 [INFO] [Input] Initialized
+2026-07-14 15:13:17 [INFO] [AssetManager] Initialized
+2026-07-14 15:13:17 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 15:13:17 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 15:13:17 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 15:13:17 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 15:13:17 [INFO] [Scene] Enter: Game Scene
+2026-07-14 15:13:17 [INFO] [GameScene] Initializing game.
+2026-07-14 15:13:17 [INFO] [GameManager] Running...
+2026-07-14 15:13:17 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 15:13:20 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 15:13:44 [INFO] [GameManager] Shutting down...
+2026-07-14 15:13:44 [INFO] [GameManager] Runtime: 28.31s
+2026-07-14 15:13:44 [INFO] [Mesh] Released.
+2026-07-14 15:13:44 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 15:13:44 [INFO] [Mesh] Released.
+2026-07-14 15:13:44 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 15:13:44 [INFO] [Renderer] Shutdown
+2026-07-14 15:13:44 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 15:31:18 [INFO] Logger Initialized
+2026-07-14 15:31:18 [INFO] [GameManager] Initializing...
+2026-07-14 15:31:18 [INFO] [Config] Loaded
+2026-07-14 15:31:19 [INFO] [Window] Created 1280x720
+2026-07-14 15:31:19 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 15:31:19 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 15:31:19 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:31:19 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 15:31:19 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:31:19 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 15:31:19 [INFO] [Input] Initialized
+2026-07-14 15:31:19 [INFO] [AssetManager] Initialized
+2026-07-14 15:31:19 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 15:31:19 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 15:31:19 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 15:31:19 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 15:31:19 [INFO] [Scene] Enter: Game Scene
+2026-07-14 15:31:19 [INFO] [GameScene] Initializing game.
+2026-07-14 15:31:19 [INFO] [GameManager] Running...
+2026-07-14 15:31:19 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 15:31:21 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 15:31:44 [INFO] [GameManager] Shutting down...
+2026-07-14 15:31:44 [INFO] [GameManager] Runtime: 26.43s
+2026-07-14 15:31:44 [INFO] [Mesh] Released.
+2026-07-14 15:31:44 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 15:31:44 [INFO] [Mesh] Released.
+2026-07-14 15:31:44 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 15:31:44 [INFO] [Renderer] Shutdown
+2026-07-14 15:31:44 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 15:54:14 [INFO] Logger Initialized
+2026-07-14 15:54:14 [INFO] [GameManager] Initializing...
+2026-07-14 15:54:14 [INFO] [Config] Loaded
+2026-07-14 15:54:15 [INFO] [Window] Created 1280x720
+2026-07-14 15:54:15 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 15:54:15 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 15:54:15 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:54:15 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 15:54:15 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:54:15 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 15:54:15 [INFO] [Input] Initialized
+2026-07-14 15:54:15 [INFO] [AssetManager] Initialized
+2026-07-14 15:54:15 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 15:54:15 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 15:54:15 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 15:54:15 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 15:54:15 [INFO] [Scene] Enter: Game Scene
+2026-07-14 15:54:15 [INFO] [GameScene] Initializing game.
+2026-07-14 15:54:15 [INFO] [GameManager] Running...
+2026-07-14 15:54:15 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 15:54:17 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 15:54:41 [INFO] [GameManager] Shutting down...
+2026-07-14 15:54:42 [INFO] [GameManager] Runtime: 27.87s
+2026-07-14 15:54:42 [INFO] [Mesh] Released.
+2026-07-14 15:54:42 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 15:54:42 [INFO] [Mesh] Released.
+2026-07-14 15:54:42 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 15:54:42 [INFO] [Renderer] Shutdown
+2026-07-14 15:54:42 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 15:56:33 [INFO] Logger Initialized
+2026-07-14 15:56:33 [INFO] [GameManager] Initializing...
+2026-07-14 15:56:33 [INFO] [Config] Loaded
+2026-07-14 15:56:34 [INFO] [Window] Created 1280x720
+2026-07-14 15:56:34 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 15:56:34 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 15:56:34 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:56:34 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 15:56:34 [INFO] [Mesh] GPU mesh created.
+2026-07-14 15:56:34 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 15:56:34 [INFO] [Input] Initialized
+2026-07-14 15:56:34 [INFO] [AssetManager] Initialized
+2026-07-14 15:56:34 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 15:56:34 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 15:56:34 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 15:56:34 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 15:56:34 [INFO] [Scene] Enter: Game Scene
+2026-07-14 15:56:34 [INFO] [GameScene] Initializing game.
+2026-07-14 15:56:34 [INFO] [GameManager] Running...
+2026-07-14 15:56:34 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 15:56:37 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 15:57:31 [INFO] [GameManager] Shutting down...
+2026-07-14 15:57:31 [INFO] [GameManager] Runtime: 57.99s
+2026-07-14 15:57:31 [INFO] [Mesh] Released.
+2026-07-14 15:57:31 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 15:57:31 [INFO] [Mesh] Released.
+2026-07-14 15:57:31 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 15:57:31 [INFO] [Renderer] Shutdown
+2026-07-14 15:57:31 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 16:37:06 [INFO] Logger Initialized
+2026-07-14 16:37:06 [INFO] [GameManager] Initializing...
+2026-07-14 16:37:06 [INFO] [Config] Loaded
+2026-07-14 16:37:08 [INFO] [Window] Created 1280x720
+2026-07-14 16:37:08 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 16:37:08 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 16:37:08 [INFO] [Mesh] GPU mesh created.
+2026-07-14 16:37:08 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 16:37:08 [INFO] [Mesh] GPU mesh created.
+2026-07-14 16:37:08 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 16:37:08 [INFO] [Input] Initialized
+2026-07-14 16:37:08 [INFO] [AssetManager] Initialized
+2026-07-14 16:37:08 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 16:37:08 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 16:37:08 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 16:37:08 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 16:37:08 [INFO] [Scene] Enter: Game Scene
+2026-07-14 16:37:08 [INFO] [GameScene] Initializing game.
+2026-07-14 16:37:08 [INFO] [GameManager] Running...
+2026-07-14 16:37:08 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 16:37:09 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 16:37:19 [INFO] [GameManager] Shutting down...
+2026-07-14 16:37:19 [INFO] [GameManager] Runtime: 13.08s
+2026-07-14 16:37:19 [INFO] [Mesh] Released.
+2026-07-14 16:37:19 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 16:37:19 [INFO] [Mesh] Released.
+2026-07-14 16:37:19 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 16:37:19 [INFO] [Renderer] Shutdown
+2026-07-14 16:37:19 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 16:41:04 [INFO] Logger Initialized
+2026-07-14 16:41:04 [INFO] [GameManager] Initializing...
+2026-07-14 16:41:04 [INFO] [Config] Loaded
+2026-07-14 16:41:05 [INFO] [Window] Created 1280x720
+2026-07-14 16:41:05 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 16:41:05 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 16:41:05 [INFO] [Mesh] GPU mesh created.
+2026-07-14 16:41:05 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 16:41:05 [INFO] [Mesh] GPU mesh created.
+2026-07-14 16:41:05 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 16:41:05 [INFO] [Input] Initialized
+2026-07-14 16:41:05 [INFO] [AssetManager] Initialized
+2026-07-14 16:41:05 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 16:41:05 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 16:41:05 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 16:41:05 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 16:41:05 [INFO] [Scene] Enter: Game Scene
+2026-07-14 16:41:05 [INFO] [GameScene] Initializing game.
+2026-07-14 16:41:05 [INFO] [GameManager] Running...
+2026-07-14 16:41:05 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 16:41:07 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 16:42:06 [INFO] [GameManager] Shutting down...
+2026-07-14 16:42:06 [INFO] [GameManager] Runtime: 62.33s
+2026-07-14 16:42:06 [INFO] [Mesh] Released.
+2026-07-14 16:42:06 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 16:42:06 [INFO] [Mesh] Released.
+2026-07-14 16:42:06 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 16:42:06 [INFO] [Renderer] Shutdown
+2026-07-14 16:42:06 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 16:45:04 [INFO] Logger Initialized
+2026-07-14 16:45:04 [INFO] [GameManager] Initializing...
+2026-07-14 16:45:04 [INFO] [Config] Loaded
+2026-07-14 16:45:06 [INFO] [Window] Created 1280x720
+2026-07-14 16:45:06 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 16:45:06 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 16:45:06 [INFO] [Mesh] GPU mesh created.
+2026-07-14 16:45:06 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 16:45:06 [INFO] [Mesh] GPU mesh created.
+2026-07-14 16:45:06 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 16:45:06 [INFO] [Input] Initialized
+2026-07-14 16:45:06 [INFO] [AssetManager] Initialized
+2026-07-14 16:45:06 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 16:45:06 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 16:45:06 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 16:45:06 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 16:45:06 [INFO] [Scene] Enter: Game Scene
+2026-07-14 16:45:06 [INFO] [GameScene] Initializing game.
+2026-07-14 16:45:06 [INFO] [GameManager] Running...
+2026-07-14 16:45:06 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 16:45:28 [INFO] [GameManager] Shutting down...
+2026-07-14 16:45:28 [INFO] [GameManager] Runtime: 23.28s
+2026-07-14 16:45:28 [INFO] [Mesh] Released.
+2026-07-14 16:45:28 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 16:45:28 [INFO] [Mesh] Released.
+2026-07-14 16:45:28 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 16:45:28 [INFO] [Renderer] Shutdown
+2026-07-14 16:45:28 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 16:52:13 [INFO] Logger Initialized
+2026-07-14 16:52:13 [INFO] [GameManager] Initializing...
+2026-07-14 16:52:13 [INFO] [Config] Loaded
+2026-07-14 16:52:15 [INFO] [Window] Created 1280x720
+2026-07-14 16:52:15 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 16:52:15 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 16:52:15 [INFO] [Mesh] GPU mesh created.
+2026-07-14 16:52:15 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 16:52:15 [INFO] [Mesh] GPU mesh created.
+2026-07-14 16:52:15 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 16:52:15 [INFO] [Input] Initialized
+2026-07-14 16:52:15 [INFO] [AssetManager] Initialized
+2026-07-14 16:52:15 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 16:52:15 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 16:52:15 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 16:52:15 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 16:52:15 [INFO] [Scene] Enter: Game Scene
+2026-07-14 16:52:15 [INFO] [GameScene] Initializing game.
+2026-07-14 16:52:15 [INFO] [GameManager] Running...
+2026-07-14 16:52:15 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 16:52:17 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 16:52:27 [INFO] [GameManager] Shutting down...
+2026-07-14 16:52:27 [INFO] [GameManager] Runtime: 13.56s
+2026-07-14 16:52:27 [INFO] [Mesh] Released.
+2026-07-14 16:52:27 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 16:52:27 [INFO] [Mesh] Released.
+2026-07-14 16:52:27 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 16:52:27 [INFO] [Renderer] Shutdown
+2026-07-14 16:52:27 [INFO] [Window] Destroyed
+
+============================================================
+2026-07-14 18:53:53 [INFO] Logger Initialized
+2026-07-14 18:53:53 [INFO] [GameManager] Initializing...
+2026-07-14 18:53:53 [INFO] [Config] Loaded
+2026-07-14 18:53:53 [INFO] [Window] Created 1280x720
+2026-07-14 18:53:53 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-07-14 18:53:53 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-07-14 18:53:53 [INFO] [Mesh] GPU mesh created.
+2026-07-14 18:53:53 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-07-14 18:53:53 [INFO] [Mesh] GPU mesh created.
+2026-07-14 18:53:53 [INFO] [Renderer] Rendering system initialized.
+2026-07-14 18:53:53 [INFO] [Input] Initialized
+2026-07-14 18:53:53 [INFO] [AssetManager] Initialized
+2026-07-14 18:53:53 [INFO] [Scene] Enter: Boot Scene
+2026-07-14 18:53:53 [INFO] [BootScene] Engine initialization complete.
+2026-07-14 18:53:53 [INFO] [BootScene] Launching Tic-Tac-Toe...
+2026-07-14 18:53:53 [INFO] [Scene] Exit: Boot Scene
+2026-07-14 18:53:53 [INFO] [Scene] Enter: Game Scene
+2026-07-14 18:53:53 [INFO] [GameScene] Initializing game.
+2026-07-14 18:53:53 [INFO] [GameManager] Running...
+2026-07-14 18:53:53 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-07-14 18:53:56 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-07-14 18:54:09 [INFO] [GameManager] Shutting down...
+2026-07-14 18:54:09 [INFO] [GameManager] Runtime: 16.52s
+2026-07-14 18:54:09 [INFO] [Mesh] Released.
+2026-07-14 18:54:09 [INFO] [ShaderManager] Released 'primitive'.
+2026-07-14 18:54:09 [INFO] [Mesh] Released.
+2026-07-14 18:54:09 [INFO] [ShaderManager] Released 'text'.
+2026-07-14 18:54:09 [INFO] [Renderer] Shutdown
+2026-07-14 18:54:09 [INFO] [Window] Destroyed

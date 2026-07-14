@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Varanasi,Uttar Pradesh,25.3333,83,36.1,36,998,0.44,0,30,scattered clouds,2026-06-24 00:07:28.691760
+Varanasi,Uttar Pradesh,25.3333,83,32.71,55,996,4.17,0,100,overcast clouds,2026-07-06 22:47:20.104431

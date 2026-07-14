@@ -112,3 +112,98 @@ Traceback (most recent call last):
     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
 _moderngl.Error: out of range offset = 0 or size = 16
 
+
+================================================================================
+Timestamp: 2026-07-06 17:42:17
+
+Exception: type object 'Input' has no attribute 'process_event'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 6, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 7, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 145, in run
+    self.process_events()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 103, in process_events
+    Input.process_event(event)
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'Input' has no attribute 'process_event'
+
+
+================================================================================
+Timestamp: 2026-07-14 15:04:38
+
+Exception: 'TicTacToeGame' object has no attribute 'result'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 6, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 6, in start
+    self.game_manager.initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 88, in initialize
+    self.scene_manager.change_scene(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        BootScene()
+        ^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 43, in change_scene
+    self.current_scene.enter()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\boot_scene.py", line 36, in enter
+    game = TicTacToeGame(self.renderer)
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\tic_tac_toe\game.py", line 40, in __init__
+    self.result.reset()
+    ^^^^^^^^^^^
+AttributeError: 'TicTacToeGame' object has no attribute 'result'. Did you mean: 'reset'?
+
+
+================================================================================
+Timestamp: 2026-07-14 15:10:25
+
+Exception: name 'reset' is not defined
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 6, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 6, in start
+    self.game_manager.initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 88, in initialize
+    self.scene_manager.change_scene(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        BootScene()
+        ^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 43, in change_scene
+    self.current_scene.enter()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\boot_scene.py", line 38, in enter
+    self.scene_manager.change_scene(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        GameScene(game)
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 43, in change_scene
+    self.current_scene.enter()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 71, in enter
+    self.game.initialize()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\tic_tac_toe\game.py", line 56, in initialize
+    self.reset()
+    ~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\tic_tac_toe\game.py", line 68, in reset
+    self.result = reset()
+                  ^^^^^
+NameError: name 'reset' is not defined. Did you mean: 'self.reset'?
+

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Jalandhar,Punjab,31.3256,75.5792,34.1,31,997,2.66,0,0,clear sky,2026-06-24 00:07:08.995753
+Jalandhar,Punjab,31.3256,75.5792,34.45,45,995,2.73,0,6,clear sky,2026-07-06 22:46:56.747197

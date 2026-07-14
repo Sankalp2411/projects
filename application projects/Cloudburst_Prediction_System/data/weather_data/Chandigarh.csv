@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Chandigarh,Chandigarh,30.7343,76.7933,32.58,30,998,2.54,0,0,clear sky,2026-06-24 00:06:57.568294
+Chandigarh,Chandigarh,30.7343,76.7933,32.64,51,997,3.04,0,10,clear sky,2026-07-06 22:46:45.840787

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Delhi,Delhi,28.6667,77.2167,36.25,28,999,2.6,0,16,few clouds,2026-06-24 00:07:00.017014
+Delhi,Delhi,28.6667,77.2167,38.51,31,996,2.85,0,1,clear sky,2026-07-06 22:46:48.610048

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Rajkot,Gujarat,22.3,70.7833,30,58,1004,7.04,0,0,clear sky,2026-06-24 00:07:20.577171
+Rajkot,Gujarat,22.3,70.7833,29.44,73,999,7.48,11.53,99,heavy intensity rain,2026-07-06 22:47:10.114449

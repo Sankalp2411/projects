@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Siliguri,West Bengal,26.7,88.4333,24.05,93,1002,2.49,1.63,5,moderate rain,2026-06-24 00:07:23.938472
+Siliguri,West Bengal,26.7,88.4333,26.35,94,1003,3.4,0,100,overcast clouds,2026-07-06 22:47:13.683517
