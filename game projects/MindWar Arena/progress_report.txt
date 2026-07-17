@@ -9210,29 +9210,1266 @@
         [✓] No crashes or exceptions occur during repeated restarts.
     }
     10(ai vs human integration){
-        01(introduce player types)
-        02(add player type constants)
-        03(add ai object)
-        04(turn dispatcher)
-        05(human turn)
-        06(ai turn)
-        07(dispatcher)
-        08(replace old function)
-        09(verification)
-        01(ai turn management)
-        02(ai move execution)
-        03(human vs ai gameplay)
-        04(ai integration verification)
+        01(update game.py){
+            "|"
+            import pygame
+            from engine.core.input import Input
+            from games.tic_tac_toe.ai import TicTacToeAI
+            from engine.interfaces.game_interface import GameInterface
+            from games.tic_tac_toe.overlay_renderer import OverlayRenderer
+            from games.tic_tac_toe.board_renderer import BoardRenderer
+            from games.tic_tac_toe.board import TicTacToeBoard
+            from games.tic_tac_toe.rules import TicTacToeRules
+            from games.tic_tac_toe.human_player import HumanPlayer
+            from engine.interfaces.game_result import GameResult
+            from games.tic_tac_toe.constants import (
+                PLAYER_X,
+                PLAYER_O,
+                FIRST_PLAYER,
+                HUMAN_PLAYER,
+                AI_PLAYER,
+                NO_WINNER,
+                GAME_NOT_STARTED,
+                GAME_RUNNING,
+                GAME_DRAW,
+                GAME_OVER,
+            )
+            class TicTacToeGame(GameInterface):
+                def __init__(self, renderer):
+                    self.renderer = renderer
+                    self.board = TicTacToeBoard()
+                    self.current_player = FIRST_PLAYER
+                    self.next_starting_player = FIRST_PLAYER
+                    self.result = GameResult()
+                    self.game_state = GAME_NOT_STARTED
+                    self.move_count = 0
+                    self.board_renderer = BoardRenderer(renderer)
+                    self.overlay_renderer = OverlayRenderer(renderer)
+                    self.human_player = HumanPlayer(self.board_renderer)
+                    self.ai_player = TicTacToeAI()
+                    self.player_x = self.human_player
+                    self.player_o = self.ai_player
+                def initialize(self):
+                    self.ai_player.initialize()
+                    self.reset()
+                def reset(self):
+                    self.board.reset()
+                    self.choose_starting_player()
+                    self.result = GameResult()
+                    self.ai_player.reset()
+                    self.ai_player.initialize()
+                    self.game_state = GAME_RUNNING
+                    self.move_count = 0
+                    self.board_renderer.reset()
+                    self.overlay_renderer.reset()
+                def shutdown(self):
+                    pass
+                def update(self):
+                    self.update_restart()
+                    if self.is_frozen():
+                        return
+                    self.update_current_player()
+                def render(self):
+                    self.board_renderer.render(
+                        self.board,
+                        self.result,
+                    )
+                    self.overlay_renderer.render(
+                        self.result,
+                    )
+                def make_move(self, row, column):
+                    if self.is_frozen():
+                        return False
+                    if not self.board.is_valid_position(row, column):
+                        return False
+                    if not self.board.is_cell_empty(row, column):
+                        return False
+                    self.board.set_cell(
+                        row,
+                        column,
+                        self.current_player,
+                    )
+                    self.move_count += 1
+                    self.result = TicTacToeRules.evaluate_game(
+                        self.board
+                    )
+                    if self.result.game_over:
+                        if self.result.draw:
+                            self.game_state = GAME_DRAW
+                        else:
+                            self.game_state = GAME_OVER
+                        return True
+                    self.switch_player()
+                    return True
+                def switch_player(self):
+                    if self.current_player == PLAYER_X:
+                        self.current_player = PLAYER_O
+                    else:
+                        self.current_player = PLAYER_X
+                def choose_starting_player(self):
+                    self.current_player = self.next_starting_player
+                    if self.next_starting_player == PLAYER_X:
+                        self.next_starting_player = PLAYER_O
+                    else:
+                        self.next_starting_player = PLAYER_X
+                def get_current_controller(self):
+                    if self.current_player == PLAYER_X:
+                        return self.player_x
+                    return self.player_o
+                def update_current_player(self):
+                    controller = self.get_current_controller()
+                    move = controller.get_action(self)
+                    if move is None:
+                        return
+                    self.make_move(*move)
+                def update_restart(self):
+                    if not self.is_frozen():
+                        return
+                    if Input.is_key_clicked(pygame.K_r):
+                        self.reset()
+                def get_result(self):
+                    return self.result
+                def get_board(self):
+                    return self.board
+                def get_current_player(self):
+                    return self.current_player
+                def get_state(self):
+                    return {
+                        "board": self.board.get_board_state(),
+                        "current_player": self.current_player,
+                        "winner": self.result.winner,
+                        "game_state": self.game_state,
+                        "game_over": self.result.game_over,
+                        "draw": self.result.draw,
+                        "move_count": self.move_count,
+                    }
+                def is_game_over(self):
+                    return self.is_frozen()
+                def get_winner(self):
+                    return self.result.winner
+                def is_frozen(self):
+                    return self.result.game_over
+            "|"
+        }
+        02(update human_player.py){
+            "|"
+            from engine.core.input import Input
+            class HumanPlayer:
+                def __init__(self, board_renderer):
+                    self.board_renderer = board_renderer
+                def get_move(self, game_over=False,):
+                    if game_over:
+                        return None
+                    if not Input.is_left_mouse_clicked():
+                        return None
+                    mouse_x, mouse_y = Input.get_mouse_position()
+                    return self.board_renderer.screen_to_cell(mouse_x,mouse_y,)
+                def get_action(self, game):
+                    if game.is_frozen():
+                        return None
+                    if not Input.is_left_mouse_clicked():
+                        return None
+                    mouse_x, mouse_y = Input.get_mouse_position()
+                    return self.board_renderer.screen_to_cell(
+                        mouse_x,
+                        mouse_y,
+                    )
+            "|"
+        }
+        03(update ai.py){
+            "|"
+            import random
+            from engine.interfaces.ai_interface import AIInterface
+            class TicTacToeAI(AIInterface):
+                def __init__(self):
+                    self.initialized = False
+                def initialize(self):
+                    self.initialized = True
+                def select_action(self, game_state):
+                    board = game_state["board"]
+                    legal_moves = []
+                    for row in range(len(board)):
+                        for column in range(len(board[row])):
+                            if board[row][column] == 0:
+                                legal_moves.append((row, column))
+                    if not legal_moves:
+                        return None
+                    return random.choice(legal_moves)
+                def learn(self, state, action, reward, next_state):
+                    pass
+                def reset(self):
+                    self.initialized = False
+                def get_action(self, game):
+                    return self.select_action(
+                        game.get_state()
+                    )
+            "|"
+        }
+        04(ai integration verification){
+            run main.py
+            output =
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            2026-07-15 17:45:20 [INFO] Logger Initialized
+            2026-07-15 17:45:20 [INFO] [GameManager] Initializing...
+            2026-07-15 17:45:20 [INFO] [Config] Loaded
+            2026-07-15 17:45:21 [INFO] [Window] Created 1280x720
+            2026-07-15 17:45:21 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+            2026-07-15 17:45:21 [INFO] [ShaderManager] Loaded shader 'primitive'.
+            2026-07-15 17:45:21 [INFO] [Mesh] GPU mesh created.
+            2026-07-15 17:45:21 [INFO] [ShaderManager] Loaded shader 'text'.
+            2026-07-15 17:45:21 [INFO] [Mesh] GPU mesh created.
+            2026-07-15 17:45:21 [INFO] [Renderer] Rendering system initialized.
+            2026-07-15 17:45:21 [INFO] [Input] Initialized
+            2026-07-15 17:45:21 [INFO] [AssetManager] Initialized
+            2026-07-15 17:45:21 [INFO] [Scene] Enter: Boot Scene
+            2026-07-15 17:45:21 [INFO] [BootScene] Engine initialization complete.
+            2026-07-15 17:45:21 [INFO] [BootScene] Launching Tic-Tac-Toe...
+            2026-07-15 17:45:21 [INFO] [Scene] Exit: Boot Scene
+            2026-07-15 17:45:21 [INFO] [Scene] Enter: Game Scene
+            2026-07-15 17:45:21 [INFO] [GameScene] Initializing game.
+            2026-07-15 17:45:21 [INFO] [GameManager] Running...
+            2026-07-15 17:45:21 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+            2026-07-15 17:45:23 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+            2026-07-15 17:45:34 [INFO] [GameManager] Shutting down...
+            2026-07-15 17:45:34 [INFO] [GameManager] Runtime: 14.37s
+            2026-07-15 17:45:34 [INFO] [Mesh] Released.
+            2026-07-15 17:45:34 [INFO] [ShaderManager] Released 'primitive'.
+            2026-07-15 17:45:34 [INFO] [Mesh] Released.
+            2026-07-15 17:45:34 [INFO] [ShaderManager] Released 'text'.
+            2026-07-15 17:45:34 [INFO] [Renderer] Shutdown
+            2026-07-15 17:45:34 [INFO] [Window] Destroyed
+            ai is working well
+        }
+        [✓] Human starts the first game.
+        [✓] AI starts the second game.
+        [✓] Starting player alternates every match.
+        [✓] Human and AI alternate turns correctly.
+        [✓] AI never plays twice consecutively.
+        [✓] Human never plays twice consecutively.
+        [✓] AI never selects occupied cells.
+        [✓] AI always selects valid board coordinates.
+        [✓] AI stops immediately after game over.
+        [✓] Human cannot move after game over.
+        [✓] Restart works after Human victory.
+        [✓] Restart works after AI victory.
+        [✓] Restart works after Draw.
+        [✓] Rapid consecutive restarts remain stable.
+        [✓] Gameplay remains stable under varied play styles.
+        [✓] AI remains stable across many consecutive games.
+        [✓] No crashes or exceptions occur during AI gameplay.
     }
     11(testing){
-        01(board test)
-        02(rules test)
-        03(game controller test)
-        04(human input test)
-        05(ai test)
-        06(renderer test)
-        07(integration test)
+        01(board test){
+            run tests/test_tic_tac_toe.py
+            input code =
+            "|"
+            import unittest
+            from games.tic_tac_toe.board import TicTacToeBoard
+            from games.tic_tac_toe.constants import (
+                BOARD_ROWS,
+                BOARD_COLUMNS,
+                EMPTY,
+                PLAYER_X,
+                PLAYER_O,
+            )
+            class TestTicTacToeBoard(unittest.TestCase):
+                def setUp(self):
+                    self.board = TicTacToeBoard()
+                def test_board_dimensions(self):
+                    state = self.board.get_board_state()
+                    self.assertEqual(len(state), BOARD_ROWS)
+                    for row in state:
+                        self.assertEqual(len(row), BOARD_COLUMNS)
+                def test_board_starts_empty(self):
+                    for row in range(BOARD_ROWS):
+                        for column in range(BOARD_COLUMNS):
+                            self.assertEqual(
+                                self.board.get_cell(row, column),
+                                EMPTY,
+                            )
+                def test_set_and_get_cell(self):
+                    self.assertTrue(
+                        self.board.set_cell(1, 1, PLAYER_X)
+                    )
+                    self.assertEqual(
+                        self.board.get_cell(1, 1),
+                        PLAYER_X,
+                    )
+                def test_set_invalid_position(self):
+                    self.assertFalse(
+                        self.board.set_cell(-1, 0, PLAYER_X)
+                    )
+                    self.assertFalse(
+                        self.board.set_cell(5, 5, PLAYER_X)
+                    )
+                def test_valid_positions(self):
+                    self.assertTrue(
+                        self.board.is_valid_position(0, 0)
+                    )
+                    self.assertTrue(
+                        self.board.is_valid_position(2, 2)
+                    )
+                def test_invalid_positions(self):
+                    self.assertFalse(
+                        self.board.is_valid_position(-1, 0)
+                    )
+                    self.assertFalse(
+                        self.board.is_valid_position(0, -1)
+                    )
+                    self.assertFalse(
+                        self.board.is_valid_position(3, 0)
+                    )
+                    self.assertFalse(
+                        self.board.is_valid_position(0, 3)
+                    )
+                def test_empty_cell(self):
+                    self.assertTrue(
+                        self.board.is_cell_empty(0, 0)
+                    )
+                    self.board.set_cell(0, 0, PLAYER_X)
+                    self.assertFalse(
+                        self.board.is_cell_empty(0, 0)
+                    )
+                def test_available_moves_on_empty_board(self):
+                    moves = self.board.get_available_moves()
+                    self.assertEqual(
+                        len(moves),
+                        BOARD_ROWS * BOARD_COLUMNS,
+                    )
+                def test_available_moves_after_move(self):
+                    self.board.set_cell(0, 0, PLAYER_X)
+                    moves = self.board.get_available_moves()
+                    self.assertEqual(len(moves), 8)
+                    self.assertNotIn(
+                        (0, 0),
+                        moves,
+                    )
+                def test_board_not_full_initially(self):
+                    self.assertFalse(
+                        self.board.is_board_full()
+                    )
+                def test_board_full(self):
+                    value = PLAYER_X
+                    for row in range(BOARD_ROWS):
+                        for column in range(BOARD_COLUMNS):
+                            self.board.set_cell(
+                                row,
+                                column,
+                                value,
+                            )
+                            value = (
+                                PLAYER_O
+                                if value == PLAYER_X
+                                else PLAYER_X
+                            )
+                    self.assertTrue(
+                        self.board.is_board_full()
+                    )
+                def test_copy_creates_deep_copy(self):
+                    self.board.set_cell(
+                        1,
+                        1,
+                        PLAYER_X,
+                    )
+                    copied = self.board.copy()
+                    copied.set_cell(
+                        0,
+                        0,
+                        PLAYER_O,
+                    )
+                    self.assertEqual(
+                        self.board.get_cell(0, 0),
+                        EMPTY,
+                    )
+                    self.assertEqual(
+                        copied.get_cell(0, 0),
+                        PLAYER_O,
+                    )
+                def test_reset(self):
+                    self.board.set_cell(
+                        0,
+                        0,
+                        PLAYER_X,
+                    )
+                    self.board.set_cell(
+                        2,
+                        2,
+                        PLAYER_O,
+                    )
+                    self.board.reset()
+                    for row in range(BOARD_ROWS):
+                        for column in range(BOARD_COLUMNS):
+                            self.assertEqual(
+                                self.board.get_cell(
+                                    row,
+                                    column,
+                                ),
+                                EMPTY,
+                            )
+                def test_get_board_state_returns_copy(self):
+                    state = self.board.get_board_state()
+                    state[0][0] = PLAYER_X
+                    self.assertEqual(
+                        self.board.get_cell(0, 0),
+                        EMPTY,
+                    )
+                def test_string_representation(self):
+                    self.board.set_cell(0, 0, PLAYER_X)
+                    self.board.set_cell(1, 1, PLAYER_O)
+                    text = str(self.board)
+                    self.assertIn("X", text)
+                    self.assertIn("O", text)
+                    self.assertIn(".", text)
+            if __name__ == "__main__":
+                unittest.main(verbosity=2)
+            "|"
+            output =
+            test_available_moves_after_move (__main__.TestTicTacToeBoard.test_available_moves_after_move) ... ok
+            test_available_moves_on_empty_board (__main__.TestTicTacToeBoard.test_available_moves_on_empty_board) ... ok
+            test_board_dimensions (__main__.TestTicTacToeBoard.test_board_dimensions) ... ok
+            test_board_full (__main__.TestTicTacToeBoard.test_board_full) ... ok
+            test_board_not_full_initially (__main__.TestTicTacToeBoard.test_board_not_full_initially) ... ok
+            test_board_starts_empty (__main__.TestTicTacToeBoard.test_board_starts_empty) ... ok
+            test_copy_creates_deep_copy (__main__.TestTicTacToeBoard.test_copy_creates_deep_copy) ... ok
+            test_empty_cell (__main__.TestTicTacToeBoard.test_empty_cell) ... ok
+            test_get_board_state_returns_copy (__main__.TestTicTacToeBoard.test_get_board_state_returns_copy) ... ok
+            test_invalid_positions (__main__.TestTicTacToeBoard.test_invalid_positions) ... ok
+            test_reset (__main__.TestTicTacToeBoard.test_reset) ... ok
+            test_set_and_get_cell (__main__.TestTicTacToeBoard.test_set_and_get_cell) ... ok
+            test_set_invalid_position (__main__.TestTicTacToeBoard.test_set_invalid_position) ... ok
+            test_string_representation (__main__.TestTicTacToeBoard.test_string_representation) ... ok
+            test_valid_positions (__main__.TestTicTacToeBoard.test_valid_positions) ... ok
+
+            ----------------------------------------------------------------------
+            Ran 15 tests in 0.006s
+
+            OK
+        }
+        02(rules test){
+            run test_tic_tac_toe.py
+            input code =
+            "|"
+            import unittest
+            from games.tic_tac_toe.board import TicTacToeBoard
+            from games.tic_tac_toe.rules import TicTacToeRules
+            from games.tic_tac_toe.constants import (
+                PLAYER_X,
+                PLAYER_O,
+                NO_WINNER,
+            )
+            class TestTicTacToeRules(unittest.TestCase):
+                def setUp(self):
+                    self.board = TicTacToeBoard()
+                def test_empty_board_has_no_winner(self):
+                    self.assertEqual(
+                        TicTacToeRules.check_winner(self.board),
+                        NO_WINNER,
+                    )
+                def test_horizontal_win(self):
+                    for column in range(3):
+                        self.board.set_cell(1, column, PLAYER_X)
+                    self.assertEqual(
+                        TicTacToeRules.check_winner(self.board),
+                        PLAYER_X,
+                    )
+                def test_vertical_win(self):
+                    for row in range(3):
+                        self.board.set_cell(row, 2, PLAYER_O)
+                    self.assertEqual(
+                        TicTacToeRules.check_winner(self.board),
+                        PLAYER_O,
+                    )
+                def test_main_diagonal_win(self):
+                    for index in range(3):
+                        self.board.set_cell(index, index, PLAYER_X)
+                    self.assertEqual(
+                        TicTacToeRules.check_winner(self.board),
+                        PLAYER_X,
+                    )
+                def test_anti_diagonal_win(self):
+                    self.board.set_cell(0, 2, PLAYER_O)
+                    self.board.set_cell(1, 1, PLAYER_O)
+                    self.board.set_cell(2, 0, PLAYER_O)
+                    self.assertEqual(
+                        TicTacToeRules.check_winner(self.board),
+                        PLAYER_O,
+                    )
+                def test_horizontal_winning_cells(self):
+                    for column in range(3):
+                        self.board.set_cell(2, column, PLAYER_X)
+                    self.assertEqual(
+                        TicTacToeRules.get_winning_cells(self.board),
+                        [(2, 0), (2, 1), (2, 2)],
+                    )
+                def test_vertical_winning_cells(self):
+                    for row in range(3):
+                        self.board.set_cell(row, 1, PLAYER_O)
+                    self.assertEqual(
+                        TicTacToeRules.get_winning_cells(self.board),
+                        [(0, 1), (1, 1), (2, 1)],
+                    )
+                def test_main_diagonal_winning_cells(self):
+                    for index in range(3):
+                        self.board.set_cell(index, index, PLAYER_X)
+                    self.assertEqual(
+                        TicTacToeRules.get_winning_cells(self.board),
+                        [(0, 0), (1, 1), (2, 2)],
+                    )
+                def test_anti_diagonal_winning_cells(self):
+                    self.board.set_cell(0, 2, PLAYER_O)
+                    self.board.set_cell(1, 1, PLAYER_O)
+                    self.board.set_cell(2, 0, PLAYER_O)
+                    self.assertEqual(
+                        TicTacToeRules.get_winning_cells(self.board),
+                        [(0, 2), (1, 1), (2, 0)],
+                    )
+                def test_no_winning_cells(self):
+                    self.assertEqual(
+                        TicTacToeRules.get_winning_cells(self.board),
+                        [],
+                    )
+                def test_draw(self):
+                    board = [
+                        [PLAYER_X, PLAYER_O, PLAYER_X],
+                        [PLAYER_X, PLAYER_O, PLAYER_O],
+                        [PLAYER_O, PLAYER_X, PLAYER_X],
+                    ]
+                    for row in range(3):
+                        for column in range(3):
+                            self.board.set_cell(
+                                row,
+                                column,
+                                board[row][column],
+                            )
+                    self.assertTrue(
+                        TicTacToeRules.is_draw(self.board)
+                    )
+                def test_not_draw_when_board_not_full(self):
+                    self.assertFalse(
+                        TicTacToeRules.is_draw(self.board)
+                    )
+                def test_game_over_after_win(self):
+                    for column in range(3):
+                        self.board.set_cell(0, column, PLAYER_X)
+                    self.assertTrue(
+                        TicTacToeRules.is_game_over(self.board)
+                    )
+                def test_game_over_after_draw(self):
+                    board = [
+                        [PLAYER_X, PLAYER_O, PLAYER_X],
+                        [PLAYER_X, PLAYER_O, PLAYER_O],
+                        [PLAYER_O, PLAYER_X, PLAYER_X],
+                    ]
+                    for row in range(3):
+                        for column in range(3):
+                            self.board.set_cell(
+                                row,
+                                column,
+                                board[row][column],
+                            )
+                    self.assertTrue(
+                        TicTacToeRules.is_game_over(self.board)
+                    )
+                def test_game_not_over(self):
+                    self.board.set_cell(0, 0, PLAYER_X)
+                    self.assertFalse(
+                        TicTacToeRules.is_game_over(self.board)
+                    )
+                def test_evaluate_running_game(self):
+                    result = TicTacToeRules.evaluate_game(
+                        self.board
+                    )
+                    self.assertFalse(result.game_over)
+                    self.assertFalse(result.draw)
+                    self.assertIsNone(result.winner)
+                    self.assertEqual(result.winning_cells, [])
+                def test_evaluate_win(self):
+                    for column in range(3):
+                        self.board.set_cell(0, column, PLAYER_X)
+                    result = TicTacToeRules.evaluate_game(
+                        self.board
+                    )
+                    self.assertTrue(result.game_over)
+                    self.assertFalse(result.draw)
+                    self.assertEqual(result.winner, PLAYER_X)
+                    self.assertEqual(
+                        result.winning_cells,
+                        [(0, 0), (0, 1), (0, 2)],
+                    )
+                def test_evaluate_draw(self):
+                    board = [
+                        [PLAYER_X, PLAYER_O, PLAYER_X],
+                        [PLAYER_X, PLAYER_O, PLAYER_O],
+                        [PLAYER_O, PLAYER_X, PLAYER_X],
+                    ]
+                    for row in range(3):
+                        for column in range(3):
+                            self.board.set_cell(
+                                row,
+                                column,
+                                board[row][column],
+                            )
+                    result = TicTacToeRules.evaluate_game(
+                        self.board
+                    )
+                    self.assertTrue(result.game_over)
+                    self.assertTrue(result.draw)
+                    self.assertIsNone(result.winner)
+                    self.assertEqual(result.winning_cells, [])
+            if __name__ == "__main__":
+                unittest.main(verbosity=2)
+            "|"
+            output =
+            test_anti_diagonal_win (__main__.TestTicTacToeRules.test_anti_diagonal_win) ... ok
+            test_anti_diagonal_winning_cells (__main__.TestTicTacToeRules.test_anti_diagonal_winning_cells) ... ok
+            test_draw (__main__.TestTicTacToeRules.test_draw) ... ok
+            test_empty_board_has_no_winner (__main__.TestTicTacToeRules.test_empty_board_has_no_winner) ... ok
+            test_evaluate_draw (__main__.TestTicTacToeRules.test_evaluate_draw) ... ok
+            test_evaluate_running_game (__main__.TestTicTacToeRules.test_evaluate_running_game) ... ok
+            test_evaluate_win (__main__.TestTicTacToeRules.test_evaluate_win) ... ok
+            test_game_not_over (__main__.TestTicTacToeRules.test_game_not_over) ... ok
+            test_game_over_after_draw (__main__.TestTicTacToeRules.test_game_over_after_draw) ... ok
+            test_game_over_after_win (__main__.TestTicTacToeRules.test_game_over_after_win) ... ok
+            test_horizontal_win (__main__.TestTicTacToeRules.test_horizontal_win) ... ok
+            test_horizontal_winning_cells (__main__.TestTicTacToeRules.test_horizontal_winning_cells) ... ok
+            test_main_diagonal_win (__main__.TestTicTacToeRules.test_main_diagonal_win) ... ok
+            test_main_diagonal_winning_cells (__main__.TestTicTacToeRules.test_main_diagonal_winning_cells) ... ok
+            test_no_winning_cells (__main__.TestTicTacToeRules.test_no_winning_cells) ... ok
+            test_not_draw_when_board_not_full (__main__.TestTicTacToeRules.test_not_draw_when_board_not_full) ... ok
+            test_vertical_win (__main__.TestTicTacToeRules.test_vertical_win) ... ok
+            test_vertical_winning_cells (__main__.TestTicTacToeRules.test_vertical_winning_cells) ... ok
+
+            ----------------------------------------------------------------------
+            Ran 18 tests in 0.004s
+
+            OK
+        }
+        03(human input test){
+            run test_tic_tac_toe.py
+            input code =
+            "|"
+            import unittest
+            from engine.core.input import Input
+            from games.tic_tac_toe.human_player import HumanPlayer
+            class FakeBoardRenderer:
+                def __init__(self):
+                    self.calls = 0
+                    self.last_position = None
+                def screen_to_cell(self, x, y):
+                    self.calls += 1
+                    self.last_position = (x, y)
+                    if (x, y) == (100, 100):
+                        return (0, 0)
+                    if (x, y) == (250, 250):
+                        return (1, 1)
+                    if (x, y) == (400, 400):
+                        return (2, 2)
+                    return None
+            class FakeGame:
+                def __init__(self, frozen=False):
+                    self._frozen = frozen
+                def is_frozen(self):
+                    return self._frozen
+            class TestHumanPlayer(unittest.TestCase):
+                def setUp(self):
+                    self.renderer = FakeBoardRenderer()
+                    self.player = HumanPlayer(self.renderer)
+                    self.original_click = Input.is_left_mouse_clicked
+                    self.original_position = Input.get_mouse_position
+                def tearDown(self):
+                    Input.is_left_mouse_clicked = self.original_click
+                    Input.get_mouse_position = self.original_position
+                def test_returns_none_when_game_over(self):
+                    move = self.player.get_move(game_over=True)
+                    self.assertIsNone(move)
+                def test_returns_none_when_game_is_frozen(self):
+                    game = FakeGame(frozen=True)
+                    move = self.player.get_action(game)
+                    self.assertIsNone(move)
+                def test_returns_none_without_click(self):
+                    Input.is_left_mouse_clicked = classmethod(
+                        lambda cls: False
+                    )
+                    move = self.player.get_move()
+                    self.assertIsNone(move)
+                def test_valid_click_top_left(self):
+                    Input.is_left_mouse_clicked = classmethod(
+                        lambda cls: True
+                    )
+                    Input.get_mouse_position = classmethod(
+                        lambda cls: (100, 100)
+                    )
+                    move = self.player.get_move()
+                    self.assertEqual(move, (0, 0))
+                def test_valid_click_center(self):
+                    Input.is_left_mouse_clicked = classmethod(
+                        lambda cls: True
+                    )
+                    Input.get_mouse_position = classmethod(
+                        lambda cls: (250, 250)
+                    )
+                    move = self.player.get_move()
+                    self.assertEqual(move, (1, 1))
+                def test_valid_click_bottom_right(self):
+                    Input.is_left_mouse_clicked = classmethod(
+                        lambda cls: True
+                    )
+                    Input.get_mouse_position = classmethod(
+                        lambda cls: (400, 400)
+                    )
+                    move = self.player.get_move()
+                    self.assertEqual(move, (2, 2))
+                def test_click_outside_board(self):
+                    Input.is_left_mouse_clicked = classmethod(
+                        lambda cls: True
+                    )
+                    Input.get_mouse_position = classmethod(
+                        lambda cls: (999, 999)
+                    )
+                    move = self.player.get_move()
+                    self.assertIsNone(move)
+                def test_screen_to_cell_called_once(self):
+                    Input.is_left_mouse_clicked = classmethod(
+                        lambda cls: True
+                    )
+                    Input.get_mouse_position = classmethod(
+                        lambda cls: (250, 250)
+                    )
+                    self.player.get_move()
+                    self.assertEqual(self.renderer.calls, 1)
+                def test_mouse_position_forwarded(self):
+                    Input.is_left_mouse_clicked = classmethod(
+                        lambda cls: True
+                    )
+                    Input.get_mouse_position = classmethod(
+                        lambda cls: (123, 456)
+                    )
+                    self.player.get_move()
+                    self.assertEqual(
+                        self.renderer.last_position,
+                        (123, 456)
+                    )
+                def test_multiple_calls(self):
+                    Input.is_left_mouse_clicked = classmethod(
+                        lambda cls: True
+                    )
+                    Input.get_mouse_position = classmethod(
+                        lambda cls: (100, 100)
+                    )
+                    for _ in range(20):
+                        move = self.player.get_move()
+                        self.assertEqual(move, (0, 0))
+            if __name__ == "__main__":
+                unittest.main(verbosity=2)
+            "|"
+            output =
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            test_click_outside_board (__main__.TestHumanPlayer.test_click_outside_board) ... ok
+            test_mouse_position_forwarded (__main__.TestHumanPlayer.test_mouse_position_forwarded) ... ok
+            test_multiple_calls (__main__.TestHumanPlayer.test_multiple_calls) ... ok
+            test_returns_none_when_game_is_frozen (__main__.TestHumanPlayer.test_returns_none_when_game_is_frozen) ... ok
+            test_returns_none_when_game_over (__main__.TestHumanPlayer.test_returns_none_when_game_over) ... ok
+            test_returns_none_without_click (__main__.TestHumanPlayer.test_returns_none_without_click) ... ok
+            test_screen_to_cell_called_once (__main__.TestHumanPlayer.test_screen_to_cell_called_once) ... ok
+            test_valid_click_bottom_right (__main__.TestHumanPlayer.test_valid_click_bottom_right) ... ok
+            test_valid_click_center (__main__.TestHumanPlayer.test_valid_click_center) ... ok
+            test_valid_click_top_left (__main__.TestHumanPlayer.test_valid_click_top_left) ... ok
+
+            ----------------------------------------------------------------------
+            Ran 10 tests in 0.003s
+
+            OK
+        }
+        04(ai test){
+            run test_tic_tac_toe.py
+            input code =
+            "|"
+            import unittest
+            from games.tic_tac_toe.ai import TicTacToeAI
+            from games.tic_tac_toe.board import TicTacToeBoard
+            from games.tic_tac_toe.constants import (
+                PLAYER_X,
+                PLAYER_O,
+                EMPTY,
+            )
+            class TestTicTacToeAI(unittest.TestCase):
+                def setUp(self):
+                    self.ai = TicTacToeAI()
+                    self.board = TicTacToeBoard()
+                def test_initialize(self):
+                    self.assertFalse(self.ai.initialized)
+                    self.ai.initialize()
+                    self.assertTrue(self.ai.initialized)
+                def test_reset(self):
+                    self.ai.initialize()
+                    self.ai.reset()
+                    self.assertFalse(self.ai.initialized)
+                def test_returns_valid_move_on_empty_board(self):
+                    move = self.ai.select_action(
+                        {
+                            "board": self.board.get_board_state()
+                        }
+                    )
+                    self.assertIsNotNone(move)
+                    row, column = move
+                    self.assertTrue(
+                        self.board.is_valid_position(
+                            row,
+                            column,
+                        )
+                    )
+                def test_never_selects_occupied_cell(self):
+                    self.board.set_cell(0, 0, PLAYER_X)
+                    self.board.set_cell(0, 1, PLAYER_O)
+                    self.board.set_cell(1, 1, PLAYER_X)
+                    move = self.ai.select_action(
+                        {
+                            "board": self.board.get_board_state()
+                        }
+                    )
+                    self.assertNotEqual(move, (0, 0))
+                    self.assertNotEqual(move, (0, 1))
+                    self.assertNotEqual(move, (1, 1))
+                def test_single_remaining_move(self):
+                    for row in range(3):
+                        for column in range(3):
+                            if (row, column) != (2, 2):
+                                self.board.set_cell(
+                                    row,
+                                    column,
+                                    PLAYER_X,
+                                )
+                    move = self.ai.select_action(
+                        {
+                            "board": self.board.get_board_state()
+                        }
+                    )
+                    self.assertEqual(
+                        move,
+                        (2, 2),
+                    )
+                def test_returns_none_when_board_full(self):
+                    value = PLAYER_X
+                    for row in range(3):
+                        for column in range(3):
+                            self.board.set_cell(
+                                row,
+                                column,
+                                value,
+                            )
+                            value = (
+                                PLAYER_O
+                                if value == PLAYER_X
+                                else PLAYER_X
+                            )
+                    move = self.ai.select_action(
+                        {
+                            "board": self.board.get_board_state()
+                        }
+                    )
+                    self.assertIsNone(move)
+                def test_move_within_board(self):
+                    for _ in range(100):
+                        move = self.ai.select_action(
+                            {
+                                "board": self.board.get_board_state()
+                            }
+                        )
+                        row, column = move
+                        self.assertGreaterEqual(row, 0)
+                        self.assertLess(row, 3)
+                        self.assertGreaterEqual(column, 0)
+                        self.assertLess(column, 3)
+                def test_ai_does_not_modify_board(self):
+                    before = self.board.get_board_state()
+                    self.ai.select_action(
+                        {
+                            "board": self.board.get_board_state()
+                        }
+                    )
+                    after = self.board.get_board_state()
+                    self.assertEqual(before, after)
+                def test_repeated_calls(self):
+                    for _ in range(500):
+                        move = self.ai.select_action(
+                            {
+                                "board": self.board.get_board_state()
+                            }
+                        )
+                        self.assertIsNotNone(move)
+                def test_get_action(self):
+                    class FakeGame:
+                        def __init__(self, board):
+                            self.board = board
+                        def get_state(self):
+                            return {
+                                "board": self.board.get_board_state()
+                            }
+                    game = FakeGame(self.board)
+                    move = self.ai.get_action(game)
+                    self.assertIsNotNone(move)
+                    row, column = move
+                    self.assertTrue(
+                        self.board.is_valid_position(
+                            row,
+                            column,
+                        )
+                    )
+            if __name__ == "__main__":
+                unittest.main(verbosity=2)
+            "|"
+            output =
+            test_ai_does_not_modify_board (__main__.TestTicTacToeAI.test_ai_does_not_modify_board) ... ok
+            test_get_action (__main__.TestTicTacToeAI.test_get_action) ... ok
+            test_initialize (__main__.TestTicTacToeAI.test_initialize) ... ok
+            test_move_within_board (__main__.TestTicTacToeAI.test_move_within_board) ... ok
+            test_never_selects_occupied_cell (__main__.TestTicTacToeAI.test_never_selects_occupied_cell) ... ok
+            test_repeated_calls (__main__.TestTicTacToeAI.test_repeated_calls) ... ok
+            test_reset (__main__.TestTicTacToeAI.test_reset) ... ok
+            test_returns_none_when_board_full (__main__.TestTicTacToeAI.test_returns_none_when_board_full) ... ok
+            test_returns_valid_move_on_empty_board (__main__.TestTicTacToeAI.test_returns_valid_move_on_empty_board) ... ok
+            test_single_remaining_move (__main__.TestTicTacToeAI.test_single_remaining_move) ... ok
+
+            ----------------------------------------------------------------------
+            Ran 10 tests in 0.011s
+
+            OK
+        }
+        05(renderer test){
+            run test_tic_tac_toe.py
+            input code =
+            "|"
+            import unittest
+            from games.tic_tac_toe.board import TicTacToeBoard
+            from games.tic_tac_toe.board_renderer import BoardRenderer
+            from games.tic_tac_toe.overlay_renderer import OverlayRenderer
+            from engine.interfaces.game_result import GameResult
+            from games.tic_tac_toe.constants import (
+                PLAYER_X,
+                PLAYER_O,
+            )
+            class FakeRenderer:
+                def __init__(self):
+                    self.calls = []
+                def draw_grid(self, **kwargs):
+                    self.calls.append(("grid", kwargs))
+                def draw_cross(self, **kwargs):
+                    self.calls.append(("cross", kwargs))
+                def draw_circle(self, **kwargs):
+                    self.calls.append(("circle", kwargs))
+                def draw_line(self, **kwargs):
+                    self.calls.append(("line", kwargs))
+                def draw_overlay_message(self, **kwargs):
+                    self.calls.append(("message", kwargs))
+            class TestBoardRenderer(unittest.TestCase):
+                def setUp(self):
+                    self.renderer = FakeRenderer()
+                    self.board_renderer = BoardRenderer(
+                        self.renderer
+                    )
+                    self.board = TicTacToeBoard()
+                def test_grid_is_drawn(self):
+                    self.board_renderer.render(
+                        self.board,
+                        GameResult(),
+                    )
+                    names = [call[0] for call in self.renderer.calls]
+                    self.assertIn(
+                        "grid",
+                        names,
+                    )
+                def test_x_is_drawn(self):
+                    self.board.set_cell(
+                        0,
+                        0,
+                        PLAYER_X,
+                    )
+                    self.board_renderer.render(
+                        self.board,
+                        GameResult(),
+                    )
+                    names = [call[0] for call in self.renderer.calls]
+                    self.assertIn(
+                        "cross",
+                        names,
+                    )
+                def test_o_is_drawn(self):
+                    self.board.set_cell(
+                        1,
+                        1,
+                        PLAYER_O,
+                    )
+                    self.board_renderer.render(
+                        self.board,
+                        GameResult(),
+                    )
+                    names = [call[0] for call in self.renderer.calls]
+                    self.assertIn(
+                        "circle",
+                        names,
+                    )
+                def test_winning_line_drawn(self):
+                    result = GameResult()
+                    result.winning_cells = [
+                        (0, 0),
+                        (0, 1),
+                        (0, 2),
+                    ]
+                    self.board_renderer.render(
+                        self.board,
+                        result,
+                    )
+                    names = [call[0] for call in self.renderer.calls]
+                    self.assertIn(
+                        "line",
+                        names,
+                    )
+                def test_reset(self):
+                    self.board_renderer.reset()
+                    self.assertTrue(True)
+            class TestOverlayRenderer(unittest.TestCase):
+                def setUp(self):
+                    self.renderer = FakeRenderer()
+                    self.overlay = OverlayRenderer(
+                        self.renderer
+                    )
+                def test_running_game_draws_nothing(self):
+                    result = GameResult()
+                    self.overlay.render(result)
+                    self.assertEqual(
+                        len(self.renderer.calls),
+                        0,
+                    )
+                def test_draw_overlay(self):
+                    result = GameResult()
+                    result.game_over = True
+                    result.draw = True
+                    self.overlay.render(result)
+                    self.assertEqual(
+                        self.renderer.calls[0][0],
+                        "message",
+                    )
+                def test_x_win_overlay(self):
+                    result = GameResult()
+                    result.game_over = True
+                    result.winner = PLAYER_X
+                    self.overlay.render(result)
+                    self.assertEqual(
+                        self.renderer.calls[0][0],
+                        "message",
+                    )
+                def test_o_win_overlay(self):
+                    result = GameResult()
+                    result.game_over = True
+                    result.winner = PLAYER_O
+                    self.overlay.render(result)
+                    self.assertEqual(
+                        self.renderer.calls[0][0],
+                        "message",
+                    )
+                def test_reset(self):
+                    self.overlay.reset()
+                    self.assertTrue(True)
+            if __name__ == "__main__":
+                unittest.main(verbosity=2)
+            "|"
+            output =
+            test_grid_is_drawn (__main__.TestBoardRenderer.test_grid_is_drawn) ... ok
+            test_o_is_drawn (__main__.TestBoardRenderer.test_o_is_drawn) ... ok
+            test_reset (__main__.TestBoardRenderer.test_reset) ... ok
+            test_winning_line_drawn (__main__.TestBoardRenderer.test_winning_line_drawn) ... ok
+            test_x_is_drawn (__main__.TestBoardRenderer.test_x_is_drawn) ... ok
+            test_draw_overlay (__main__.TestOverlayRenderer.test_draw_overlay) ... ok
+            test_o_win_overlay (__main__.TestOverlayRenderer.test_o_win_overlay) ... ok
+            test_reset (__main__.TestOverlayRenderer.test_reset) ... ok
+            test_running_game_draws_nothing (__main__.TestOverlayRenderer.test_running_game_draws_nothing) ... ok
+            test_x_win_overlay (__main__.TestOverlayRenderer.test_x_win_overlay) ... ok
+
+            ----------------------------------------------------------------------
+            Ran 10 tests in 0.002s
+
+            OK
+        }
+        06(integration test){
+            run test_tic_tac_toe.py
+            input code =
+            "|"
+            import unittest
+            from unittest.mock import patch
+            from games.tic_tac_toe.game import TicTacToeGame
+            from games.tic_tac_toe.constants import (
+                PLAYER_X,
+                PLAYER_O,
+                EMPTY,
+                GAME_RUNNING,
+                GAME_OVER,
+            )
+            class FakeRenderer:
+                def draw_grid(self, **kwargs):
+                    pass
+                def draw_cross(self, **kwargs):
+                    pass
+                def draw_circle(self, **kwargs):
+                    pass
+                def draw_line(self, **kwargs):
+                    pass
+                def draw_overlay_message(self, **kwargs):
+                    pass
+            class TestIntegration(unittest.TestCase):
+                def setUp(self):
+                    self.game = TicTacToeGame(
+                        FakeRenderer()
+                    )
+                    self.game.initialize()
+                def test_game_initializes(self):
+                    self.assertEqual(
+                        self.game.game_state,
+                        GAME_RUNNING,
+                    )
+                    self.assertFalse(
+                        self.game.is_game_over()
+                    )
+                def test_human_move(self):
+                    self.game.current_player = PLAYER_X
+                    self.assertTrue(
+                        self.game.make_move(0, 0)
+                    )
+                    self.assertEqual(
+                        self.game.board.get_cell(0, 0),
+                        PLAYER_X,
+                    )
+                def test_ai_move(self):
+                    self.game.current_player = PLAYER_O
+                    move = self.game.ai_player.get_action(
+                        self.game
+                    )
+                    self.assertIsNotNone(move)
+                    self.assertTrue(
+                        self.game.make_move(*move)
+                    )
+                def test_turn_switch(self):
+                    start = self.game.current_player
+                    self.game.make_move(0, 0)
+                    self.assertNotEqual(
+                        start,
+                        self.game.current_player,
+                    )
+                def test_illegal_move_rejected(self):
+                    self.game.make_move(0, 0)
+                    self.assertFalse(
+                        self.game.make_move(0, 0)
+                    )
+                def test_win_detection(self):
+                    self.game.current_player = PLAYER_X
+                    self.game.make_move(0, 0)
+                    self.game.current_player = PLAYER_X
+                    self.game.make_move(0, 1)
+                    self.game.current_player = PLAYER_X
+                    self.game.make_move(0, 2)
+                    self.assertTrue(
+                        self.game.is_game_over()
+                    )
+                    self.assertEqual(
+                        self.game.get_winner(),
+                        PLAYER_X,
+                    )
+                def test_draw_detection(self):
+                    board = self.game.board
+                    values = [
+                        [1,2,1],
+                        [1,2,2],
+                        [2,1,1],
+                    ]
+                    for r in range(3):
+                        for c in range(3):
+                            board.set_cell(
+                                r,
+                                c,
+                                values[r][c],
+                            )
+                    self.game.result = self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        self.game.result = \
+                        __import__(
+                            "games.tic_tac_toe.rules",
+                            fromlist=["TicTacToeRules"]
+                        ).TicTacToeRules.evaluate_game(board)
+                    self.assertTrue(
+                        self.game.result.draw
+                    )
+                def test_restart(self):
+                    self.game.make_move(0, 0)
+                    self.game.reset()
+                    self.assertEqual(
+                        self.game.move_count,
+                        0,
+                    )
+                    for row in range(3):
+                        for col in range(3):
+                            self.assertEqual(
+                                self.game.board.get_cell(
+                                    row,
+                                    col,
+                                ),
+                                EMPTY,
+                            )
+                def test_starting_player_alternates(self):
+                    first = self.game.current_player
+                    self.game.reset()
+                    second = self.game.current_player
+                    self.assertNotEqual(
+                        first,
+                        second,
+                    )
+                def test_complete_game_runs_without_exception(self):
+                    try:
+                        self.game.make_move(0,0)
+                        self.game.make_move(1,1)
+                        self.game.make_move(0,1)
+                        self.game.make_move(2,2)
+                        self.game.make_move(0,2)
+                    except Exception as e:
+                        self.fail(str(e))
+            if __name__ == "__main__":
+                unittest.main(verbosity=2)
+            "|"
+            output =
+            pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+            Hello from the pygame community. https://www.pygame.org/contribute.html
+            test_ai_move (__main__.TestIntegration.test_ai_move) ... ok
+            test_complete_game_runs_without_exception (__main__.TestIntegration.test_complete_game_runs_without_exception) ... ok
+            test_draw_detection (__main__.TestIntegration.test_draw_detection) ... ok
+            test_game_initializes (__main__.TestIntegration.test_game_initializes) ... ok
+            test_human_move (__main__.TestIntegration.test_human_move) ... ok
+            test_illegal_move_rejected (__main__.TestIntegration.test_illegal_move_rejected) ... ok
+            test_restart (__main__.TestIntegration.test_restart) ... ok
+            test_starting_player_alternates (__main__.TestIntegration.test_starting_player_alternates) ... ok
+            test_turn_switch (__main__.TestIntegration.test_turn_switch) ... ok
+            test_win_detection (__main__.TestIntegration.test_win_detection) ... ok
+
+            ----------------------------------------------------------------------
+            Ran 10 tests in 0.004s
+
+            OK
+        }
     }
+    
 }
 03(connect four){
 

@@ -1,3 +1,4 @@
+#main.py
 from launcher import Launcher
 from engine.utils.crash_handler import CrashHandler
 def main():

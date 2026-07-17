@@ -1,3 +1,4 @@
+#engine/core/renderer.py
 import moderngl
 from engine.rendering.text_renderer import TextRenderer
 from engine.rendering.camera2d import Camera2D

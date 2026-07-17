@@ -1,9 +1,7 @@
-#version 330 core
-
+//engine/rendering/shaders/primitive.frag
+#version 330
 uniform vec4 color;
-
 out vec4 fragColor;
-
 void main()
 {
     fragColor = color;

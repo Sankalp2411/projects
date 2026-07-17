@@ -1,146 +1,265 @@
 """
 MindWar Arena
+Phase 2 - Tic-Tac-Toe
 
-tests/test_overlay_renderer.py
+Integration Tests
 
-Tests the complete overlay rendering system.
+Verifies the complete interaction between:
 
-Verifies:
-• Background overlay
-• Text rendering
-• Different winner messages
-• Draw message
-• Renderer shutdown
+- Game Controller
+- Board
+- Rules
+- Human Player
+- AI
+- Restart System
+
+This is the final verification of Phase 2.
 """
 
-import pygame
+import unittest
+from unittest.mock import patch
 
-from engine.utils.logger import Logger
-from engine.core.window import Window
-from engine.core.renderer import Renderer
-from engine.core.input import Input
+from games.tic_tac_toe.game import TicTacToeGame
+from games.tic_tac_toe.constants import (
+    PLAYER_X,
+    PLAYER_O,
+    EMPTY,
+    GAME_RUNNING,
+    GAME_OVER,
+)
 
 
-WINDOW_WIDTH = 1280
-WINDOW_HEIGHT = 720
+# ---------------------------------------------------------
+# Fake Renderer
+# ---------------------------------------------------------
+
+class FakeRenderer:
+
+    def draw_grid(self, **kwargs):
+        pass
+
+    def draw_cross(self, **kwargs):
+        pass
+
+    def draw_circle(self, **kwargs):
+        pass
+
+    def draw_line(self, **kwargs):
+        pass
+
+    def draw_overlay_message(self, **kwargs):
+        pass
 
 
-def main():
+# ---------------------------------------------------------
+# Integration Tests
+# ---------------------------------------------------------
 
-    Logger.initialize()
+class TestIntegration(unittest.TestCase):
 
-    window = Window(
-        WINDOW_WIDTH,
-        WINDOW_HEIGHT,
-        "Overlay Renderer Test",
-    )
+    def setUp(self):
 
-    window.create()
-
-    renderer = Renderer()
-    renderer.initialize(
-        WINDOW_WIDTH,
-        WINDOW_HEIGHT,
-    )
-
-    Input.initialize()
-
-    running = True
-
-    stage = 0
-
-    stage_duration = 180          # 3 seconds @ 60 FPS
-    frame_counter = 0
-
-    while running:
-
-        for event in pygame.event.get():
-
-            if event.type == pygame.QUIT:
-                running = False
-
-        Input.update()
-
-        renderer.begin_frame()
-
-        # -------------------------------------------------
-        # Dummy board behind the overlay
-        # -------------------------------------------------
-
-        renderer.draw_grid(
-            origin=(200, 120),
-            rows=3,
-            columns=3,
-            cell_size=150,
-            color=(180, 180, 180),
+        self.game = TicTacToeGame(
+            FakeRenderer()
         )
 
-        renderer.draw_cross(
-            center=(275,195),
-            size=70,
-            color=(255,80,80),
+        self.game.initialize()
+
+    # -----------------------------------------------------
+
+    def test_game_initializes(self):
+
+        self.assertEqual(
+            self.game.game_state,
+            GAME_RUNNING,
         )
 
-        renderer.draw_circle(
-            center=(425,345),
-            radius=35,
-            color=(80,180,255),
+        self.assertFalse(
+            self.game.is_game_over()
         )
 
-        # -------------------------------------------------
-        # Overlay Messages
-        # -------------------------------------------------
+    # -----------------------------------------------------
 
-        if stage == 0:
+    def test_human_move(self):
 
-            renderer.draw_overlay_message(
-                "PLAYER X WINS!",
-                color=(255,80,80),
-                size=60,
-            )
+        self.game.current_player = PLAYER_X
 
-        elif stage == 1:
+        self.assertTrue(
+            self.game.make_move(0, 0)
+        )
 
-            renderer.draw_overlay_message(
-                "PLAYER O WINS!",
-                color=(80,180,255),
-                size=60,
-            )
+        self.assertEqual(
+            self.game.board.get_cell(0, 0),
+            PLAYER_X,
+        )
 
-        elif stage == 2:
+    # -----------------------------------------------------
 
-            renderer.draw_overlay_message(
-                "DRAW GAME",
-                color=(255,255,100),
-                size=60,
-            )
+    def test_ai_move(self):
 
-        elif stage == 3:
+        self.game.current_player = PLAYER_O
 
-            renderer.draw_overlay_message(
-                "MindWar Arena",
-                color=(255,255,255),
-                size=64,
-            )
+        move = self.game.ai_player.get_action(
+            self.game
+        )
 
-        renderer.end_frame()
+        self.assertIsNotNone(move)
 
-        window.update()
-        window.tick(60)
+        self.assertTrue(
+            self.game.make_move(*move)
+        )
 
-        frame_counter += 1
+    # -----------------------------------------------------
 
-        if frame_counter >= stage_duration:
+    def test_turn_switch(self):
 
-            frame_counter = 0
-            stage += 1
+        start = self.game.current_player
 
-            if stage > 3:
-                running = False
+        self.game.make_move(0, 0)
 
-    renderer.shutdown()
-    window.destroy()
+        self.assertNotEqual(
+            start,
+            self.game.current_player,
+        )
+
+    # -----------------------------------------------------
+
+    def test_illegal_move_rejected(self):
+
+        self.game.make_move(0, 0)
+
+        self.assertFalse(
+            self.game.make_move(0, 0)
+        )
+
+    # -----------------------------------------------------
+
+    def test_win_detection(self):
+
+        self.game.current_player = PLAYER_X
+
+        self.game.make_move(0, 0)
+
+        self.game.current_player = PLAYER_X
+
+        self.game.make_move(0, 1)
+
+        self.game.current_player = PLAYER_X
+
+        self.game.make_move(0, 2)
+
+        self.assertTrue(
+            self.game.is_game_over()
+        )
+
+        self.assertEqual(
+            self.game.get_winner(),
+            PLAYER_X,
+        )
+
+    # -----------------------------------------------------
+
+    def test_draw_detection(self):
+
+        board = self.game.board
+
+        values = [
+
+            [1,2,1],
+            [1,2,2],
+            [2,1,1],
+
+        ]
+
+        for r in range(3):
+            for c in range(3):
+                board.set_cell(
+                    r,
+                    c,
+                    values[r][c],
+                )
+
+        self.game.result = self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            self.game.result = \
+            __import__(
+                "games.tic_tac_toe.rules",
+                fromlist=["TicTacToeRules"]
+            ).TicTacToeRules.evaluate_game(board)
+
+        self.assertTrue(
+            self.game.result.draw
+        )
+
+    # -----------------------------------------------------
+
+    def test_restart(self):
+
+        self.game.make_move(0, 0)
+
+        self.game.reset()
+
+        self.assertEqual(
+            self.game.move_count,
+            0,
+        )
+
+        for row in range(3):
+            for col in range(3):
+
+                self.assertEqual(
+                    self.game.board.get_cell(
+                        row,
+                        col,
+                    ),
+                    EMPTY,
+                )
+
+    # -----------------------------------------------------
+
+    def test_starting_player_alternates(self):
+
+        first = self.game.current_player
+
+        self.game.reset()
+
+        second = self.game.current_player
+
+        self.assertNotEqual(
+            first,
+            second,
+        )
+
+    # -----------------------------------------------------
+
+    def test_complete_game_runs_without_exception(self):
+
+        try:
+
+            self.game.make_move(0,0)
+            self.game.make_move(1,1)
+            self.game.make_move(0,1)
+            self.game.make_move(2,2)
+            self.game.make_move(0,2)
+
+        except Exception as e:
+
+            self.fail(str(e))
 
 
 if __name__ == "__main__":
-    main()
+    unittest.main(verbosity=2)

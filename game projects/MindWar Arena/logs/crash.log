@@ -207,3 +207,189 @@ Traceback (most recent call last):
                   ^^^^^
 NameError: name 'reset' is not defined. Did you mean: 'self.reset'?
 
+
+================================================================================
+Timestamp: 2026-07-14 19:22:42
+
+Exception: 'TicTacToeGame' object has no attribute 'ai_player'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 6, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 6, in start
+    self.game_manager.initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 88, in initialize
+    self.scene_manager.change_scene(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        BootScene()
+        ^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 43, in change_scene
+    self.current_scene.enter()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\boot_scene.py", line 36, in enter
+    game = TicTacToeGame(self.renderer)
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\tic_tac_toe\game.py", line 39, in __init__
+    self.ai_player.initialize()
+    ^^^^^^^^^^^^^^
+AttributeError: 'TicTacToeGame' object has no attribute 'ai_player'
+
+
+================================================================================
+Timestamp: 2026-07-17 13:36:30
+
+Exception: Expecting value: line 1 column 1 (char 0)
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 6, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 6, in start
+    self.game_manager.initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 59, in initialize
+    Config.load()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\utils\config.py", line 10, in load
+    cls._data = json.load(file)
+                ~~~~~~~~~^^^^^^
+  File "C:\Program Files\Python313\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Program Files\Python313\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\Python313\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\json\decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+================================================================================
+Timestamp: 2026-07-17 18:09:47
+
+Exception: Expecting value: line 1 column 1 (char 0)
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 7, in start
+    self.game_manager.initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 23, in initialize
+    Config.load()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\utils\config.py", line 11, in load
+    cls._data = json.load(file)
+                ~~~~~~~~~^^^^^^
+  File "C:\Program Files\Python313\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Program Files\Python313\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\Python313\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\json\decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+
+================================================================================
+Timestamp: 2026-07-17 18:14:20
+
+Exception: GLSL Compiler failed
+
+vertex_shader
+=============
+ERROR: 0:1: '' : syntax error: unknown directive #engine
+ERROR: 0:1: '' : syntax error: unexpected tokens following preprocessor directive - expected a newline
+WARNING: 0:2: '' :  #version directive missing
+
+
+
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 7, in start
+    self.game_manager.initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 30, in initialize
+    self.renderer.initialize(width,height, )
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\renderer.py", line 22, in initialize
+    self.primitives = PrimitiveRenderer(self.ctx, self.camera, )
+                      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\rendering\primitive_renderer.py", line 14, in __init__
+    self.program = self.shader_manager.load_program("primitive","engine/rendering/shaders/primitive.vert","engine/rendering/shaders/primitive.frag",)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\rendering\shader_manager.py", line 20, in load_program
+    program = self.context.program(vertex_shader=vertex_source,fragment_shader=fragment_source,)
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\venv\Lib\site-packages\moderngl\__init__.py", line 1978, in program
+    res.mglo, _members, res._subroutines, res._geom, res._glo = self.mglo.program(
+                                                                ~~~~~~~~~~~~~~~~~^
+        vertex_shader,
+        ^^^^^^^^^^^^^^
+    ...<7 lines>...
+        varyings_capture_mode == "interleaved",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+_moderngl.Error: GLSL Compiler failed
+
+vertex_shader
+=============
+ERROR: 0:1: '' : syntax error: unknown directive #engine
+ERROR: 0:1: '' : syntax error: unexpected tokens following preprocessor directive - expected a newline
+WARNING: 0:2: '' :  #version directive missing
+
+
+
+
+
+================================================================================
+Timestamp: 2026-07-17 18:27:41
+
+Exception: Expecting value: line 1 column 1 (char 0)
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 7, in start
+    self.game_manager.initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 23, in initialize
+    Config.load()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\utils\config.py", line 11, in load
+    cls._data = json.load(file)
+                ~~~~~~~~~^^^^^^
+  File "C:\Program Files\Python313\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Program Files\Python313\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\Python313\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\json\decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
