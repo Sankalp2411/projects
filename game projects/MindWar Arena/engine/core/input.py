@@ -3,22 +3,18 @@ import pygame
 from engine.utils.logger import Logger
 class Input:
     _pressed_keys = set()
-    _previous_keys = set()
-    _key_clicked = set()
     _mouse_x = 0
     _mouse_y = 0
     _left_pressed = False
-    _previous_left_pressed = False
     _left_clicked = False
     @classmethod
     def initialize(cls):
         cls._pressed_keys = set()
         cls._keys_down = set()
-        cls._keys_up = set()    
+        cls._keys_up = set()
         cls._mouse_x = 0
         cls._mouse_y = 0
         cls._left_pressed = False
-        cls._previous_left_pressed = False
         cls._left_clicked = False
         Logger.info("[Input] Initialized")
     @classmethod

@@ -86,7 +86,7 @@ MINDWAR ARENA(
         version.py
     )
     game(
-        scene(
+        scenes(
             __init__.py
             boot_scene.py
             game_scene.py
@@ -183,7 +183,7 @@ MINDWAR ARENA(
             rules.py
         )
         tic_tac_toe(
-            assests(
+            assets(
 
             )
             __init__.py
@@ -245,12 +245,9 @@ import pygame
 from engine.utils.logger import Logger
 class Input:
     _pressed_keys = set()
-    _previous_keys = set()
-    _key_clicked = set()
     _mouse_x = 0
     _mouse_y = 0
     _left_pressed = False
-    _previous_left_pressed = False
     _left_clicked = False
     @classmethod
     def initialize(cls):
@@ -260,7 +257,6 @@ class Input:
         cls._mouse_x = 0
         cls._mouse_y = 0
         cls._left_pressed = False
-        cls._previous_left_pressed = False
         cls._left_clicked = False
         Logger.info("[Input] Initialized")
     @classmethod
@@ -320,12 +316,12 @@ class Renderer:
         self.ctx = None
         self.camera = None
         self.primitives = None
+        self.text = None
         self.overlay = None
     def initialize(self, width: int, height: int, ):
         self.ctx = moderngl.create_context()
         self.ctx.enable(moderngl.BLEND)
         self.ctx.blend_func = (moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA, )
-        self.ctx.enable(moderngl.BLEND)
         self.overlay = OverlayRenderer(self)
         Logger.info(f"[Renderer] OpenGL Version: {self.ctx.info['GL_VERSION']}")
         self.camera = Camera2D(width, height)
@@ -1174,7 +1170,7 @@ class GameScene(Scene):
     def render(self):
         self.game.render()
 
-#game/scences/main_menu_scene.py
+#game/scenes/main_menu_scene.py
 from engine.core.scene import Scene
 from engine.utils.logger import Logger
 class MainMenuScene(Scene):
@@ -1314,8 +1310,6 @@ GAME_NAME = "Tic-Tac-Toe"
 GAME_VERSION = "1.0.0"
 BOARD_ROWS = 3
 BOARD_COLUMNS = 3
-BOARD_SIZE = BOARD_ROWS * BOARD_COLUMNS
-BOARD_DIMENSIONS = (BOARD_ROWS, BOARD_COLUMNS)
 WIN_LENGTH = 3
 EMPTY = 0
 PLAYER_X = 1
@@ -1326,10 +1320,6 @@ GAME_RUNNING = 1
 GAME_DRAW = 2
 GAME_OVER = 3
 NO_WINNER = 0
-X_WINS = PLAYER_X
-O_WINS = PLAYER_O
-HUMAN_PLAYER = 0
-AI_PLAYER = 1
 AI_RANDOM = "Random"
 AI_EASY = "Easy"
 AI_MEDIUM = "Medium"
@@ -1338,21 +1328,10 @@ CELL_SIZE = 150
 BOARD_LINE_WIDTH = 4
 SYMBOL_LINE_WIDTH = 8
 BOARD_PADDING = 40
-X_SYMBOL = "X"
-O_SYMBOL = "O"
-EMPTY_SYMBOL = "."
-BACKGROUND_COLOR = (30, 30, 30)
 GRID_COLOR = (220, 220, 220)
 X_COLOR = (70, 170, 255)
 O_COLOR = (255, 120, 120)
 WIN_LINE_COLOR = (50, 255, 50)
-WIN_LINE_COLOR = (0.0, 1.0, 0.0)
-LEFT_MOUSE_BUTTON = 1
-LOG_GAME_STARTED = "[TicTacToe] Game Started"
-LOG_GAME_RESET = "[TicTacToe] Game Reset"
-LOG_PLAYER_MOVED = "[TicTacToe] Player Move"
-LOG_AI_MOVED = "[TicTacToe] AI Move"
-LOG_GAME_OVER = "[TicTacToe] Game Over"
 GAME_MODE_HUMAN_VS_HUMAN = 0
 GAME_MODE_HUMAN_VS_AI = 1
 GAME_MODE_AI_VS_AI = 2
@@ -1369,7 +1348,7 @@ from games.tic_tac_toe.board import TicTacToeBoard
 from games.tic_tac_toe.rules import TicTacToeRules
 from games.tic_tac_toe.human_player import HumanPlayer
 from engine.interfaces.game_result import GameResult
-from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,HUMAN_PLAYER,AI_PLAYER,NO_WINNER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,)
+from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,)
 class TicTacToeGame(GameInterface):
     def __init__(self, renderer):
         self.renderer = renderer
@@ -1472,13 +1451,6 @@ from engine.core.input import Input
 class HumanPlayer:
     def __init__(self, board_renderer):
         self.board_renderer = board_renderer
-    def get_move(self, game_over=False,):
-        if game_over:
-            return None
-        if not Input.is_left_mouse_clicked():
-            return None
-        mouse_x, mouse_y = Input.get_mouse_position()
-        return self.board_renderer.screen_to_cell(mouse_x,mouse_y,)
     def get_action(self, game):
         if game.is_frozen():
             return None

@@ -10,12 +10,12 @@ class Renderer:
         self.ctx = None
         self.camera = None
         self.primitives = None
+        self.text = None
         self.overlay = None
     def initialize(self, width: int, height: int, ):
         self.ctx = moderngl.create_context()
         self.ctx.enable(moderngl.BLEND)
         self.ctx.blend_func = (moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA, )
-        self.ctx.enable(moderngl.BLEND)
         self.overlay = OverlayRenderer(self)
         Logger.info(f"[Renderer] OpenGL Version: {self.ctx.info['GL_VERSION']}")
         self.camera = Camera2D(width, height)

@@ -9,7 +9,7 @@ from games.tic_tac_toe.board import TicTacToeBoard
 from games.tic_tac_toe.rules import TicTacToeRules
 from games.tic_tac_toe.human_player import HumanPlayer
 from engine.interfaces.game_result import GameResult
-from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,HUMAN_PLAYER,AI_PLAYER,NO_WINNER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,)
+from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,)
 class TicTacToeGame(GameInterface):
     def __init__(self, renderer):
         self.renderer = renderer
