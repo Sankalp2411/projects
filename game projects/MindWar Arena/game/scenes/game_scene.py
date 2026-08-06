@@ -1,4 +1,6 @@
 #game/scenes/game_scene.py
+import pygame
+from engine.core.input import Input
 from engine.core.scene import Scene
 from engine.interfaces.game_interface import GameInterface
 from engine.utils.logger import Logger
@@ -18,5 +20,11 @@ class GameScene(Scene):
         super().exit()
     def update(self):
         self.game.update()
+        if self.game.is_game_over():
+            if Input.is_key_clicked(pygame.K_r):
+                self.game.reset()
+            elif Input.is_key_clicked(pygame.K_g):
+                from game.scenes.main_menu_scene import MainMenuScene
+                self.scene_manager.change_scene(MainMenuScene())
     def render(self):
         self.game.render()

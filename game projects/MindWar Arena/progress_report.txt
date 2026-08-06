@@ -11392,8 +11392,7 @@
         }
         06(update games/tic_tac_toe/game.py){
             "|"
-            import pygame
-            from engine.core.input import Input
+            #games/tic_tac_toe/game.py
             from games.tic_tac_toe.ai import TicTacToeAI
             from engine.interfaces.game_interface import GameInterface
             from games.tic_tac_toe.overlay_renderer import OverlayRenderer
@@ -11440,7 +11439,6 @@
                 def shutdown(self):
                     pass
                 def update(self):
-                    self.update_restart()
                     if self.is_frozen():
                         return
                     self.update_current_player()
@@ -11486,11 +11484,6 @@
                     if move is None:
                         return
                     self.make_move(*move)
-                def update_restart(self):
-                    if not self.is_frozen():
-                        return
-                    if Input.is_key_clicked(pygame.K_r):
-                        self.reset()
                 def get_result(self):
                     return self.result
                 def get_board(self):
@@ -11509,8 +11502,6 @@
         }
         07(update games/connect4/game.py){
             "|"
-            import pygame
-            from engine.core.input import Input
             from engine.interfaces.game_interface import GameInterface
             from engine.interfaces.game_result import GameResult
             from games.connect4.ai import Connect4AI
@@ -11567,7 +11558,6 @@
                 def shutdown(self):
                     pass
                 def update(self):
-                    self.update_restart()
                     if self.is_frozen():
                         return
                     self.update_current_player()
@@ -11621,11 +11611,6 @@
                     if move is None:
                         return
                     self.make_move(move)
-                def update_restart(self):
-                    if not self.is_frozen():
-                        return
-                    if Input.is_key_clicked(pygame.K_r):
-                        self.reset()
                 def get_result(self):
                     return self.result
                 def get_board(self):
@@ -11705,17 +11690,297 @@
                         y += 55
             "|"
         }
-        06(update game_scene.py)
-        07(launch games through new flow)
-        08(testing)
+        06(update game_scene.py){
+            "|"
+            #game/scenes/game_scene.py
+            import pygame
+            from engine.core.input import Input
+            from engine.core.scene import Scene
+            from engine.interfaces.game_interface import GameInterface
+            from engine.utils.logger import Logger
+            class GameScene(Scene):
+                def __init__(self, game: GameInterface):
+                    super().__init__("Game Scene")
+                    if not isinstance(game, GameInterface):
+                        raise TypeError("GameScene requires an object ""implementing GameInterface.")
+                    self.game = game
+                def enter(self):
+                    super().enter()
+                    Logger.info("[GameScene] Initializing game.")
+                    self.game.initialize()
+                def exit(self):
+                    Logger.info("[GameScene] Shutting down game.")
+                    self.game.shutdown()
+                    super().exit()
+                def update(self):
+                    self.game.update()
+                    if self.game.is_game_over():
+                        if Input.is_key_clicked(pygame.K_r):
+                            self.game.reset()
+                        elif Input.is_key_clicked(pygame.K_g):
+                            from game.scenes.main_menu_scene import MainMenuScene
+                            self.scene_manager.change_scene(MainMenuScene())
+                def render(self):
+                    self.game.render()
+            "|"
+        }
     }
-    11(create game registry)
-    12(temporary game selector)
-    13(boot scene)
-    14(testing)
-    11(cleanup and refactoring)
-    12(final regration testing)
-    13(update version information)
+    11(testing){
+        run main.py
+        output =
+        "|"
+        pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+        Hello from the pygame community. https://www.pygame.org/contribute.html
+        2026-08-06 17:29:22 [INFO] Logger Initialized
+        2026-08-06 17:29:22 [INFO] [GameManager] Initializing...
+        2026-08-06 17:29:22 [INFO] [Config] Loaded
+        2026-08-06 17:29:22 [INFO] [Window] Created 1280x720
+        2026-08-06 17:29:22 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+        2026-08-06 17:29:22 [INFO] [ShaderManager] Loaded shader 'primitive'.
+        2026-08-06 17:29:22 [INFO] [Mesh] GPU mesh created.
+        2026-08-06 17:29:22 [INFO] [ShaderManager] Loaded shader 'text'.
+        2026-08-06 17:29:22 [INFO] [Mesh] GPU mesh created.
+        2026-08-06 17:29:22 [INFO] [Renderer] Rendering system initialized.
+        2026-08-06 17:29:22 [INFO] [Input] Initialized
+        2026-08-06 17:29:22 [INFO] [AssetManager] Initialized
+        2026-08-06 17:29:22 [INFO] [Scene] Enter: Boot Scene
+        2026-08-06 17:29:22 [INFO] [BootScene] Engine initialization complete.
+        2026-08-06 17:29:22 [INFO] [BootScene] Opening Main Menu.
+        2026-08-06 17:29:22 [INFO] [Scene] Exit: Boot Scene
+        2026-08-06 17:29:22 [INFO] [Scene] Enter: Main Menu
+        2026-08-06 17:29:22 [INFO] [MainMenuScene] Ready
+        2026-08-06 17:29:22 [INFO] [GameManager] Running...
+        2026-08-06 17:29:25 [INFO] [MainMenuScene] Selected Tic-Tac-Toe
+        2026-08-06 17:29:25 [INFO] [Scene] Exit: Main Menu
+        2026-08-06 17:29:25 [INFO] [Scene] Enter: Game Mode
+        2026-08-06 17:29:25 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+        2026-08-06 17:29:25 [INFO] [GameModeScene] Mode: Human vs Human
+        2026-08-06 17:29:25 [INFO] [Scene] Exit: Game Mode
+        2026-08-06 17:29:25 [INFO] [Scene] Enter: Game Scene
+        2026-08-06 17:29:25 [INFO] [GameScene] Initializing game.
+        2026-08-06 17:29:25 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+        2026-08-06 17:29:28 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+        2026-08-06 17:29:34 [INFO] [GameScene] Shutting down game.
+        2026-08-06 17:29:34 [INFO] [Scene] Exit: Game Scene
+        2026-08-06 17:29:34 [INFO] [Scene] Enter: Main Menu
+        2026-08-06 17:29:34 [INFO] [MainMenuScene] Ready
+        2026-08-06 17:29:35 [INFO] [MainMenuScene] Selected Tic-Tac-Toe
+        2026-08-06 17:29:35 [INFO] [Scene] Exit: Main Menu
+        2026-08-06 17:29:35 [INFO] [Scene] Enter: Game Mode
+        2026-08-06 17:29:35 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+        2026-08-06 17:29:36 [INFO] [GameModeScene] Mode: Human vs Human
+        2026-08-06 17:29:36 [INFO] [Scene] Exit: Game Mode
+        2026-08-06 17:29:36 [INFO] [Scene] Enter: Game Scene
+        2026-08-06 17:29:36 [INFO] [GameScene] Initializing game.
+        2026-08-06 17:29:45 [INFO] [GameManager] Shutting down...
+        2026-08-06 17:29:45 [INFO] [GameManager] Runtime: 23.13s
+        2026-08-06 17:29:45 [INFO] [Mesh] Released.
+        2026-08-06 17:29:45 [INFO] [ShaderManager] Released 'primitive'.
+        2026-08-06 17:29:45 [INFO] [Mesh] Released.
+        2026-08-06 17:29:45 [INFO] [ShaderManager] Released 'text'.
+        2026-08-06 17:29:45 [INFO] [Renderer] Shutdown
+        2026-08-06 17:29:45 [INFO] [Window] Destroyed
+        "|"
+        everything is running well
+    }
+    PHASE 3 — CONNECT FOUR
+
+        STEP 1 — Project Architecture
+        [✓] Connect Four module created inside games/connect4.
+        [✓] Standard project architecture matches Tic-Tac-Toe.
+        [✓] All required source files created.
+        [✓] Module imports verified.
+        [✓] Project structure remains scalable for future games.
+
+        STEP 2 — Game Constants
+        [✓] Game metadata constants created.
+        [✓] Board dimensions defined (6×7).
+        [✓] Win length defined.
+        [✓] Player identifiers defined.
+        [✓] Empty cell identifier defined.
+        [✓] Game state constants created.
+        [✓] AI difficulty constants prepared.
+        [✓] Rendering constants created.
+        [✓] Game mode constants created.
+        [✓] Default game mode defined.
+        [✓] Future-required constants prepared.
+
+        STEP 3 — Board Representation
+        [✓] Connect4Board class implemented.
+        [✓] Board reset functionality implemented.
+        [✓] Internal board representation created.
+        [✓] Column validation implemented.
+        [✓] Piece dropping logic implemented.
+        [✓] Gravity mechanics implemented.
+        [✓] Piece stacking implemented.
+        [✓] Column full detection implemented.
+        [✓] Board full detection implemented.
+        [✓] Available column detection implemented.
+        [✓] Available move retrieval implemented.
+        [✓] Deep copy functionality implemented.
+        [✓] Board state export implemented.
+        [✓] Board string representation implemented.
+        [✓] Invalid move protection implemented.
+
+        STEP 4 — Rules Engine
+        [✓] Horizontal win detection implemented.
+        [✓] Vertical win detection implemented.
+        [✓] Positive diagonal win detection implemented.
+        [✓] Negative diagonal win detection implemented.
+        [✓] Winner detection implemented.
+        [✓] Winning cell detection implemented.
+        [✓] Draw detection implemented.
+        [✓] Game over detection implemented.
+        [✓] Game evaluation implemented.
+        [✓] GameResult integration completed.
+
+        STEP 5 — Board Renderer
+        [✓] Connect Four board renderer implemented.
+        [✓] Board background rendering implemented.
+        [✓] Grid rendering implemented.
+        [✓] Disc rendering implemented.
+        [✓] Empty slot rendering implemented.
+        [✓] Disc positioning implemented.
+        [✓] Winning line rendering implemented.
+        [✓] Screen-to-column conversion implemented.
+        [✓] Mouse hit detection implemented.
+        [✓] Renderer reset implemented.
+        [✓] Rendering pipeline integrated successfully.
+
+        STEP 6 — Overlay Renderer
+        [✓] Overlay renderer implemented.
+        [✓] Win overlay implemented.
+        [✓] Draw overlay implemented.
+        [✓] Background overlay prepared.
+        [✓] Overlay rendering integrated.
+        [✓] Overlay reset implemented.
+
+        STEP 7 — Human Player
+        [✓] Human player controller implemented.
+        [✓] Mouse input handling implemented.
+        [✓] Screen position translated into board column.
+        [✓] Invalid click rejection implemented.
+        [✓] Frozen game protection implemented.
+
+        STEP 8 — Random AI
+        [✓] Random AI controller implemented.
+        [✓] AI initialization implemented.
+        [✓] AI reset implemented.
+        [✓] Available column analysis implemented.
+        [✓] Random move selection implemented.
+        [✓] Full column avoidance implemented.
+        [✓] No available move handling implemented.
+        [✓] AI-game integration completed.
+
+        STEP 9 — Game Controller
+        [✓] Connect4Game implemented.
+        [✓] GameInterface integrated.
+        [✓] Board initialization completed.
+        [✓] Player initialization completed.
+        [✓] GameResult integration completed.
+        [✓] Starting player selection implemented.
+        [✓] Player switching implemented.
+        [✓] Move validation implemented.
+        [✓] Piece dropping integrated.
+        [✓] Rule evaluation integrated.
+        [✓] Game state management implemented.
+        [✓] Restart functionality implemented.
+        [✓] Rendering pipeline integrated.
+        [✓] Human vs Human mode supported.
+        [✓] Human vs AI mode supported.
+        [✓] AI turn management implemented.
+        [✓] State retrieval implemented.
+
+        STEP 10 — Engine Integration
+        [✓] Connect Four registered in GameRegistry.
+        [✓] Game Registry supports multiple games.
+        [✓] Main Menu displays multiple games.
+        [✓] Keyboard navigation implemented.
+        [✓] Game selection implemented.
+        [✓] Game Mode scene integrated.
+        [✓] Human vs Human selection implemented.
+        [✓] Human vs AI selection implemented.
+        [✓] Selected mode passed into game instance.
+        [✓] BootScene launches Main Menu.
+        [✓] Main Menu launches Game Mode.
+        [✓] Game Mode launches selected game.
+        [✓] Game Scene initializes selected game.
+        [✓] Scene transitions verified.
+        [✓] Circular import issue resolved.
+        [✓] Restart (R) functionality verified.
+        [✓] Change Game (G) shortcut implemented.
+        [✓] Returning to Main Menu verified.
+        [✓] Tic-Tac-Toe compatibility preserved.
+        [✓] Connect Four launches successfully.
+        [✓] Multiple games coexist within engine.
+
+        STEP 11 — Testing
+        Board Tests
+        [✓] Board dimensions verified.
+        [✓] Board initializes empty.
+        [✓] Board reset verified.
+        [✓] Bottom piece placement verified.
+        [✓] Piece stacking verified.
+        [✓] Full column detection verified.
+        [✓] Invalid column detection verified.
+        [✓] Available move detection verified.
+        [✓] Board copy verified.
+        [✓] Board full detection verified.
+        [✓] Board state export verified.
+        Rules Tests
+        [✓] Horizontal win verified.
+        [✓] Vertical win verified.
+        [✓] Positive diagonal win verified.
+        [✓] Negative diagonal win verified.
+        [✓] Winning cells verified.
+        [✓] No winner state verified.
+        [✓] Running game state verified.
+        [✓] Game over detection verified.
+        [✓] Game evaluation verified.
+        AI Tests
+        [✓] AI initialization verified.
+        [✓] AI reset verified.
+        [✓] AI selects only legal moves.
+        [✓] AI never selects full columns.
+        [✓] AI handles full board correctly.
+        Game Tests
+        [✓] Game initialization verified.
+        [✓] Game reset verified.
+        [✓] Player switching verified.
+        [✓] Move execution verified.
+        [✓] Invalid move rejection verified.
+        [✓] Win detection verified.
+        [✓] Game state updates verified.
+        [✓] Winner retrieval verified.
+        [✓] Game over detection verified.
+        Integration Tests
+        [✓] Main Menu launches correctly.
+        [✓] Game selection verified.
+        [✓] Game Mode selection verified.
+        [✓] Tic-Tac-Toe launches correctly.
+        [✓] Connect Four launches correctly.
+        [✓] Human vs Human mode verified.
+        [✓] Human vs AI mode verified.
+        [✓] Scene transitions verified.
+        [✓] Restart verified.
+        [✓] Change Game shortcut verified.
+        [✓] No runtime crashes observed.
+
+        STEP 12 — Gameplay Verification
+        [✓] Human vs Human gameplay verified.
+        [✓] Human vs AI gameplay verified.
+        [✓] Pieces fall correctly.
+        [✓] Gravity behaves correctly.
+        [✓] Turns alternate correctly.
+        [✓] Winning sequences detected correctly.
+        [✓] Winning line displayed correctly.
+        [✓] Overlay messages displayed correctly.
+        [✓] Restart works correctly.
+        [✓] Game switching works correctly.
+        [✓] Engine remains stable during gameplay.
+
+    summery
+    
 }
 04(gomoku){
 

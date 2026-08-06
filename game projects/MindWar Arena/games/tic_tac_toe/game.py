@@ -1,6 +1,4 @@
 #games/tic_tac_toe/game.py
-import pygame
-from engine.core.input import Input
 from games.tic_tac_toe.ai import TicTacToeAI
 from engine.interfaces.game_interface import GameInterface
 from games.tic_tac_toe.overlay_renderer import OverlayRenderer
@@ -47,7 +45,6 @@ class TicTacToeGame(GameInterface):
     def shutdown(self):
         pass
     def update(self):
-        self.update_restart()
         if self.is_frozen():
             return
         self.update_current_player()
@@ -93,11 +90,6 @@ class TicTacToeGame(GameInterface):
         if move is None:
             return
         self.make_move(*move)
-    def update_restart(self):
-        if not self.is_frozen():
-            return
-        if Input.is_key_clicked(pygame.K_r):
-            self.reset()
     def get_result(self):
         return self.result
     def get_board(self):

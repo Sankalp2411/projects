@@ -89,7 +89,9 @@ MINDWAR ARENA(
         scenes(
             __init__.py
             boot_scene.py
+            game_mode_scene.py
             game_scene.py
+            game_selection_scene.py
             main_menu_scene.py
         )
     )
@@ -122,9 +124,12 @@ MINDWAR ARENA(
             )
             __init__.py
             ai.py
+            board_renderer.py
             board.py
             constants.py
             game.py
+            human_player.py
+            overlay_renderer.py
             rules.py
         )
         go(
@@ -253,7 +258,7 @@ class Input:
     def initialize(cls):
         cls._pressed_keys = set()
         cls._keys_down = set()
-        cls._keys_up = set()    
+        cls._keys_up = set()
         cls._mouse_x = 0
         cls._mouse_y = 0
         cls._left_pressed = False
@@ -544,7 +549,7 @@ void main()
     fragColor = color;
 }
 
-//engine/rendering/primitive.vert
+//engine/rendering/shaders/primitive.vert
 #version 330
 in vec2 in_position;
 uniform mat4 projection;
@@ -1121,32 +1126,97 @@ class GameManager:
             Logger.error(f"[GameManager] Window shutdown error: {exception}")
         self.running = False
 
+#engine/game_registry.py
+from games.tic_tac_toe.game import TicTacToeGame
+from games.connect4.game import Connect4Game
+class GameRegistry:
+    _games = {"Tic-Tac-Toe": TicTacToeGame,"Connect Four": Connect4Game,}
+    @classmethod
+    def get_game_names(cls):
+        return list(cls._games.keys())
+    @classmethod
+    def get_game_class(cls, game_name):
+        return cls._games.get(game_name)
+    @classmethod
+    def has_game(cls, game_name):
+        return game_name in cls._games
+    @classmethod
+    def register_game(cls, game_name, game_class):
+        cls._games[game_name] = game_class
+    @classmethod
+    def unregister_game(cls, game_name):
+        if game_name in cls._games:
+            del cls._games[game_name]
+    @classmethod
+    def create_game(cls, game_name, renderer):
+        game_class = cls.get_game_class(game_name)
+        if game_class is None:
+            raise ValueError(f"Game '{game_name}' is not registered.")
+        return game_class(renderer)
+
 #engine/version.py
 ENGINE_NAME = "MindWar Arena"
 ENGINE_VERSION = "0.1.0"
-PHASE = 2
-STATUS = "tic tac toe added"
+PHASE = 3
+STATUS = "phase 3 completed"
 
-#game/scenes/boot_scene.py
+#game/scene/boot_scene.py
 from engine.core.scene import Scene
 from engine.utils.logger import Logger
-from game.scenes.game_scene import GameScene
-from games.tic_tac_toe.game import TicTacToeGame
+from game.scenes.main_menu_scene import MainMenuScene
 class BootScene(Scene):
     def __init__(self):
         super().__init__("Boot Scene")
     def enter(self):
         super().enter()
         Logger.info("[BootScene] Engine initialization complete.")
-        Logger.info("[BootScene] Launching Tic-Tac-Toe...")
-        game = TicTacToeGame(self.renderer)
-        self.scene_manager.change_scene(GameScene(game))
+        Logger.info("[BootScene] Opening Main Menu.")
+        self.scene_manager.change_scene(MainMenuScene())
     def update(self):
         pass
     def render(self):
         pass
 
+#game/scenes/game_mode_scene.py
+from engine.core.scene import Scene
+from engine.core.input import Input
+from engine.utils.logger import Logger
+from engine.game_registry import GameRegistry
+from game.scenes.game_scene import GameScene
+from games.tic_tac_toe.constants import (GAME_MODE_HUMAN_VS_HUMAN,GAME_MODE_HUMAN_VS_AI,)
+import pygame
+class GameModeScene(Scene):
+    def __init__(self, game_name):
+        super().__init__("Game Mode")
+        self.game_name = game_name
+        self.modes = [("Human vs Human", GAME_MODE_HUMAN_VS_HUMAN),("Human vs AI", GAME_MODE_HUMAN_VS_AI),]
+        self.selected_index = 0
+    def enter(self):
+        super().enter()
+        Logger.info(f"[GameModeScene] Choosing mode for {self.game_name}")
+    def update(self):
+        if Input.is_key_clicked(pygame.K_UP):
+            self.selected_index = (self.selected_index - 1) % len(self.modes)
+        elif Input.is_key_clicked(pygame.K_DOWN):
+            self.selected_index = (self.selected_index + 1) % len(self.modes)
+        elif Input.is_key_clicked(pygame.K_RETURN):
+            mode_name, mode = self.modes[self.selected_index]
+            Logger.info(f"[GameModeScene] Mode: {mode_name}")
+            game_class = GameRegistry.get_game_class(self.game_name)
+            game = game_class(renderer =self.renderer,game_mode=mode,)
+            self.scene_manager.change_scene(GameScene(game))
+    def render(self):
+        self.renderer.draw_text(self.game_name, (80, 50), size=48,)
+        self.renderer.draw_text("Select Mode", (80, 110), size=36, )
+        y = 190
+        for index, (mode_name, _) in enumerate(self.modes):
+            prefix = "► " if index == self.selected_index else "  "
+            self.renderer.draw_text( prefix + mode_name, (100, y), size=34, )
+            y += 55
+
 #game/scenes/game_scene.py
+import pygame
+from engine.core.input import Input
 from engine.core.scene import Scene
 from engine.interfaces.game_interface import GameInterface
 from engine.utils.logger import Logger
@@ -1166,22 +1236,454 @@ class GameScene(Scene):
         super().exit()
     def update(self):
         self.game.update()
+        if self.game.is_game_over():
+            if Input.is_key_clicked(pygame.K_r):
+                self.game.reset()
+            elif Input.is_key_clicked(pygame.K_g):
+                from game.scenes.main_menu_scene import MainMenuScene
+                self.scene_manager.change_scene(MainMenuScene())
     def render(self):
         self.game.render()
 
+#game/scenes/game_selection_scene.py
+from engine.core.scene import Scene
+from engine.core.input import Input
+from engine.utils.logger import Logger
+from engine.game_registry import GameRegistry
+from game.scenes.game_mode_scene import GameModeScene
+class GameSelectionScene(Scene):
+    def __init__(self):
+        super().__init__("Game Selection")
+        self.games = GameRegistry.get_game_names()
+        self.selected_index = 0
+    def enter(self):
+        super().enter()
+        Logger.info("[GameSelectionScene] Ready")
+    def update(self):
+        if Input.is_key_clicked(__import__("pygame").K_UP):
+            self.selected_index = (self.selected_index - 1) % len(self.games)
+        elif Input.is_key_clicked(__import__("pygame").K_DOWN):
+            self.selected_index = (self.selected_index + 1) % len(self.games)
+        elif Input.is_key_clicked(__import__("pygame").K_RETURN):
+            selected_game = self.games[self.selected_index]
+            Logger.info(f"[GameSelectionScene] Selected: {selected_game}")
+            self.scene_manager.change_scene(GameModeScene(selected_game))
+    def render(self):
+        self.renderer.draw_text("Select Game",(80, 50),size=48,)
+        y = 150
+        for index, game in enumerate(self.games):
+            prefix = "► " if index == self.selected_index else "  "
+            self.renderer.draw_text(prefix + game,(100, y),size=36,)
+            y += 55
+
 #game/scenes/main_menu_scene.py
 from engine.core.scene import Scene
+from engine.core.input import Input
 from engine.utils.logger import Logger
+from engine.game_registry import GameRegistry
+from game.scenes.game_mode_scene import GameModeScene
+import pygame
 class MainMenuScene(Scene):
     def __init__(self):
         super().__init__("Main Menu")
+        self.games = GameRegistry.get_game_names()
+        self.selected_index = 0
     def enter(self):
         super().enter()
         Logger.info("[MainMenuScene] Ready")
     def update(self):
-        pass
+        if Input.is_key_clicked(pygame.K_UP):
+            self.selected_index = (self.selected_index - 1) % len(self.games)
+        elif Input.is_key_clicked(pygame.K_DOWN):
+            self.selected_index = (self.selected_index + 1) % len(self.games)
+        elif Input.is_key_clicked(pygame.K_RETURN):
+            selected_game = self.games[self.selected_index]
+            Logger.info(f"[MainMenuScene] Selected {selected_game}")
+            self.scene_manager.change_scene(GameModeScene(selected_game))
     def render(self):
+        self.renderer.draw_text("MindWar Arena",(60, 40),size=54,)
+        self.renderer.draw_text("Select Game",(60, 110),size=38,)
+        y = 190
+        for index, game_name in enumerate(self.games):
+            prefix = "► " if index == self.selected_index else "  "
+            self.renderer.draw_text(prefix + game_name,(80, y),size=34,)
+            y += 55
+
+#games/connect4/ai.py
+import random
+from engine.interfaces.ai_interface import AIInterface
+class Connect4AI(AIInterface):
+    def __init__(self):
+        self.initialized = False
+    def initialize(self):
+        self.initialized = True
+    def select_action(self, game_state):
+        board = game_state["board"]
+        legal_moves = []
+        columns = len(board[0])
+        for column in range(columns):
+            if board[0][column] == 0:
+                legal_moves.append(column)
+        if not legal_moves:
+            return None
+        return random.choice(legal_moves)
+    def learn(self, state, action, reward, next_state):
         pass
+    def reset(self):
+        self.initialized = False
+    def get_action(self, game):
+        return self.select_action(game.get_state())
+
+#games/connect4/board_renderer.py
+from games.connect4.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,PLAYER_RED,PLAYER_YELLOW,PLAYER_RED_COLOR,PLAYER_YELLOW_COLOR,DISC_RADIUS,WIN_LINE_COLOR,)
+class BoardRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+        self.origin_x = BOARD_PADDING
+        self.origin_y = BOARD_PADDING
+    def render(self, board, game_result=None):
+        self.draw_grid()
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                value = board.get_cell(row, column)
+                if value == PLAYER_RED:
+                    self.draw_disc(row, column, PLAYER_RED_COLOR)
+                elif value == PLAYER_YELLOW:
+                    self.draw_disc(row, column, PLAYER_YELLOW_COLOR)
+        if game_result is not None and game_result.winning_cells:
+            self.draw_winning_line(game_result.winning_cells)
+    def draw_grid(self):
+        self.renderer.draw_grid(origin=(self.origin_x, self.origin_y),rows=BOARD_ROWS,columns=BOARD_COLUMNS,cell_size=CELL_SIZE,color=GRID_COLOR,)
+    def draw_disc(self, row, column, color):
+        center = self.get_cell_center(row, column)
+        self.renderer.draw_circle(center=center,radius=DISC_RADIUS,color=color,)
+    def get_cell_center(self, row, column):
+        x = (self.origin_x + column * CELL_SIZE + CELL_SIZE / 2)
+        y = (self.origin_y + row * CELL_SIZE + CELL_SIZE / 2 )
+        return (x, y)
+    def contains_point(self, x, y):
+        board_width = BOARD_COLUMNS * CELL_SIZE
+        board_height = BOARD_ROWS * CELL_SIZE
+        return (self.origin_x <= x < self.origin_x + board_width and self.origin_y <= y < self.origin_y + board_height )
+    def screen_to_column(self, x, y):
+        if not self.contains_point(x, y):
+            return None
+        return int((x - self.origin_x) // CELL_SIZE)
+    def draw_winning_line(self, winning_cells):
+        if len(winning_cells) < 2:
+            return
+        start = self.get_cell_center(*winning_cells[0])
+        end = self.get_cell_center(*winning_cells[-1])
+        self.renderer.draw_line(start=start, end=end, color=WIN_LINE_COLOR,)
+    def reset(self):
+        pass
+
+#games/connect4/board.py
+from copy import deepcopy
+from games.connect4.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,)
+class Connect4Board:
+    def __init__(self):
+        self.reset()
+    def reset(self):
+        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)]for _ in range(BOARD_ROWS)]
+    def get_cell(self, row, column):
+        return self._board[row][column]
+    def set_cell(self, row, column, value):
+        if not self.is_valid_position(row, column):
+            return False
+        self._board[row][column] = value
+        return True
+    def is_valid_position(self, row, column):
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+    def is_column_full(self, column):
+        if not (0 <= column < BOARD_COLUMNS):
+            return True
+        return self._board[0][column] != EMPTY
+    def get_available_columns(self):
+        columns = []
+        for column in range(BOARD_COLUMNS):
+            if not self.is_column_full(column):
+                columns.append(column)
+        return columns
+    def get_next_open_row(self, column):
+        if not (0 <= column < BOARD_COLUMNS):
+            return None
+        for row in range(BOARD_ROWS - 1, -1, -1):
+            if self._board[row][column] == EMPTY:
+                return row
+        return None
+    def drop_piece(self, column, player):
+        row = self.get_next_open_row(column)
+        if row is None:
+            return None
+        self._board[row][column] = player
+        return row
+    def is_board_full(self):
+        return len(self.get_available_columns()) == 0
+    def copy(self):
+        board_copy = Connect4Board()
+        board_copy._board = deepcopy(self._board)
+        return board_copy
+    def get_board_state(self):
+        return deepcopy(self._board)
+    def __str__(self):
+        symbols = {EMPTY: ".",1: "R",2: "Y",}
+        rows = []
+        for row in self._board:
+            rows.append(" ".join(symbols[cell] for cell in row))
+        return "\n".join(rows)
+
+#games/connect4/constants.py
+GAME_NAME = "Connect Four"
+GAME_VERSION = "1.0.0"
+BOARD_ROWS = 6
+BOARD_COLUMNS = 7
+WIN_LENGTH = 4
+EMPTY = 0
+PLAYER_RED = 1
+PLAYER_YELLOW = 2
+FIRST_PLAYER = PLAYER_RED
+GAME_NOT_STARTED = 0
+GAME_RUNNING = 1
+GAME_DRAW = 2
+GAME_OVER = 3
+NO_WINNER = 0
+AI_RANDOM = "Random"
+AI_EASY = "Easy"
+AI_MEDIUM = "Medium"
+AI_HARD = "Hard"
+CELL_SIZE = 100
+BOARD_PADDING = 40
+BOARD_LINE_WIDTH = 4
+DISC_RADIUS = CELL_SIZE * 0.38
+GRID_COLOR = (220, 220, 220)
+PLAYER_RED_COLOR = (230, 70, 70)
+PLAYER_YELLOW_COLOR = (255, 215, 0)
+WIN_LINE_COLOR = (50, 255, 50)
+GAME_MODE_HUMAN_VS_HUMAN = 0
+GAME_MODE_HUMAN_VS_AI = 1
+GAME_MODE_AI_VS_AI = 2
+DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+
+#games/connect4/game.py
+from engine.interfaces.game_interface import GameInterface
+from engine.interfaces.game_result import GameResult
+from games.connect4.ai import Connect4AI
+from games.connect4.board import Connect4Board
+from games.connect4.board_renderer import BoardRenderer
+from games.connect4.human_player import HumanPlayer
+from games.connect4.overlay_renderer import OverlayRenderer
+from games.connect4.rules import Connect4Rules
+from games.connect4.constants import (PLAYER_RED, PLAYER_YELLOW, FIRST_PLAYER, GAME_NOT_STARTED, GAME_RUNNING, GAME_DRAW, GAME_OVER, GAME_MODE_HUMAN_VS_HUMAN, GAME_MODE_HUMAN_VS_AI,)
+class Connect4Game(GameInterface):
+    def __init__(self, renderer,game_mode=GAME_MODE_HUMAN_VS_HUMAN,):
+        self.renderer = renderer
+        self.game_mode = game_mode
+        self.board = Connect4Board()
+        self.current_player = FIRST_PLAYER
+        self.next_starting_player = FIRST_PLAYER
+        self.result = GameResult()
+        self.game_state = GAME_NOT_STARTED
+        self.move_count = 0
+        self.board_renderer = BoardRenderer(renderer)
+        self.overlay_renderer = OverlayRenderer(renderer)
+        self.human_player = HumanPlayer(self.board_renderer)
+        self.ai_player = Connect4AI()
+        self.player_red = self.human_player
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.player_yellow = self.ai_player
+        else:
+            self.player_yellow = self.human_player
+    def initialize(self):
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.initialize()
+        self.reset()
+    def reset(self):
+        self.board.reset()
+        self.choose_starting_player()
+        self.result = GameResult()
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.reset()
+            self.ai_player.initialize()
+        self.game_state = GAME_RUNNING
+        self.move_count = 0
+        self.board_renderer.reset()
+        self.overlay_renderer.reset()
+    def shutdown(self):
+        pass
+    def update(self):
+        if self.is_frozen():
+            return
+        self.update_current_player()
+    def render(self):
+        self.board_renderer.render(self.board,self.result,)
+        self.overlay_renderer.render(self.result)
+    def make_move(self, column):
+        if self.is_frozen():
+            return False
+        if column is None:
+            return False
+        row = self.board.drop_piece(column,self.current_player,)
+        if row is None:
+            return False
+        self.move_count += 1
+        self.result = Connect4Rules.evaluate_game(self.board)
+        if self.result.game_over:
+            if self.result.draw:
+                self.game_state = GAME_DRAW
+            else:
+                self.game_state = GAME_OVER
+            return True
+        self.switch_player()
+        return True
+    def switch_player(self):
+        if self.current_player == PLAYER_RED:
+            self.current_player = PLAYER_YELLOW
+        else:
+            self.current_player = PLAYER_RED
+    def choose_starting_player(self):
+        self.current_player = self.next_starting_player
+        if self.next_starting_player == PLAYER_RED:
+            self.next_starting_player = PLAYER_YELLOW
+        else:
+            self.next_starting_player = PLAYER_RED
+    def get_current_controller(self):
+        if self.current_player == PLAYER_RED:
+            return self.player_red
+        return self.player_yellow
+    def update_current_player(self):
+        controller = self.get_current_controller()
+        move = controller.get_action(self)
+        if move is None:
+            return
+        self.make_move(move)
+    def get_result(self):
+        return self.result
+    def get_board(self):
+        return self.board
+    def get_current_player(self):
+        return self.current_player
+    def get_state(self):
+        return {"board": self.board.get_board_state(), "current_player": self.current_player, "winner": self.result.winner, "game_state": self.game_state, "game_over": self.result.game_over, "draw": self.result.draw, "move_count": self.move_count,}
+    def is_game_over(self):
+        return self.is_frozen()
+    def get_winner(self):
+        return self.result.winner
+    def is_frozen(self):
+        return self.result.game_over
+
+#games/connect4/human_player.py
+from engine.core.input import Input
+class HumanPlayer:
+    def __init__(self, board_renderer):
+        self.board_renderer = board_renderer
+    def get_action(self, game):
+        if game.is_frozen():
+            return None
+        if not Input.is_left_mouse_clicked():
+            return None
+        mouse_x, mouse_y = Input.get_mouse_position()
+        return self.board_renderer.screen_to_column(mouse_x,mouse_y,)
+
+#games/connect4/overlay_renderer.py
+from games.connect4.constants import (PLAYER_RED,PLAYER_YELLOW,)
+class OverlayRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def render(self, result):
+        if result is None:
+            return
+        if not result.game_over:
+            return
+        self.draw_background()
+        if result.draw:
+            self.draw_draw_overlay()
+        else:
+            self.draw_winner_overlay(result.winner)
+    def draw_background(self):
+        pass
+    def draw_winner_overlay(self, winner):
+        if winner == PLAYER_RED:
+            message = "Red Wins!"
+        elif winner == PLAYER_YELLOW:
+            message = "Yellow Wins!"
+        else:
+            return
+        self.renderer.draw_overlay_message(message=message, color=(255, 255, 255), size=56,)
+    def draw_draw_overlay(self):
+        self.renderer.draw_overlay_message(message="Draw Game!", color=(255, 255, 255), size=56,)
+    def reset(self):
+        pass
+
+#games/connect4/rules.py
+from engine.interfaces.game_result import GameResult
+from games.connect4.constants import (BOARD_ROWS, BOARD_COLUMNS, WIN_LENGTH, EMPTY, NO_WINNER,)
+class Connect4Rules:
+    _DIRECTIONS = ((0, 1), (1, 0), (1, 1), (-1, 1), )
+    @staticmethod
+    def check_winner(board):
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                player = board.get_cell(row, column)
+                if player == EMPTY:
+                    continue
+                for row_delta, column_delta in Connect4Rules._DIRECTIONS:
+                    if Connect4Rules._check_direction(board, row, column, row_delta, column_delta, player,):
+                        return player
+        return NO_WINNER
+    @staticmethod
+    def get_winning_cells(board):
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                player = board.get_cell(row, column)
+                if player == EMPTY:
+                    continue
+                for row_delta, column_delta in Connect4Rules._DIRECTIONS:
+                    cells = Connect4Rules._collect_direction(board, row, column, row_delta, column_delta, player,)
+                    if cells:
+                        return cells
+        return []
+    @staticmethod
+    def is_draw(board):
+        return (Connect4Rules.check_winner(board) == NO_WINNER and board.is_board_full())
+    @staticmethod
+    def is_game_over(board):
+        return (Connect4Rules.check_winner(board) != NO_WINNER or board.is_board_full())
+    @staticmethod
+    def evaluate_game(board):
+        result = GameResult()
+        winner = Connect4Rules.check_winner(board)
+        if winner != NO_WINNER:
+            result.winner = winner
+            result.game_over = True
+            result.winning_cells = Connect4Rules.get_winning_cells(board)
+            return result
+        if board.is_board_full():
+            result.draw = True
+            result.game_over = True
+        return result
+    @staticmethod
+    def _check_direction(board, row, column, row_delta, column_delta, player, ):
+        for index in range(1, WIN_LENGTH):
+            next_row = row + row_delta * index
+            next_column = column + column_delta * index
+            if not board.is_valid_position(next_row, next_column):
+                return False
+            if board.get_cell(next_row, next_column) != player:
+                return False
+        return True
+    @staticmethod
+    def _collect_direction(board, row, column, row_delta, column_delta, player,):
+        cells = []
+        for index in range(WIN_LENGTH):
+            next_row = row + row_delta * index
+            next_column = column + column_delta * index
+            if not board.is_valid_position(next_row, next_column):
+                return []
+            if board.get_cell(next_row, next_column) != player:
+                return []
+            cells.append((next_row, next_column))
+        return cells
 
 #games/tic_tac_toe/ai.py
 import random
@@ -1208,7 +1710,7 @@ class TicTacToeAI(AIInterface):
     def get_action(self, game):
         return self.select_action(game.get_state())
 
-#games/tic_tac_toe/board_renderer.py
+#games/tic_tac_teo/board_renderer.py
 from games.tic_tac_toe.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,X_COLOR,O_COLOR,PLAYER_X,PLAYER_O,WIN_LINE_COLOR,)
 class BoardRenderer:
     def __init__(self, renderer):
@@ -1337,8 +1839,6 @@ GAME_MODE_AI_VS_AI = 2
 DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
 
 #games/tic_tac_toe/game.py
-import pygame
-from engine.core.input import Input
 from games.tic_tac_toe.ai import TicTacToeAI
 from engine.interfaces.game_interface import GameInterface
 from games.tic_tac_toe.overlay_renderer import OverlayRenderer
@@ -1347,10 +1847,11 @@ from games.tic_tac_toe.board import TicTacToeBoard
 from games.tic_tac_toe.rules import TicTacToeRules
 from games.tic_tac_toe.human_player import HumanPlayer
 from engine.interfaces.game_result import GameResult
-from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,)
+from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,GAME_MODE_HUMAN_VS_HUMAN,GAME_MODE_HUMAN_VS_AI,)
 class TicTacToeGame(GameInterface):
-    def __init__(self, renderer):
+    def __init__(self, renderer, game_mode=GAME_MODE_HUMAN_VS_HUMAN):
         self.renderer = renderer
+        self.game_mode = game_mode
         self.board = TicTacToeBoard()
         self.current_player = FIRST_PLAYER
         self.next_starting_player = FIRST_PLAYER
@@ -1362,16 +1863,21 @@ class TicTacToeGame(GameInterface):
         self.human_player = HumanPlayer(self.board_renderer)
         self.ai_player = TicTacToeAI()
         self.player_x = self.human_player
-        self.player_o = self.ai_player
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.player_o = self.ai_player
+        else:
+            self.player_o = self.human_player
     def initialize(self):
-        self.ai_player.initialize()
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.initialize()
         self.reset()
     def reset(self):
         self.board.reset()
         self.choose_starting_player()
         self.result = GameResult()
-        self.ai_player.reset()
-        self.ai_player.initialize()
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.reset()
+            self.ai_player.initialize()
         self.game_state = GAME_RUNNING
         self.move_count = 0
         self.board_renderer.reset()
@@ -1379,7 +1885,6 @@ class TicTacToeGame(GameInterface):
     def shutdown(self):
         pass
     def update(self):
-        self.update_restart()
         if self.is_frozen():
             return
         self.update_current_player()
@@ -1425,11 +1930,6 @@ class TicTacToeGame(GameInterface):
         if move is None:
             return
         self.make_move(*move)
-    def update_restart(self):
-        if not self.is_frozen():
-            return
-        if Input.is_key_clicked(pygame.K_r):
-            self.reset()
     def get_result(self):
         return self.result
     def get_board(self):
@@ -1625,18 +2125,14 @@ def main():
 if __name__ == "__main__":
     main()
 
-#requirements.txt
-colorama==0.4.6
-glcontext==3.0.0
-markdown-it-py==4.2.0
-mdurl==0.1.2
-moderngl==5.12.0
-numpy==2.4.6
-packaging==26.2
-pillow==12.2.0
-pygame==2.6.1
-pyglm==2.8.3
-Pygments==2.20.0
-rich==15.0.0
-setuptools==82.0.1
-wheel==0.47.0
+#main.py
+from launcher import Launcher
+from engine.utils.crash_handler import CrashHandler
+def main():
+    launcher = Launcher()
+    try:
+        launcher.start()
+    except Exception as exception:
+        CrashHandler.handle_exception(exception)
+if __name__ == "__main__":
+    main()
