@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Kozhikode,Kerala,11.25,75.7667,26.11,87,1011,4.59,0,90,overcast clouds,2026-07-06 22:47:03.099289
+Kozhikode,Kerala,11.25,75.7667,24.99,83,1013,2.48,0,100,overcast clouds,2026-07-17 23:36:55.137787

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Faridabad,Haryana,28.4333,77.3167,37.31,34,997,2.98,0,1,clear sky,2026-07-06 22:46:50.789464
+Faridabad,Haryana,28.4333,77.3167,37.25,32,999,2.74,0,100,overcast clouds,2026-07-17 23:36:44.832235

@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Haridwar,Uttarakhand,29.9667,78.1667,31.06,48,998,2,0,39,scattered clouds,2026-07-06 22:46:53.649761
+Haridwar,Uttarakhand,29.9667,78.1667,29.91,57,1001,1.56,0,94,overcast clouds,2026-07-17 23:36:47.401674

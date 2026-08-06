@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Jaipur,Rajasthan,26.9167,75.8167,36.01,36,996,2.31,0,76,broken clouds,2026-07-06 22:46:56.326768
+Jaipur,Rajasthan,26.9167,75.8167,34.84,34,1002,4.22,0,100,overcast clouds,2026-07-17 23:36:49.991570

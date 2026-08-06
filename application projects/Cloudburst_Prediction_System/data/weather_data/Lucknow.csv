@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Lucknow,Uttar Pradesh,26.85,80.9167,33.08,50,997,3.45,0,56,broken clouds,2026-07-06 22:47:03.612117
+Lucknow,Uttar Pradesh,26.85,80.9167,32.44,58,1001,2.95,0,88,overcast clouds,2026-07-17 23:36:55.577514

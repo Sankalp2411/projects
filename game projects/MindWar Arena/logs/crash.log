@@ -393,3 +393,140 @@ Traceback (most recent call last):
     raise JSONDecodeError("Expecting value", s, err.value) from None
 json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
 
+
+================================================================================
+Timestamp: 2026-08-06 13:00:46
+
+Exception: 'TicTacToeGame' object has no attribute 'game_mode'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 60, in update
+    game = game_class(renderer =self.renderer,game_mode=mode,)
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\tic_tac_toe\game.py", line 27, in __init__
+    if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+       ^^^^^^^^^^^^^^
+AttributeError: 'TicTacToeGame' object has no attribute 'game_mode'. Did you mean: 'make_move'?
+
+
+================================================================================
+Timestamp: 2026-08-06 13:04:14
+
+Exception: 'TicTacToeGame' object has no attribute 'set_game_mode'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 62, in update
+    game.set_game_mode(mode)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'TicTacToeGame' object has no attribute 'set_game_mode'. Did you mean: 'game_mode'?
+
+
+================================================================================
+Timestamp: 2026-08-06 13:04:30
+
+Exception: 'TicTacToeGame' object has no attribute 'set_game_mode'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 62, in update
+    game.set_game_mode(mode)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'TicTacToeGame' object has no attribute 'set_game_mode'. Did you mean: 'game_mode'?
+
+
+================================================================================
+Timestamp: 2026-08-06 13:04:38
+
+Exception: 'Connect4Game' object has no attribute 'set_game_mode'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 62, in update
+    game.set_game_mode(mode)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Connect4Game' object has no attribute 'set_game_mode'. Did you mean: 'game_mode'?
+
+
+================================================================================
+Timestamp: 2026-08-06 13:04:45
+
+Exception: 'Connect4Game' object has no attribute 'set_game_mode'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 62, in update
+    game.set_game_mode(mode)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'Connect4Game' object has no attribute 'set_game_mode'. Did you mean: 'game_mode'?
+

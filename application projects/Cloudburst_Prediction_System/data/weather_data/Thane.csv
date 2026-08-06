@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Thane,Maharashtra,19.2,72.9667,26.02,94,1001,9.72,0.69,100,light rain,2026-07-06 22:47:16.478705
+Thane,Maharashtra,19.2,72.9667,28.16,68,1009,4.11,0,98,overcast clouds,2026-07-17 23:37:06.910453

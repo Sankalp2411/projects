@@ -728,7 +728,6 @@ class OverlayRenderer:
 #engine/rendering/primitive_renderer.py
 from __future__ import annotations
 import math
-import glm
 import moderngl
 from engine.rendering.mesh import Mesh
 from engine.rendering.shader_manager import ShaderManager
@@ -1210,7 +1209,7 @@ class TicTacToeAI(AIInterface):
         return self.select_action(game.get_state())
 
 #games/tic_tac_toe/board_renderer.py
-from games.tic_tac_toe.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,X_COLOR,O_COLOR,EMPTY,PLAYER_X,PLAYER_O,WIN_LINE_COLOR,)
+from games.tic_tac_toe.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,X_COLOR,O_COLOR,PLAYER_X,PLAYER_O,WIN_LINE_COLOR,)
 class BoardRenderer:
     def __init__(self, renderer):
         self.renderer = renderer

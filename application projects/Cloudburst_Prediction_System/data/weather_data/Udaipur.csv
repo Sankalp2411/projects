@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Udaipur,Rajasthan,24.5712,73.6918,24.67,81,1000,1.32,0,100,overcast clouds,2026-07-06 22:47:19.210507
+Udaipur,Rajasthan,24.5712,73.6918,27.43,61,1006,6.79,0,68,broken clouds,2026-07-17 23:37:09.238930

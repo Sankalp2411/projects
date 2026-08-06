@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Dhanbad,Jharkhand,23.8,86.45,26.65,83,999,4.52,0,100,overcast clouds,2026-07-06 22:46:49.049296
+Dhanbad,Jharkhand,23.8,86.45,30.67,65,1001,0.66,0,100,overcast clouds,2026-07-17 23:36:43.079251

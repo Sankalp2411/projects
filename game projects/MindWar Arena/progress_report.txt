@@ -10469,10 +10469,1253 @@
             OK
         }
     }
-    
+    summery
+    Introduction
+        Phase 2 marked the first complete game implementation in the MindWar Arena project and represented the transition from a reusable engine foundation into a functional gaming platform.
+        While Phase 1 focused entirely on building the engine architecture, rendering system, scene management, interfaces, and supporting utilities, Phase 2 demonstrated that the engine was capable of hosting an actual game without requiring changes to its core architecture.
+        Tic-Tac-Toe was deliberately selected as the first game because it is a deterministic, turn-based board game with a relatively small state space, making it ideal for validating every subsystem of the engine before progressing toward increasingly complex games such as Connect Four, Gomoku, Pente, Othello, Checkers, Chess, Nine Men's Morris, and Go.
+        The primary objective of this phase was not merely to create a playable Tic-Tac-Toe game but to establish a universal pattern that every future game in MindWar Arena will follow.
+        Every class, module, renderer, controller, AI component, and rule evaluator developed during this phase was designed with reusability in mind.
+        Instead of writing game-specific code that only works for Tic-Tac-Toe, the implementation was structured around the universal interfaces introduced in Phase 1.
+        As a result, the game engine remained independent of game logic while the Tic-Tac-Toe implementation became a practical example of how future games will integrate with the engine.
+        Throughout this phase, emphasis was placed on modularity, maintainability, readability, deterministic gameplay, and comprehensive verification.
+        Each responsibility was assigned to an independent module, ensuring that game logic, board management, rendering, artificial intelligence, human interaction, overlays, and rule evaluation remained isolated from one another.
+        This separation of concerns established a clean software architecture that can be replicated throughout the remaining phases of the project.
+
+    Overall Objectives
+        Several major objectives guided the implementation of Phase 2. The first objective was to validate the engine interfaces by implementing a real game without modifying the engine architecture.
+        The second objective was to verify that rendering, input handling, scene management, and game management all worked together correctly.
+        Another important objective was to create a deterministic turn-based game loop capable of handling player input, AI decisions, game state transitions, and rendering updates every frame.
+        The project also aimed to introduce a reusable board system, establish standardized game state management, implement universal win and draw detection, integrate a simple AI opponent, and provide complete gameplay from start to finish.
+        Finally, extensive testing was considered an essential goal, ensuring that every major subsystem functioned correctly before moving to more advanced games.
+
+    Project Organization
+        The Tic-Tac-Toe implementation followed the overall MindWar Arena project architecture introduced in Phase 1.
+        Rather than placing all game functionality into a single file, the implementation was divided into specialized modules, each with a clearly defined responsibility.
+        The Tic-Tac-Toe directory contains independent modules responsible for board management, rule evaluation, rendering, overlays, human interaction, artificial intelligence, constants, and overall game control.
+        This modular organization greatly improves maintainability because each file focuses exclusively on a single responsibility.
+        The engine itself remained completely generic. Rendering continued to be handled by the universal renderer, scene transitions remained managed by the Scene Manager, user input flowed through the universal Input system, and the Game Manager remained responsible only for lifecycle management.
+        This separation confirmed that the engine was capable of supporting independent games without becoming tightly coupled to any specific implementation.
+
+    Game Constants
+        One of the earliest tasks in Phase 2 involved creating a centralized constants module.
+        Every configurable value related to Tic-Tac-Toe was placed into a dedicated constants file rather than scattering numerical values throughout the codebase.
+        The constants include the game name, version number, board dimensions, winning length, player identifiers, empty cell representation, initial player, game states, AI difficulty labels, rendering dimensions, board padding, symbol sizes, board colors, overlay colors, and default game modes.
+        Centralizing these values provided several benefits. Readability improved because symbolic names replaced raw numerical literals.
+        Future modifications became significantly easier since changing a board size or rendering value requires editing only one location.
+        Additionally, consistency was guaranteed across all modules because every component references the same shared constants.
+
+    Board Representation
+        The TicTacToeBoard class became the foundation of gameplay by representing the complete board state. 
+        Instead of exposing raw data structures directly to other systems, the board provided a controlled interface through which every interaction occurred.
+        The board internally stores a two-dimensional list representing the three-by-three grid.
+        Dedicated methods allow reading and writing individual cells while ensuring that every operation remains within valid board boundaries.
+        Invalid coordinates are safely rejected, preventing accidental corruption of board data.
+        Several utility methods further enhanced the board abstraction. 
+        Functions exist for determining whether a cell is empty, checking whether the board is full, retrieving every available move, copying the board, producing immutable snapshots of the current state, validating positions, and generating human-readable string representations for debugging.
+        By encapsulating all board operations within a dedicated class, higher-level systems such as the AI, rule evaluator, renderer, and game controller never manipulate raw arrays directly.
+        This abstraction greatly improves maintainability and reduces the possibility of introducing state inconsistencies.
+
+    Rule Evaluation
+        The TicTacToeRules class centralized every gameplay rule into a single location. 
+        This design prevented rule logic from becoming distributed throughout multiple classes and established a reusable evaluation model for future games.
+        Row victories are detected by comparing every cell in each horizontal line. 
+        Column victories follow the same process vertically.
+        Both primary and secondary diagonals are evaluated independently. 
+        Whenever a winning sequence is found, the appropriate player identifier is returned immediately.
+        Beyond winner detection, the rules module determines draw conditions, game completion status, winning cell coordinates, and overall game evaluation. 
+        Instead of requiring the Game Controller to perform these calculations manually, a single evaluate_game function produces a GameResult object describing the complete outcome of the current board state.
+        This architecture significantly simplified the Game Controller because all gameplay evaluation became delegated to a dedicated rule engine.
+
+    Game Result Object
+        Phase 2 introduced a universal GameResult object for representing completed games. 
+        Rather than returning multiple independent variables, every rule evaluation produces a single structured result containing winner information, draw status, game completion status, and winning cell coordinates.
+        The GameResult object also provides helper functions for checking whether a winner exists, whether the game ended in a draw, and whether gameplay has finished.
+        This object-oriented representation improves readability while establishing a universal result format that future games can share.
+
+    Game Controller
+        The TicTacToeGame class became the central coordinator of gameplay. 
+        Rather than implementing individual algorithms itself, it orchestrates interactions among the board, AI, human player, renderers, overlays, rule evaluator, and engine.
+        Initialization constructs every required subsystem before resetting the game into its starting configuration. 
+        Resetting clears the board, alternates the starting player, recreates the GameResult object, resets the AI, clears rendering state, and prepares a new game.
+        The update cycle first processes restart requests before delegating control to the current player controller. 
+        Human players receive mouse input while AI players generate moves algorithmically. 
+        After each move, the controller validates legality, updates the board, evaluates the rules, updates the GameResult, changes the game state, and switches players when appropriate.
+        Rendering delegates all drawing responsibilities to the BoardRenderer and OverlayRenderer, allowing the Game Controller to remain free from rendering details.
+        This separation of orchestration from implementation greatly simplified the controller while preserving a clear architecture.
+
+    Player Management
+        A major improvement introduced during Phase 2 was the concept of interchangeable player controllers. 
+        Instead of embedding human or AI logic directly into the Game Controller, both player types expose the same get_action interface.
+        The HumanPlayer converts mouse input into board coordinates, while the AI independently selects moves. 
+        The Game Controller never needs to know whether the current controller represents a human or an AI because both behave identically from its perspective.
+        This abstraction allows future support for Human vs Human, Human vs AI, and AI vs AI gameplay without changing the overall game architecture.
+
+    Human Input Processing
+        Human interaction is handled exclusively by the HumanPlayer class. 
+        Each update cycle first verifies that the game has not already finished before checking for a left mouse click. 
+        Mouse coordinates are retrieved through the universal Input system introduced during Phase 1 and translated into board positions using the BoardRenderer.
+        Invalid clicks outside the playing area automatically return no move, preventing accidental interactions. 
+        Because the HumanPlayer returns only board coordinates, the Game Controller remains responsible for validating legality and applying moves.
+        Separating user interaction from gameplay logic improves modularity while ensuring that the input system remains reusable for future games.
+
+    Artificial Intelligence
+        Phase 2 introduced the project's first AI implementation through TicTacToeAI. 
+        Although intentionally simple, this AI established the architecture that future intelligent agents will follow.
+        The AI receives an immutable snapshot of the current game state rather than direct access to the board. 
+        It scans the board to locate every legal move before selecting one uniformly at random. If no legal moves remain, the AI returns no action.
+        The AI fully implements the universal AI interface, including initialization, action selection, reset functionality, and placeholder learning methods for future intelligent algorithms.
+        Although the current implementation uses random move selection, its architecture allows future replacement with Minimax, Alpha-Beta Pruning, Monte Carlo Tree Search, reinforcement learning, or neural network approaches without affecting other systems.
+
+    Board Rendering
+        Rendering responsibilities were intentionally isolated within the BoardRenderer. 
+        Rather than allowing the Game Controller to draw graphics directly, the renderer receives the board state and converts it into graphical primitives using the universal rendering engine.
+        Grid lines are drawn using the engine's grid renderer. Every occupied cell is examined individually. 
+        Player X pieces are rendered as crosses while Player O pieces are rendered as circles. 
+        Whenever the GameResult reports a winning sequence, the renderer calculates the centers of the winning cells and draws a victory line connecting them.
+        The renderer also provides utility functions for converting screen coordinates into board positions and determining whether mouse clicks fall inside the playable region. 
+        This functionality supports both rendering and human interaction while keeping coordinate calculations centralized.
+
+    Overlay Rendering
+        The OverlayRenderer manages every visual element appearing after game completion. 
+        Rather than embedding overlay logic into the board renderer or controller, overlays remain entirely independent.
+        Whenever a game ends, the renderer displays either a victory message identifying the winning player or a draw notification when appropriate. 
+        Messages are centered using the engine's universal text rendering system.
+        Separating overlays from board rendering simplifies future additions such as animations, score displays, timers, and transition effects.
+
+    Turn Management
+        Turn management became another important feature of Phase 2. 
+        The Game Controller maintains the current player and automatically switches control after every successful move.
+        An alternating starting player mechanism was introduced to improve fairness across multiple games. 
+        Rather than allowing Player X to start indefinitely, the starting player alternates between X and O after every reset.
+        This feature prepares the project for future competitive gameplay where fairness between repeated matches becomes important.
+
+    Game State Management
+        Gameplay progresses through clearly defined states. Initially the game begins in a non-started state before entering the running state after initialization. 
+        Once a winner is detected, gameplay transitions to the game-over state. If the board becomes full without producing a winner, the game instead enters the draw state.
+        The current state influences every aspect of gameplay.
+        Frozen games reject additional moves, AI processing stops automatically, human input is ignored, and restart functionality becomes available.
+        This finite-state approach ensures deterministic behavior while preventing invalid transitions.
+
+    Restart System
+        A restart mechanism was implemented to improve usability during testing and gameplay. 
+        After a game reaches either a win or draw state, pressing the R key immediately resets the board and begins a new game.
+        The reset process clears every gameplay variable, recreates the GameResult object, resets rendering systems, restarts the AI, alternates the starting player, and restores the running state.
+        This functionality significantly accelerated development and testing because complete application restarts were no longer required after every game.
+
+    Scene Integration
+        Phase 2 also verified successful integration with the engine's scene management system. 
+        During startup, the Boot Scene performs initialization before creating a TicTacToeGame instance and transitioning into the Game Scene.
+        The Game Scene serves as a wrapper connecting the engine to the game implementation. 
+        It initializes the game upon entry, forwards update and render requests during execution, and performs proper shutdown when exiting.
+        This successful integration demonstrated that future games can reuse the exact same scene workflow.
+
+    Rendering Pipeline Validation
+        The universal renderer introduced during Phase 1 was fully validated during Phase 2. 
+        Grid rendering, line drawing, circles, crosses, overlays, and text rendering all operated through the engine's generalized rendering interface.
+        No Tic-Tac-Toe module directly manipulated OpenGL resources. 
+        Instead, every drawing operation flowed through the renderer abstraction, confirming that the rendering engine remains completely reusable across future games.
+
+    Engine Independence
+        One of the greatest achievements of Phase 2 was proving that the engine remains completely independent from individual games.
+        None of the engine modules required modification after Tic-Tac-Toe development began.
+        The Game Manager, Renderer, Scene Manager, Window, Input system, Time Manager, Asset Manager, Logger, Config system, Crash Handler, interfaces, and rendering pipeline all functioned exactly as originally designed.
+        This validated the architectural decisions made during Phase 1.
+
+    Testing Strategy
+        Testing represented a major portion of Phase 2. Rather than relying solely on manual gameplay, comprehensive automated tests were created to verify nearly every subsystem.
+        Board tests confirmed initialization, resetting, copying, move generation, boundary validation, and board fullness.
+        Rule tests verified row, column, diagonal victories, draw detection, game completion, winning cell identification, and evaluation accuracy.
+        Game Controller tests confirmed initialization, move execution, player switching, illegal move rejection, restart functionality, win detection, draw detection, and alternating starting players.
+        Human input tests validated mouse translation, click detection, invalid selections, frozen game handling, and repeated interaction.
+        AI tests confirmed initialization, valid move generation, occupied-cell avoidance, board immutability, repeated action selection, and correct behavior on full boards.
+        Renderer tests verified grid drawing, piece rendering, winning line visualization, overlays, and reset behavior.
+        Integration tests simulated complete gameplay scenarios to ensure that every subsystem worked together correctly.
+        Every automated test passed successfully, demonstrating that the implementation behaved consistently across all tested scenarios.
+
+    Code Quality Improvements
+        Following implementation, a cleanup phase focused on improving code quality without modifying functionality.
+        Unused imports were removed, formatting was standardized, project consistency was verified, redundant code was eliminated where appropriate, and the entire test suite was executed again to ensure that cleanup introduced no regressions.
+        This cleanup stage prepared the project for long-term maintainability while freezing Phase 2 as a stable development milestone.
+
+    Architectural Benefits
+        Phase 2 established numerous architectural patterns that will be reused throughout the remaining project. 
+        Every game will include independent modules for board management, rule evaluation, rendering, overlays, AI, constants, and overall game control. 
+        Universal interfaces ensure consistent communication between the engine and every game implementation.
+        The renderer remains completely game-independent. Artificial intelligence systems interact only with immutable game states. 
+        Scene management continues to provide consistent lifecycle handling. Game results follow a universal structure. 
+        Human interaction remains isolated from gameplay logic.
+        These patterns greatly simplify future development because new games can focus almost entirely on implementing their unique rules rather than recreating engine functionality.
+
+    Challenges and Solutions
+        Several challenges were encountered during Phase 2, including ensuring proper separation between rendering and gameplay, maintaining immutable board states for AI processing, preventing illegal moves after game completion, correctly alternating starting players, integrating restart functionality without restarting the application, and validating rendering behavior independently of gameplay logic.
+        Each challenge reinforced the importance of modular design and ultimately resulted in a cleaner, more maintainable architecture.
+
+    Readiness for Future Phases
+        Completing Phase 2 provides a strong foundation for the remainder of the MindWar Arena project. 
+        The engine has now proven its ability to host a fully playable board game while maintaining strict separation between engine functionality and game logic.
+        Future games will primarily require implementing their own board representations, rule evaluators, renderers, and AI while continuing to leverage the existing engine infrastructure. 
+        The universal interfaces, rendering system, input handling, scene management, configuration system, logging framework, testing methodology, and Game Manager all remain reusable without modification.
+
+    Conclusion
+        Phase 2 transformed MindWar Arena from a reusable engine framework into a functioning board game platform by successfully implementing Tic-Tac-Toe as the project's first complete game. 
+        Every subsystem introduced during Phase 1 was validated through real gameplay, confirming the effectiveness of the engine architecture and the universal interfaces that connect games to the underlying framework. 
+        The implementation emphasized modularity, maintainability, deterministic behavior, and comprehensive testing, resulting in a clean separation between board management, rule evaluation, rendering, overlays, artificial intelligence, player interaction, and game orchestration.
+        Beyond delivering a fully playable Tic-Tac-Toe experience, this phase established the architectural template that will guide every remaining game in the project. 
+        The engine required no structural modifications during implementation, demonstrating that its abstractions are sufficiently general to support future games of increasing complexity. 
+        Extensive automated testing and a final cleanup phase further ensured that the codebase is stable, reliable, and ready for expansion.
+        With Phase 2 completed, MindWar Arena now possesses a verified engine, a proven integration model, and a reusable game framework. 
+        This milestone concludes the foundational stage of game implementation and prepares the project to move confidently into Phase 3, where Connect Four will build upon the same architecture while introducing larger boards, gravity-based mechanics, deeper game trees, and more advanced artificial intelligence.
 }
 03(connect four){
-
+    01(update architecture){
+        connect4/
+        ├── assets/
+        │
+        ├── __init__.py
+        ├── ai.py
+        ├── board.py
+        ├── board_renderer.py
+        ├── constants.py
+        ├── game.py
+        ├── human_player.py
+        ├── overlay_renderer.py
+        └── rules.py
+    }
+    02(update constants.py){
+        "|"
+        GAME_NAME = "Connect Four"
+        GAME_VERSION = "1.0.0"
+        BOARD_ROWS = 6
+        BOARD_COLUMNS = 7
+        WIN_LENGTH = 4
+        EMPTY = 0
+        PLAYER_RED = 1
+        PLAYER_YELLOW = 2
+        FIRST_PLAYER = PLAYER_RED
+        GAME_NOT_STARTED = 0
+        GAME_RUNNING = 1
+        GAME_DRAW = 2
+        GAME_OVER = 3
+        NO_WINNER = 0
+        AI_RANDOM = "Random"
+        AI_EASY = "Easy"
+        AI_MEDIUM = "Medium"
+        AI_HARD = "Hard"
+        CELL_SIZE = 100
+        BOARD_PADDING = 40
+        BOARD_LINE_WIDTH = 4
+        DISC_RADIUS = CELL_SIZE * 0.38
+        GRID_COLOR = (220, 220, 220)
+        PLAYER_RED_COLOR = (230, 70, 70)
+        PLAYER_YELLOW_COLOR = (255, 215, 0)
+        WIN_LINE_COLOR = (50, 255, 50)
+        GAME_MODE_HUMAN_VS_HUMAN = 0
+        GAME_MODE_HUMAN_VS_AI = 1
+        GAME_MODE_AI_VS_AI = 2
+        DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+        "|"
+    }
+    03(update board.py){
+        "|"
+        from copy import deepcopy
+        from games.connect4.constants import (
+            BOARD_ROWS,
+            BOARD_COLUMNS,
+            EMPTY,
+        )
+        class Connect4Board:
+            def __init__(self):
+                self.reset()
+            def reset(self):
+                self._board = [
+                    [EMPTY for _ in range(BOARD_COLUMNS)]
+                    for _ in range(BOARD_ROWS)
+                ]
+            def get_cell(self, row, column):
+                return self._board[row][column]
+            def set_cell(self, row, column, value):
+                if not self.is_valid_position(row, column):
+                    return False
+                self._board[row][column] = value
+                return True
+            def is_valid_position(self, row, column):
+                return (
+                    0 <= row < BOARD_ROWS
+                    and 0 <= column < BOARD_COLUMNS
+                )
+            def is_column_full(self, column):
+                if not (0 <= column < BOARD_COLUMNS):
+                    return True
+                return self._board[0][column] != EMPTY
+            def get_available_columns(self):
+                columns = []
+                for column in range(BOARD_COLUMNS):
+                    if not self.is_column_full(column):
+                        columns.append(column)
+                return columns
+            def get_next_open_row(self, column):
+                if not (0 <= column < BOARD_COLUMNS):
+                    return None
+                for row in range(BOARD_ROWS - 1, -1, -1):
+                    if self._board[row][column] == EMPTY:
+                        return row
+                return None
+            def drop_piece(self, column, player):
+                row = self.get_next_open_row(column)
+                if row is None:
+                    return None
+                self._board[row][column] = player
+                return row
+            def is_board_full(self):
+                return len(self.get_available_columns()) == 0
+            def copy(self):
+                board_copy = Connect4Board()
+                board_copy._board = deepcopy(self._board)
+                return board_copy
+            def get_board_state(self):
+                return deepcopy(self._board)
+            def __str__(self):
+                symbols = {
+                    EMPTY: ".",
+                    1: "R",
+                    2: "Y",
+                }
+                rows = []
+                for row in self._board:
+                    rows.append(
+                        " ".join(symbols[cell] for cell in row)
+                    )
+                return "\n".join(rows)
+        "|"
+    }
+    04(update rules.py){
+        "|"
+        from engine.interfaces.game_result import GameResult
+        from games.connect4.constants import (
+            BOARD_ROWS,
+            BOARD_COLUMNS,
+            WIN_LENGTH,
+            EMPTY,
+            NO_WINNER,
+        )
+        class Connect4Rules:
+            _DIRECTIONS = (
+                (0, 1),     # Horizontal
+                (1, 0),     # Vertical
+                (1, 1),     # Diagonal down-right
+                (-1, 1),    # Diagonal up-right
+            )
+            @staticmethod
+            def check_winner(board):
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        player = board.get_cell(row, column)
+                        if player == EMPTY:
+                            continue
+                        for row_delta, column_delta in Connect4Rules._DIRECTIONS:
+                            if Connect4Rules._check_direction(
+                                board,
+                                row,
+                                column,
+                                row_delta,
+                                column_delta,
+                                player,
+                            ):
+                                return player
+                return NO_WINNER
+            @staticmethod
+            def get_winning_cells(board):
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        player = board.get_cell(row, column)
+                        if player == EMPTY:
+                            continue
+                        for row_delta, column_delta in Connect4Rules._DIRECTIONS:
+                            cells = Connect4Rules._collect_direction(
+                                board,
+                                row,
+                                column,
+                                row_delta,
+                                column_delta,
+                                player,
+                            )
+                            if cells:
+                                return cells
+                return []
+            @staticmethod
+            def is_draw(board):
+                return (
+                    Connect4Rules.check_winner(board) == NO_WINNER
+                    and board.is_board_full()
+                )
+            @staticmethod
+            def is_game_over(board):
+                return (
+                    Connect4Rules.check_winner(board) != NO_WINNER
+                    or board.is_board_full()
+                )
+            @staticmethod
+            def evaluate_game(board):
+                result = GameResult()
+                winner = Connect4Rules.check_winner(board)
+                if winner != NO_WINNER:
+                    result.winner = winner
+                    result.game_over = True
+                    result.winning_cells = Connect4Rules.get_winning_cells(board)
+                    return result
+                if board.is_board_full():
+                    result.draw = True
+                    result.game_over = True
+                return result
+            @staticmethod
+            def _check_direction(
+                board,
+                row,
+                column,
+                row_delta,
+                column_delta,
+                player,
+            ):
+                for index in range(1, WIN_LENGTH):
+                    next_row = row + row_delta * index
+                    next_column = column + column_delta * index
+                    if not board.is_valid_position(next_row, next_column):
+                        return False
+                    if board.get_cell(next_row, next_column) != player:
+                        return False
+                return True
+            @staticmethod
+            def _collect_direction(
+                board,
+                row,
+                column,
+                row_delta,
+                column_delta,
+                player,
+            ):
+                cells = []
+                for index in range(WIN_LENGTH):
+                    next_row = row + row_delta * index
+                    next_column = column + column_delta * index
+                    if not board.is_valid_position(next_row, next_column):
+                        return []
+                    if board.get_cell(next_row, next_column) != player:
+                        return []
+                    cells.append((next_row, next_column))
+                return cells
+        "|"
+    }
+    05(update board_renderer.py){
+        "|"
+        from games.connect4.constants import (
+            BOARD_ROWS,
+            BOARD_COLUMNS,
+            CELL_SIZE,
+            BOARD_PADDING,
+            GRID_COLOR,
+            PLAYER_RED,
+            PLAYER_YELLOW,
+            PLAYER_RED_COLOR,
+            PLAYER_YELLOW_COLOR,
+            DISC_RADIUS,
+            WIN_LINE_COLOR,
+        )
+        class BoardRenderer:
+            def __init__(self, renderer):
+                self.renderer = renderer
+                self.origin_x = BOARD_PADDING
+                self.origin_y = BOARD_PADDING
+            def render(self, board, game_result=None):
+                self.draw_grid()
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        value = board.get_cell(row, column)
+                        if value == PLAYER_RED:
+                            self.draw_disc(row, column, PLAYER_RED_COLOR)
+                        elif value == PLAYER_YELLOW:
+                            self.draw_disc(row, column, PLAYER_YELLOW_COLOR)
+                if game_result is not None and game_result.winning_cells:
+                    self.draw_winning_line(game_result.winning_cells)
+            def draw_grid(self):
+                self.renderer.draw_grid(
+                    origin=(self.origin_x, self.origin_y),
+                    rows=BOARD_ROWS,
+                    columns=BOARD_COLUMNS,
+                    cell_size=CELL_SIZE,
+                    color=GRID_COLOR,
+                )
+            def draw_disc(self, row, column, color):
+                center = self.get_cell_center(row, column)
+                self.renderer.draw_circle(
+                    center=center,
+                    radius=DISC_RADIUS,
+                    color=color,
+                )
+            def get_cell_center(self, row, column):
+                x = (
+                    self.origin_x
+                    + column * CELL_SIZE
+                    + CELL_SIZE / 2
+                )
+                y = (
+                    self.origin_y
+                    + row * CELL_SIZE
+                    + CELL_SIZE / 2
+                )
+                return (x, y)
+            def contains_point(self, x, y):
+                board_width = BOARD_COLUMNS * CELL_SIZE
+                board_height = BOARD_ROWS * CELL_SIZE
+                return (
+                    self.origin_x <= x < self.origin_x + board_width
+                    and
+                    self.origin_y <= y < self.origin_y + board_height
+                )
+            def screen_to_column(self, x, y):
+                if not self.contains_point(x, y):
+                    return None
+                return int((x - self.origin_x) // CELL_SIZE)
+            def draw_winning_line(self, winning_cells):
+                if len(winning_cells) < 2:
+                    return
+                start = self.get_cell_center(*winning_cells[0])
+                end = self.get_cell_center(*winning_cells[-1])
+                self.renderer.draw_line(
+                    start=start,
+                    end=end,
+                    color=WIN_LINE_COLOR,
+                )
+            def reset(self):
+                pass
+        "|"
+    }
+    06(update overlay_renderer.py){
+        "|"
+        from games.connect4.constants import (
+            PLAYER_RED,
+            PLAYER_YELLOW,
+        )
+        class OverlayRenderer:
+            def __init__(self, renderer):
+                self.renderer = renderer
+            def render(self, result):
+                if result is None:
+                    return
+                if not result.game_over:
+                    return
+                self.draw_background()
+                if result.draw:
+                    self.draw_draw_overlay()
+                else:
+                    self.draw_winner_overlay(result.winner)
+            def draw_background(self):
+                pass
+            def draw_winner_overlay(self, winner):
+                if winner == PLAYER_RED:
+                    message = "Red Wins!"
+                elif winner == PLAYER_YELLOW:
+                    message = "Yellow Wins!"
+                else:
+                    return
+                self.renderer.draw_overlay_message(
+                    message=message,
+                    color=(255, 255, 255),
+                    size=56,
+                )
+            def draw_draw_overlay(self):
+                self.renderer.draw_overlay_message(
+                    message="Draw Game!",
+                    color=(255, 255, 255),
+                    size=56,
+                )
+            def reset(self):
+                pass
+        "|"
+    }
+    07(human_player.py){
+        "|"
+        from engine.core.input import Input
+        class HumanPlayer:
+            def __init__(self, board_renderer):
+                self.board_renderer = board_renderer
+            def get_action(self, game):
+                if game.is_frozen():
+                    return None
+                if not Input.is_left_mouse_clicked():
+                    return None
+                mouse_x, mouse_y = Input.get_mouse_position()
+                return self.board_renderer.screen_to_column(
+                    mouse_x,
+                    mouse_y,
+                )
+        "|"
+    }
+    08(ai.py){
+        "|"
+        import random
+        from engine.interfaces.ai_interface import AIInterface
+        class Connect4AI(AIInterface):
+            def __init__(self):
+                self.initialized = False
+            def initialize(self):
+                self.initialized = True
+            def select_action(self, game_state):
+                board = game_state["board"]
+                legal_moves = []
+                columns = len(board[0])
+                for column in range(columns):
+                    if board[0][column] == 0:
+                        legal_moves.append(column)
+                if not legal_moves:
+                    return None
+                return random.choice(legal_moves)
+            def learn(self, state, action, reward, next_state):
+                pass
+            def reset(self):
+                self.initialized = False
+            def get_action(self, game):
+                return self.select_action(game.get_state())
+        "|"
+    }
+    09(game.py){
+        "|"
+        import pygame
+        from engine.core.input import Input
+        from engine.interfaces.game_interface import GameInterface
+        from engine.interfaces.game_result import GameResult
+        from games.connect4.ai import Connect4AI
+        from games.connect4.board import Connect4Board
+        from games.connect4.board_renderer import BoardRenderer
+        from games.connect4.human_player import HumanPlayer
+        from games.connect4.overlay_renderer import OverlayRenderer
+        from games.connect4.rules import Connect4Rules
+        from games.connect4.constants import (
+            PLAYER_RED,
+            PLAYER_YELLOW,
+            FIRST_PLAYER,
+            GAME_NOT_STARTED,
+            GAME_RUNNING,
+            GAME_DRAW,
+            GAME_OVER,
+        )
+        class Connect4Game(GameInterface):
+            def __init__(self, renderer):
+                self.renderer = renderer
+                self.board = Connect4Board()
+                self.current_player = FIRST_PLAYER
+                self.next_starting_player = FIRST_PLAYER
+                self.result = GameResult()
+                self.game_state = GAME_NOT_STARTED
+                self.move_count = 0
+                self.board_renderer = BoardRenderer(renderer)
+                self.overlay_renderer = OverlayRenderer(renderer)
+                self.human_player = HumanPlayer(self.board_renderer)
+                self.ai_player = Connect4AI()
+                self.player_red = self.human_player
+                self.player_yellow = self.ai_player
+            def initialize(self):
+                self.ai_player.initialize()
+                self.reset()
+            def reset(self):
+                self.board.reset()
+                self.choose_starting_player()
+                self.result = GameResult()
+                self.ai_player.reset()
+                self.ai_player.initialize()
+                self.game_state = GAME_RUNNING
+                self.move_count = 0
+                self.board_renderer.reset()
+                self.overlay_renderer.reset()
+            def shutdown(self):
+                pass
+            def update(self):
+                self.update_restart()
+                if self.is_frozen():
+                    return
+                self.update_current_player()
+            def render(self):
+                self.board_renderer.render(
+                    self.board,
+                    self.result,
+                )
+                self.overlay_renderer.render(self.result)
+            def make_move(self, column):
+                if self.is_frozen():
+                    return False
+                if column is None:
+                    return False
+                row = self.board.drop_piece(
+                    column,
+                    self.current_player,
+                )
+                if row is None:
+                    return False
+                self.move_count += 1
+                self.result = Connect4Rules.evaluate_game(
+                    self.board
+                )
+                if self.result.game_over:
+                    if self.result.draw:
+                        self.game_state = GAME_DRAW
+                    else:
+                        self.game_state = GAME_OVER
+                    return True
+                self.switch_player()
+                return True
+            def switch_player(self):
+                if self.current_player == PLAYER_RED:
+                    self.current_player = PLAYER_YELLOW
+                else:
+                    self.current_player = PLAYER_RED
+            def choose_starting_player(self):
+                self.current_player = self.next_starting_player
+                if self.next_starting_player == PLAYER_RED:
+                    self.next_starting_player = PLAYER_YELLOW
+                else:
+                    self.next_starting_player = PLAYER_RED
+            def get_current_controller(self):
+                if self.current_player == PLAYER_RED:
+                    return self.player_red
+                return self.player_yellow
+            def update_current_player(self):
+                controller = self.get_current_controller()
+                move = controller.get_action(self)
+                if move is None:
+                    return
+                self.make_move(move)
+            def update_restart(self):
+                if not self.is_frozen():
+                    return
+                if Input.is_key_clicked(pygame.K_r):
+                    self.reset()
+            def get_result(self):
+                return self.result
+            def get_board(self):
+                return self.board
+            def get_current_player(self):
+                return self.current_player
+            def get_state(self):
+                return {
+                    "board": self.board.get_board_state(),
+                    "current_player": self.current_player,
+                    "winner": self.result.winner,
+                    "game_state": self.game_state,
+                    "game_over": self.result.game_over,
+                    "draw": self.result.draw,
+                    "move_count": self.move_count,
+                }
+            def is_game_over(self):
+                return self.is_frozen()
+            def get_winner(self):
+                return self.result.winner
+            def is_frozen(self):
+                return self.result.game_over
+        "|"
+    }
+    10(engine integration){
+        01(update architecture){
+            engine/
+                game_registry.py
+            game/
+            └── scenes/
+                __init__.py
+                boot_scene.py
+                game_selection_scene.py
+                game_mode_scene.py
+                game_scene.py
+                main_menu_scene.py
+        }
+        02(update game_registry.py){
+            "|"
+            from games.tic_tac_toe.game import TicTacToeGame
+            from games.connect4.game import Connect4Game
+            class GameRegistry:
+                _games = {
+                    "Tic-Tac-Toe": TicTacToeGame,
+                    "Connect Four": Connect4Game,
+                }
+                @classmethod
+                def get_game_names(cls):
+                    return list(cls._games.keys())
+                @classmethod
+                def get_game_class(cls, game_name):
+                    return cls._games.get(game_name)
+                @classmethod
+                def has_game(cls, game_name):
+                    return game_name in cls._games
+                @classmethod
+                def register_game(cls, game_name, game_class):
+                    cls._games[game_name] = game_class
+                @classmethod
+                def unregister_game(cls, game_name):
+                    if game_name in cls._games:
+                        del cls._games[game_name]
+                @classmethod
+                def create_game(cls, game_name, renderer):
+                    game_class = cls.get_game_class(game_name)
+                    if game_class is None:
+                        raise ValueError(f"Game '{game_name}' is not registered.")
+                    return game_class(renderer)
+            "|"
+        }
+        03(update game_selection_scene.py){
+            "|"
+            from engine.core.scene import Scene
+            from engine.core.input import Input
+            from engine.utils.logger import Logger
+            from engine.game_registry import GameRegistry
+            from game.scenes.game_mode_scene import GameModeScene
+            class GameSelectionScene(Scene):
+                def __init__(self):
+                    super().__init__("Game Selection")
+                    self.games = GameRegistry.get_game_names()
+                    self.selected_index = 0
+                def enter(self):
+                    super().enter()
+                    Logger.info("[GameSelectionScene] Ready")
+                def update(self):
+                    if Input.is_key_clicked(__import__("pygame").K_UP):
+                        self.selected_index = (self.selected_index - 1) % len(self.games)
+                    elif Input.is_key_clicked(__import__("pygame").K_DOWN):
+                        self.selected_index = (self.selected_index + 1) % len(self.games)
+                    elif Input.is_key_clicked(__import__("pygame").K_RETURN):
+                        selected_game = self.games[self.selected_index]
+                        Logger.info(f"[GameSelectionScene] Selected: {selected_game}")
+                        self.scene_manager.change_scene(
+                            GameModeScene(selected_game)
+                        )
+                def render(self):
+                    self.renderer.draw_text(
+                        "Select Game",
+                        (80, 50),
+                        size=48,
+                    )
+                    y = 150
+                    for index, game in enumerate(self.games):
+                        prefix = "► " if index == self.selected_index else "  "
+                        self.renderer.draw_text(
+                            prefix + game,
+                            (100, y),
+                            size=36,
+                        )
+                        y += 55
+            "|"
+        }
+        04(update game_mode_scene.py){
+            "|"
+            from engine.core.scene import Scene
+            from engine.core.input import Input
+            from engine.utils.logger import Logger
+            from engine.game_registry import GameRegistry
+            from game.scenes.game_scene import GameScene
+            from games.tic_tac_toe.constants import (
+                GAME_MODE_HUMAN_VS_HUMAN,
+                GAME_MODE_HUMAN_VS_AI,
+            )
+            import pygame
+            class GameModeScene(Scene):
+                def __init__(self, game_name):
+                    super().__init__("Game Mode")
+                    self.game_name = game_name
+                    self.modes = [
+                        ("Human vs Human", GAME_MODE_HUMAN_VS_HUMAN),
+                        ("Human vs AI", GAME_MODE_HUMAN_VS_AI),
+                    ]
+                    self.selected_index = 0
+                def enter(self):
+                    super().enter()
+                    Logger.info(f"[GameModeScene] Choosing mode for {self.game_name}")
+                def update(self):
+                    if Input.is_key_clicked(pygame.K_UP):
+                        self.selected_index = (
+                            self.selected_index - 1
+                        ) % len(self.modes)
+                    elif Input.is_key_clicked(pygame.K_DOWN):
+                        self.selected_index = (
+                            self.selected_index + 1
+                        ) % len(self.modes)
+                    elif Input.is_key_clicked(pygame.K_RETURN):
+                        mode_name, mode = self.modes[self.selected_index]
+                        Logger.info(
+                            f"[GameModeScene] Mode: {mode_name}"
+                        )
+                        game_class = GameRegistry.get_game_class(
+                            self.game_name
+                        )
+                        game = game_class(renderer =self.renderer,game_mode=mode,)
+                        self.scene_manager.change_scene(
+                            GameScene(game)
+                        )
+                def render(self):
+                    self.renderer.draw_text(
+                        self.game_name,
+                        (80, 50),
+                        size=48,
+                    )
+                    self.renderer.draw_text(
+                        "Select Mode",
+                        (80, 110),
+                        size=36,
+                    )
+                    y = 190
+                    for index, (mode_name, _) in enumerate(self.modes):
+                        prefix = "► " if index == self.selected_index else "  "
+                        self.renderer.draw_text(
+                            prefix + mode_name,
+                            (100, y),
+                            size=34,
+                        )
+                        y += 55
+            "|"
+        }
+        05(update boot_scene.py){
+            "|"
+            from engine.core.scene import Scene
+            from engine.utils.logger import Logger
+            from game.scenes.main_menu_scene import MainMenuScene
+            class BootScene(Scene):
+                def __init__(self):
+                    super().__init__("Boot Scene")
+                def enter(self):
+                    super().enter()
+                    Logger.info("[BootScene] Engine initialization complete.")
+                    Logger.info("[BootScene] Opening Main Menu.")
+                    self.scene_manager.change_scene(
+                        MainMenuScene()
+                    )
+                def update(self):
+                    pass
+                def render(self):
+                    pass
+            "|"
+        }
+        06(update games/tic_tac_toe/game.py){
+            "|"
+            import pygame
+            from engine.core.input import Input
+            from games.tic_tac_toe.ai import TicTacToeAI
+            from engine.interfaces.game_interface import GameInterface
+            from games.tic_tac_toe.overlay_renderer import OverlayRenderer
+            from games.tic_tac_toe.board_renderer import BoardRenderer
+            from games.tic_tac_toe.board import TicTacToeBoard
+            from games.tic_tac_toe.rules import TicTacToeRules
+            from games.tic_tac_toe.human_player import HumanPlayer
+            from engine.interfaces.game_result import GameResult
+            from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,GAME_MODE_HUMAN_VS_HUMAN,GAME_MODE_HUMAN_VS_AI,)
+            class TicTacToeGame(GameInterface):
+                def __init__(self, renderer, game_mode=GAME_MODE_HUMAN_VS_HUMAN):
+                    self.renderer = renderer
+                    self.game_mode = game_mode
+                    self.board = TicTacToeBoard()
+                    self.current_player = FIRST_PLAYER
+                    self.next_starting_player = FIRST_PLAYER
+                    self.result = GameResult()
+                    self.game_state = GAME_NOT_STARTED
+                    self.move_count = 0
+                    self.board_renderer = BoardRenderer(renderer)
+                    self.overlay_renderer = OverlayRenderer(renderer)
+                    self.human_player = HumanPlayer(self.board_renderer)
+                    self.ai_player = TicTacToeAI()
+                    self.player_x = self.human_player
+                    if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                        self.player_o = self.ai_player
+                    else:
+                        self.player_o = self.human_player
+                def initialize(self):
+                    if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                        self.ai_player.initialize()
+                    self.reset()
+                def reset(self):
+                    self.board.reset()
+                    self.choose_starting_player()
+                    self.result = GameResult()
+                    if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                        self.ai_player.reset()
+                        self.ai_player.initialize()
+                    self.game_state = GAME_RUNNING
+                    self.move_count = 0
+                    self.board_renderer.reset()
+                    self.overlay_renderer.reset()
+                def shutdown(self):
+                    pass
+                def update(self):
+                    self.update_restart()
+                    if self.is_frozen():
+                        return
+                    self.update_current_player()
+                def render(self):
+                    self.board_renderer.render(self.board,self.result,)
+                    self.overlay_renderer.render(self.result,)
+                def make_move(self, row, column):
+                    if self.is_frozen():
+                        return False
+                    if not self.board.is_valid_position(row, column):
+                        return False
+                    if not self.board.is_cell_empty(row, column):
+                        return False
+                    self.board.set_cell(row,column,self.current_player,)
+                    self.move_count += 1
+                    self.result = TicTacToeRules.evaluate_game(self.board)
+                    if self.result.game_over:
+                        if self.result.draw:
+                            self.game_state = GAME_DRAW
+                        else:
+                            self.game_state = GAME_OVER
+                        return True
+                    self.switch_player()
+                    return True
+                def switch_player(self):
+                    if self.current_player == PLAYER_X:
+                        self.current_player = PLAYER_O
+                    else:
+                        self.current_player = PLAYER_X
+                def choose_starting_player(self):
+                    self.current_player = self.next_starting_player
+                    if self.next_starting_player == PLAYER_X:
+                        self.next_starting_player = PLAYER_O
+                    else:
+                        self.next_starting_player = PLAYER_X
+                def get_current_controller(self):
+                    if self.current_player == PLAYER_X:
+                        return self.player_x
+                    return self.player_o
+                def update_current_player(self):
+                    controller = self.get_current_controller()
+                    move = controller.get_action(self)
+                    if move is None:
+                        return
+                    self.make_move(*move)
+                def update_restart(self):
+                    if not self.is_frozen():
+                        return
+                    if Input.is_key_clicked(pygame.K_r):
+                        self.reset()
+                def get_result(self):
+                    return self.result
+                def get_board(self):
+                    return self.board
+                def get_current_player(self):
+                    return self.current_player
+                def get_state(self):
+                    return {"board": self.board.get_board_state(),"current_player": self.current_player,"winner": self.result.winner,"game_state": self.game_state,"game_over": self.result.game_over,"draw": self.result.draw,"move_count": self.move_count,}
+                def is_game_over(self):
+                    return self.is_frozen()
+                def get_winner(self):
+                    return self.result.winner
+                def is_frozen(self):
+                    return self.result.game_over
+            "|"
+        }
+        07(update games/connect4/game.py){
+            "|"
+            import pygame
+            from engine.core.input import Input
+            from engine.interfaces.game_interface import GameInterface
+            from engine.interfaces.game_result import GameResult
+            from games.connect4.ai import Connect4AI
+            from games.connect4.board import Connect4Board
+            from games.connect4.board_renderer import BoardRenderer
+            from games.connect4.human_player import HumanPlayer
+            from games.connect4.overlay_renderer import OverlayRenderer
+            from games.connect4.rules import Connect4Rules
+            from games.connect4.constants import (
+                PLAYER_RED,
+                PLAYER_YELLOW,
+                FIRST_PLAYER,
+                GAME_NOT_STARTED,
+                GAME_RUNNING,
+                GAME_DRAW,
+                GAME_OVER,
+                GAME_MODE_HUMAN_VS_HUMAN,
+                GAME_MODE_HUMAN_VS_AI,
+            )
+            class Connect4Game(GameInterface):
+                def __init__(self, renderer,game_mode=GAME_MODE_HUMAN_VS_HUMAN,):
+                    self.renderer = renderer
+                    self.game_mode = game_mode
+                    self.board = Connect4Board()
+                    self.current_player = FIRST_PLAYER
+                    self.next_starting_player = FIRST_PLAYER
+                    self.result = GameResult()
+                    self.game_state = GAME_NOT_STARTED
+                    self.move_count = 0
+                    self.board_renderer = BoardRenderer(renderer)
+                    self.overlay_renderer = OverlayRenderer(renderer)
+                    self.human_player = HumanPlayer(self.board_renderer)
+                    self.ai_player = Connect4AI()
+                    self.player_red = self.human_player
+                    if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                        self.player_yellow = self.ai_player
+                    else:
+                        self.player_yellow = self.human_player
+                def initialize(self):
+                    if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                        self.ai_player.initialize()
+                    self.reset()
+                def reset(self):
+                    self.board.reset()
+                    self.choose_starting_player()
+                    self.result = GameResult()
+                    if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                        self.ai_player.reset()
+                        self.ai_player.initialize()
+                    self.game_state = GAME_RUNNING
+                    self.move_count = 0
+                    self.board_renderer.reset()
+                    self.overlay_renderer.reset()
+                def shutdown(self):
+                    pass
+                def update(self):
+                    self.update_restart()
+                    if self.is_frozen():
+                        return
+                    self.update_current_player()
+                def render(self):
+                    self.board_renderer.render(
+                        self.board,
+                        self.result,
+                    )
+                    self.overlay_renderer.render(self.result)
+                def make_move(self, column):
+                    if self.is_frozen():
+                        return False
+                    if column is None:
+                        return False
+                    row = self.board.drop_piece(
+                        column,
+                        self.current_player,
+                    )
+                    if row is None:
+                        return False
+                    self.move_count += 1
+                    self.result = Connect4Rules.evaluate_game(
+                        self.board
+                    )
+                    if self.result.game_over:
+                        if self.result.draw:
+                            self.game_state = GAME_DRAW
+                        else:
+                            self.game_state = GAME_OVER
+                        return True
+                    self.switch_player()
+                    return True
+                def switch_player(self):
+                    if self.current_player == PLAYER_RED:
+                        self.current_player = PLAYER_YELLOW
+                    else:
+                        self.current_player = PLAYER_RED
+                def choose_starting_player(self):
+                    self.current_player = self.next_starting_player
+                    if self.next_starting_player == PLAYER_RED:
+                        self.next_starting_player = PLAYER_YELLOW
+                    else:
+                        self.next_starting_player = PLAYER_RED
+                def get_current_controller(self):
+                    if self.current_player == PLAYER_RED:
+                        return self.player_red
+                    return self.player_yellow
+                def update_current_player(self):
+                    controller = self.get_current_controller()
+                    move = controller.get_action(self)
+                    if move is None:
+                        return
+                    self.make_move(move)
+                def update_restart(self):
+                    if not self.is_frozen():
+                        return
+                    if Input.is_key_clicked(pygame.K_r):
+                        self.reset()
+                def get_result(self):
+                    return self.result
+                def get_board(self):
+                    return self.board
+                def get_current_player(self):
+                    return self.current_player
+                def get_state(self):
+                    return {
+                        "board": self.board.get_board_state(),
+                        "current_player": self.current_player,
+                        "winner": self.result.winner,
+                        "game_state": self.game_state,
+                        "game_over": self.result.game_over,
+                        "draw": self.result.draw,
+                        "move_count": self.move_count,
+                    }
+                def is_game_over(self):
+                    return self.is_frozen()
+                def get_winner(self):
+                    return self.result.winner
+                def is_frozen(self):
+                    return self.result.game_over
+            "|"
+        }
+        08(update main_menu_scene.py){
+            "|"
+            from engine.core.scene import Scene
+            from engine.core.input import Input
+            from engine.utils.logger import Logger
+            from engine.game_registry import GameRegistry
+            from game.scenes.game_mode_scene import GameModeScene
+            import pygame
+            class MainMenuScene(Scene):
+                def __init__(self):
+                    super().__init__("Main Menu")
+                    self.games = GameRegistry.get_game_names()
+                    self.selected_index = 0
+                def enter(self):
+                    super().enter()
+                    Logger.info("[MainMenuScene] Ready")
+                def update(self):
+                    if Input.is_key_clicked(pygame.K_UP):
+                        self.selected_index = (
+                            self.selected_index - 1
+                        ) % len(self.games)
+                    elif Input.is_key_clicked(pygame.K_DOWN):
+                        self.selected_index = (
+                            self.selected_index + 1
+                        ) % len(self.games)
+                    elif Input.is_key_clicked(pygame.K_RETURN):
+                        selected_game = self.games[self.selected_index]
+                        Logger.info(
+                            f"[MainMenuScene] Selected {selected_game}"
+                        )
+                        self.scene_manager.change_scene(
+                            GameModeScene(selected_game)
+                        )
+                def render(self):
+                    self.renderer.draw_text(
+                        "MindWar Arena",
+                        (60, 40),
+                        size=54,
+                    )
+                    self.renderer.draw_text(
+                        "Select Game",
+                        (60, 110),
+                        size=38,
+                    )
+                    y = 190
+                    for index, game_name in enumerate(self.games):
+                        prefix = "► " if index == self.selected_index else "  "
+                        self.renderer.draw_text(
+                            prefix + game_name,
+                            (80, y),
+                            size=34,
+                        )
+                        y += 55
+            "|"
+        }
+        06(update game_scene.py)
+        07(launch games through new flow)
+        08(testing)
+    }
+    11(create game registry)
+    12(temporary game selector)
+    13(boot scene)
+    14(testing)
+    11(cleanup and refactoring)
+    12(final regration testing)
+    13(update version information)
 }
 04(gomoku){
 

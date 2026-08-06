@@ -1,7 +1,6 @@
 #engine/rendering/primitive_renderer.py
 from __future__ import annotations
 import math
-import glm
 import moderngl
 from engine.rendering.mesh import Mesh
 from engine.rendering.shader_manager import ShaderManager

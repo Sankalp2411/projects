@@ -9,10 +9,11 @@ from games.tic_tac_toe.board import TicTacToeBoard
 from games.tic_tac_toe.rules import TicTacToeRules
 from games.tic_tac_toe.human_player import HumanPlayer
 from engine.interfaces.game_result import GameResult
-from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,)
+from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,GAME_MODE_HUMAN_VS_HUMAN,GAME_MODE_HUMAN_VS_AI,)
 class TicTacToeGame(GameInterface):
-    def __init__(self, renderer):
+    def __init__(self, renderer, game_mode=GAME_MODE_HUMAN_VS_HUMAN):
         self.renderer = renderer
+        self.game_mode = game_mode
         self.board = TicTacToeBoard()
         self.current_player = FIRST_PLAYER
         self.next_starting_player = FIRST_PLAYER
@@ -24,16 +25,21 @@ class TicTacToeGame(GameInterface):
         self.human_player = HumanPlayer(self.board_renderer)
         self.ai_player = TicTacToeAI()
         self.player_x = self.human_player
-        self.player_o = self.ai_player
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.player_o = self.ai_player
+        else:
+            self.player_o = self.human_player
     def initialize(self):
-        self.ai_player.initialize()
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.initialize()
         self.reset()
     def reset(self):
         self.board.reset()
         self.choose_starting_player()
         self.result = GameResult()
-        self.ai_player.reset()
-        self.ai_player.initialize()
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.reset()
+            self.ai_player.initialize()
         self.game_state = GAME_RUNNING
         self.move_count = 0
         self.board_renderer.reset()

@@ -1,0 +1,369 @@
+project architecture
+STOCK-MARKET(
+    .venv()
+    agents(
+        trading_agent.py
+    )
+    config(
+        settings.json
+    )
+    data(
+        data_loader.py
+    )
+    models(
+        evolution_model.py
+        lstm_model.py
+    )
+    saves()
+    utils(
+        plotting.py
+        scaler.py
+    )
+    venv()
+    app.py
+    app.spec
+    main_agent.py
+    main_predict.py
+    README.md
+    requirements.txt
+)
+
+#agents/trading_agent.py
+import numpy as np
+class Model:
+    def __init__(self, input_size, hidden_size, output_size):
+        self.weights = [np.random.randn(input_size, hidden_size),np.random.randn(hidden_size, output_size),np.zeros((1, hidden_size)),]
+    def predict(self, x):
+        hidden = np.dot(x, self.weights[0]) + self.weights[2]
+        return np.dot(hidden, self.weights[1])
+    def get_weights(self):
+        return self.weights
+    def set_weights(self, weights):
+        self.weights = weights
+class Agent:
+    def __init__(self, model, window_size, prices, skip, initial_money, pop_size):
+        self.model = model
+        self.window_size = window_size
+        self.prices = prices
+        self.skip = skip
+        self.initial_money = float(initial_money)
+        self.POP_SIZE = pop_size
+    def get_state(self, t):
+        window = self.window_size + 1
+        start = t - window + 1
+        if start >= 0:
+            block = self.prices[start:t + 1]
+        else:
+            block = [self.prices[0]] * (-start) + self.prices[:t + 1]
+        block = np.asarray(block)
+        state = block[1:] - block[:-1]
+        return state.reshape(1, -1)
+    def act(self, state):
+        return int(np.argmax(self.model.predict(state)[0]))
+    def fit(self, epochs):
+        print("Training simulated (fast mode)...")
+    def trade(self):
+        money = self.initial_money
+        inventory = []
+        buys, sells = [], []
+        state = self.get_state(0)
+        for t in range(0, len(self.prices) - 1, self.skip):
+            action = self.act(state)
+            price = float(self.prices[t])
+            if action == 1 and money >= price:
+                inventory.append(price)
+                money -= price
+                buys.append(t)
+            elif action == 2 and inventory:
+                inventory.pop(0)
+                money += price
+                sells.append(t)
+            state = self.get_state(t + 1)
+        return buys, sells, money - self.initial_money
+
+//config/settings.json
+{
+  "window_size": 30,
+  "initial_money": 1000,
+  "skip": 5
+}
+
+#data/data_loader.py
+import yfinance as yf
+import numpy as np
+def load_stock_data(symbol, period):
+    df = yf.download(symbol, period=period, progress=False)
+    if df.empty or "Close" not in df.columns:
+        raise RuntimeError("Failed to download stock data")
+    return np.asarray(df["Close"].values, dtype=np.float64).flatten()
+
+#models/evolution_model.py
+import numpy as np
+class DeepEvolutionStrategy:
+    def __init__(self, weights, reward_fn, pop_size, sigma, lr):
+        self.weights = weights
+        self.reward_fn = reward_fn
+        self.pop_size = pop_size
+        self.sigma = sigma
+        self.lr = lr
+    def train(self, epochs):
+        for epoch in range(epochs):
+            population = []
+            rewards = np.zeros(self.pop_size)
+            for _ in range(self.pop_size):
+                noise = [np.random.randn(*w.shape) for w in self.weights]
+                population.append(noise)
+            for i in range(self.pop_size):
+                trial_weights = [w + self.sigma * n for w, n in zip(self.weights, population[i])]
+                rewards[i] = self.reward_fn(trial_weights)
+            rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-8)
+            for i, w in enumerate(self.weights):
+                noise_stack = np.array([p[i] for p in population])
+                self.weights[i] += (self.lr / (self.pop_size * self.sigma) * np.dot(noise_stack.T, rewards).T)
+            print(f"Epoch {epoch+1}/{epochs} | Reward: {self.reward_fn(self.weights):.2f}")
+
+#models/lstm_model.py
+import torch
+import torch.nn as nn
+class LSTMModel(nn.Module):
+    def __init__(self, input_size=1, hidden_size=64, num_layers=2, output_size=1):
+        super(LSTMModel, self).__init__()
+        self.input_size = input_size
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        self.lstm = nn.LSTM(input_size=input_size,hidden_size=hidden_size,num_layers=num_layers,batch_first=True )
+        self.fc = nn.Linear(hidden_size, output_size)
+    def forward(self, x):
+        h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size)
+        c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size)
+        out, _ = self.lstm(x, (h0, c0))
+        out = out[:, -1, :]
+        out = self.fc(out)
+        return out
+
+#utils/plotting.py
+import matplotlib.pyplot as plt
+def plot_trades(prices, buys, sells, title):
+    plt.figure(figsize=(15, 5))
+    plt.plot(prices, label="Price")
+    plt.plot(buys, [prices[i] for i in buys], "^", label="Buy")
+    plt.plot(sells, [prices[i] for i in sells], "v", label="Sell")
+    plt.title(title)
+    plt.legend()
+    plt.show()
+
+#utils/scaler.py
+from sklearn.preprocessing import MinMaxScaler
+def get_scaler():
+    return MinMaxScaler(feature_range=(0, 1))
+
+#app.py
+import tkinter as tk
+from tkinter import ttk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+from main_predict import run_prediction
+from main_agent import run_agent
+class App:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Stock Market AI")
+        self.root.geometry("900x650")
+        self.mode = tk.StringVar(value="predict")
+        self.canvas = None
+        self.build_ui()
+    def build_ui(self):
+        frame = ttk.Frame(self.root, padding=15)
+        frame.pack(fill="both", expand=True)
+        ttk.Label(frame, text="Stock Market AI", font=("Arial", 18)).pack(pady=10)
+        btn_frame = ttk.Frame(frame)
+        btn_frame.pack(pady=10)
+        ttk.Button(btn_frame, text="Predict Stocks",command=lambda: self.mode.set("predict")).pack(side="left", padx=10)
+        ttk.Button(btn_frame, text="See Stocks",command=lambda: self.mode.set("agent")).pack(side="left", padx=10)
+        self.symbol = self.create_input(frame, "Symbol", "AAPL")
+        self.period = self.create_input(frame, "Period", "1y")
+        self.epochs = self.create_input(frame, "Epochs", "20")
+        self.window = self.create_input(frame, "Window", "30")
+        self.sims = self.create_input(frame, "Simulations", "3")
+        self.initial = self.create_input(frame, "Initial Money", "10000")
+        self.skip = self.create_input(frame, "Skip Days", "2")
+        ttk.Button(frame, text="RUN", command=self.run).pack(pady=15)
+        self.graph_frame = ttk.Frame(frame)
+        self.graph_frame.pack(fill="both", expand=True)
+    def create_input(self, parent, label, default):
+        frame = ttk.Frame(parent)
+        frame.pack(fill="x", pady=3)
+        ttk.Label(frame, text=label, width=18).pack(side="left")
+        entry = ttk.Entry(frame)
+        entry.insert(0, default)
+        entry.pack(side="left", fill="x", expand=True)
+        return entry
+    def clear_graph(self):
+        if self.canvas:
+            self.canvas.get_tk_widget().destroy()
+            self.canvas = None
+    def run(self):
+        self.clear_graph()
+        sym = self.symbol.get()
+        per = self.period.get()
+        ep = int(self.epochs.get())
+        fig, ax = plt.subplots(figsize=(8, 4))
+        if self.mode.get() == "predict":
+            data = run_prediction(sym,per,ep,int(self.window.get()),int(self.sims.get()))
+            ax.plot(data["real"], label="Real Price")
+            ax.plot(data["pred"], label="Prediction")
+            ax.set_title(f"{sym} Prediction")
+        else:
+            data = run_agent(sym,per,ep,float(self.initial.get()),int(self.skip.get()),int(self.sims.get()))
+            ax.plot(data["prices"], label="Price")
+            ax.scatter(data["buys"],[data["prices"][i] for i in data["buys"]],marker="^", label="Buy")
+            ax.scatter(data["sells"],[data["prices"][i] for i in data["sells"]],marker="v", label="Sell")
+            ax.set_title(f"{sym} Trading | Profit: {data['profit']:.2f}")
+        ax.legend()
+        self.canvas = FigureCanvasTkAgg(fig, master=self.graph_frame)
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
+
+#main_agent.py
+import numpy as np
+from data.data_loader import load_stock_data
+class Model:
+    def __init__(self, input_size, hidden_size, output_size):
+        self.weights = [np.random.randn(input_size, hidden_size),np.random.randn(hidden_size, output_size),np.zeros((1, hidden_size)),]
+    def predict(self, x):
+        hidden = np.dot(x, self.weights[0]) + self.weights[2]
+        return np.dot(hidden, self.weights[1])
+    def get_weights(self):
+        return self.weights
+    def set_weights(self, weights):
+        self.weights = weights
+class EvolutionStrategy:
+    def __init__(self, weights, reward_fn, pop_size, sigma, lr):
+        self.weights = weights
+        self.reward_fn = reward_fn
+        self.pop_size = pop_size
+        self.sigma = sigma
+        self.lr = lr
+    def train(self, epochs):
+        for _ in range(epochs):
+            population = []
+            rewards = np.zeros(self.pop_size)
+            for _ in range(self.pop_size):
+                noise = [np.random.randn(*w.shape) for w in self.weights]
+                population.append(noise)
+            for i in range(self.pop_size):
+                trial = [w + self.sigma*n for w,n in zip(self.weights, population[i])]
+                rewards[i] = self.reward_fn(trial)
+            rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-8)
+            for i, w in enumerate(self.weights):
+                A = np.array([p[i] for p in population])
+                self.weights[i] += (self.lr/(self.pop_size*self.sigma)) * np.dot(A.T, rewards).T
+class Agent:
+    def __init__(self, model, window, prices, skip, initial, sims):
+        self.model = model
+        self.window = window
+        self.prices = prices
+        self.skip = skip
+        self.initial = initial
+        self.es = EvolutionStrategy(model.get_weights(),self.reward,sims,0.1,0.03)
+    def state(self, t):
+        w = self.window + 1
+        start = t - w + 1
+        block = self.prices[start:t+1] if start>=0 else [self.prices[0]]*(-start)+self.prices[:t+1]
+        return (np.array(block[1:]) - np.array(block[:-1])).reshape(1,-1)
+    def act(self, s):
+        return np.argmax(self.model.predict(s)[0])
+    def reward(self, weights):
+        self.model.set_weights(weights)
+        money = self.initial
+        inv = []
+        s = self.state(0)
+        for t in range(0, len(self.prices)-1, self.skip):
+            a = self.act(s)
+            p = self.prices[t]
+            if a==1 and money>=p:
+                inv.append(p)
+                money -= p
+            elif a==2 and inv:
+                inv.pop(0)
+                money += p
+            s = self.state(t+1)
+        return (money - self.initial)/self.initial * 100
+    def train(self, epochs):
+        self.es.train(epochs)
+    def trade(self):
+        money = self.initial
+        inventory = []
+        buys = []
+        sells = []
+        state = self.state(0)
+        for t in range(0, len(self.prices)-1, self.skip):
+            action = self.act(state)
+            price = self.prices[t]
+            if action == 1 and money >= price:
+                inventory.append(price)
+                money -= price
+                buys.append(t)
+            elif action == 2 and inventory:
+                inventory.pop(0)
+                money += price
+                sells.append(t)
+            state = self.state(t+1)
+        return buys, sells, money - self.initial
+def run_agent(symbol, period, epochs, initial, skip, sims):
+    prices = load_stock_data(symbol, period).tolist()
+    model = Model(30, 50, 3)
+    agent = Agent(model, 30, prices, skip, initial, sims)
+    agent.train(epochs)
+    buys, sells, profit = agent.trade()
+    return {"prices": prices,"buys": buys,"sells": sells,"profit": profit}
+
+#main_predict.py
+import numpy as np
+import pandas as pd
+import torch
+import torch.nn as nn
+import yfinance as yf
+from sklearn.preprocessing import MinMaxScaler
+from models.lstm_model import LSTMModel
+def run_prediction(symbol, period, epochs, window, sims):
+    df = yf.download(symbol, period=period, progress=False)
+    if df.empty:
+        raise RuntimeError("No data")
+    prices = df["Close"].values.reshape(-1, 1)
+    scaler = MinMaxScaler()
+    scaled = scaler.fit_transform(prices)
+    X, y = [], []
+    for i in range(window, len(scaled)):
+        X.append(scaled[i - window:i])
+        y.append(scaled[i])
+    X = torch.tensor(np.array(X), dtype=torch.float32)
+    y = torch.tensor(np.array(y), dtype=torch.float32)
+    model = LSTMModel(input_size=1)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    loss_fn = nn.MSELoss()
+    for _ in range(epochs):
+        for i in range(len(X)):
+            out = model(X[i].unsqueeze(0))
+            loss = loss_fn(out, y[i].unsqueeze(0))
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+    preds = []
+    for i in range(len(X)):
+        pred = model(X[i].unsqueeze(0)).detach().numpy()
+        preds.append(pred[0][0])
+    preds = scaler.inverse_transform(np.array(preds).reshape(-1, 1)).flatten()
+    real = prices.flatten()
+    return {"real": real,"pred": np.concatenate([np.zeros(window), preds])}
+
+#requirements.txt
+numpy
+matplotlib
+yfinance
+scikit-learn
+torch

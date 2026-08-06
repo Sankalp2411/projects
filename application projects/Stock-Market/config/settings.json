@@ -1,3 +1,4 @@
+//config/settings.json
 {
   "window_size": 30,
   "initial_money": 1000,

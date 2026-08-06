@@ -1,2 +1,2 @@
 city,state,latitude,longitude,temperature,humidity,pressure,wind_speed,rainfall,cloud_cover,weather_description,datetime
-Ahmedabad,Gujarat,23.0333,72.6167,27.57,75,1000,5.42,0,100,overcast clouds,2026-07-06 22:46:32.784167
+Ahmedabad,Gujarat,23.0333,72.6167,31.83,56,1005,3.67,0,100,overcast clouds,2026-07-17 23:36:28.172368

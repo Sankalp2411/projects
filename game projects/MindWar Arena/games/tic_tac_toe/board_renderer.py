@@ -1,5 +1,5 @@
 #games/tic_tac_teo/board_renderer.py
-from games.tic_tac_toe.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,X_COLOR,O_COLOR,EMPTY,PLAYER_X,PLAYER_O,WIN_LINE_COLOR,)
+from games.tic_tac_toe.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,X_COLOR,O_COLOR,PLAYER_X,PLAYER_O,WIN_LINE_COLOR,)
 class BoardRenderer:
     def __init__(self, renderer):
         self.renderer = renderer
