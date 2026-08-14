@@ -1246,6 +1246,7 @@ class GameScene(Scene):
         self.game.render()
 
 #game/scenes/game_selection_scene.py
+import pygame
 from engine.core.scene import Scene
 from engine.core.input import Input
 from engine.utils.logger import Logger
@@ -1260,11 +1261,11 @@ class GameSelectionScene(Scene):
         super().enter()
         Logger.info("[GameSelectionScene] Ready")
     def update(self):
-        if Input.is_key_clicked(__import__("pygame").K_UP):
+        if Input.is_key_clicked(pygame.K_UP):
             self.selected_index = (self.selected_index - 1) % len(self.games)
-        elif Input.is_key_clicked(__import__("pygame").K_DOWN):
+        elif Input.is_key_clicked(pygame.K_DOWN):
             self.selected_index = (self.selected_index + 1) % len(self.games)
-        elif Input.is_key_clicked(__import__("pygame").K_RETURN):
+        elif Input.is_key_clicked(pygame.K_RETURN):
             selected_game = self.games[self.selected_index]
             Logger.info(f"[GameSelectionScene] Selected: {selected_game}")
             self.scene_manager.change_scene(GameModeScene(selected_game))
@@ -2125,14 +2126,18 @@ def main():
 if __name__ == "__main__":
     main()
 
-#main.py
-from launcher import Launcher
-from engine.utils.crash_handler import CrashHandler
-def main():
-    launcher = Launcher()
-    try:
-        launcher.start()
-    except Exception as exception:
-        CrashHandler.handle_exception(exception)
-if __name__ == "__main__":
-    main()
+#requirements.txt
+colorama==0.4.6
+glcontext==3.0.0
+markdown-it-py==4.2.0
+mdurl==0.1.2
+moderngl==5.12.0
+numpy==2.4.6
+packaging==26.2
+pillow==12.2.0
+pygame==2.6.1
+pyglm==2.8.3
+Pygments==2.20.0
+rich==15.0.0
+setuptools==82.0.1
+wheel==0.47.0

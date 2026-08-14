@@ -11980,7 +11980,271 @@
         [✓] Engine remains stable during gameplay.
 
     summery
-    
+        Phase 3: Connect Four
+            Phase 3 of MindWar Arena focused on expanding the platform from its first playable board game, Tic-Tac-Toe, into a second fully integrated deterministic two-player board game: Connect Four. 
+            The objective was not simply to write a Connect Four implementation in isolation, but to prove that the architecture created during Phase 1 and extended during Phase 2 could support multiple games through common interfaces, reusable engine systems, independent game modules, selectable game modes, and a unified application flow. 
+            By completing this phase, MindWar Arena moved from being essentially a platform containing one game to becoming a genuine multi-game engine architecture capable of hosting additional games in later phases.
+            The central achievement of Phase 3 was therefore architectural as much as functional. 
+            Connect Four was implemented as an independent game module while remaining compatible with the existing engine infrastructure. 
+            The game was connected to the common GameInterface, used the shared rendering system, shared input system, shared scene system, shared timing and window management, shared logging, and shared game-management architecture. 
+            A GameRegistry was also introduced to provide a central mechanism for registering available games and creating the appropriate game implementation. 
+            This was an important transition because the project no longer needed to hard-code one particular game as the application's permanent entry point.
+            At the beginning of the project, MindWar Arena had been designed around a larger long-term vision. 
+            The platform is intended to become a collection of deterministic 1v1 strategy and board games with progressively stronger AI capabilities. 
+            The planned game collection contains Tic-Tac-Toe, Connect Four, Gomoku, Pente, Othello, Checkers, Chess, Nine Men's Morris, and Go. 
+            Phase 3 established the second major game implementation and therefore validated that the project's universal engine architecture could begin scaling beyond a single game.
+            The Connect Four implementation was designed around the conventional six-row by seven-column board and a four-in-a-row victory condition. 
+            The game uses two players, represented as red and yellow pieces. The first player is red, while the second player is yellow. 
+            An important gameplay characteristic of Connect Four is that pieces do not simply occupy arbitrary empty cells. 
+            Instead, a player selects a column, and the piece falls into the lowest available position in that column. 
+            This requirement influenced the design of the Connect Four board API and made the board implementation different from the Tic-Tac-Toe implementation while preserving the same overall architectural principles.
+            The Connect Four module was organized into several dedicated components. 
+            These components include the AI implementation, board representation, constants, game controller, human player controller, board renderer, overlay renderer, and rules engine. 
+            This modular organization prevents the game controller from becoming a monolithic class containing every piece of game logic. 
+            Instead, each component has a clear responsibility. 
+            The board manages state, the rules engine evaluates state, the human player converts user input into actions, the AI selects actions, the renderer visualizes state, and the game controller coordinates the complete lifecycle.
+            The Connect Four constants module establishes the fundamental rules and configuration of the game. 
+            It defines the game name and version, board dimensions, win length, empty-cell value, player identifiers, starting player, game-state identifiers, winner identifiers, AI difficulty identifiers, rendering constants, player colors, board spacing, cell size, disc radius, and supported game modes. 
+            This centralization prevents important game values from being scattered throughout multiple files. 
+            The board dimensions are six rows and seven columns, while the required winning sequence is four pieces. 
+            The constants also define red and yellow as the two player representations and establish the game's rendering configuration.
+            The Connect Four board implementation is centered around the Connect4Board class. 
+            Internally, the board is represented as a two-dimensional list containing six rows and seven columns. 
+            Empty positions use the common EMPTY value. 
+            The board provides methods for resetting itself, retrieving and setting cells, validating positions, checking whether a column is full, finding available columns, finding the next open row, dropping a piece, checking whether the board is full, creating a copy, retrieving a deep-copied board state, and producing a human-readable string representation.
+            The drop_piece() operation is particularly important because it encapsulates the physical behavior of Connect Four. 
+            Instead of requiring the caller to calculate the destination row, the board determines the lowest available position within the requested column. 
+            It searches from the bottom row upward until it finds an empty cell. 
+            If no position exists, the column is considered full and the operation returns None. 
+            This creates a clean abstraction for the game controller and prevents game-level code from duplicating the board's gravity rules.
+            The board also provides get_available_columns(), allowing controllers and AI systems to determine which columns can legally accept a piece. 
+            This is particularly useful for the Connect Four AI because the AI does not need to understand the internal board representation in detail. 
+            It can request the current game state, identify legal columns, and select one of them. 
+            The board also supports copying through deepcopy, which becomes increasingly important for future AI implementations because stronger search-based algorithms will need to simulate hypothetical positions without modifying the real game.
+            The Tic-Tac-Toe board was also reviewed alongside the Connect Four board during Phase 3. 
+            Although the two games have different mechanics, they expose conceptually similar operations. 
+            Tic-Tac-Toe allows a player to choose a specific row and column, whereas Connect Four allows a player to choose a column and lets the board determine the row. 
+            Both boards support resetting, cell access, validation, copying, state extraction, and string representation. 
+            This parallel structure is important for the long-term platform because future games will follow the same principle: individual games can implement their own mechanics while exposing useful, predictable APIs.
+            The Connect Four rules engine was another major component completed during this phase. 
+            Connect4Rules is responsible for determining whether a player has won, identifying the winning cells, determining whether a game is a draw, determining whether the game is over, and producing a complete GameResult. 
+            The rules engine uses four directional vectors: horizontal, vertical, diagonal down-right, and diagonal up-right. 
+            These directions are sufficient to identify all possible four-piece winning sequences.
+            The winner detection algorithm scans the board and ignores empty cells. 
+            For every occupied cell, it checks the four possible directions and determines whether the required number of consecutive pieces belonging to the same player exists. 
+            The directional checking logic is separated into _check_direction(), which determines whether a complete winning sequence exists, and _collect_direction(), which retrieves the actual coordinates of the winning cells. 
+            Separating detection from coordinate collection is useful because the game needs both pieces of information: the winner itself and the positions that should be highlighted visually.
+            The evaluate_game() method provides a high-level result-oriented interface to the rules engine. 
+            It creates a GameResult, checks for a winner, records the winner and winning cells when appropriate, and otherwise checks whether the board is full. 
+            If the board is full without a winner, it marks the result as a draw. 
+            This allows the game controller to remain relatively simple. 
+            The controller does not need to understand the individual winning patterns; it simply asks the rules engine to evaluate the current board.
+            The common GameResult class established during the earlier engine work became particularly valuable in Phase 3. 
+            It provides a standardized representation of game completion information, including the winner, whether the game is over, whether the game ended in a draw, and which cells constitute the winning sequence. 
+            Tic-Tac-Toe and Connect Four both use this structure. 
+            This means the engine can reason about game outcomes without needing separate result types for every game.
+            The Connect Four AI was implemented initially as a random-action AI. 
+            This was intentional. Phase 3 was not intended to implement advanced game intelligence. 
+            The immediate goal was to prove that an AI controller could operate through the same interface as a human controller and participate in a real game. 
+            The Connect4AI class implements AIInterface, provides initialization and reset behavior, receives the current game state through select_action(), determines the legal columns, and randomly chooses one. 
+            It also provides a get_action() method compatible with the game-controller architecture.
+            The Tic-Tac-Toe AI follows the same general structure. It scans the board for legal empty cells and randomly chooses one. 
+            Although random AI is extremely weak from a strategic perspective, it serves an important architectural purpose at this stage. 
+            It proves that AI is treated as a player/controller rather than being embedded directly inside the game rules. 
+            This separation will be critical in future phases when stronger algorithms such as minimax, alpha-beta pruning, heuristic evaluation, Monte Carlo methods, or other search techniques are introduced.
+            The AI interface itself defines the expected AI lifecycle through methods such as initialize(), select_action(), learn(), and reset(). 
+            This establishes a common contract for future AI implementations. 
+            The learn() method is currently unused by the random AI, but its presence preserves the possibility of supporting learning-based agents in the future. 
+            The architecture therefore does not restrict MindWar Arena to simple deterministic search. 
+            It leaves room for broader AI experimentation.
+            Human input was also separated into its own player-controller classes. 
+            The Connect Four HumanPlayer checks whether the left mouse button has been clicked, obtains the mouse position from the common input system, and converts the screen coordinate into a board column through the board renderer. 
+            The Tic-Tac-Toe human player follows the same architecture but converts the mouse position into a specific board cell. 
+            This distinction is important because input translation belongs to the player/input layer rather than the core rules engine.
+            The board renderer for Connect Four was implemented specifically around the game's visual requirements. 
+            It draws the board grid, iterates over all cells, renders red or yellow discs for occupied positions, and optionally renders a winning line over the winning cells. 
+            The renderer also provides coordinate conversion utilities. 
+            contains_point() determines whether a mouse position falls inside the board, while screen_to_column() converts a screen coordinate into a logical column.
+            This coordinate-conversion mechanism creates a clean boundary between graphical coordinates and game coordinates. 
+            The human player does not need to know the board's physical dimensions or padding. 
+            It simply asks the renderer to interpret the mouse position. 
+            This pattern can be reused across future games, although the exact conversion logic will naturally differ according to each game's board geometry.
+            Tic-Tac-Toe has an equivalent board renderer. 
+            It draws the grid, renders X and O symbols, calculates cell centers, converts mouse coordinates into cells, and draws a winning line. 
+            The existence of similarly structured renderers for the two games provides an early demonstration that the engine's game-specific rendering architecture is scalable.
+            The overlay renderer provides the game-over visual state. 
+            For Tic-Tac-Toe it displays messages such as Player X Wins, Player O Wins, or Draw Game. 
+            Connect Four similarly displays Red Wins, Yellow Wins, or Draw Game. 
+            The overlay renderer is separated from the board renderer so that board visualization and end-of-game messaging remain independent concerns.
+            The underlying rendering engine also received significant use during Phase 3. 
+            The PrimitiveRenderer provides reusable primitives including lines, rectangles, filled rectangles, crosses, circles, and grids. 
+            Connect Four makes particularly strong use of these primitives because the board is fundamentally composed of lines and circles. 
+            Tic-Tac-Toe uses the same primitives to render its grid, crosses, circles, and winning line. 
+            This validates the decision made during the engine phase to build rendering primitives rather than implementing each game's graphics independently.
+            The Mesh class provides the lower-level GPU abstraction used by the primitive renderer and text renderer. 
+            It manages vertex buffers and vertex arrays through ModernGL and supports dynamic vertex updates. 
+            This allows the same mesh object to be reused for different primitive shapes. 
+            The rendering system therefore remains reasonably lightweight while still using GPU-based rendering.
+            The shader system was also leveraged throughout the phase. 
+            Primitive rendering uses a vertex shader and fragment shader pair, while text rendering uses a separate shader pair. 
+            ShaderManager handles loading, caching, retrieval, and release of shader programs. 
+            Because games use the higher-level renderer rather than manipulating shaders directly, Connect Four does not need to know anything about ModernGL shader compilation. This is exactly the separation desired in the architecture.
+            Text rendering is handled by TextRenderer and TextTextureCache. The text renderer converts text into cached textures and renders them using a textured quad. 
+            The cache prevents identical text rendering operations from unnecessarily rebuilding textures. 
+            Font management is centralized through FontManager, which caches fonts by filename and size. 
+            These systems are reused by both games and therefore demonstrate that game modules can focus on gameplay rather than low-level graphics infrastructure.
+            The camera system also remains shared. 
+            Camera2D maintains viewport dimensions, position, zoom, and an orthographic projection matrix. 
+            Although the current games use relatively straightforward static board layouts, having the camera abstraction already available creates a foundation for future games such as Go and Chess, where board scaling and potentially scrolling may become more important.
+            One of the most important architectural improvements introduced during Phase 3 was the GameRegistry. 
+            Before multiple games existed, the application could simply instantiate a specific game directly. 
+            Once Connect Four was added, this approach became increasingly undesirable. 
+            The registry provides a central mapping between human-readable game names and game classes. 
+            It currently registers Tic-Tac-Toe and Connect Four. 
+            It can return available game names, retrieve a game class, determine whether a game is registered, register new games, unregister games, and create game instances.
+            The registry is particularly important for the future phases of MindWar Arena. 
+            When Gomoku, Pente, Othello, Checkers, Chess, Nine Men's Morris, and Go are implemented, they can be registered through the same mechanism. 
+            The menu system will then be able to discover available games without requiring an entirely new selection architecture for every game. 
+            This is a major step toward making MindWar Arena a true platform rather than a collection of unrelated game scripts.
+            The scene system was also expanded to support game selection and mode selection. 
+            The GameSelectionScene provides a dedicated interface for choosing a game from the registered games. 
+            The player can navigate through available games using the keyboard and press Enter to select one. 
+            This scene then transitions into the game mode selection scene.
+            The GameModeScene allows the player to select between Human vs Human and Human vs AI. 
+            The selected mode is then passed into the appropriate game class. This establishes a clean sequence:
+            Boot
+            ↓
+            Main Menu / Game Selection
+            ↓
+            Game Mode Selection
+            ↓
+            Selected Game
+            This flow is an important milestone because the application is no longer locked to a single game or single gameplay configuration.
+            The GameScene acts as the bridge between the generic scene architecture and the game-specific implementation. 
+            It accepts an object implementing GameInterface, initializes the game when the scene is entered, updates the game each frame, renders the game, and shuts it down when the scene exits. 
+            It also handles simple post-game controls. Pressing R resets the current game, while pressing G returns to the main menu.
+            This behavior provides a practical gameplay loop without requiring the player to restart the entire application after every match. 
+            The game can be replayed and another game can be selected without terminating the engine. 
+            This is particularly important for testing because it makes repeated gameplay verification significantly easier.
+            The common GameInterface is central to this architecture. 
+            Both Tic-Tac-Toe and Connect Four implement initialization, reset, shutdown, update, render, state retrieval, board retrieval, current-player retrieval, winner retrieval, game-over detection, and move execution. 
+            This interface ensures that the scene layer does not need to know whether it is running Tic-Tac-Toe, Connect Four, or eventually another game.
+            The lifecycle of each game is standardized around initialization, reset, update, render, and shutdown. 
+            Initialization prepares the game and AI, reset establishes the starting state, update processes gameplay, render displays the current state, and shutdown provides an appropriate lifecycle endpoint. 
+            Although the current shutdown implementations are intentionally lightweight, the interface exists so future games can manage resources correctly.
+            The game controllers also alternate starting players between rounds. 
+            Tic-Tac-Toe uses X and O, while Connect Four uses red and yellow. 
+            Each game maintains next_starting_player and selects the next starting player during reset. 
+            This creates a fairer repeated-game experience and demonstrates that game lifecycle state is being deliberately managed rather than accidentally persisting between matches.
+            Game-state management is represented using constants such as GAME_NOT_STARTED, GAME_RUNNING, GAME_DRAW, and GAME_OVER. 
+            These values allow the controller to distinguish active play from terminal conditions. 
+            The GameResult object provides detailed outcome information, while the game controller maintains the broader state of the match.
+            The get_state() methods in both games return a structured representation of the current game. 
+            This includes the board state, current player, winner, game state, game-over status, draw status, and move count. 
+            This is extremely important for the future AI architecture. 
+            AI agents should be able to consume a game state without directly manipulating internal controller objects. 
+            The state interface therefore provides a foundation for increasingly sophisticated AI systems.
+            The Connect Four game controller coordinates all of these components. 
+            It owns the board, result object, current player, starting-player state, move count, board renderer, overlay renderer, human controller, and AI controller. 
+            During each update, it identifies the controller associated with the current player, asks that controller for an action, and applies the action through make_move().
+            The make_move() method validates that the game is not frozen and that a valid column has been supplied. 
+            It then asks the board to drop the current player's piece. 
+            If successful, the move count increases, the rules engine evaluates the game, and the controller either ends the match or switches to the other player. 
+            This produces a clean and understandable gameplay pipeline.
+            Tic-Tac-Toe follows the same controller architecture. 
+            Its make_move() method validates the selected cell, verifies that the cell is empty, places the current player's mark, evaluates the result, and either ends the game or switches players. 
+            The similarity between the two controllers is deliberate and provides evidence that the original universal interface design is working as intended.
+            Phase 3 also included cleanup work. 
+            The project was reviewed for unused imports, duplicate imports, unnecessary code, temporary debugging logic, and obvious dead code. 
+            Imports were cleaned where appropriate, and the newly modified game-selection code was retained. 
+            Basic code cleanup was prioritized over a broad formatting refactor.
+            A full formatting normalization pass was intentionally deferred. 
+            This was a sensible architectural decision because MindWar Arena is still in active expansion. 
+            Seven additional games remain to be implemented after Connect Four. 
+            Performing a strict formatting and style normalization now would mean repeatedly touching files as new game modules are added. 
+            Instead, the final comprehensive style pass can be performed during Phase 11 or Phase 14, when the architecture is substantially more stable.
+            The same reasoning applies to deeper abstraction work. 
+            Although Tic-Tac-Toe and Connect Four already share many patterns, forcing them into an overly generic abstraction too early could make the engine harder to understand and less flexible. 
+            Their current implementations demonstrate the common interfaces while retaining game-specific mechanics. 
+            Later, after all major games have been integrated, repeated patterns can be evaluated with better information.
+            One of the most valuable outcomes of Phase 3 is therefore not the Connect Four rules themselves but the architectural proof that the engine can support multiple games. 
+            Tic-Tac-Toe established the first complete game implementation. 
+            Connect Four established the second. 
+            The comparison between the two reveals which parts of the architecture are genuinely universal and which parts must remain game-specific.
+            The project now has a clear separation between engine-level systems and game-level systems. 
+            Engine systems include time management, window management, input, scenes, rendering, shaders, meshes, cameras, fonts, assets, configuration, logging, crash handling, game management, interfaces, and the game registry. 
+            Game systems contain individual game implementations with their own boards, rules, controllers, AI, renderers, constants, and state management.
+            This separation is one of the core architectural principles of MindWar Arena. 
+            The engine should not need to know how Connect Four determines a winner. 
+            Connect Four should not need to know how ModernGL creates a shader program. 
+            The scene system should not need to know how a player wins a Tic-Tac-Toe match. 
+            The AI should not need to know how mouse coordinates are converted into screen positions. 
+            Each layer has a defined responsibility.
+            The project metadata was also updated to indicate that Phase 3 has been completed. 
+            The engine version currently identifies MindWar Arena as version 0.1.0, with Phase 3 marked as completed. 
+            As the project moves toward the later integration and release phases, versioning can be refined further. 
+            For now, the metadata provides a clear internal milestone marker.
+            The dependency configuration also reflects the current technology stack. 
+            The project uses Python along with Pygame, ModernGL, PyGLM, NumPy, Pillow, and supporting libraries. 
+            These dependencies provide the graphical, mathematical, asset, and utility foundations required by the current engine.
+            From a software-engineering perspective, Phase 3 significantly increased the project's maturity. 
+            The project is no longer simply demonstrating that individual game logic can be written. 
+            It is demonstrating that multiple independent gameplay implementations can coexist within one reusable engine. 
+            This is a substantially more meaningful architectural milestone.
+            The completed Connect Four implementation also creates a template for the remaining games. 
+            Future game phases can follow the same high-level structure:
+            games/<game>/
+                ai.py
+                board.py
+                constants.py
+                game.py
+                human_player.py
+                board_renderer.py
+                overlay_renderer.py
+                rules.py
+            Not every future game will necessarily require exactly these files, but the structure establishes a strong baseline. 
+            More complex games may introduce additional components. Chess may require specialized move generation and piece representations. 
+            Go may require territory and liberty calculations. 
+            Checkers may require jump sequences and promotion. 
+            Nine Men's Morris may require board topology rather than a conventional rectangular grid. 
+            Nevertheless, the core principle remains the same: isolate game-specific rules from engine infrastructure.
+            Phase 3 also establishes a foundation for stronger AI. 
+            The random AI implementations are deliberately simple, but the architecture already provides the necessary separation for future improvements. 
+            A stronger Connect Four AI could replace the random action selection with heuristic evaluation, minimax, alpha-beta pruning, or another search algorithm without fundamentally changing the game controller. 
+            Similarly, Tic-Tac-Toe can eventually use a perfect minimax agent.
+            The AIInterface and game-state APIs therefore represent an important forward-looking investment. 
+            The project does not need to redesign its gameplay architecture every time a stronger AI is introduced. 
+            The AI can operate through the existing action-selection interface while the game remains responsible for validating and applying actions.
+            Testing and verification also formed an important part of Phase 3. 
+            Connect Four tests were executed during development, including tests covering board behavior, rules, game logic, and AI-related functionality. 
+            There were initial import/module-path issues during testing, but these were resolved as the test structure and invocation method were corrected. 
+            Tic-Tac-Toe testing was also retained as a regression requirement so that introducing Connect Four did not silently break the first completed game.
+            Manual gameplay verification was also considered important because automated tests cannot fully validate the graphical interaction flow. 
+            Human-vs-human gameplay, human-vs-AI gameplay, game selection, restarting a match, and returning to the menu all need practical verification through the application itself. 
+            This ensures that the engine's individual components work together correctly rather than merely passing isolated unit tests.
+            The game-selection architecture is particularly important for this regression process. 
+            The application should launch into the menu, allow the user to choose Tic-Tac-Toe or Connect Four, allow the user to choose a gameplay mode, start the selected game, finish the match, restart it with R, or return to game selection/menu using the appropriate control. 
+            This demonstrates that the complete application flow works rather than merely proving that each game works in isolation.
+            There are still improvements that intentionally remain outside the Phase 3 cleanup scope. 
+            The renderer interfaces could eventually be standardized further. 
+            The game-mode constants could eventually be moved into a shared engine-level definition so that game-specific modules do not depend on another game's constants. 
+            The overlay rendering system could be made more consistent. 
+            Common game-controller functionality could potentially be extracted into reusable infrastructure if the remaining games reveal enough duplication to justify it.
+            Those changes should not be rushed. 
+            A common engineering mistake is to abstract code based on two examples before enough examples exist to reveal the true abstraction. 
+            MindWar Arena will eventually have nine games, and those nine implementations will provide much stronger evidence about what genuinely belongs in the common engine. 
+            Therefore, deeper architectural refactoring should wait until the game set is more mature.
+            The same principle applies to formatting. 
+            Basic cleanup has been performed, but the final project-wide style should be standardized after the major architecture stabilizes. 
+            Phase 11, which is dedicated to full game integration and the Game Manager, is a good opportunity for a major consistency pass. 
+            Phase 14, dedicated to documentation, testing, packaging, and release, should perform the final quality-control pass.
+            Overall, Phase 3 successfully transformed MindWar Arena from a one-game engine into a multi-game platform prototype. 
+            Tic-Tac-Toe remains functional, Connect Four has been added as the second game, the game registry supports multiple game implementations, the scene system supports selection and gameplay modes, the AI architecture supports interchangeable controllers, the board and rules systems are separated, and the shared rendering/input infrastructure has proven capable of supporting multiple game types.
+            The significance of this phase can be summarized as follows: Phase 2 proved that MindWar Arena could build a complete game on top of its engine; Phase 3 proved that the engine could support another game without being rebuilt around it. 
+            That distinction is the real architectural milestone.
+            The project is now positioned for Phase 4, where the next game can be implemented using the lessons learned from Tic-Tac-Toe and Connect Four. 
+            The existing architecture should continue to evolve naturally rather than being prematurely over-engineered. 
+            Each new game will provide another architectural test, and by the time the project reaches full integration, the platform will have enough real implementations to justify deeper common abstractions.
 }
 04(gomoku){
 

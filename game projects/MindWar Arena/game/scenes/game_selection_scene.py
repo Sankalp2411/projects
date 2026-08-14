@@ -1,4 +1,5 @@
 #game/scenes/game_selection_scene.py
+import pygame
 from engine.core.scene import Scene
 from engine.core.input import Input
 from engine.utils.logger import Logger
@@ -13,11 +14,11 @@ class GameSelectionScene(Scene):
         super().enter()
         Logger.info("[GameSelectionScene] Ready")
     def update(self):
-        if Input.is_key_clicked(__import__("pygame").K_UP):
+        if Input.is_key_clicked(pygame.K_UP):
             self.selected_index = (self.selected_index - 1) % len(self.games)
-        elif Input.is_key_clicked(__import__("pygame").K_DOWN):
+        elif Input.is_key_clicked(pygame.K_DOWN):
             self.selected_index = (self.selected_index + 1) % len(self.games)
-        elif Input.is_key_clicked(__import__("pygame").K_RETURN):
+        elif Input.is_key_clicked(pygame.K_RETURN):
             selected_game = self.games[self.selected_index]
             Logger.info(f"[GameSelectionScene] Selected: {selected_game}")
             self.scene_manager.change_scene(GameModeScene(selected_game))
