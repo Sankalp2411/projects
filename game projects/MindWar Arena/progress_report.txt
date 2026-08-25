@@ -12247,7 +12247,897 @@
             Each new game will provide another architectural test, and by the time the project reaches full integration, the platform will have enough real implementations to justify deeper common abstractions.
 }
 04(gomoku){
+    01(update architecture){
+        games/
+        └── gomoku/
+            ├── __init__.py
+            ├── assets/
+            ├── ai.py
+            ├── board.py
+            ├── board_renderer.py
+            ├── constants.py
+            ├── game.py
+            ├── human_player.py
+            ├── overlay_renderer.py
+            └── rules.py
+    }
+    02(update constants.py){
+        "|"
+        GAME_NAME = "Gomoku"
+        GAME_VERSION = "1.0.0"
+        BOARD_ROWS = 15
+        BOARD_COLUMNS = 15
+        WIN_LENGTH = 5
+        EMPTY = 0
+        PLAYER_BLACK = 1
+        PLAYER_WHITE = 2
+        FIRST_PLAYER = PLAYER_BLACK
+        GAME_NOT_STARTED = 0
+        GAME_RUNNING = 1
+        GAME_DRAW = 2
+        GAME_OVER = 3
+        NO_WINNER = 0
+        AI_RANDOM = "Random"
+        AI_EASY = "Easy"
+        AI_MEDIUM = "Medium"
+        AI_HARD = "Hard"
+        CELL_SIZE = 45
+        BOARD_PADDING = 40
+        BOARD_LINE_WIDTH = 2
+        STONE_RADIUS = CELL_SIZE * 0.38
+        GRID_COLOR = (40, 40, 40)
+        PLAYER_BLACK_COLOR = (30, 30, 30)
+        PLAYER_WHITE_COLOR = (235, 235, 235)
+        WIN_LINE_COLOR = (50, 255, 50)
+        GAME_MODE_HUMAN_VS_HUMAN = 0
+        GAME_MODE_HUMAN_VS_AI = 1
+        GAME_MODE_AI_VS_AI = 2
+        DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+        "|"
+    }
+    03(update board.py){
+        "|"
+        from copy import deepcopy
+        from games.gomoku.constants import (BOARD_ROWS, BOARD_COLUMNS, EMPTY,)
+        class GomokuBoard:
+            def __init__(self):
+                self.reset()
+            def reset(self):
+                self._board = [[EMPTY for _ in range(BOARD_COLUMNS)]for _ in range(BOARD_ROWS)]
+            def get_cell(self, row, column):
+                return self._board[row][column]
+            def set_cell(self, row, column, value):
+                if not self.is_valid_position(row, column):
+                    return False
+                self._board[row][column] = value
+                return True
+            def is_cell_empty(self, row, column):
+                if not self.is_valid_position(row, column):
+                    return False
+                return self._board[row][column] == EMPTY
+            def is_valid_position(self, row, column):
+                return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+            def is_board_full(self):
+                for row in self._board:
+                    for cell in row:
+                        if cell == EMPTY:
+                            return False
+                return True
+            def get_available_moves(self):
+                moves = []
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        if self._board[row][column] == EMPTY:
+                            moves.append((row, column))
+                return moves
+            def copy(self):
+                board_copy = GomokuBoard()
+                board_copy._board = deepcopy(self._board)
+                return board_copy
+            def get_board_state(self):
+                return deepcopy(self._board)
+            def __str__(self):
+                symbols = {EMPTY: ".", 1: "B", 2: "W",}
+                rows = []
+                for row in self._board:
+                    rows.append(" ".join(symbols[cell] for cell in row))
+                return "\n".join(rows)
+        "|"
+    }
+    04(update rules.py){
+        "|"
+        from engine.interfaces.game_result import GameResult
+        from games.gomoku.constants import (BOARD_ROWS,BOARD_COLUMNS,WIN_LENGTH,EMPTY,NO_WINNER,)
+        class GomokuRules:
+            _DIRECTIONS = ((0, 1), (1, 0), (1, 1), (1, -1),)
+            @staticmethod
+            def check_winner(board):
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        player = board.get_cell(row, column)
+                        if player == EMPTY:
+                            continue
+                        for row_delta, column_delta in GomokuRules._DIRECTIONS:
+                            if GomokuRules._check_direction(board, row, column, row_delta, column_delta, player, ):
+                                return player
+                return NO_WINNER
+            @staticmethod
+            def get_winning_cells(board):
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        player = board.get_cell(row, column)
+                        if player == EMPTY:
+                            continue
+                        for row_delta, column_delta in GomokuRules._DIRECTIONS:
+                            cells = GomokuRules._collect_direction(board, row, column, row_delta, column_delta, player, )
+                            if cells:
+                                return cells
+                return []
+            @staticmethod
+            def is_draw(board):
+                return (GomokuRules.check_winner(board) == NO_WINNER and board.is_board_full())
+            @staticmethod
+            def is_game_over(board):
+                if GomokuRules.check_winner(board) != NO_WINNER:
+                    return True
+                if board.is_board_full():
+                    return True
+                return False
+            @staticmethod
+            def evaluate_game(board):
+                result = GameResult()
+                winner = GomokuRules.check_winner(board)
+                if winner != NO_WINNER:
+                    result.winner = winner
+                    result.game_over = True
+                    result.winning_cells = GomokuRules.get_winning_cells(board)
+                    return result
+                if board.is_board_full():
+                    result.draw = True
+                    result.game_over = True
+                    return result
+                return result
+            @staticmethod
+            def _check_direction(board, row, column, row_delta, column_delta, player, ):
+                for index in range(1, WIN_LENGTH):
+                    next_row = row + row_delta * index
+                    next_column = column + column_delta * index
+                    if not board.is_valid_position(next_row, next_column, ):
+                        return False
+                    if board.get_cell( next_row, next_column, ) != player:
+                        return False
+                return True
+            @staticmethod
+            def _collect_direction(board, row, column, row_delta, column_delta, player, ):
+                cells = []
+                for index in range(WIN_LENGTH):
+                    next_row = row + row_delta * index
+                    next_column = column + column_delta * index
+                    if not board.is_valid_position( next_row, next_column,):
+                        return []
+                    if board.get_cell( next_row, next_column, ) != player:
+                        return []
+                    cells.append((next_row, next_column))
+                return cells
+        "|"
+    }
+    05(update ai.py){
+        "|"
+        import random
+        from engine.interfaces.ai_interface import AIInterface
+        class GomokuAI(AIInterface):
+            def __init__(self):
+                self.initialized = False
+            def initialize(self):
+                self.initialized = True
+            def select_action(self, game_state):
+                board = game_state["board"]
+                legal_moves = []
+                for row in range(len(board)):
+                    for column in range(len(board[row])):
+                        if board[row][column] == 0:
+                            legal_moves.append((row, column))
+                if not legal_moves:
+                    return None
+                return random.choice(legal_moves)
+            def learn(self,state,action,reward,next_state,):
+                pass
+            def reset(self):
+                self.initialized = False
+            def get_action(self, game):
+                return self.select_action(game.get_state())
+        "|"
+    }
+    06(update human_player.py){
+        "|"
+        from engine.core.input import Input
+        class HumanPlayer:
+            def __init__(self, board_renderer):
+                self.board_renderer = board_renderer
+            def get_action(self, game):
+                if game.is_frozen():
+                    return None
+                if not Input.is_left_mouse_clicked():
+                    return None
+                mouse_x, mouse_y = Input.get_mouse_position()
+                return self.board_renderer.screen_to_cell(mouse_x,mouse_y,)
+        "|"
+    }
+    07(update board_renderer.py){
+        "|"
+        from games.gomoku.constants import (BOARD_ROWS, BOARD_COLUMNS, CELL_SIZE, BOARD_PADDING, GRID_COLOR, PLAYER_BLACK, PLAYER_WHITE, PLAYER_BLACK_COLOR, PLAYER_WHITE_COLOR, STONE_RADIUS, WIN_LINE_COLOR,)
+        class BoardRenderer:
+            def __init__(self, renderer):
+                self.renderer = renderer
+                self.origin_x = BOARD_PADDING
+                self.origin_y = BOARD_PADDING
+            def render(self, board, game_result=None):
+                self.draw_grid()
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        value = board.get_cell(row, column)
+                        if value == PLAYER_BLACK:
+                            self.draw_stone(row, column, PLAYER_BLACK_COLOR, )
+                        elif value == PLAYER_WHITE:
+                            self.draw_stone( row, column, PLAYER_WHITE_COLOR, )
+                if (game_result is not None and game_result.winning_cells ):
+                    self.draw_winning_line(game_result.winning_cells)
+            def draw_grid(self):
+                self.renderer.draw_grid(origin=(self.origin_x, self.origin_y,), rows=BOARD_ROWS, columns=BOARD_COLUMNS, cell_size=CELL_SIZE, color=GRID_COLOR, )
+            def draw_stone(self, row, column, color):
+                center = self.get_cell_center(row, column,)
+                self.renderer.draw_circle( center=center, radius=STONE_RADIUS, color=color, )
+            def get_cell_center(self, row, column):
+                x = (self.origin_x + column * CELL_SIZE + CELL_SIZE / 2)
+                y = (self.origin_y + row * CELL_SIZE + CELL_SIZE / 2)
+                return (x, y)
+            def contains_point(self, x, y):
+                board_width = BOARD_COLUMNS * CELL_SIZE
+                board_height = BOARD_ROWS * CELL_SIZE
+                return (self.origin_x <= x < self.origin_x + board_width and self.origin_y <= y < self.origin_y + board_height )
+            def screen_to_cell(self, x, y):
+                if not self.contains_point(x, y):
+                    return None
+                column = int((x - self.origin_x))
+                row = int((y - self.origin_y))
+                return (row, column)
+            def draw_winning_line(self, winning_cells):
+                if len(winning_cells) < 2:
+                    return
+                start = self.get_cell_center(*winning_cells[0])
+                end = self.get_cell_center(*winning_cells[-1])
+                self.renderer.draw_line( start=start, end=end, color=WIN_LINE_COLOR,)
+            def reset(self):
+                pass
+        "|"
+    }
+    08(update overlay_enderer.py){
+        "|"
+        from games.gomoku.constants import (PLAYER_BLACK, PLAYER_WHITE,)
+        class OverlayRenderer:
+            def __init__(self, renderer):
+                self.renderer = renderer
+            def render(self, result):
+                if result is None:
+                    return
+                if not result.game_over:
+                    return
+                self.draw_background()
+                if result.draw:
+                    self.draw_draw_overlay()
+                else:
+                    self.draw_winner_overlay(result.winner)
+            def draw_background(self):
+                pass
+            def draw_winner_overlay(self, winner):
+                if winner == PLAYER_BLACK:
+                    message = "Black Wins!"
+                elif winner == PLAYER_WHITE:
+                    message = "White Wins!"
+                else:
+                    return
+                self.renderer.draw_overlay_message(message=message, color=(255, 255, 255), size=56, )
+            def draw_draw_overlay(self):
+                self.renderer.draw_overlay_message(message="Draw Game!", color=(255, 255, 255), size=56, )
+            def reset(self):
+                pass
+        "|"
+    }
+    09(update game.py){
+        "|"
+        from engine.interfaces.game_interface import GameInterface
+        from engine.interfaces.game_result import GameResult
+        from games.gomoku.ai import GomokuAI
+        from games.gomoku.board import GomokuBoard
+        from games.gomoku.board_renderer import BoardRenderer
+        from games.gomoku.human_player import HumanPlayer
+        from games.gomoku.overlay_renderer import OverlayRenderer
+        from games.gomoku.rules import GomokuRules
+        from games.gomoku.constants import (PLAYER_BLACK, PLAYER_WHITE, FIRST_PLAYER, GAME_NOT_STARTED, GAME_RUNNING, GAME_DRAW, GAME_OVER, GAME_MODE_HUMAN_VS_HUMAN, GAME_MODE_HUMAN_VS_AI,)
+        class GomokuGame(GameInterface):
+            def __init__( self, renderer, game_mode=GAME_MODE_HUMAN_VS_HUMAN, ):
+                self.renderer = renderer
+                self.game_mode = game_mode
+                self.board = GomokuBoard()
+                self.current_player = FIRST_PLAYER
+                self.next_starting_player = FIRST_PLAYER
+                self.result = GameResult()
+                self.game_state = GAME_NOT_STARTED
+                self.move_count = 0
+                self.board_renderer = BoardRenderer(renderer)
+                self.overlay_renderer = OverlayRenderer(renderer)
+                self.human_player = HumanPlayer(self.board_renderer)
+                self.ai_player = GomokuAI()
+                self.player_black = self.human_player
+                if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                    self.player_white = self.ai_player
+                else:
+                    self.player_white = self.human_player
+            def initialize(self):
+                if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                    self.ai_player.initialize()
+                self.reset()
+            def reset(self):
+                self.board.reset()
+                self.choose_starting_player()
+                self.result = GameResult()
+                if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                    self.ai_player.reset()
+                    self.ai_player.initialize()
+                self.game_state = GAME_RUNNING
+                self.move_count = 0
+                self.board_renderer.reset()
+                self.overlay_renderer.reset()
+            def shutdown(self):
+                pass
+            def update(self):
+                if self.is_frozen():
+                    return
+                self.update_current_player()
+            def render(self):
+                self.board_renderer.render(self.board, self.result, )
+                self.overlay_renderer.render(self.result)
+            def make_move(self, row, column):
+                if self.is_frozen():
+                    return False
+                if not self.board.is_valid_position(row, column,):
+                    return False
+                if not self.board.is_cell_empty( row, column,):
+                    return False
+                self.board.set_cell(row, column, self.current_player, )
+                self.move_count += 1
+                self.result = GomokuRules.evaluate_game(self.board)
+                if self.result.game_over:
+                    if self.result.draw:
+                        self.game_state = GAME_DRAW
+                    else:
+                        self.game_state = GAME_OVER
+                    return True
+                self.switch_player()
+                return True
+            def switch_player(self):
+                if self.current_player == PLAYER_BLACK:
+                    self.current_player = PLAYER_WHITE
+                else:
+                    self.current_player = PLAYER_BLACK
+            def choose_starting_player(self):
+                self.current_player = (self.next_starting_player)
+                if self.next_starting_player == PLAYER_BLACK:
+                    self.next_starting_player = PLAYER_WHITE
+                else:
+                    self.next_starting_player = PLAYER_BLACK
+            def get_current_controller(self):
+                if self.current_player == PLAYER_BLACK:
+                    return self.player_black
+                return self.player_white
+            def update_current_player(self):
+                controller = self.get_current_controller()
+                move = controller.get_action(self)
+                if move is None:
+                    return
+                self.make_move(*move)
+            def get_result(self):
+                return self.result
+            def get_board(self):
+                return self.board
+            def get_current_player(self):
+                return self.current_player
+            def get_state(self):
+                return {"board": self.board.get_board_state(), "current_player": self.current_player, "winner": self.result.winner, "game_state": self.game_state, "game_over": self.result.game_over, "draw": self.result.draw, "move_count": self.move_count, }
+            def is_game_over(self):
+                return self.is_frozen()
+            def get_winner(self):
+                return self.result.winner
+            def is_frozen(self):
+                return self.result.game_over
+        "|"
+    }
+    10(update game_registry.py){
+        "|"
+        from games.tic_tac_toe.game import TicTacToeGame
+        from games.connect4.game import Connect4Game
+        from games.gomoku.game import GomokuGame
+        class GameRegistry:
+            _games = {"Tic-Tac-Toe": TicTacToeGame,"Connect Four": Connect4Game,"Gomoku": GomokuGame,}
+            @classmethod
+            def get_game_names(cls):
+                return list(cls._games.keys())
+            @classmethod
+            def get_game_class(cls, game_name):
+                return cls._games.get(game_name)
+            @classmethod
+            def has_game(cls, game_name):
+                return game_name in cls._games
+            @classmethod
+            def register_game(cls, game_name, game_class):
+                cls._games[game_name] = game_class
+            @classmethod
+            def unregister_game(cls, game_name):
+                if game_name in cls._games:
+                    del cls._games[game_name]
+            @classmethod
+            def create_game(cls, game_name, renderer):
+                game_class = cls.get_game_class(game_name)
+                if game_class is None:
+                    raise ValueError(f"Game '{game_name}' is not registered.")
+                return game_class(renderer)
+        "|"
+    }
+    11(testing){
+        run main.py
+        output 
+        "|"
+        pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+        Hello from the pygame community. https://www.pygame.org/contribute.html
+        2026-08-25 19:20:07 [INFO] Logger Initialized
+        2026-08-25 19:20:07 [INFO] [GameManager] Initializing...
+        2026-08-25 19:20:07 [INFO] [Config] Loaded
+        2026-08-25 19:20:09 [INFO] [Window] Created 1280x720
+        2026-08-25 19:20:09 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+        2026-08-25 19:20:09 [INFO] [ShaderManager] Loaded shader 'primitive'.
+        2026-08-25 19:20:09 [INFO] [Mesh] GPU mesh created.
+        2026-08-25 19:20:09 [INFO] [ShaderManager] Loaded shader 'text'.
+        2026-08-25 19:20:09 [INFO] [Mesh] GPU mesh created.
+        2026-08-25 19:20:09 [INFO] [Renderer] Rendering system initialized.
+        2026-08-25 19:20:09 [INFO] [Input] Initialized
+        2026-08-25 19:20:09 [INFO] [AssetManager] Initialized
+        2026-08-25 19:20:09 [INFO] [Scene] Enter: Boot Scene
+        2026-08-25 19:20:09 [INFO] [BootScene] Engine initialization complete.
+        2026-08-25 19:20:09 [INFO] [BootScene] Opening Main Menu.
+        2026-08-25 19:20:09 [INFO] [Scene] Exit: Boot Scene
+        2026-08-25 19:20:09 [INFO] [Scene] Enter: Main Menu
+        2026-08-25 19:20:09 [INFO] [MainMenuScene] Ready
+        2026-08-25 19:20:09 [INFO] [GameManager] Running...
+        2026-08-25 19:20:13 [INFO] [MainMenuScene] Selected Gomoku
+        2026-08-25 19:20:13 [INFO] [Scene] Exit: Main Menu
+        2026-08-25 19:20:13 [INFO] [Scene] Enter: Game Mode
+        2026-08-25 19:20:13 [INFO] [GameModeScene] Choosing mode for Gomoku
+        2026-08-25 19:20:14 [INFO] [GameModeScene] Mode: Human vs Human
+        2026-08-25 19:20:14 [INFO] [Scene] Exit: Game Mode
+        2026-08-25 19:20:14 [INFO] [Scene] Enter: Game Scene
+        2026-08-25 19:20:14 [INFO] [GameScene] Initializing game.
+        2026-08-25 19:20:14 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+        2026-08-25 19:20:16 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+        2026-08-25 19:20:40 [INFO] [GameScene] Shutting down game.
+        2026-08-25 19:20:40 [INFO] [Scene] Exit: Game Scene
+        2026-08-25 19:20:40 [INFO] [Scene] Enter: Main Menu
+        2026-08-25 19:20:40 [INFO] [MainMenuScene] Ready
+        2026-08-25 19:20:43 [INFO] [MainMenuScene] Selected Gomoku
+        2026-08-25 19:20:43 [INFO] [Scene] Exit: Main Menu
+        2026-08-25 19:20:43 [INFO] [Scene] Enter: Game Mode
+        2026-08-25 19:20:43 [INFO] [GameModeScene] Choosing mode for Gomoku
+        2026-08-25 19:20:44 [INFO] [GameModeScene] Mode: Human vs AI
+        2026-08-25 19:20:44 [INFO] [Scene] Exit: Game Mode
+        2026-08-25 19:20:44 [INFO] [Scene] Enter: Game Scene
+        2026-08-25 19:20:44 [INFO] [GameScene] Initializing game.
+        2026-08-25 19:21:18 [INFO] [GameScene] Shutting down game.
+        2026-08-25 19:21:18 [INFO] [Scene] Exit: Game Scene
+        2026-08-25 19:21:18 [INFO] [Scene] Enter: Main Menu
+        2026-08-25 19:21:18 [INFO] [MainMenuScene] Ready
+        2026-08-25 19:21:21 [INFO] [GameManager] Shutting down...
+        2026-08-25 19:21:21 [INFO] [GameManager] Runtime: 73.91s
+        2026-08-25 19:21:21 [INFO] [Mesh] Released.
+        2026-08-25 19:21:21 [INFO] [ShaderManager] Released 'primitive'.
+        2026-08-25 19:21:21 [INFO] [Mesh] Released.
+        2026-08-25 19:21:21 [INFO] [ShaderManager] Released 'text'.
+        2026-08-25 19:21:21 [INFO] [Renderer] Shutdown
+        2026-08-25 19:21:22 [INFO] [Window] Destroyed
+        "|"
+    }
+        STEP 1 — Project Architecture
+    [✓] Gomoku module created inside games/gomoku.
+    [✓] Standard project architecture matches existing games.
+    [✓] All required source files created.
+    [✓] Module imports verified.
+    [✓] Project structure remains scalable for future games.
 
+    STEP 2 — Game Constants
+    [✓] Game metadata constants created.
+    [✓] Board dimensions defined (15×15).
+    [✓] Win length defined (5).
+    [✓] Player identifiers defined.
+    [✓] Empty cell identifier defined.
+    [✓] Game state constants created.
+    [✓] AI difficulty constants prepared.
+    [✓] Rendering constants created.
+    [✓] Game mode constants created.
+    [✓] Default game mode defined.
+    [✓] Future-required constants prepared.
+
+    STEP 3 — Board Representation
+    [✓] GomokuBoard class implemented.
+    [✓] Board reset functionality implemented.
+    [✓] Internal board representation created.
+    [✓] Position validation implemented.
+    [✓] Cell placement implemented.
+    [✓] Empty-cell detection implemented.
+    [✓] Occupied-cell protection implemented.
+    [✓] Board full detection implemented.
+    [✓] Available move detection implemented.
+    [✓] Available move retrieval implemented.
+    [✓] Deep copy functionality implemented.
+    [✓] Board state export implemented.
+    [✓] Board string representation implemented.
+    [✓] Invalid position protection implemented.
+
+    STEP 4 — Rules Engine
+    [✓] Horizontal win detection implemented.
+    [✓] Vertical win detection implemented.
+    [✓] Down-right diagonal win detection implemented.
+    [✓] Down-left diagonal win detection implemented.
+    [✓] Five-in-a-row detection implemented.
+    [✓] Winner detection implemented.
+    [✓] Winning cell detection implemented.
+    [✓] Four-in-a-row non-win behavior verified.
+    [✓] Separated stones non-win behavior verified.
+    [✓] Six-in-a-row win behavior verified.
+    [✓] Draw detection implemented.
+    [✓] Game over detection implemented.
+    [✓] Game evaluation implemented.
+    [✓] GameResult integration completed.
+
+    STEP 5 — Board Renderer
+    [✓] Gomoku board renderer implemented.
+    [✓] Grid rendering implemented.
+    [✓] Stone rendering implemented.
+    [✓] Empty intersection rendering implemented.
+    [✓] Stone positioning implemented.
+    [✓] Winning line rendering implemented.
+    [✓] Screen-to-cell conversion implemented.
+    [✓] Mouse hit detection implemented.
+    [✓] Renderer reset implemented.
+    [✓] Rendering pipeline integrated successfully.
+
+    STEP 6 — Overlay Renderer
+    [✓] Overlay renderer implemented.
+    [✓] Win overlay implemented.
+    [✓] Draw overlay implemented.
+    [✓] Background overlay prepared.
+    [✓] Overlay rendering integrated.
+    [✓] Overlay reset implemented.
+
+    STEP 7 — Human Player
+    [✓] Human player controller implemented.
+    [✓] Mouse input handling implemented.
+    [✓] Screen position translated into board cell.
+    [✓] Invalid click rejection implemented.
+    [✓] Frozen game protection implemented.
+
+    STEP 8 — Random AI
+    [✓] Random AI controller implemented.
+    [✓] AI initialization implemented.
+    [✓] AI reset implemented.
+    [✓] Available move analysis implemented.
+    [✓] Random move selection implemented.
+    [✓] Occupied-cell avoidance implemented.
+    [✓] No available move handling implemented.
+    [✓] AI-game integration completed.
+
+    STEP 9 — Game Controller
+    [✓] GomokuGame implemented.
+    [✓] GameInterface integrated.
+    [✓] Board initialization completed.
+    [✓] Player initialization completed.
+    [✓] GameResult integration completed.
+    [✓] Starting player selection implemented.
+    [✓] Player switching implemented.
+    [✓] Move validation implemented.
+    [✓] Stone placement integrated.
+    [✓] Rule evaluation integrated.
+    [✓] Game state management implemented.
+    [✓] Restart functionality implemented.
+    [✓] Rendering pipeline integrated.
+    [✓] Human vs Human mode supported.
+    [✓] Human vs AI mode supported.
+    [✓] AI turn management implemented.
+    [✓] State retrieval implemented.
+
+    STEP 10 — Engine Integration
+    [✓] Gomoku registered in GameRegistry.
+    [✓] Game Registry supports multiple games.
+    [✓] Main Menu displays Gomoku.
+    [✓] Keyboard navigation supports Gomoku.
+    [✓] Gomoku game selection implemented.
+    [✓] Game Mode scene integrated.
+    [✓] Human vs Human selection implemented.
+    [✓] Human vs AI selection implemented.
+    [✓] Selected mode passed into Gomoku instance.
+    [✓] BootScene launches Main Menu.
+    [✓] Main Menu launches Game Mode.
+    [✓] Game Mode launches Gomoku.
+    [✓] Game Scene initializes Gomoku.
+    [✓] Scene transitions verified.
+    [✓] Restart (R) functionality verified.
+    [✓] Change Game (G) functionality verified.
+    [✓] Returning to Main Menu verified.
+    [✓] Tic-Tac-Toe compatibility preserved.
+    [✓] Connect Four compatibility preserved.
+    [✓] Gomoku launches successfully.
+    [✓] Multiple games coexist within engine.
+
+    STEP 11 — Testing
+    Board Tests
+    [✓] Board dimensions verified.
+    [✓] Board initializes empty.
+    [✓] Board reset verified.
+    [✓] Cell placement verified.
+    [✓] Invalid position detection verified.
+    [✓] Occupied cell protection verified.
+    [✓] Available move detection verified.
+    [✓] Board copy verified.
+    [✓] Board state independence verified.
+
+    Rules Tests
+    [✓] No winner state verified.
+    [✓] Horizontal five-in-a-row verified.
+    [✓] Vertical five-in-a-row verified.
+    [✓] Down-right diagonal win verified.
+    [✓] Down-left diagonal win verified.
+    [✓] Four-in-a-row non-win verified.
+    [✓] Separated stones non-win verified.
+    [✓] Six-in-a-row win verified.
+    [✓] Winning cells verified.
+    [✓] Game over after win verified.
+    [✓] Game remains active with four stones verified.
+    [✓] Game evaluation verified.
+
+    AI Tests
+    [✓] AI initialization verified.
+    [✓] AI reset verified.
+    [✓] AI selects only legal moves.
+    [✓] AI avoids occupied cells.
+    [✓] AI handles no available moves correctly.
+    [✓] AI-game integration verified.
+
+    Game Tests
+    [✓] Game initialization verified.
+    [✓] Game reset verified.
+    [✓] Starting player selection verified.
+    [✓] Player switching verified.
+    [✓] Move execution verified.
+    [✓] Invalid move rejection verified.
+    [✓] Win detection verified.
+    [✓] Game state updates verified.
+    [✓] Winner retrieval verified.
+    [✓] Game over detection verified.
+
+    Integration Tests
+    [✓] Main Menu launches correctly.
+    [✓] Gomoku selection verified.
+    [✓] Game Mode selection verified.
+    [✓] Tic-Tac-Toe launches correctly.
+    [✓] Connect Four launches correctly.
+    [✓] Gomoku launches correctly.
+    [✓] Human vs Human mode verified.
+    [✓] Human vs AI mode verified.
+    [✓] Scene transitions verified.
+    [✓] Restart verified.
+    [✓] Change Game shortcut verified.
+    [✓] No runtime crashes observed.
+
+    Automated Test Results
+    [✓] Gomoku automated test suite executed.
+    [✓] 19 tests passed.
+    [✓] 0 tests failed.
+    [✓] 19/19 tests successful.
+    [✓] Test summary verified.
+    [✓] Regression behavior verified.
+
+    STEP 12 — Gameplay Verification
+    [✓] Human vs Human gameplay verified.
+    [✓] Human vs AI gameplay verified.
+    [✓] Stone placement works correctly.
+    [✓] Turns alternate correctly.
+    [✓] Horizontal wins detected correctly.
+    [✓] Vertical wins detected correctly.
+    [✓] Diagonal wins detected correctly.
+    [✓] Five-in-a-row rule verified.
+    [✓] Winning line displayed correctly.
+    [✓] Overlay messages displayed correctly.
+    [✓] Restart works correctly.
+    [✓] Game switching works correctly.
+    [✓] Engine remains stable during gameplay.
+
+    MindWar Arena — Phase 4 Gomoku Complete Summary
+
+        Phase 4 of MindWar Arena was dedicated to implementing, integrating, testing, and cleaning up the Gomoku game within the existing multi-game architecture. 
+        The primary objective of this phase was not simply to create a playable Gomoku board, but to implement Gomoku as a proper first-class game inside the MindWar Arena engine while preserving the architecture, interfaces, scene system, rendering pipeline, game registry, game-mode selection, AI structure, and compatibility established during the earlier Tic-Tac-Toe and Connect Four phases. 
+        By the end of the phase, Gomoku was fully integrated into the platform, manually tested, automatically tested, regression tested, and cleaned up. The final automated test suite completed with 19 passed tests and 0 failures, confirming that the core Gomoku logic behaves correctly.
+        MindWar Arena is being developed as a modular offline multi-game AI platform focused on deterministic two-player board games. 
+        The project follows a reusable architecture where every game is implemented as an independent module under the games/ directory while sharing common engine infrastructure. 
+        The first games established the architectural foundation: Tic-Tac-Toe demonstrated the basic board-game structure, while Connect Four expanded that structure with gravity-based mechanics and a more complex board. 
+        Gomoku was therefore implemented using the same established conventions rather than introducing a separate architecture. 
+        This was an important decision because the long-term objective of MindWar Arena is to support multiple games without allowing every game to require a completely different engine implementation.
+        The Gomoku module was created under games/gomoku. 
+        Its structure follows the standardized architecture already established by the previous games. 
+        The module contains separate files for constants, board representation, rules, AI, human input, board rendering, overlay rendering, and the main game controller. 
+        This separation keeps responsibilities clear. 
+        The board handles board state and legal positions, the rules engine handles game logic, the AI handles computer decisions, the human player handles input, the board renderer handles visual representation, the overlay renderer handles game-result presentation, and the game controller coordinates all of these components. 
+        This separation is especially important for MindWar Arena because future games such as Pente, Othello, Checkers, Chess, Nine Men's Morris, and Go will follow the same general architecture.
+        The first major component of Gomoku was its constants system. 
+        Gomoku was defined with a 15×15 board, which is a conventional and appropriate board size for the game. 
+        The WIN_LENGTH constant was set to 5, establishing the central rule that a player needs five consecutive stones to win. 
+        The game uses EMPTY = 0, PLAYER_BLACK = 1, and PLAYER_WHITE = 2. Black is configured as the first player. 
+        Game-state constants were also defined for not-started, running, draw, and game-over states. AI difficulty constants were prepared even though the current implementation only uses a random AI. 
+        Rendering constants were also defined, including cell size, board padding, grid color, stone radius, player colors, and winning-line color. 
+        Game-mode constants were also prepared for Human vs Human, Human vs AI, and AI vs AI modes, with Human vs Human as the default mode.
+        The constants architecture is deliberately more extensive than what is strictly required by the current Random AI. 
+        This is intentional. MindWar Arena is being designed as a long-term project rather than a one-off assignment. 
+        Preparing constants such as AI_RANDOM, AI_EASY, AI_MEDIUM, and AI_HARD allows the project to evolve toward stronger AI implementations later without requiring a fundamental redesign of the game architecture. 
+        Similarly, the three game-mode constants provide room for future AI-vs-AI functionality. 
+        This approach keeps the current implementation simple while maintaining a clear path for future expansion.
+        The second major component was the Gomoku board system. The GomokuBoard class provides the underlying representation of the 15×15 game board. 
+        Internally, the board is represented as a two-dimensional list containing empty cells or player identifiers. The board is initialized through the reset() method, which creates a fresh 15×15 board containing only empty positions. 
+        This makes board initialization and restarting deterministic and straightforward.
+        The board provides a get_cell() method for reading individual positions and a set_cell() method for placing values after validating the requested position. 
+        Position validation is handled by is_valid_position(), which ensures that row and column indexes remain within the boundaries of the 15×15 board. 
+        This prevents invalid coordinates from corrupting the game state. 
+        The board also provides is_cell_empty(), which makes it possible for the game controller to reject attempts to place a stone on an already occupied position.
+        The board also implements is_board_full(), which checks whether every position contains a stone. 
+        This functionality is required for draw detection. 
+        Although a normal Gomoku game will usually end through a five-in-a-row before the board becomes completely full, a full-board draw is still a legitimate terminal condition and therefore needs to be supported by the rules engine.
+        Another important board function is get_available_moves(). 
+        This method scans the complete board and returns every empty coordinate as a (row, column) pair. 
+        This is particularly useful for AI decision-making because the AI can request the current board state and identify all legal moves. 
+        It also provides a reusable abstraction for future AI implementations, including stronger heuristic, minimax, or machine-learning-based approaches.
+        The board also supports deep-copy functionality through copy(). 
+        The copied board receives an independent copy of the internal board structure rather than sharing the original nested lists. 
+        This was explicitly tested during Phase 4. 
+        The board-state export function also returns a deep copy, which is important for AI and engine interfaces because external systems should not accidentally modify the live game board through a state snapshot.
+        The string representation of the board was also implemented. 
+        Empty cells are represented with ., black stones with B, and white stones with W. 
+        While this is not part of the graphical gameplay system, it is extremely useful during development and debugging because it allows the board state to be printed in a human-readable format. 
+        This type of utility becomes increasingly valuable as the project grows and more complicated games are added.
+        The rules engine was the most important part of Phase 4. 
+        Gomoku differs from Tic-Tac-Toe primarily because it requires detecting five consecutive stones on a much larger board. 
+        The GomokuRules class therefore uses directional scanning. 
+        Four fundamental directions are defined: horizontal (0, 1), vertical (1, 0), diagonal down-right (1, 1), and diagonal down-left (1, -1). 
+        These four directions are sufficient because every possible five-in-a-row configuration on the board can be represented by one of these directions.
+        The check_winner() function scans every position on the board. Empty positions are ignored. For each occupied position, the rules engine checks all four directions. 
+        The helper _check_direction() then examines the next four positions, giving a total sequence length of five including the starting cell. 
+        If all five positions contain the same player, that player is declared the winner. If no sequence is found anywhere on the board, the function returns NO_WINNER.
+        This directional approach is significantly cleaner than writing separate hard-coded loops for every possible horizontal, vertical, and diagonal pattern. 
+        It also makes the implementation easier to understand and maintain. 
+        More importantly, it establishes a pattern that can be reused or adapted for other alignment-based games in MindWar Arena.
+        The rules engine also implements get_winning_cells(). 
+        This method does not merely determine who won; it identifies the exact five board positions that produced the winning sequence. 
+        This information is then passed to the board renderer so that the game can visually highlight the winning line. 
+        This demonstrates an important architectural separation: the rules engine determines what happened, while the renderer determines how that event is displayed.
+        The implementation correctly handles different Gomoku cases. A horizontal five-in-a-row is recognized, as is a vertical sequence. 
+        Both diagonal directions are supported. A sequence of only four stones does not produce a win, which was explicitly tested. Separated stones are also correctly rejected as winning sequences. 
+        A sequence of six stones is recognized as a win because it contains a valid sequence of five consecutive stones. 
+        This behavior was specifically included in the automated tests and passed successfully.
+        The rules engine also supports draw detection. A draw occurs when there is no winner and the board is completely full. 
+        is_game_over() returns true if either a winner exists or the board is full. evaluate_game() combines these checks and generates a GameResult object. 
+        When a player wins, the result contains the winner identifier, the game-over state, and the winning cells. 
+        When the board is full without a winner, the result indicates a draw. Otherwise, the game remains active.
+        The GameResult integration is particularly important because it allows the Gomoku game to communicate its state using the same engine-level abstraction already used by Tic-Tac-Toe and Connect Four. 
+        This means higher-level systems do not need to understand the internal details of Gomoku's rules. They can simply work with the common game-result interface.
+        The Gomoku board renderer was then implemented to convert the logical board into a visual representation. 
+        The renderer receives a shared engine renderer and uses the Gomoku constants to determine board dimensions, cell size, position, and colors. 
+        The board is rendered as a 15×15 grid. Black and white stones are drawn according to the values stored in the board
+        The renderer calculates the center of each board cell using the board origin, column, row, and cell size. This provides consistent positioning for every stone. 
+        The contains_point() method determines whether a screen coordinate lies within the board boundaries. 
+        This is necessary for converting mouse input into a valid board position.
+        The screen_to_cell() function translates a mouse position into a (row, column) coordinate. 
+        This creates the bridge between the graphical input system and the logical game board. 
+        A player does not interact with Gomoku by entering row and column numbers; they click on the graphical board. 
+        The renderer therefore converts that click into the corresponding logical cell.
+        The renderer also supports drawing the winning line. 
+        Once the rules engine identifies the winning cells, the renderer uses the first and last cells of that sequence to draw a line across the winning stones. 
+        This provides immediate visual feedback when the game ends. The rendering pipeline was integrated successfully into the game controller.
+        The overlay renderer was implemented following the same architecture as the previous games. When a game is active, the overlay does nothing. 
+        Once the game is over, it displays the appropriate result. 
+        If Black wins, the overlay displays "Black Wins!"; if White wins, it displays "White Wins!"; and if the game ends in a draw, it displays "Draw Game!". 
+        The overlay also contains a background-rendering hook and a reset method, maintaining consistency with the other game modules and leaving room for future visual improvements.
+        The human player controller was implemented as a lightweight input adapter. 
+        It uses the engine's Input system to detect a left mouse click. 
+        When a click occurs, it obtains the mouse coordinates and asks the board renderer to translate those coordinates into a board cell. 
+        If the click occurs outside the board, the renderer returns None, which prevents an invalid move from being submitted. 
+        The human controller also checks whether the game is frozen before attempting to produce an action.
+        This design keeps input handling separate from the game rules. The human player does not directly modify the board. 
+        It simply provides an intended action to the game controller. The game controller remains responsible for determining whether that action is legal. 
+        This is a strong architectural decision because the same game controller can then support human players and AI players through the same action interface.
+        The Random AI was implemented as the first Gomoku AI. The GomokuAI class implements the common AIInterface. It provides initialization, action selection, learning placeholder, reset, and action retrieval methods. 
+        During action selection, the AI reads the board state from the game state and scans all positions for empty cells. It builds a list of legal moves and randomly selects one.
+        This AI is intentionally simple. 
+        It does not attempt to block opponents, create threats, evaluate board positions, or plan multiple moves ahead. 
+        Its purpose at this stage is to verify the AI architecture and establish a functioning AI player that can participate in the game. 
+        More sophisticated AI will be introduced later as the project evolves. 
+        The important achievement in Phase 4 is that the AI follows the same interface and controller architecture as the other games.
+        The Gomoku game controller brings all these components together. 
+        GomokuGame implements GameInterface and owns the board, current player, result, game state, move count, renderers, human controller, and AI controller. 
+        It also maintains the next starting player, allowing alternating starting players across rounds.
+        The initialization process prepares the AI when Human vs AI mode is active and then calls reset(). 
+        Resetting the game clears the board, selects the starting player, resets the GameResult, resets the AI when required, sets the game state to running, resets the move counter, and resets the rendering components. 
+        This creates a clean and deterministic game state for every round.
+        The game update loop first checks whether the game is frozen. 
+        If the game is already over, no additional moves are processed. 
+        Otherwise, it determines which controller belongs to the current player and asks that controller for an action. 
+        If an action exists, it is passed to make_move().
+        The make_move() method is responsible for validating and executing moves. It first checks whether the game is frozen. 
+        It then validates the requested position and ensures that the selected cell is empty. If either condition fails, the move is rejected. 
+        If the move is valid, the current player's stone is placed on the board, the move counter is incremented, and the rules engine evaluates the new board state.
+        If the rules engine determines that the game is over, the controller updates the game state to either GAME_OVER or GAME_DRAW. 
+        If the game is still active, the current player is switched. This provides a clean turn-based flow and ensures that the game rules remain centralized in the rules engine.
+        The controller also exposes several state-access methods, including get_result(), get_board(), get_current_player(), get_state(), is_game_over(), get_winner(), and is_frozen(). 
+        These methods allow the engine, AI, tests, and other systems to interact with the game without directly accessing its internal implementation details.
+        Gomoku was then integrated into the MindWar Arena engine. 
+        The Game Registry was updated so that Gomoku could be discovered alongside Tic-Tac-Toe and Connect Four. 
+        This allows the main menu to dynamically display multiple games rather than hard-coding one particular game.
+        The existing scene architecture was preserved. The Boot Scene initializes the engine and opens the Main Menu. The Main Menu provides game selection. 
+        The Game Mode Scene then allows the player to choose a supported game mode. 
+        The selected game and mode are then passed into the Game Scene, where the corresponding game controller is initialized.
+        The existing GameScene architecture also provides common post-game controls. Pressing R resets the current game, while pressing G returns the player to the main menu. 
+        These controls work with Gomoku without requiring Gomoku-specific scene logic. 
+        This is an excellent example of the benefit of the shared game interface: common engine functionality can operate across multiple games.
+        During integration testing, the complete flow was manually verified. 
+        Gomoku appeared in the game-selection menu, could be selected, and could be launched through the Game Mode Scene. 
+        The Human vs Human mode was tested, and the game launched successfully. Human interaction worked correctly, turns alternated, and the game could reach a valid end state. 
+        The game could also return to the main menu and coexist with the previously completed Tic-Tac-Toe and Connect Four implementations.
+        The application was also executed through the normal project entry point using python main.py. 
+        The startup logs confirmed successful initialization of the logger, configuration system, window, OpenGL renderer, shader manager, mesh system, rendering system, input system, asset manager, Boot Scene, Main Menu, Game Mode Scene, and Game Scene. 
+        Gomoku was successfully initialized after the user selected it from the menu. The runtime completed without a crash, and the engine shut down normally.
+        Automated testing was the final major validation stage. 
+        produced a Python module-specification error because the .py extension should not be included when executing a module with python -m. 
+        The correct module form was then used successfully.
+        These 19 tests provide meaningful coverage of the core Gomoku logic. 
+        Board initialization was verified, cell placement was verified, invalid positions were rejected, occupied cells were protected, available moves were detected, board copying was verified, and state independence was confirmed. 
+        These tests ensure that the underlying data model is reliable.
+        The rules tests are particularly important because Gomoku's primary complexity is its five-in-a-row detection. 
+        Horizontal, vertical, diagonal down-right, and diagonal down-left wins were all verified. 
+        The test suite also confirmed that four consecutive stones do not incorrectly trigger a win, that separated stones do not count as a sequence, and that six consecutive stones are correctly recognized as a winning configuration. 
+        Winning cells were also verified, ensuring that the rendering layer can receive correct winning coordinates.
+        Game-over behavior was also tested. The game correctly ends after a winning sequence, while a board containing only four consecutive stones remains active. 
+        The complete game evaluation process was also verified.
+        The test suite therefore confirms that the core board and rules systems are functioning correctly. 
+        In addition to the automated tests, manual gameplay testing confirmed the practical behavior of the complete application. 
+        This combination of unit-level testing and real gameplay verification provides significantly stronger confidence than relying on either approach alone.
+        Regression testing was also completed. This was important because adding Gomoku modified shared systems such as the Game Registry, game-selection flow, and game-mode flow. 
+        A new game should never break existing games. Tic-Tac-Toe and Connect Four remained compatible with the engine after Gomoku was added. 
+        The scene system continued to operate correctly, and multiple games could coexist under the same engine architecture.
+        The cleanup stage was then completed. The Gomoku source files were reviewed for consistency with the existing project architecture. 
+        Imports, naming, responsibilities, duplicate logic, and unnecessary code were reviewed. 
+        The module remained aligned with the patterns established by Tic-Tac-Toe and Connect Four. 
+        No unnecessary architectural redesign was introduced.
+        One important characteristic of the current architecture is that some methods, such as reset() inside renderers and draw_background() inside the overlay renderer, currently contain no implementation. 
+        These methods are not considered a problem at this stage because they preserve the common interface structure and provide extension points for future rendering improvements. 
+        The priority during these early game phases is stable architecture and correct gameplay rather than premature visual optimization.
+        The Random AI is also intentionally basic. It should not be interpreted as the final AI of MindWar Arena. 
+        It is a functional baseline that proves the AI interface, game-state retrieval, legal-move discovery, and AI turn management are working. 
+        Future AI development can build upon this foundation and introduce increasingly sophisticated strategies without replacing the game architecture.
+        Overall, Phase 4 accomplished more than simply adding another playable game. It demonstrated that the architecture established during Phases 1–3 is genuinely reusable. 
+        Gomoku could be added without creating a new engine, new scene system, or new application framework. 
+        The existing GameInterface, AIInterface, GameResult, renderer, input system, scene manager, Game Registry, Game Mode Scene, and Game Scene were all reused successfully.
+        This is a major architectural milestone for MindWar Arena. 
+        The project has now demonstrated the ability to support three distinct board-game structures: Tic-Tac-Toe with a small grid and simple alignment rules, Connect Four with gravity and column-based moves, and Gomoku with a larger board and directional five-in-a-row detection. 
+        These three games provide increasingly strong evidence that the engine can support the remaining games.
+        The completion of Gomoku also establishes a stable template for Phase 5. 
+        Pente can follow the same fundamental structure of constants, board, rules, renderer, overlay, human player, AI, and game controller. 
+        However, Pente will introduce additional rule complexity, particularly its capture mechanics and capture-based victory condition. 
+        Therefore, Phase 5 should reuse the architecture while expanding the rules model where necessary rather than blindly copying Gomoku logic.
+        At the end of Phase 4, MindWar Arena has successfully completed four major stages of development: the original vision and architecture, the core engine and universal interfaces, Tic-Tac-Toe, Connect Four, and now Gomoku. 
+        The project has moved beyond being a basic engine prototype and is becoming a genuine multi-game platform with a repeatable development pattern
 }
 05(pente){
 

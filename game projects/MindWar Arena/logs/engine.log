@@ -156,3 +156,313 @@
 2026-08-14 11:55:25 [INFO] [ShaderManager] Released 'text'.
 2026-08-14 11:55:25 [INFO] [Renderer] Shutdown
 2026-08-14 11:55:25 [INFO] [Window] Destroyed
+
+============================================================
+2026-08-18 21:00:23 [INFO] Logger Initialized
+2026-08-18 21:00:23 [INFO] [GameManager] Initializing...
+2026-08-18 21:00:23 [INFO] [Config] Loaded
+2026-08-18 21:00:24 [INFO] [Window] Created 1280x720
+2026-08-18 21:00:24 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-08-18 21:00:24 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-08-18 21:00:24 [INFO] [Mesh] GPU mesh created.
+2026-08-18 21:00:24 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-08-18 21:00:24 [INFO] [Mesh] GPU mesh created.
+2026-08-18 21:00:24 [INFO] [Renderer] Rendering system initialized.
+2026-08-18 21:00:24 [INFO] [Input] Initialized
+2026-08-18 21:00:24 [INFO] [AssetManager] Initialized
+2026-08-18 21:00:24 [INFO] [Scene] Enter: Boot Scene
+2026-08-18 21:00:24 [INFO] [BootScene] Engine initialization complete.
+2026-08-18 21:00:24 [INFO] [BootScene] Opening Main Menu.
+2026-08-18 21:00:24 [INFO] [Scene] Exit: Boot Scene
+2026-08-18 21:00:24 [INFO] [Scene] Enter: Main Menu
+2026-08-18 21:00:24 [INFO] [MainMenuScene] Ready
+2026-08-18 21:00:24 [INFO] [GameManager] Running...
+2026-08-18 21:00:30 [INFO] [MainMenuScene] Selected Connect Four
+2026-08-18 21:00:30 [INFO] [Scene] Exit: Main Menu
+2026-08-18 21:00:30 [INFO] [Scene] Enter: Game Mode
+2026-08-18 21:00:30 [INFO] [GameModeScene] Choosing mode for Connect Four
+2026-08-18 21:00:33 [INFO] [GameModeScene] Mode: Human vs AI
+2026-08-18 21:00:33 [INFO] [Scene] Exit: Game Mode
+2026-08-18 21:00:33 [INFO] [Scene] Enter: Game Scene
+2026-08-18 21:00:33 [INFO] [GameScene] Initializing game.
+2026-08-18 21:00:33 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-08-18 21:00:36 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-08-18 21:01:00 [INFO] [GameManager] Shutting down...
+2026-08-18 21:01:00 [INFO] [GameManager] Runtime: 37.46s
+2026-08-18 21:01:00 [INFO] [Mesh] Released.
+2026-08-18 21:01:00 [INFO] [ShaderManager] Released 'primitive'.
+2026-08-18 21:01:00 [INFO] [Mesh] Released.
+2026-08-18 21:01:00 [INFO] [ShaderManager] Released 'text'.
+2026-08-18 21:01:00 [INFO] [Renderer] Shutdown
+2026-08-18 21:01:00 [INFO] [Window] Destroyed
+
+============================================================
+2026-08-19 08:12:45 [INFO] Logger Initialized
+2026-08-19 08:12:45 [INFO] [GameManager] Initializing...
+2026-08-19 08:12:45 [INFO] [Config] Loaded
+2026-08-19 08:12:47 [INFO] [Window] Created 1280x720
+2026-08-19 08:12:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-08-19 08:12:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-08-19 08:12:47 [INFO] [Mesh] GPU mesh created.
+2026-08-19 08:12:47 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-08-19 08:12:47 [INFO] [Mesh] GPU mesh created.
+2026-08-19 08:12:47 [INFO] [Renderer] Rendering system initialized.
+2026-08-19 08:12:47 [INFO] [Input] Initialized
+2026-08-19 08:12:47 [INFO] [AssetManager] Initialized
+2026-08-19 08:12:47 [INFO] [Scene] Enter: Boot Scene
+2026-08-19 08:12:47 [INFO] [BootScene] Engine initialization complete.
+2026-08-19 08:12:47 [INFO] [BootScene] Opening Main Menu.
+2026-08-19 08:12:47 [INFO] [Scene] Exit: Boot Scene
+2026-08-19 08:12:47 [INFO] [Scene] Enter: Main Menu
+2026-08-19 08:12:47 [INFO] [MainMenuScene] Ready
+2026-08-19 08:12:47 [INFO] [GameManager] Running...
+2026-08-19 08:13:03 [INFO] [MainMenuScene] Selected Tic-Tac-Toe
+2026-08-19 08:13:03 [INFO] [Scene] Exit: Main Menu
+2026-08-19 08:13:03 [INFO] [Scene] Enter: Game Mode
+2026-08-19 08:13:03 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-08-19 08:13:12 [INFO] [GameModeScene] Mode: Human vs AI
+2026-08-19 08:13:12 [INFO] [Scene] Exit: Game Mode
+2026-08-19 08:13:12 [INFO] [Scene] Enter: Game Scene
+2026-08-19 08:13:12 [INFO] [GameScene] Initializing game.
+2026-08-19 08:13:12 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-08-19 08:13:14 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-08-19 08:13:30 [INFO] [GameManager] Shutting down...
+2026-08-19 08:13:30 [INFO] [GameManager] Runtime: 44.18s
+2026-08-19 08:13:30 [INFO] [Mesh] Released.
+2026-08-19 08:13:30 [INFO] [ShaderManager] Released 'primitive'.
+2026-08-19 08:13:30 [INFO] [Mesh] Released.
+2026-08-19 08:13:30 [INFO] [ShaderManager] Released 'text'.
+2026-08-19 08:13:30 [INFO] [Renderer] Shutdown
+2026-08-19 08:13:30 [INFO] [Window] Destroyed
+
+============================================================
+2026-08-21 23:00:15 [INFO] Logger Initialized
+2026-08-21 23:00:15 [INFO] [GameManager] Initializing...
+2026-08-21 23:00:15 [INFO] [Config] Loaded
+2026-08-21 23:00:17 [INFO] [Window] Created 1280x720
+2026-08-21 23:00:17 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-08-21 23:00:17 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-08-21 23:00:17 [INFO] [Mesh] GPU mesh created.
+2026-08-21 23:00:17 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-08-21 23:00:17 [INFO] [Mesh] GPU mesh created.
+2026-08-21 23:00:17 [INFO] [Renderer] Rendering system initialized.
+2026-08-21 23:00:17 [INFO] [Input] Initialized
+2026-08-21 23:00:17 [INFO] [AssetManager] Initialized
+2026-08-21 23:00:17 [INFO] [Scene] Enter: Boot Scene
+2026-08-21 23:00:17 [INFO] [BootScene] Engine initialization complete.
+2026-08-21 23:00:17 [INFO] [BootScene] Opening Main Menu.
+2026-08-21 23:00:17 [INFO] [Scene] Exit: Boot Scene
+2026-08-21 23:00:17 [INFO] [Scene] Enter: Main Menu
+2026-08-21 23:00:17 [INFO] [MainMenuScene] Ready
+2026-08-21 23:00:17 [INFO] [GameManager] Running...
+2026-08-21 23:00:21 [INFO] [MainMenuScene] Selected Gomoku
+2026-08-21 23:00:21 [INFO] [Scene] Exit: Main Menu
+2026-08-21 23:00:21 [INFO] [Scene] Enter: Game Mode
+2026-08-21 23:00:21 [INFO] [GameModeScene] Choosing mode for Gomoku
+2026-08-21 23:00:26 [INFO] [GameModeScene] Mode: Human vs Human
+2026-08-21 23:00:26 [INFO] [Scene] Exit: Game Mode
+2026-08-21 23:00:27 [INFO] [Scene] Enter: Game Scene
+2026-08-21 23:00:27 [INFO] [GameScene] Initializing game.
+2026-08-21 23:00:27 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-08-21 23:00:28 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-08-21 23:02:28 [INFO] [GameManager] Shutting down...
+2026-08-21 23:02:28 [INFO] [GameManager] Runtime: 133.48s
+2026-08-21 23:02:28 [INFO] [Mesh] Released.
+2026-08-21 23:02:28 [INFO] [ShaderManager] Released 'primitive'.
+2026-08-21 23:02:28 [INFO] [Mesh] Released.
+2026-08-21 23:02:28 [INFO] [ShaderManager] Released 'text'.
+2026-08-21 23:02:28 [INFO] [Renderer] Shutdown
+2026-08-21 23:02:29 [INFO] [Window] Destroyed
+
+============================================================
+2026-08-22 08:51:47 [INFO] Logger Initialized
+2026-08-22 08:51:47 [INFO] [GameManager] Initializing...
+2026-08-22 08:51:47 [INFO] [Config] Loaded
+2026-08-22 08:51:47 [INFO] [Window] Created 1280x720
+2026-08-22 08:51:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-08-22 08:51:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-08-22 08:51:47 [INFO] [Mesh] GPU mesh created.
+2026-08-22 08:51:47 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-08-22 08:51:47 [INFO] [Mesh] GPU mesh created.
+2026-08-22 08:51:47 [INFO] [Renderer] Rendering system initialized.
+2026-08-22 08:51:47 [INFO] [Input] Initialized
+2026-08-22 08:51:47 [INFO] [AssetManager] Initialized
+2026-08-22 08:51:47 [INFO] [Scene] Enter: Boot Scene
+2026-08-22 08:51:47 [INFO] [BootScene] Engine initialization complete.
+2026-08-22 08:51:47 [INFO] [BootScene] Opening Main Menu.
+2026-08-22 08:51:47 [INFO] [Scene] Exit: Boot Scene
+2026-08-22 08:51:47 [INFO] [Scene] Enter: Main Menu
+2026-08-22 08:51:47 [INFO] [MainMenuScene] Ready
+2026-08-22 08:51:47 [INFO] [GameManager] Running...
+2026-08-22 08:51:52 [INFO] [MainMenuScene] Selected Tic-Tac-Toe
+2026-08-22 08:51:52 [INFO] [Scene] Exit: Main Menu
+2026-08-22 08:51:52 [INFO] [Scene] Enter: Game Mode
+2026-08-22 08:51:52 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-08-22 08:51:54 [INFO] [GameModeScene] Mode: Human vs Human
+2026-08-22 08:51:54 [INFO] [Scene] Exit: Game Mode
+2026-08-22 08:51:54 [INFO] [Scene] Enter: Game Scene
+2026-08-22 08:51:54 [INFO] [GameScene] Initializing game.
+2026-08-22 08:51:54 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-08-22 08:51:57 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-08-22 08:52:05 [INFO] [GameScene] Shutting down game.
+2026-08-22 08:52:05 [INFO] [Scene] Exit: Game Scene
+2026-08-22 08:52:05 [INFO] [Scene] Enter: Main Menu
+2026-08-22 08:52:05 [INFO] [MainMenuScene] Ready
+2026-08-22 08:52:07 [INFO] [MainMenuScene] Selected Tic-Tac-Toe
+2026-08-22 08:52:07 [INFO] [Scene] Exit: Main Menu
+2026-08-22 08:52:07 [INFO] [Scene] Enter: Game Mode
+2026-08-22 08:52:07 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-08-22 08:52:09 [INFO] [GameModeScene] Mode: Human vs AI
+2026-08-22 08:52:09 [INFO] [Scene] Exit: Game Mode
+2026-08-22 08:52:09 [INFO] [Scene] Enter: Game Scene
+2026-08-22 08:52:09 [INFO] [GameScene] Initializing game.
+2026-08-22 08:52:22 [INFO] [GameScene] Shutting down game.
+2026-08-22 08:52:22 [INFO] [Scene] Exit: Game Scene
+2026-08-22 08:52:22 [INFO] [Scene] Enter: Main Menu
+2026-08-22 08:52:22 [INFO] [MainMenuScene] Ready
+2026-08-22 08:52:24 [INFO] [MainMenuScene] Selected Connect Four
+2026-08-22 08:52:24 [INFO] [Scene] Exit: Main Menu
+2026-08-22 08:52:24 [INFO] [Scene] Enter: Game Mode
+2026-08-22 08:52:24 [INFO] [GameModeScene] Choosing mode for Connect Four
+2026-08-22 08:52:26 [INFO] [GameModeScene] Mode: Human vs Human
+2026-08-22 08:52:26 [INFO] [Scene] Exit: Game Mode
+2026-08-22 08:52:26 [INFO] [Scene] Enter: Game Scene
+2026-08-22 08:52:26 [INFO] [GameScene] Initializing game.
+2026-08-22 08:53:02 [INFO] [GameScene] Shutting down game.
+2026-08-22 08:53:02 [INFO] [Scene] Exit: Game Scene
+2026-08-22 08:53:02 [INFO] [Scene] Enter: Main Menu
+2026-08-22 08:53:02 [INFO] [MainMenuScene] Ready
+2026-08-22 08:53:05 [INFO] [MainMenuScene] Selected Connect Four
+2026-08-22 08:53:05 [INFO] [Scene] Exit: Main Menu
+2026-08-22 08:53:05 [INFO] [Scene] Enter: Game Mode
+2026-08-22 08:53:05 [INFO] [GameModeScene] Choosing mode for Connect Four
+2026-08-22 08:53:06 [INFO] [GameModeScene] Mode: Human vs AI
+2026-08-22 08:53:06 [INFO] [Scene] Exit: Game Mode
+2026-08-22 08:53:06 [INFO] [Scene] Enter: Game Scene
+2026-08-22 08:53:06 [INFO] [GameScene] Initializing game.
+2026-08-22 08:53:52 [INFO] [GameScene] Shutting down game.
+2026-08-22 08:53:52 [INFO] [Scene] Exit: Game Scene
+2026-08-22 08:53:52 [INFO] [Scene] Enter: Main Menu
+2026-08-22 08:53:53 [INFO] [MainMenuScene] Ready
+2026-08-22 08:53:58 [INFO] [MainMenuScene] Selected Gomoku
+2026-08-22 08:53:58 [INFO] [Scene] Exit: Main Menu
+2026-08-22 08:53:58 [INFO] [Scene] Enter: Game Mode
+2026-08-22 08:53:58 [INFO] [GameModeScene] Choosing mode for Gomoku
+2026-08-22 08:54:00 [INFO] [GameModeScene] Mode: Human vs Human
+2026-08-22 08:54:00 [INFO] [Scene] Exit: Game Mode
+2026-08-22 08:54:00 [INFO] [Scene] Enter: Game Scene
+2026-08-22 08:54:00 [INFO] [GameScene] Initializing game.
+2026-08-22 08:54:25 [INFO] [GameScene] Shutting down game.
+2026-08-22 08:54:25 [INFO] [Scene] Exit: Game Scene
+2026-08-22 08:54:25 [INFO] [Scene] Enter: Main Menu
+2026-08-22 08:54:25 [INFO] [MainMenuScene] Ready
+2026-08-22 08:54:28 [INFO] [MainMenuScene] Selected Gomoku
+2026-08-22 08:54:28 [INFO] [Scene] Exit: Main Menu
+2026-08-22 08:54:28 [INFO] [Scene] Enter: Game Mode
+2026-08-22 08:54:28 [INFO] [GameModeScene] Choosing mode for Gomoku
+2026-08-22 08:54:32 [INFO] [GameModeScene] Mode: Human vs AI
+2026-08-22 08:54:32 [INFO] [Scene] Exit: Game Mode
+2026-08-22 08:54:32 [INFO] [Scene] Enter: Game Scene
+2026-08-22 08:54:32 [INFO] [GameScene] Initializing game.
+2026-08-22 08:55:19 [INFO] [GameManager] Shutting down...
+2026-08-22 08:55:19 [INFO] [GameManager] Runtime: 212.71s
+2026-08-22 08:55:19 [INFO] [Mesh] Released.
+2026-08-22 08:55:19 [INFO] [ShaderManager] Released 'primitive'.
+2026-08-22 08:55:19 [INFO] [Mesh] Released.
+2026-08-22 08:55:19 [INFO] [ShaderManager] Released 'text'.
+2026-08-22 08:55:19 [INFO] [Renderer] Shutdown
+2026-08-22 08:55:19 [INFO] [Window] Destroyed
+
+============================================================
+2026-08-25 19:20:07 [INFO] Logger Initialized
+2026-08-25 19:20:07 [INFO] [GameManager] Initializing...
+2026-08-25 19:20:07 [INFO] [Config] Loaded
+2026-08-25 19:20:09 [INFO] [Window] Created 1280x720
+2026-08-25 19:20:09 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-08-25 19:20:09 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-08-25 19:20:09 [INFO] [Mesh] GPU mesh created.
+2026-08-25 19:20:09 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-08-25 19:20:09 [INFO] [Mesh] GPU mesh created.
+2026-08-25 19:20:09 [INFO] [Renderer] Rendering system initialized.
+2026-08-25 19:20:09 [INFO] [Input] Initialized
+2026-08-25 19:20:09 [INFO] [AssetManager] Initialized
+2026-08-25 19:20:09 [INFO] [Scene] Enter: Boot Scene
+2026-08-25 19:20:09 [INFO] [BootScene] Engine initialization complete.
+2026-08-25 19:20:09 [INFO] [BootScene] Opening Main Menu.
+2026-08-25 19:20:09 [INFO] [Scene] Exit: Boot Scene
+2026-08-25 19:20:09 [INFO] [Scene] Enter: Main Menu
+2026-08-25 19:20:09 [INFO] [MainMenuScene] Ready
+2026-08-25 19:20:09 [INFO] [GameManager] Running...
+2026-08-25 19:20:13 [INFO] [MainMenuScene] Selected Gomoku
+2026-08-25 19:20:13 [INFO] [Scene] Exit: Main Menu
+2026-08-25 19:20:13 [INFO] [Scene] Enter: Game Mode
+2026-08-25 19:20:13 [INFO] [GameModeScene] Choosing mode for Gomoku
+2026-08-25 19:20:14 [INFO] [GameModeScene] Mode: Human vs Human
+2026-08-25 19:20:14 [INFO] [Scene] Exit: Game Mode
+2026-08-25 19:20:14 [INFO] [Scene] Enter: Game Scene
+2026-08-25 19:20:14 [INFO] [GameScene] Initializing game.
+2026-08-25 19:20:14 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-08-25 19:20:16 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-08-25 19:20:40 [INFO] [GameScene] Shutting down game.
+2026-08-25 19:20:40 [INFO] [Scene] Exit: Game Scene
+2026-08-25 19:20:40 [INFO] [Scene] Enter: Main Menu
+2026-08-25 19:20:40 [INFO] [MainMenuScene] Ready
+2026-08-25 19:20:43 [INFO] [MainMenuScene] Selected Gomoku
+2026-08-25 19:20:43 [INFO] [Scene] Exit: Main Menu
+2026-08-25 19:20:43 [INFO] [Scene] Enter: Game Mode
+2026-08-25 19:20:43 [INFO] [GameModeScene] Choosing mode for Gomoku
+2026-08-25 19:20:44 [INFO] [GameModeScene] Mode: Human vs AI
+2026-08-25 19:20:44 [INFO] [Scene] Exit: Game Mode
+2026-08-25 19:20:44 [INFO] [Scene] Enter: Game Scene
+2026-08-25 19:20:44 [INFO] [GameScene] Initializing game.
+2026-08-25 19:21:18 [INFO] [GameScene] Shutting down game.
+2026-08-25 19:21:18 [INFO] [Scene] Exit: Game Scene
+2026-08-25 19:21:18 [INFO] [Scene] Enter: Main Menu
+2026-08-25 19:21:18 [INFO] [MainMenuScene] Ready
+2026-08-25 19:21:21 [INFO] [GameManager] Shutting down...
+2026-08-25 19:21:21 [INFO] [GameManager] Runtime: 73.91s
+2026-08-25 19:21:21 [INFO] [Mesh] Released.
+2026-08-25 19:21:21 [INFO] [ShaderManager] Released 'primitive'.
+2026-08-25 19:21:21 [INFO] [Mesh] Released.
+2026-08-25 19:21:21 [INFO] [ShaderManager] Released 'text'.
+2026-08-25 19:21:21 [INFO] [Renderer] Shutdown
+2026-08-25 19:21:22 [INFO] [Window] Destroyed
+
+============================================================
+2026-08-25 20:04:20 [INFO] Logger Initialized
+2026-08-25 20:04:20 [INFO] [GameManager] Initializing...
+2026-08-25 20:04:20 [INFO] [Config] Loaded
+2026-08-25 20:04:22 [INFO] [Window] Created 1280x720
+2026-08-25 20:04:22 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-08-25 20:04:22 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-08-25 20:04:22 [INFO] [Mesh] GPU mesh created.
+2026-08-25 20:04:22 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-08-25 20:04:22 [INFO] [Mesh] GPU mesh created.
+2026-08-25 20:04:22 [INFO] [Renderer] Rendering system initialized.
+2026-08-25 20:04:22 [INFO] [Input] Initialized
+2026-08-25 20:04:22 [INFO] [AssetManager] Initialized
+2026-08-25 20:04:22 [INFO] [Scene] Enter: Boot Scene
+2026-08-25 20:04:22 [INFO] [BootScene] Engine initialization complete.
+2026-08-25 20:04:22 [INFO] [BootScene] Opening Main Menu.
+2026-08-25 20:04:22 [INFO] [Scene] Exit: Boot Scene
+2026-08-25 20:04:22 [INFO] [Scene] Enter: Main Menu
+2026-08-25 20:04:22 [INFO] [MainMenuScene] Ready
+2026-08-25 20:04:22 [INFO] [GameManager] Running...
+2026-08-25 20:04:25 [INFO] [MainMenuScene] Selected Gomoku
+2026-08-25 20:04:25 [INFO] [Scene] Exit: Main Menu
+2026-08-25 20:04:25 [INFO] [Scene] Enter: Game Mode
+2026-08-25 20:04:25 [INFO] [GameModeScene] Choosing mode for Gomoku
+2026-08-25 20:04:28 [INFO] [GameModeScene] Mode: Human vs Human
+2026-08-25 20:04:28 [INFO] [Scene] Exit: Game Mode
+2026-08-25 20:04:28 [INFO] [Scene] Enter: Game Scene
+2026-08-25 20:04:28 [INFO] [GameScene] Initializing game.
+2026-08-25 20:04:28 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-08-25 20:04:30 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-08-25 20:05:00 [INFO] [GameManager] Shutting down...
+2026-08-25 20:05:00 [INFO] [GameManager] Runtime: 39.33s
+2026-08-25 20:05:00 [INFO] [Mesh] Released.
+2026-08-25 20:05:00 [INFO] [ShaderManager] Released 'primitive'.
+2026-08-25 20:05:00 [INFO] [Mesh] Released.
+2026-08-25 20:05:00 [INFO] [ShaderManager] Released 'text'.
+2026-08-25 20:05:00 [INFO] [Renderer] Shutdown
+2026-08-25 20:05:00 [INFO] [Window] Destroyed

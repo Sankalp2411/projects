@@ -1,8 +1,9 @@
 #engine/game_registry.py
 from games.tic_tac_toe.game import TicTacToeGame
 from games.connect4.game import Connect4Game
+from games.gomoku.game import GomokuGame
 class GameRegistry:
-    _games = {"Tic-Tac-Toe": TicTacToeGame,"Connect Four": Connect4Game,}
+    _games = {"Tic-Tac-Toe": TicTacToeGame,"Connect Four": Connect4Game,"Gomoku": GomokuGame,}
     @classmethod
     def get_game_names(cls):
         return list(cls._games.keys())
