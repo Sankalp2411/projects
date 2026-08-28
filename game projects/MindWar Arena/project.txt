@@ -185,9 +185,12 @@ MINDWAR ARENA(
             )
             __init__.py
             ai.py
+            board_renderer.py
             board.py
             constants.py
             game.py
+            human_player.py
+            overlay_renderer.py
             rules.py
         )
         tic_tac_toe(
