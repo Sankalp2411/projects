@@ -2,8 +2,14 @@
 from games.tic_tac_toe.game import TicTacToeGame
 from games.connect4.game import Connect4Game
 from games.gomoku.game import GomokuGame
+from games.pente.game import PenteGame
+from games.othello.game import OthelloGame
+from games.checkers.game import CheckersGame
+from games.chess.game import ChessGame
+from games.nine_mens_morris.game import NineMensMorrisGame
+from games.go.game import GoGame
 class GameRegistry:
-    _games = {"Tic-Tac-Toe": TicTacToeGame,"Connect Four": Connect4Game,"Gomoku": GomokuGame,}
+    _games = {"Tic-Tac-Toe": TicTacToeGame,"Connect Four": Connect4Game,"Gomoku": GomokuGame, "Pente": PenteGame,"Othello": OthelloGame,"Checkers": CheckersGame,"Chess": ChessGame,"Nine Men's Morris": NineMensMorrisGame,"Go": GoGame,}
     @classmethod
     def get_game_names(cls):
         return list(cls._games.keys())

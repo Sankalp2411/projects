@@ -1133,8 +1133,14 @@ class GameManager:
 from games.tic_tac_toe.game import TicTacToeGame
 from games.connect4.game import Connect4Game
 from games.gomoku.game import GomokuGame
+from games.pente.game import PenteGame
+from games.othello.game import OthelloGame
+from games.checkers.game import CheckersGame
+from games.chess.game import ChessGame
+from games.nine_mens_morris.game import NineMensMorrisGame
+from games.go.game import GoGame
 class GameRegistry:
-    _games = {"Tic-Tac-Toe": TicTacToeGame,"Connect Four": Connect4Game,"Gomoku": GomokuGame,}
+    _games = {"Tic-Tac-Toe": TicTacToeGame,"Connect Four": Connect4Game,"Gomoku": GomokuGame, "Pente": PenteGame,"Othello": OthelloGame,"Checkers": CheckersGame,"Chess": ChessGame,"Nine Men's Morris": NineMensMorrisGame,"Go": GoGame,}
     @classmethod
     def get_game_names(cls):
         return list(cls._games.keys())
@@ -1207,6 +1213,9 @@ class GameModeScene(Scene):
             mode_name, mode = self.modes[self.selected_index]
             Logger.info(f"[GameModeScene] Mode: {mode_name}")
             game_class = GameRegistry.get_game_class(self.game_name)
+            if game_class is None:
+                Logger.error(f"[GameModeScene] Game not found: {self.game_name}")
+                return
             game = game_class(renderer =self.renderer,game_mode=mode,)
             self.scene_manager.change_scene(GameScene(game))
     def render(self):
@@ -2063,6 +2072,549 @@ class GomokuRules:
             if board.get_cell(next_row,next_column,) != player:
                 return []
             cells.append((next_row, next_column))
+        return cells
+
+# games/pente/ai.py
+import random
+from engine.interfaces.ai_interface import AIInterface
+class PenteAI(AIInterface):
+    def __init__(self):
+        self.initialized = False
+    def initialize(self):
+        self.initialized = True
+    def reset(self):
+        self.initialized = False
+    def select_action(self, game_state):
+        if not self.initialized:
+            return None
+        board = game_state.get("board")
+        if board is None:
+            return None
+        legal_moves = []
+        for row in range(len(board)):
+            for column in range(len(board[row])):
+                if board[row][column] == 0:
+                    legal_moves.append((row, column))
+        if not legal_moves:
+            return None
+        return random.choice(legal_moves)
+    def get_action(self, game):
+        return self.select_action(game.get_state())
+    def learn(self,state,action,reward,next_state,):
+        pass
+
+# games/pente/board_renderer.py
+from games.pente.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,PLAYER_BLACK,PLAYER_WHITE,PLAYER_BLACK_COLOR,PLAYER_WHITE_COLOR,STONE_RADIUS,WIN_LINE_COLOR,)
+class BoardRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+        self.origin_x = BOARD_PADDING
+        self.origin_y = BOARD_PADDING
+    def render(self, board, game_result=None):
+        self.draw_grid()
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                value = board.get_cell(row,column,)
+                if value == PLAYER_BLACK:
+                    self.draw_stone(row,column,PLAYER_BLACK_COLOR,)
+                elif value == PLAYER_WHITE:
+                    self.draw_stone(row,column,PLAYER_WHITE_COLOR,)
+        if (game_result is not None and game_result.winning_cells):
+            self.draw_winning_line(game_result.winning_cells)
+    def draw_grid(self):
+        self.renderer.draw_grid(origin=(self.origin_x,self.origin_y,),rows=BOARD_ROWS,columns=BOARD_COLUMNS,cell_size=CELL_SIZE,color=GRID_COLOR,)
+    def draw_stone(self, row, column, color):
+        center = self.get_cell_center(row,column,)
+        self.renderer.draw_circle(center=center,radius=STONE_RADIUS,color=color,)
+    def get_cell_center(self, row, column):
+        x = (self.origin_x + column * CELL_SIZE)
+        y = (self.origin_y + row * CELL_SIZE)
+        return (x, y)
+    def contains_point(self, x, y):
+        board_width = ((BOARD_COLUMNS - 1) * CELL_SIZE)
+        board_height = ((BOARD_ROWS - 1) * CELL_SIZE)
+        return (self.origin_x <= x <= self.origin_x + board_width and self.origin_y <= y <= self.origin_y + board_height)
+    def screen_to_cell(self, x, y):
+        if not self.contains_point(x, y):
+            return None
+        column = round((x - self.origin_x) / CELL_SIZE)
+        row = round((y - self.origin_y) / CELL_SIZE)
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return None
+        return (row,column,)
+    def draw_winning_line(self, winning_cells):
+        if len(winning_cells) < 2:
+            return
+        start = self.get_cell_center(*winning_cells[0])
+        end = self.get_cell_center(*winning_cells[-1])
+        self.renderer.draw_line(start=start,end=end,color=WIN_LINE_COLOR,)
+    def reset(self):
+        pass
+
+# games/pente/board.py
+from copy import deepcopy
+from games.pente.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
+class PenteBoard:
+    def __init__(self):
+        self.reset()
+    def reset(self):
+        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)] for _ in range(BOARD_ROWS)]
+    def get_cell(self, row, column):
+        return self._board[row][column]
+    def set_cell(self, row, column, value):
+        if not self.is_valid_position(row, column):
+            return False
+        if value not in (EMPTY, PLAYER_BLACK, PLAYER_WHITE):
+            return False
+        self._board[row][column] = value
+        return True
+    def place_stone(self, row, column, player):
+        if not self.is_valid_position(row, column):
+            return False
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return False
+        if not self.is_cell_empty(row, column):
+            return False
+        self._board[row][column] = player
+        return True
+    def remove_stone(self, row, column):
+        if not self.is_valid_position(row, column):
+            return False
+        if self._board[row][column] == EMPTY:
+            return False
+        self._board[row][column] = EMPTY
+        return True
+    def is_valid_position(self, row, column):
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+    def is_cell_empty(self, row, column):
+        if not self.is_valid_position(row, column):
+            return False
+        return self._board[row][column] == EMPTY
+    def is_board_full(self):
+        for row in self._board:
+            for cell in row:
+                if cell == EMPTY:
+                    return False
+        return True
+    def get_available_moves(self):
+        moves = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] == EMPTY:
+                    moves.append((row, column))
+        return moves
+    def count_stones(self, player):
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return 0
+        count = 0
+        for row in self._board:
+            for cell in row:
+                if cell == player:
+                    count += 1
+        return count
+    def get_empty_count(self):
+        count = 0
+        for row in self._board:
+            for cell in row:
+                if cell == EMPTY:
+                    count += 1
+        return count
+    def copy(self):
+        board_copy = PenteBoard()
+        board_copy._board = deepcopy(self._board)
+        return board_copy
+    def get_board_state(self):
+        return deepcopy(self._board)
+    def __str__(self):
+        symbols = {EMPTY: ".",PLAYER_BLACK: "B",PLAYER_WHITE: "W",}
+        rows = []
+        for row in self._board:
+            rows.append(" ".join(symbols[cell] for cell in row))
+        return "\n".join(rows)
+
+# games/pente/constants.py
+GAME_NAME = "Pente"
+GAME_VERSION = "1.0.0"
+BOARD_ROWS = 19
+BOARD_COLUMNS = 19
+WIN_LENGTH = 5
+EMPTY = 0
+PLAYER_BLACK = 1
+PLAYER_WHITE = 2
+FIRST_PLAYER = PLAYER_BLACK
+GAME_NOT_STARTED = 0
+GAME_RUNNING = 1
+GAME_DRAW = 2
+GAME_OVER = 3
+NO_WINNER = 0
+CAPTURE_STONES = 2
+CAPTURE_WIN_PAIRS = 5
+CAPTURE_WIN_STONES = CAPTURE_WIN_PAIRS * CAPTURE_STONES
+AI_RANDOM = "Random"
+AI_EASY = "Easy"
+AI_MEDIUM = "Medium"
+AI_HARD = "Hard"
+CELL_SIZE = 36
+BOARD_PADDING = 40
+BOARD_LINE_WIDTH = 2
+STONE_RADIUS = CELL_SIZE * 0.38
+GRID_COLOR = (120, 90, 60)
+PLAYER_BLACK_COLOR = (30, 30, 30)
+PLAYER_WHITE_COLOR = (235, 235, 235)
+WIN_LINE_COLOR = (50, 255, 50)
+CAPTURE_MARK_COLOR = (255, 180, 50)
+GAME_MODE_HUMAN_VS_HUMAN = 0
+GAME_MODE_HUMAN_VS_AI = 1
+GAME_MODE_AI_VS_AI = 2
+DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+
+# games/pente/game.py
+from engine.interfaces.game_interface import GameInterface
+from engine.interfaces.game_result import GameResult
+from games.pente.ai import PenteAI
+from games.pente.board import PenteBoard
+from games.pente.board_renderer import BoardRenderer
+from games.pente.constants import (PLAYER_BLACK,PLAYER_WHITE,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,GAME_MODE_HUMAN_VS_HUMAN,GAME_MODE_HUMAN_VS_AI,)
+from games.pente.human_player import HumanPlayer
+from games.pente.overlay_renderer import OverlayRenderer
+from games.pente.rules import PenteRules
+class PenteGame(GameInterface):
+    def __init__(self,renderer,game_mode=GAME_MODE_HUMAN_VS_HUMAN,):
+        self.renderer = renderer
+        self.game_mode = game_mode
+        self.board = PenteBoard()
+        self.current_player = FIRST_PLAYER
+        self.next_starting_player = FIRST_PLAYER
+        self.result = GameResult()
+        self.game_state = GAME_NOT_STARTED
+        self.move_count = 0
+        self.capture_counts = {PLAYER_BLACK: 0,PLAYER_WHITE: 0,}
+        self.board_renderer = BoardRenderer(renderer)
+        self.overlay_renderer = OverlayRenderer(renderer)
+        self.human_player = HumanPlayer(self.board_renderer)
+        self.ai_player = PenteAI()
+        self.player_black = self.human_player
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.player_white = self.ai_player
+        else:
+            self.player_white = self.human_player
+    def initialize(self):
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.initialize()
+        self.reset()
+    def reset(self):
+        self.board.reset()
+        self.choose_starting_player()
+        self.result = GameResult()
+        self.capture_counts = {PLAYER_BLACK: 0,PLAYER_WHITE: 0,}
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.reset()
+            self.ai_player.initialize()
+        self.game_state = GAME_RUNNING
+        self.move_count = 0
+        self.board_renderer.reset()
+        self.overlay_renderer.reset()
+    def shutdown(self):
+        pass
+    def update(self):
+        if self.is_frozen():
+            return
+        self.update_current_player()
+    def render(self):
+        self.board_renderer.render(self.board,self.result,)
+        self.overlay_renderer.render(self.result)
+    def make_move(self, row, column):
+        if self.is_frozen():
+            return False
+        if not self.board.is_valid_position(row,column,):
+            return False
+        if not self.board.is_cell_empty(row,column,):
+            return False
+        if not self.board.place_stone(row,column,self.current_player,):
+            return False
+        self.move_count += 1
+        captured_cells = PenteRules.find_captures(self.board,row,column,self.current_player,)
+        captured_count = PenteRules.apply_captures(self.board,captured_cells,)
+        captured_pairs = captured_count // 2
+        self.capture_counts[self.current_player] += captured_pairs
+        self.result = PenteRules.evaluate_game(self.board,self.capture_counts,)
+        if self.result.game_over:
+            if self.result.draw:
+                self.game_state = GAME_DRAW
+            else:
+                self.game_state = GAME_OVER
+            return True
+        self.switch_player()
+        return True
+    def switch_player(self):
+        if self.current_player == PLAYER_BLACK:
+            self.current_player = PLAYER_WHITE
+        else:
+            self.current_player = PLAYER_BLACK
+    def choose_starting_player(self):
+        self.current_player = (self.next_starting_player)
+        if self.next_starting_player == PLAYER_BLACK:
+            self.next_starting_player = PLAYER_WHITE
+        else:
+            self.next_starting_player = PLAYER_BLACK
+    def get_current_controller(self):
+        if self.current_player == PLAYER_BLACK:
+            return self.player_black
+        return self.player_white
+    def update_current_player(self):
+        controller = (self.get_current_controller())
+        move = controller.get_action(self)
+        if move is None:
+            return
+        self.make_move(*move)
+    def get_result(self):
+        return self.result
+    def get_board(self):
+        return self.board
+    def get_current_player(self):
+        return self.current_player
+    def get_state(self):
+        return {"board": self.board.get_board_state(),"current_player": self.current_player,"winner": self.result.winner,"game_state": self.game_state,"game_over": self.result.game_over,"draw": self.result.draw,"move_count": self.move_count,"capture_counts": dict(self.capture_counts),}
+    def get_capture_count(self, player):
+        return self.capture_counts.get(player,0,)
+    def get_capture_counts(self):
+        return dict(self.capture_counts)
+    def is_game_over(self):
+        return self.is_frozen()
+    def get_winner(self):
+        return self.result.winner
+    def is_frozen(self):
+        return self.result.game_over
+
+# games/pente/human_player.py
+from engine.core.input import Input
+class HumanPlayer:
+    def __init__(self, board_renderer):
+        self.board_renderer = board_renderer
+    def get_action(self, game):
+        if game.is_frozen():
+            return None
+        if not Input.is_left_mouse_clicked():
+            return None
+        mouse_x, mouse_y = Input.get_mouse_position()
+        return self.board_renderer.screen_to_cell(mouse_x,mouse_y,)
+
+# games/pente/overlay_renderer.py
+from games.pente.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+class OverlayRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def render(self, result):
+        if result is None:
+            return
+        if not result.game_over:
+            return
+        self.draw_background()
+        if result.draw:
+            self.draw_draw_overlay()
+        else:
+            self.draw_winner_overlay(result.winner)
+    def draw_background(self):
+        pass
+    def draw_winner_overlay(self, winner):
+        if winner == PLAYER_BLACK:
+            message = "Black Wins!"
+        elif winner == PLAYER_WHITE:
+            message = "White Wins!"
+        else:
+            return
+        self.renderer.draw_overlay_message(message=message,color=(255, 255, 255),size=56,)
+    def draw_draw_overlay(self):
+        self.renderer.draw_overlay_message(message="Draw Game!",color=(255, 255, 255),size=56,)
+    def reset(self):
+        pass
+
+# games/pente/rules.py
+from engine.interfaces.game_result import GameResult
+from games.pente.constants import (BOARD_ROWS,BOARD_COLUMNS,WIN_LENGTH,EMPTY,PLAYER_BLACK,PLAYER_WHITE,NO_WINNER,CAPTURE_WIN_PAIRS,)
+class PenteRules:
+    _DIRECTIONS = ((0, 1),(1, 0),(1, 1),(1, -1),)
+    @staticmethod
+    def get_opponent(player):
+        if player == PLAYER_BLACK:
+            return PLAYER_WHITE
+        if player == PLAYER_WHITE:
+            return PLAYER_BLACK
+        return EMPTY
+    @staticmethod
+    def check_winner(board):
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                player = board.get_cell(row, column)
+                if player == EMPTY:
+                    continue
+                for row_delta, column_delta in PenteRules._DIRECTIONS:
+                    if PenteRules._check_direction(board,row,column,row_delta,column_delta,player,):
+                        return player
+        return NO_WINNER
+    @staticmethod
+    def get_winning_cells(board):
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                player = board.get_cell(row, column)
+                if player == EMPTY:
+                    continue
+                for row_delta, column_delta in PenteRules._DIRECTIONS:
+                    cells = PenteRules._collect_direction(board,row,column,row_delta,column_delta,player,)
+                    if cells:
+                        return cells
+        return []
+    @staticmethod
+    def get_captures(board, row, column, player):
+        if not board.is_valid_position(row, column):
+            return []
+        if board.get_cell(row, column) != player:
+            return []
+        opponent = PenteRules.get_opponent(player)
+        if opponent == EMPTY:
+            return []
+        captures = []
+        for row_delta, column_delta in PenteRules._DIRECTIONS:
+            capture = PenteRules._check_capture_pattern(board,row,column,row_delta,column_delta,player,opponent,)
+            if capture:
+                captures.append(capture)
+            capture = PenteRules._check_capture_pattern(board,row,column,-row_delta,-column_delta,player,opponent,)
+            if capture:
+                captures.append(capture)
+        return PenteRules._remove_duplicate_captures(captures)
+    @staticmethod
+    def find_captures(board, row, column, player):
+        captures = PenteRules.get_captures(board,row,column,player,)
+        captured_cells = []
+        for capture in captures:
+            for cell in capture:
+                if cell not in captured_cells:
+                    captured_cells.append(cell)
+        return captured_cells
+    @staticmethod
+    def _check_capture_pattern(board,row,column,row_delta,column_delta,player,opponent,):
+        first_row = row + row_delta
+        first_column = column + column_delta
+        second_row = row + row_delta * 2
+        second_column = column + column_delta * 2
+        third_row = row + row_delta * 3
+        third_column = column + column_delta * 3
+        if not board.is_valid_position(first_row,first_column,):
+            return None
+        if not board.is_valid_position(second_row,second_column,):
+            return None
+        if not board.is_valid_position(third_row,third_column,):
+            return None
+        if board.get_cell(first_row,first_column,) != opponent:
+            return None
+        if board.get_cell(second_row,second_column,) != opponent:
+            return None
+        if board.get_cell(third_row,third_column,) != player:
+            return None
+        return ((first_row, first_column),(second_row, second_column),)
+    @staticmethod
+    def _remove_duplicate_captures(captures):
+        unique_captures = []
+        for capture in captures:
+            if capture not in unique_captures:
+                unique_captures.append(capture)
+        return unique_captures
+    @staticmethod
+    def apply_captures(board, captures):
+        if not captures:
+            return 0
+        captured_cells = []
+        first_item = captures[0]
+        if (isinstance(first_item, tuple) and len(first_item) == 2 and isinstance(first_item[0], tuple)):
+            for capture in captures:
+                for cell in capture:
+                    if cell not in captured_cells:
+                        captured_cells.append(cell)
+        else:
+            for cell in captures:
+                if cell not in captured_cells:
+                    captured_cells.append(cell)
+        captured_count = 0
+        for row, column in captured_cells:
+            if not board.is_valid_position(row, column):
+                continue
+            if board.get_cell(row, column) == EMPTY:
+                continue
+            if board.remove_stone(row, column):
+                captured_count += 1
+        return captured_count
+    @staticmethod
+    def is_draw(board, capture_counts=None):
+        if PenteRules.check_winner(board) != NO_WINNER:
+            return False
+        if capture_counts is not None:
+            black_captures = capture_counts.get(PLAYER_BLACK,0,)
+            white_captures = capture_counts.get(PLAYER_WHITE,0,)
+            if black_captures >= CAPTURE_WIN_PAIRS:
+                return False
+            if white_captures >= CAPTURE_WIN_PAIRS:
+                return False
+        return board.is_board_full()
+    @staticmethod
+    def is_game_over(board,capture_counts=None,black_captures=0,white_captures=0,):
+        if PenteRules.check_winner(board) != NO_WINNER:
+            return True
+        if capture_counts is not None:
+            black_captures = capture_counts.get(PLAYER_BLACK,0,)
+            white_captures = capture_counts.get(PLAYER_WHITE,0,)
+        if black_captures >= CAPTURE_WIN_PAIRS:
+            return True
+        if white_captures >= CAPTURE_WIN_PAIRS:
+            return True
+        if board.is_board_full():
+            return True
+        return False
+    @staticmethod
+    def evaluate_game(board,capture_counts=None,black_captures=0,white_captures=0,):
+        result = GameResult()
+        winner = PenteRules.check_winner(board)
+        if winner != NO_WINNER:
+            result.winner = winner
+            result.game_over = True
+            result.winning_cells = (PenteRules.get_winning_cells(board))
+            return result
+        if capture_counts is not None:
+            black_captures = capture_counts.get(PLAYER_BLACK,0,)
+            white_captures = capture_counts.get(PLAYER_WHITE,0,)
+        if black_captures >= CAPTURE_WIN_PAIRS:
+            result.winner = PLAYER_BLACK
+            result.game_over = True
+            return result
+        if white_captures >= CAPTURE_WIN_PAIRS:
+            result.winner = PLAYER_WHITE
+            result.game_over = True
+            return result
+        if board.is_board_full():
+            result.draw = True
+            result.game_over = True
+            return result
+        return result
+    @staticmethod
+    def _check_direction(board,row,column,row_delta,column_delta,player,):
+        for index in range(1, WIN_LENGTH):
+            next_row = row + row_delta * index
+            next_column = column + column_delta * index
+            if not board.is_valid_position(next_row,next_column,):
+                return False
+            if board.get_cell(next_row,next_column,) != player:
+                return False
+        return True
+    @staticmethod
+    def _collect_direction(board,row,column,row_delta,column_delta,player,):
+        cells = []
+        for index in range(WIN_LENGTH):
+            next_row = row + row_delta * index
+            next_column = column + column_delta * index
+            if not board.is_valid_position(next_row,next_column,):
+                return []
+            if board.get_cell(next_row,next_column,) != player:
+                return []
+            cells.append((next_row,next_column,))
         return cells
 
 #games/tic_tac_toe/ai.py

@@ -24,6 +24,9 @@ class GameModeScene(Scene):
             mode_name, mode = self.modes[self.selected_index]
             Logger.info(f"[GameModeScene] Mode: {mode_name}")
             game_class = GameRegistry.get_game_class(self.game_name)
+            if game_class is None:
+                Logger.error(f"[GameModeScene] Game not found: {self.game_name}")
+                return
             game = game_class(renderer =self.renderer,game_mode=mode,)
             self.scene_manager.change_scene(GameScene(game))
     def render(self):
