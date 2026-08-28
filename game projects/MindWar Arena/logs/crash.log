@@ -1,0 +1,26 @@
+
+================================================================================
+Timestamp: 2026-08-28 14:28:20
+
+Exception: OthelloGame() takes no arguments
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 30, in update
+    game = game_class(renderer =self.renderer,game_mode=mode,)
+TypeError: OthelloGame() takes no arguments
+
