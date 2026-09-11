@@ -14062,7 +14062,878 @@
     This makes the development process more efficient and reduces unnecessary changes to already-tested code.
 }
 06(othello){
+    01(update architecture){
+        add three files in games/othello
+        board_renderer.py
+        human_player.py
+        overlay_renderer.py
+    }
+    02(update constants.py){
+        "|"
+        # games/othello/constants.py
+        GAME_NAME = "Othello"
+        GAME_VERSION = "1.0.0"
+        BOARD_ROWS = 8
+        BOARD_COLUMNS = 8
+        EMPTY = 0
+        PLAYER_BLACK = 1
+        PLAYER_WHITE = 2
+        FIRST_PLAYER = PLAYER_BLACK
+        GAME_NOT_STARTED = 0
+        GAME_RUNNING = 1
+        GAME_DRAW = 2
+        GAME_OVER = 3
+        NO_WINNER = 0
+        AI_RANDOM = "Random"
+        AI_EASY = "Easy"
+        AI_MEDIUM = "Medium"
+        AI_HARD = "Hard"
+        CELL_SIZE = 70
+        BOARD_PADDING = 40
+        BOARD_LINE_WIDTH = 2
+        DISC_RADIUS = CELL_SIZE * 0.38
+        BOARD_COLOR = (45, 120, 70)
+        GRID_COLOR = (30, 30, 30)
+        PLAYER_BLACK_COLOR = (30, 30, 30)
+        PLAYER_WHITE_COLOR = (235, 235, 235)
+        LEGAL_MOVE_COLOR = (100, 220, 120)
+        LAST_MOVE_COLOR = (255, 200, 50)
+        WIN_LINE_COLOR = (50, 255, 50)
+        GAME_MODE_HUMAN_VS_HUMAN = 0
+        GAME_MODE_HUMAN_VS_AI = 1
+        GAME_MODE_AI_VS_AI = 2
+        DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+        "|"
+    }
+    03(update board.py){
+        "|"
+        # games/othello/board.py
+        from copy import deepcopy
+        from games.othello.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
+        class OthelloBoard:
+            def __init__(self):
+                self._board = []
+                self.reset()
+            def reset(self):
+                self._board = [[EMPTY for _ in range(BOARD_COLUMNS)] for _ in range(BOARD_ROWS)]
+                middle_row = BOARD_ROWS // 2
+                middle_column = BOARD_COLUMNS // 2
+                self._board[middle_row - 1][middle_column - 1] = PLAYER_WHITE
+                self._board[middle_row - 1][middle_column] = PLAYER_BLACK
+                self._board[middle_row][middle_column - 1] = PLAYER_BLACK
+                self._board[middle_row][middle_column] = PLAYER_WHITE
+            def get_cell(self, row, column):
+                if not self.is_valid_position(row, column):
+                    raise ValueError(f"Invalid board position: ({row}, {column})")
+                return self._board[row][column]
+            def set_cell(self, row, column, value):
+                if not self.is_valid_position(row, column):
+                    raise ValueError(f"Invalid board position: ({row}, {column})")
+                if value not in (EMPTY, PLAYER_BLACK, PLAYER_WHITE):
+                    raise ValueError(f"Invalid cell value: {value}")
+                self._board[row][column] = value
+            def is_valid_position(self, row, column):
+                return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+            def is_cell_empty(self, row, column):
+                return self.get_cell(row, column) == EMPTY
+            def is_board_full(self):
+                return self.get_empty_count() == 0
+            def get_available_moves(self):
+                moves = []
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        if self._board[row][column] == EMPTY:
+                            moves.append((row, column))
+                return moves
+            def get_empty_count(self):
+                count = 0
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        if self._board[row][column] == EMPTY:
+                            count += 1
+                return count
+            def count_stones(self, player):
+                if player not in (PLAYER_BLACK, PLAYER_WHITE):
+                    raise ValueError(f"Invalid player: {player}")
+                count = 0
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        if self._board[row][column] == player:
+                            count += 1
+                return count
+            def copy(self):
+                new_board = OthelloBoard()
+                new_board._board = deepcopy(self._board)
+                return new_board
+            def get_board_state(self):
+                return deepcopy(self._board)
+            def __str__(self):
+                symbols = {EMPTY: ".",PLAYER_BLACK: "B",PLAYER_WHITE: "W",}
+                rows = []
+                for row in self._board:
+                    rows.append(" ".join(symbols[cell] for cell in row))
+                return "\n".join(rows)
+        "|"
+    }
+    04(update rules.py){
+        "|"
+        # games/othello/rules.py
+        from engine.interfaces.game_result import GameResult
+        from games.othello.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
+        class OthelloRules:
+            _DIRECTIONS = ((-1, -1),(-1, 0),(-1, 1),(0, -1),(0, 1),(1, -1),(1, 0),(1, 1),)
+            @staticmethod
+            def get_opponent(player):
+                if player == PLAYER_BLACK:
+                    return PLAYER_WHITE
+                if player == PLAYER_WHITE:
+                    return PLAYER_BLACK
+                raise ValueError(f"Invalid player: {player}")
+            @classmethod
+            def is_valid_move(cls, board, row, column, player):
+                if player not in (PLAYER_BLACK, PLAYER_WHITE):
+                    return False
+                if not board.is_valid_position(row, column):
+                    return False
+                if not board.is_cell_empty(row, column):
+                    return False
+                return bool(cls.get_flips(board,row,column,player,))
+            @classmethod
+            def get_flips(cls, board, row, column, player):
+                if player not in (PLAYER_BLACK, PLAYER_WHITE):
+                    return []
+                if not board.is_valid_position(row, column):
+                    return []
+                if not board.is_cell_empty(row, column):
+                    return []
+                opponent = cls.get_opponent(player)
+                flips = []
+                for direction_row, direction_column in cls._DIRECTIONS:
+                    direction_flips = cls._get_direction_flips(board,row,column,player,opponent,direction_row,direction_column,)
+                    flips.extend(direction_flips)
+                return flips
+            @classmethod
+            def _get_direction_flips(cls,board,row,column,player,opponent,direction_row,direction_column,):
+                current_row = row + direction_row
+                current_column = column + direction_column
+                potential_flips = []
+                while board.is_valid_position(current_row,current_column,):
+                    cell = board.get_cell(current_row,current_column,)
+                    if cell == opponent:
+                        potential_flips.append((current_row, current_column))
+                    elif cell == player:
+                        if potential_flips:
+                            return potential_flips
+                        return []
+                    else:
+                        return []
+                    current_row += direction_row
+                    current_column += direction_column
+                return []
+            @classmethod
+            def get_legal_moves(cls, board, player):
+                legal_moves = []
+                if player not in (PLAYER_BLACK, PLAYER_WHITE):
+                    return legal_moves
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        if cls.is_valid_move(board,row,column,player,):
+                            legal_moves.append((row, column))
+                return legal_moves
+            @classmethod
+            def apply_move(cls, board, row, column, player):
+                if not cls.is_valid_move(board,row,column,player,):
+                    return False
+                flips = cls.get_flips(board,row,column,player,)
+                board.set_cell(row,column,player,)
+                for flip_row, flip_column in flips:
+                    board.set_cell(flip_row,flip_column,player,)
+                return True
+            @classmethod
+            def can_player_move(cls, board, player):
+                return bool(cls.get_legal_moves(board,player,))
+            @classmethod
+            def is_game_over(cls, board):
+                if board.is_board_full():
+                    return True
+                return (not cls.can_player_move(board,PLAYER_BLACK,) and not cls.can_player_move( board,PLAYER_WHITE,))
+            @staticmethod
+            def get_winner(board):
+                black_count = board.count_stones(PLAYER_BLACK)
+                white_count = board.count_stones(PLAYER_WHITE)
+                if black_count > white_count:
+                    return PLAYER_BLACK
+                if white_count > black_count:
+                    return PLAYER_WHITE
+                return None
+            @classmethod
+            def is_draw(cls, board):
+                if not cls.is_game_over(board):
+                    return False
+                black_count = board.count_stones(PLAYER_BLACK)
+                white_count = board.count_stones(PLAYER_WHITE)
+                return black_count == white_count
+            @classmethod
+            def evaluate_game(cls, board):
+                result = GameResult()
+                if not cls.is_game_over(board):
+                    return result
+                result.game_over = True
+                black_count = board.count_stones(PLAYER_BLACK)
+                white_count = board.count_stones(PLAYER_WHITE)
+                if black_count > white_count:
+                    result.winner = PLAYER_BLACK
+                elif white_count > black_count:
+                    result.winner = PLAYER_WHITE
+                else:
+                    result.draw = True
+                return result
+        "|"
+    }
+    05(update game.py){
+        "|"
+        # games/othello/game.py
+        from engine.interfaces.game_interface import GameInterface
+        from engine.interfaces.game_result import GameResult
+        from games.othello.ai import OthelloAI
+        from games.othello.board import OthelloBoard
+        from games.othello.board_renderer import OthelloBoardRenderer
+        from games.othello.constants import (FIRST_PLAYER,GAME_DRAW,GAME_MODE_HUMAN_VS_AI,GAME_MODE_HUMAN_VS_HUMAN,GAME_MODE_AI_VS_AI,GAME_NOT_STARTED,GAME_OVER,GAME_RUNNING,PLAYER_BLACK,PLAYER_WHITE,)
+        from games.othello.human_player import HumanPlayer
+        from games.othello.overlay_renderer import OthelloOverlayRenderer
+        from games.othello.rules import OthelloRules
+        class OthelloGame(GameInterface):
+            def __init__(self, renderer, game_mode=GAME_MODE_HUMAN_VS_HUMAN):
+                self.renderer = renderer
+                self.game_mode = game_mode
+                self.board = OthelloBoard()
+                self.current_player = FIRST_PLAYER
+                self.next_starting_player = FIRST_PLAYER
+                self.result = GameResult()
+                self.game_state = GAME_NOT_STARTED
+                self.move_count = 0
+                self.consecutive_passes = 0
+                self.board_renderer = OthelloBoardRenderer()
+                self.overlay_renderer = OthelloOverlayRenderer()
+                self.human_player = HumanPlayer(self.board_renderer)
+                self.ai = OthelloAI()
+            def initialize(self):
+                if self.game_mode in (GAME_MODE_HUMAN_VS_AI,GAME_MODE_AI_VS_AI,):
+                    self.ai.initialize()
+                self.reset()
+            def reset(self):
+                self.board.reset()
+                self.current_player = self.choose_starting_player()
+                self.next_starting_player = (PLAYER_WHITE if self.current_player == PLAYER_BLACK else PLAYER_BLACK)
+                self.result.reset()
+                self.game_state = GAME_RUNNING
+                self.move_count = 0
+                self.consecutive_passes = 0
+                self.board_renderer.reset()
+                self.overlay_renderer.reset()
+                if self.game_mode in (GAME_MODE_HUMAN_VS_AI,GAME_MODE_AI_VS_AI,):
+                    self.ai.reset()
+                    self.ai.initialize()
+            def shutdown(self):
+                pass
+            def update(self):
+                if self.is_frozen():
+                    return
+                self.update_current_player()
+            def render(self):
+                self.board_renderer.render(self.renderer,self.board,self.result,)
+                self.overlay_renderer.render(self.renderer,self.result,self.board,)
+            def make_move(self, row, column):
+                if self.is_frozen():
+                    return False
+                if not self.board.is_valid_position(row, column):
+                    return False
+                if not OthelloRules.is_valid_move(self.board,row,column,self.current_player,):
+                    return False
+                if not OthelloRules.apply_move(self.board,row,column,self.current_player,):
+                    return False
+                self.move_count += 1
+                self.consecutive_passes = 0
+                self.result = OthelloRules.evaluate_game(self.board)
+                if self.result.game_over:
+                    self.game_state = GAME_DRAW if self.result.draw else GAME_OVER
+                    return True
+                self.switch_player()
+                if not self.get_legal_moves():
+                    self.pass_turn()
+                return True
+            def switch_player(self):
+                if self.current_player == PLAYER_BLACK:
+                    self.current_player = PLAYER_WHITE
+                else:
+                    self.current_player = PLAYER_BLACK
+            def choose_starting_player(self):
+                player = self.next_starting_player
+                if player == PLAYER_BLACK:
+                    self.next_starting_player = PLAYER_WHITE
+                else:
+                    self.next_starting_player = PLAYER_BLACK
+                return player
+            def pass_turn(self):
+                if self.is_frozen():
+                    return False
+                if self.get_legal_moves():
+                    return False
+                self.consecutive_passes += 1
+                if self.consecutive_passes >= 2:
+                    self.result = OthelloRules.evaluate_game(self.board)
+                    self.game_state = (GAME_DRAW if self.result.draw else GAME_OVER)
+                    return True
+                self.switch_player()
+                return True
+            def get_current_controller(self):
+                if self.game_mode == GAME_MODE_HUMAN_VS_HUMAN:
+                    return self.human_player
+                if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+                    if self.current_player == PLAYER_BLACK:
+                        return self.human_player
+                    return self.ai
+                if self.game_mode == GAME_MODE_AI_VS_AI:
+                    return self.ai
+                return None
+            def update_current_player(self):
+                controller = self.get_current_controller()
+                if controller is None:
+                    return
+                action = controller.get_action(self)
+                if action is None:
+                    return
+                if not isinstance(action, tuple):
+                    return
+                if len(action) != 2:
+                    return
+                row, column = action
+                self.make_move(row, column)
+            def get_state(self):
+                return {"board": self.board.get_board_state(),"current_player": self.current_player,"winner": self.result.winner,"game_state": self.game_state,"game_over": self.result.game_over,"draw": self.result.draw,"move_count": self.move_count,"consecutive_passes": self.consecutive_passes,"black_count": self.board.count_stones(PLAYER_BLACK),"white_count": self.board.count_stones(PLAYER_WHITE),"legal_moves": self.get_legal_moves(),}
+            def get_board(self):
+                return self.board
+            def get_current_player(self):
+                return self.current_player
+            def get_winner(self):
+                return self.result.winner
+            def get_result(self):
+                return self.result
+            def get_game_state(self):
+                return self.game_state
+            def get_legal_moves(self):
+                return OthelloRules.get_legal_moves(self.board,self.current_player,)
+            def get_black_count(self):
+                return self.board.count_stones(PLAYER_BLACK)
+            def get_white_count(self):
+                return self.board.count_stones(PLAYER_WHITE)
+            def is_game_over(self):
+                return self.result.game_over
+            def is_frozen(self):
+                return self.result.game_over
+        "|"
+    }
+    06(update ai.py){
+        "|"
+        # games/othello/ai.py
+        import random
+        from engine.interfaces.ai_interface import AIInterface
+        from games.othello.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+        from games.othello.rules import OthelloRules
+        class OthelloAI(AIInterface):
+            def __init__(self):
+                self.initialized = False
+            def initialize(self):
+                self.initialized = True
+            def reset(self):
+                self.initialized = False
+            def select_action(self, game_state):
+                if not self.initialized:
+                    return None
+                if not game_state:
+                    return None
+                board_state = game_state.get("board")
+                if board_state is None:
+                    return None
+                player = game_state.get("current_player")
+                if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+                    return None
+                legal_moves = self._get_legal_moves(board_state,player,)
+                if not legal_moves:
+                    return None
+                return random.choice(legal_moves)
+            def _get_legal_moves(self, board_state, player):
+                from games.othello.board import OthelloBoard
+                board = OthelloBoard()
+                board._board = [list(row) for row in board_state]
+                return OthelloRules.get_legal_moves(board,player,)
+            def get_action(self, game):
+                return self.select_action(game.get_state())
+            def learn(self,state,action,reward,next_state,):
+                pass
+        "|"
+    }
+    07(update human_player.py){
+        "|"
+        # games/othello/human_player.py
+        from engine.core.input import Input
+        class HumanPlayer:
+            def __init__(self, board_renderer):
+                self.board_renderer = board_renderer
+            def get_action(self, game):
+                if game.is_frozen():
+                    return None
+                if not Input.is_left_mouse_clicked():
+                    return None
+                mouse_x, mouse_y = Input.get_mouse_position()
+                return self.board_renderer.screen_to_cell(mouse_x,mouse_y,)
+        "|"
+    }
+    08(update board_renderer.py){
+        "|"
+        # games/othello/board_renderer.py
+        from games.othello.constants import (BOARD_COLUMNS,BOARD_COLOR,BOARD_PADDING,BOARD_ROWS,CELL_SIZE,DISC_RADIUS,GRID_COLOR,LEGAL_MOVE_COLOR,LAST_MOVE_COLOR,PLAYER_BLACK,PLAYER_BLACK_COLOR,PLAYER_WHITE,PLAYER_WHITE_COLOR,)
+        class OthelloBoardRenderer:
+            def __init__(self):
+                self.origin_x = BOARD_PADDING
+                self.origin_y = BOARD_PADDING
+            def render(self, renderer, board, result=None):
+                self._render_board(renderer)
+                self._render_discs(renderer, board)
+            def _render_board(self, renderer):
+                board_width = ((BOARD_COLUMNS - 1) * CELL_SIZE)
+                board_height = ((BOARD_ROWS - 1) * CELL_SIZE)
+                half_cell = CELL_SIZE / 2
+                renderer.draw_filled_rectangle((self.origin_x - half_cell,self.origin_y - half_cell,),(board_width + CELL_SIZE,board_height + CELL_SIZE,),BOARD_COLOR,)
+                for row in range(BOARD_ROWS):
+                    y = (self.origin_y + row * CELL_SIZE)
+                    renderer.draw_line((self.origin_x,y,),(self.origin_x + board_width,y,),GRID_COLOR,)
+                for column in range(BOARD_COLUMNS):
+                    x = (self.origin_x + column * CELL_SIZE)
+                    renderer.draw_line((x,self.origin_y,),(x,self.origin_y + board_height,),GRID_COLOR,)
+            def _render_discs(self,renderer,board,):
+                for row in range(BOARD_ROWS):
+                    for column in range(BOARD_COLUMNS):
+                        cell = board.get_cell(row,column,)
+                        if cell == PLAYER_BLACK:
+                            color = PLAYER_BLACK_COLOR
+                        elif cell == PLAYER_WHITE:
+                            color = PLAYER_WHITE_COLOR
+                        else:
+                            continue
+                        center = self.get_cell_center(row,column,)
+                        renderer.draw_filled_circle(center,DISC_RADIUS,color,)
+            def render_legal_moves(self,renderer,legal_moves,):
+                if not legal_moves:
+                    return
+                indicator_radius = (DISC_RADIUS * 0.20)
+                for row, column in legal_moves:
+                    center = self.get_cell_center(row,column,)
+                    renderer.draw_filled_circle(center,indicator_radius,LEGAL_MOVE_COLOR,)
+            def render_last_move(self,renderer,move,):
+                if move is None:
+                    return
+                row, column = move
+                center = self.get_cell_center(row,column,)
+                renderer.draw_filled_circle(center,DISC_RADIUS * 0.10,LAST_MOVE_COLOR,)
+            def get_cell_center(self,row,column,):
+                if not 0 <= row < BOARD_ROWS:
+                    raise ValueError(f"Invalid row: {row}")
+                if not 0 <= column < BOARD_COLUMNS:
+                    raise ValueError(f"Invalid column: {column}")
+                x = (self.origin_x + column * CELL_SIZE)
+                y = (self.origin_y + row * CELL_SIZE)
+                return (x,y,)
+            def contains_point(self,x,y,):
+                board_width = ((BOARD_COLUMNS - 1) * CELL_SIZE)
+                board_height = ((BOARD_ROWS - 1) * CELL_SIZE)
+                half_cell = CELL_SIZE / 2
+                return (self.origin_x - half_cell <= x <= self.origin_x + board_width + half_cell and self.origin_y - half_cell <= y <= self.origin_y + board_height + half_cell)
+            def screen_to_cell(self,x,y,):
+                if not self.contains_point(x, y):
+                    return None
+                column = round((x - self.origin_x) / CELL_SIZE)
+                row = round((y - self.origin_y) / CELL_SIZE)
+                if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+                    return None
+                return (row,column,)
+            def reset(self):
+                pass
+        "|"
+    }
+    09(update overlay_renderer.py){
+        "|"
+        # games/othello/overlay_renderer.py
+        from games.othello.constants import (GAME_DRAW,GAME_OVER,PLAYER_BLACK,PLAYER_WHITE,)
+        class OthelloOverlayRenderer:
+            def __init__(self):
+                self.message = ""
+                self.visible = False
+            def render(self, renderer, result, board):
+                if result is None:
+                    return
+                if not result.game_over:
+                    return
+                message = self._get_game_over_message(result,board,)
+                if not message:
+                    return
+                renderer.draw_overlay_message(message)
+            def _get_game_over_message(self, result, board):
+                black_count = board.count_stones(PLAYER_BLACK)
+                white_count = board.count_stones(PLAYER_WHITE)
+                if result.draw:
+                    return (f"Draw-Black:{black_count}"f"White:{white_count}")
+                if result.winner == PLAYER_BLACK:
+                    return (f"Black Wins-Black:{black_count}"f"White:{white_count}")
+                if result.winner == PLAYER_WHITE:
+                    return (f"White Wins-Black:{black_count}"f"White:{white_count}")
+                return (f"Game Over-Black:{black_count}"f"White:{white_count}")
+            def reset(self):
+                self.message = ""
+                self.visible = False
+        "|"
+    }
+    10(update primitive_renderer.py){
+        "|"
+        #engine/rendering/primitive_rendering.py
+        from __future__ import annotations
+        import math
+        import moderngl
+        from engine.rendering.mesh import Mesh
+        from engine.rendering.shader_manager import ShaderManager
+        from engine.rendering.camera2d import Camera2D
+        class PrimitiveRenderer:
+            def __init__(self,context: moderngl.Context,camera: Camera2D,):
+                self.context = context
+                self.camera = camera
+                self.shader_manager = ShaderManager(context)
+                self.program = self.shader_manager.load_program("primitive","engine/rendering/shaders/primitive.vert","engine/rendering/shaders/primitive.frag",)
+                self.mesh = Mesh(context=self.context,program=self.program,vertices=[0.0, 0.0],dynamic=True,)
+            def _set_color(self, color):
+                if len(color) == 3:
+                    r, g, b = color
+                    a = 255
+                else:
+                    r, g, b, a = color
+                self.program["color"].value = (r / 255,g / 255,b / 255,a / 255,)
+            def _set_projection(self):
+                projection = self.camera.get_projection()
+                self.program["projection"].write(projection.to_bytes())
+            def begin_frame(self):
+                self._set_projection()
+            def end_frame(self):
+                pass
+            def draw_line(self,start,end,color,):
+                self._set_color(color)
+                vertices = [start[0],start[1],end[0],end[1],]
+                self.mesh.update_vertices(vertices)
+                self.mesh.render(moderngl.LINES)
+            def draw_rectangle(self,position,size,color,):
+                x, y = position
+                w, h = size
+                self.draw_line((x, y),(x + w, y),color,)
+                self.draw_line((x + w, y),(x + w, y + h),color,)
+                self.draw_line((x + w, y + h),(x, y + h),color,)
+                self.draw_line((x, y + h),(x, y),color,)
+            def draw_filled_rectangle(self,position,size,color,):
+                self._set_color(color)
+                x, y = position
+                width, height = size
+                vertices = [x,y,x + width,y,x,y + height,x,y + height,x + width,y,x + width,y + height,]
+                self.mesh.update_vertices(vertices)
+                self.mesh.render(moderngl.TRIANGLES)
+            def draw_cross(self,center,size,color,):
+                half = size / 2
+                x = center[0]
+                y = center[1]
+                self.draw_line((x - half, y - half),(x + half, y + half),color,)
+                self.draw_line((x + half, y - half),(x - half, y + half),color,)
+            def draw_circle(self,center,radius,color,segments=64,):
+                self._set_color(color)
+                vertices = []
+                for i in range(segments + 1):
+                    angle = ((i / segments) * math.pi * 2)
+                    x = (center[0] + math.cos(angle) * radius)
+                    y = (center[1] + math.sin(angle) * radius)
+                    vertices.extend([x,y,])
+                self.mesh.update_vertices(vertices)
+                self.mesh.render(moderngl.LINE_STRIP)
+            def draw_filled_circle(self,center,radius,color,segments=64,):
+                self._set_color(color)
+                vertices = [center[0],center[1],]
+                for i in range(segments + 1):
+                    angle = ((i / segments) * math.pi * 2)
+                    x = (center[0] + math.cos(angle) * radius)
+                    y = (center[1] + math.sin(angle) * radius)
+                    vertices.extend([x,y,])
+                self.mesh.update_vertices(vertices)
+                self.mesh.render(moderngl.TRIANGLE_FAN)
+            def draw_grid(self,origin,rows,columns,cell_size,color,):
+                ox, oy = origin
+                width = columns * cell_size
+                height = rows * cell_size
+                for row in range(rows + 1):
+                    y = oy + row * cell_size
+                    self.draw_line((ox, y),(ox + width, y),color,)
+                for column in range(columns + 1):
+                    x = ox + column * cell_size
+                    self.draw_line((x, oy),(x, oy + height),color,)
+            def release(self):
+                self.mesh.release()
+                self.shader_manager.release()
+        "|"
+    }
+    11(update renderer.py){
+        "|"
+        #engine/core/renderer.py
+        import moderngl
+        from engine.rendering.text_renderer import TextRenderer
+        from engine.rendering.camera2d import Camera2D
+        from engine.rendering.primitive_renderer import PrimitiveRenderer
+        from engine.utils.logger import Logger
+        from engine.rendering.overlay_renderer import OverlayRenderer
+        class Renderer:
+            def __init__(self):
+                self.ctx = None
+                self.camera = None
+                self.primitives = None
+                self.text = None
+                self.overlay = None
+            def initialize(self, width: int, height: int, ):
+                self.ctx = moderngl.create_context()
+                self.ctx.enable(moderngl.BLEND)
+                self.ctx.blend_func = (moderngl.SRC_ALPHA, moderngl.ONE_MINUS_SRC_ALPHA, )
+                self.overlay = OverlayRenderer(self)
+                Logger.info(f"[Renderer] OpenGL Version: {self.ctx.info['GL_VERSION']}")
+                self.camera = Camera2D(width, height)
+                self.primitives = PrimitiveRenderer(self.ctx, self.camera, )
+                self.text = TextRenderer(self.ctx,self.camera, )
+                Logger.info("[Renderer] Rendering system initialized." )
+            def begin_frame(self):
+                self.ctx.clear(red=0.08,green=0.08,blue=0.10,alpha=1.0, )
+                self.primitives.begin_frame()
+            def end_frame(self):
+                self.primitives.end_frame()
+            def draw_line(self,start,end,color, ):
+                self.primitives.draw_line(start,end,color, )
+            def draw_rectangle(self,position,size,color, ):
+                self.primitives.draw_rectangle(position,size,color, )
+            def draw_filled_rectangle(self,position,size,color, ):
+                self.primitives.draw_filled_rectangle(position,size,color, )
+            def draw_circle(self,center,radius,color,segments=64, ):
+                self.primitives.draw_circle(center,radius,color,segments, )
+            def draw_filled_circle(self,center,radius,color,segments=64,):
+                self.primitives.draw_filled_circle(center,radius,color,segments,)
+            def draw_cross(self,center,size,color, ):
+                self.primitives.draw_cross(center,size,color, )
+            def draw_grid(self,origin,rows,columns,cell_size,color, ):
+                self.primitives.draw_grid(origin,rows,columns,cell_size,color, )
+            def draw_text(self,text,position,size=32,color=(255, 255, 255),font_name=None, ):
+                self.text.draw_text(text=text,position=position,size=size,color=color,font_name=font_name,)
+            def draw_overlay_message(self,message,color=(255, 255, 255),size=56, ):
+                self.overlay.draw_message(message=message,color=color,size=size, )
+            def resize(self,width,height, ):
+                self.camera.resize(width,height, )
+            def shutdown(self):
+                if self.primitives is not None:
+                    self.primitives.release()
+                if self.text is not None:
+                    self.text.release()
+                if self.overlay is not None:
+                    self.overlay.release()
+                Logger.info("[Renderer] Shutdown")
+        "|"
+    }
+    12(testing){
+        run main.py
+        output
+        "|"
+        pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+        Hello from the pygame community. https://www.pygame.org/contribute.html
+        2026-09-07 13:07:38 [INFO] Logger Initialized
+        2026-09-07 13:07:38 [INFO] [GameManager] Initializing...
+        2026-09-07 13:07:38 [INFO] [Config] Loaded
+        2026-09-07 13:07:40 [INFO] [Window] Created 1280x720
+        2026-09-07 13:07:40 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+        2026-09-07 13:07:40 [INFO] [ShaderManager] Loaded shader 'primitive'.
+        2026-09-07 13:07:40 [INFO] [Mesh] GPU mesh created.
+        2026-09-07 13:07:40 [INFO] [ShaderManager] Loaded shader 'text'.
+        2026-09-07 13:07:40 [INFO] [Mesh] GPU mesh created.
+        2026-09-07 13:07:40 [INFO] [Renderer] Rendering system initialized.
+        2026-09-07 13:07:40 [INFO] [Input] Initialized
+        2026-09-07 13:07:40 [INFO] [AssetManager] Initialized
+        2026-09-07 13:07:40 [INFO] [Scene] Enter: Boot Scene
+        2026-09-07 13:07:40 [INFO] [BootScene] Engine initialization complete.
+        2026-09-07 13:07:40 [INFO] [BootScene] Opening Main Menu.
+        2026-09-07 13:07:40 [INFO] [Scene] Exit: Boot Scene
+        2026-09-07 13:07:40 [INFO] [Scene] Enter: Main Menu
+        2026-09-07 13:07:40 [INFO] [MainMenuScene] Ready
+        2026-09-07 13:07:40 [INFO] [GameManager] Running...
+        2026-09-07 13:07:43 [INFO] [MainMenuScene] Selected Othello
+        2026-09-07 13:07:43 [INFO] [Scene] Exit: Main Menu
+        2026-09-07 13:07:43 [INFO] [Scene] Enter: Game Mode
+        2026-09-07 13:07:43 [INFO] [GameModeScene] Choosing mode for Othello
+        2026-09-07 13:07:47 [INFO] [GameModeScene] Mode: Human vs AI
+        2026-09-07 13:07:47 [INFO] [Scene] Exit: Game Mode
+        2026-09-07 13:07:47 [INFO] [Scene] Enter: Game Scene
+        2026-09-07 13:07:47 [INFO] [GameScene] Initializing game.
+        2026-09-07 13:07:47 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+        2026-09-07 13:07:47 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+        2026-09-07 13:09:20 [INFO] [GameManager] Shutting down...
+        2026-09-07 13:09:20 [INFO] [GameManager] Runtime: 101.33s
+        2026-09-07 13:09:20 [INFO] [Mesh] Released.
+        2026-09-07 13:09:20 [INFO] [ShaderManager] Released 'primitive'.
+        2026-09-07 13:09:20 [INFO] [Mesh] Released.
+        2026-09-07 13:09:20 [INFO] [ShaderManager] Released 'text'.
+        2026-09-07 13:09:20 [INFO] [Renderer] Shutdown
+        2026-09-07 13:09:20 [INFO] [Window] Destroyed
+        "|"
+    }
+    PHASE 6 — OTHELLO SUMMARY
 
+    Phase 6 of MindWar Arena focused on implementing Othello, a deterministic two-player strategic board game, as a fully integrated game within the existing MindWar Arena architecture. The objective of this phase was to implement the complete Othello gameplay system, including board representation, game rules, player management, AI interaction, rendering, game-state management, and integration with the existing engine while maintaining the project's offline and modular architecture.
+
+    The Othello game was implemented using an 8×8 board with two players, Black and White. The board maintains three possible cell states: empty, Black disc, and White disc. The standard Othello starting position was implemented with four discs placed in the center of the board. The board component is responsible strictly for maintaining and manipulating board state, including retrieving and modifying cells, checking valid positions, determining whether the board is full, counting empty cells, counting each player's discs, creating board copies, and returning safe board-state representations. This keeps board-state management separate from game-specific rule logic.
+
+    The Othello rules system implements the core mechanics of the game. Eight directional vectors are used to examine horizontal, vertical, and diagonal lines surrounding a potential move. A move is considered legal only when the selected cell is empty and the move brackets at least one opponent disc between the newly placed disc and an existing disc belonging to the current player. The rules system determines exactly which opponent discs must be flipped before applying a move. This supports single-direction and multi-direction captures, ensuring that a single move can correctly flip discs across several directions simultaneously.
+
+    The rules system also handles the special pass-turn mechanism of Othello. If the current player has no legal moves but the opponent still has available moves, the current player must pass and the opponent continues. The game is considered finished when the board is completely occupied or when neither player has a legal move. At game completion, the number of Black and White discs is counted and the player with the greater number of discs is declared the winner. If both players have the same number of discs, the game is recorded as a draw. Othello therefore uses disc-count evaluation rather than a traditional winning-cell or winning-line system.
+
+    The main Othello game controller integrates the board, rules, AI, human controller, renderers, and common GameInterface. It manages the current player, starting-player rotation, move count, consecutive passes, game state, and GameResult. The controller validates moves before applying them, updates the board, evaluates the game state, switches players, and automatically handles situations where the next player has no legal move. The game also supports resetting and restarting while maintaining the project's established starting-player alternation behavior.
+
+    Othello supports the project's three standard game modes: Human vs Human, Human vs AI, and AI vs AI. The human player uses mouse input that is converted into board coordinates through the Othello board renderer. Invalid clicks and illegal moves are rejected without modifying the game state. The AI currently uses a Random AI strategy that obtains the current board state, determines the legal moves available to the current player, and selects one of those legal moves. This establishes a valid AI foundation while keeping the game compatible with the project's future configurable AI difficulty architecture.
+
+    The visual system was implemented specifically for Othello while following the existing rendering architecture. The board renderer displays the green Othello board, grid lines, and Black and White discs. A filled-circle rendering capability was added to the engine's primitive renderer and exposed through the core renderer because Othello requires filled circular discs rather than the existing primitive shapes. The renderer also contains support for legal-move indicators and last-move indicators, allowing the Othello interface to be expanded without mixing rendering logic into the rules system.
+
+    An Othello overlay renderer was also implemented to display the final game result. When the game ends, the overlay reports whether Black won, White won, or the game ended in a draw, together with the final Black and White disc counts. This keeps result presentation separate from the game controller and follows the modular rendering architecture used throughout MindWar Arena.
+
+    Othello was integrated into the existing Game Registry and game-selection system, allowing it to be launched through the normal MindWar Arena flow rather than operating as an isolated module. Runtime verification confirmed that Othello can be selected through the application's normal menu system and launched in both Human vs Human and Human vs AI modes. The application initialized the engine, renderer, OpenGL context, shaders, input system, and Othello scenes successfully and shut down cleanly during the verified runtime sessions.
+
+    The most important verification stage of Phase 6 was automated testing. The Othello test suite was expanded and cleaned to cover board behavior, move validation, directional flipping, multi-direction flipping, blocked paths, invalid moves, pass-turn behavior, game termination, winner and draw determination, AI legal-move selection, game-state generation, and game-controller behavior. The final verified test execution produced 99 tests with 99 passing, 0 failures, and 0 errors, confirming that the implemented Othello logic and associated components satisfy the tested requirements.
+
+    With the successful completion of the implementation, integration, runtime verification, and automated testing, Phase 6 — Othello is complete. The project now contains six implemented strategic board games: Tic-Tac-Toe, Connect Four, Gomoku, Pente, and Othello, in addition to the continuing development roadmap for the remaining games. The next development stage is Phase 7 — Checkers, which introduces more complex movement interactions such as mandatory captures, multi-jump capture sequences, and king promotion.
+
+    PHASE 6 — OTHELLO CHECKLIST
+    STEP 1 — Project Architecture
+    [✓] Othello module created inside games/othello.
+    [✓] Standard game architecture followed.
+    [✓] Required source files created.
+    [✓] Module imports verified.
+    [✓] Othello integrated with existing engine architecture.
+    STEP 2 — Constants
+    [✓] Game name and version defined.
+    [✓] 8×8 board dimensions defined.
+    [✓] Empty, Black, and White states defined.
+    [✓] Player constants defined.
+    [✓] Game-state constants defined.
+    [✓] AI constants defined.
+    [✓] Rendering constants defined.
+    [✓] Game-mode constants defined.
+    STEP 3 — Board System
+    [✓] 8×8 board implemented.
+    [✓] Standard initial Othello position implemented.
+    [✓] Cell access implemented.
+    [✓] Cell modification implemented.
+    [✓] Position validation implemented.
+    [✓] Empty-cell detection implemented.
+    [✓] Board-full detection implemented.
+    [✓] Empty-cell counting implemented.
+    [✓] Player-disc counting implemented.
+    [✓] Board copying implemented.
+    [✓] Safe board-state retrieval implemented.
+    STEP 4 — Rules System
+    [✓] Eight movement directions implemented.
+    [✓] Opponent detection implemented.
+    [✓] Legal-move validation implemented.
+    [✓] Flip detection implemented.
+    [✓] Directional flip detection implemented.
+    [✓] Multi-direction flipping implemented.
+    [✓] Invalid/blocked paths handled.
+    [✓] Legal-move generation implemented.
+    [✓] Move application implemented.
+    [✓] Player-move availability implemented.
+    [✓] Pass condition implemented.
+    [✓] Game-over detection implemented.
+    [✓] Winner detection implemented.
+    [✓] Draw detection implemented.
+    [✓] GameResult integration implemented.
+    STEP 5 — Game Controller
+    [✓] GameInterface implemented.
+    [✓] Board integrated.
+    [✓] Rules integrated.
+    [✓] Current-player management implemented.
+    [✓] Starting-player rotation implemented.
+    [✓] Move counter implemented.
+    [✓] Consecutive-pass tracking implemented.
+    [✓] Automatic player switching implemented.
+    [✓] Automatic pass handling implemented.
+    [✓] Game-state management implemented.
+    [✓] Reset functionality implemented.
+    [✓] Game-result handling implemented.
+    [✓] State retrieval implemented.
+    [✓] Game freeze after completion implemented.
+    STEP 6 — AI
+    [✓] AIInterface implemented.
+    [✓] Othello AI implemented.
+    [✓] AI initialization implemented.
+    [✓] AI reset implemented.
+    [✓] Legal moves obtained from game state.
+    [✓] AI restricted to legal moves.
+    [✓] Random legal-move selection implemented.
+    [✓] AI action integrated with game controller.
+    STEP 7 — Human Player
+    [✓] Human controller implemented.
+    [✓] Mouse input integrated.
+    [✓] Screen-to-board coordinate conversion integrated.
+    [✓] Invalid board clicks handled.
+    [✓] Illegal moves rejected.
+    [✓] Human controller integrated with game modes.
+    STEP 8 — Rendering
+    [✓] Othello board renderer implemented.
+    [✓] Green board rendered.
+    [✓] Grid rendered.
+    [✓] Black discs rendered.
+    [✓] White discs rendered.
+    [✓] Filled-circle primitive added to engine renderer.
+    [✓] Legal-move rendering support implemented.
+    [✓] Last-move rendering support implemented.
+    [✓] Board coordinate conversion implemented.
+    [✓] Overlay renderer implemented.
+    [✓] Winner message implemented.
+    [✓] Draw message implemented.
+    [✓] Final disc counts displayed.
+    STEP 9 — Game Integration
+    [✓] Othello added to GameRegistry.
+    [✓] Othello available in game selection.
+    [✓] Game mode selection integrated.
+    [✓] Normal game-scene flow verified.
+    [✓] Human vs Human verified.
+    [✓] Human vs AI verified.
+    STEP 10 — Testing
+    [✓] Board tests.
+    [✓] Move validation tests.
+    [✓] Flip tests.
+    [✓] Multi-direction flip tests.
+    [✓] Invalid-move tests.
+    [✓] Pass-turn tests.
+    [✓] Game termination tests.
+    [✓] Winner tests.
+    [✓] Draw tests.
+    [✓] AI tests.
+    [✓] Game-controller tests.
+    [✓] Integration tests.
+    [✓] Automated test suite completed.
+    [✓] 99/99 tests passed.
+    [✓] 0 failures.
+    [✓] 0 errors.
+    STEP 11 — Final Verification
+    [✓] Runtime launch verified.
+    [✓] Rendering verified.
+    [✓] Human vs Human runtime verified.
+    [✓] Human vs AI runtime verified.
+    [✓] Clean shutdown verified.
+    [✓] Phase 6 testing completed.
+    [✓] PHASE 6 — OTHELLO COMPLETE.
 }
 07(checkers){
 

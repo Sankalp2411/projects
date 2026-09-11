@@ -1,8 +1,8 @@
 
 ================================================================================
-Timestamp: 2026-08-28 14:28:20
+Timestamp: 2026-09-04 14:38:34
 
-Exception: OthelloGame() takes no arguments
+Exception: Renderer.draw_rectangle() takes 4 positional arguments but 7 were given
 
 Traceback (most recent call last):
   File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
@@ -11,16 +11,92 @@ Traceback (most recent call last):
   File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
     self.game_manager.run()
     ~~~~~~~~~~~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
-    self.update()
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 54, in run
+    self.render()
     ~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
-    self.scene_manager.update()
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 46, in render
+    self.scene_manager.render()
     ~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
-    self.current_scene.update()
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 17, in render
+    self.current_scene.render()
     ~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 30, in update
-    game = game_class(renderer =self.renderer,game_mode=mode,)
-TypeError: OthelloGame() takes no arguments
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 30, in render
+    self.game.render()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\othello\game.py", line 106, in render
+    self.board_renderer.render(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.renderer,
+        ^^^^^^^^^^^^^^
+        self.board,
+        ^^^^^^^^^^^
+        self.result,
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\othello\board_renderer.py", line 31, in render
+    self._render_board(renderer)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\othello\board_renderer.py", line 42, in _render_board
+    renderer.draw_rectangle(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self.origin_x,
+        ^^^^^^^^^^^^^^
+    ...<4 lines>...
+        BOARD_LINE_WIDTH,
+        ^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Renderer.draw_rectangle() takes 4 positional arguments but 7 were given
+
+
+================================================================================
+Timestamp: 2026-09-04 14:39:04
+
+Exception: Renderer.draw_rectangle() takes 4 positional arguments but 7 were given
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 54, in run
+    self.render()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 46, in render
+    self.scene_manager.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 17, in render
+    self.current_scene.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 30, in render
+    self.game.render()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\othello\game.py", line 106, in render
+    self.board_renderer.render(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.renderer,
+        ^^^^^^^^^^^^^^
+        self.board,
+        ^^^^^^^^^^^
+        self.result,
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\othello\board_renderer.py", line 31, in render
+    self._render_board(renderer)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\othello\board_renderer.py", line 42, in _render_board
+    renderer.draw_rectangle(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self.origin_x,
+        ^^^^^^^^^^^^^^
+    ...<4 lines>...
+        BOARD_LINE_WIDTH,
+        ^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: Renderer.draw_rectangle() takes 4 positional arguments but 7 were given
 

@@ -1,151 +1,292 @@
 
 ============================================================
-2026-08-26 21:49:09 [INFO] Logger Initialized
-2026-08-26 21:49:09 [INFO] [GameManager] Initializing...
-2026-08-26 21:49:09 [INFO] [Config] Loaded
-2026-08-26 21:49:10 [INFO] [Window] Created 1280x720
-2026-08-26 21:49:10 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
-2026-08-26 21:49:10 [INFO] [ShaderManager] Loaded shader 'primitive'.
-2026-08-26 21:49:10 [INFO] [Mesh] GPU mesh created.
-2026-08-26 21:49:10 [INFO] [ShaderManager] Loaded shader 'text'.
-2026-08-26 21:49:10 [INFO] [Mesh] GPU mesh created.
-2026-08-26 21:49:10 [INFO] [Renderer] Rendering system initialized.
-2026-08-26 21:49:10 [INFO] [Input] Initialized
-2026-08-26 21:49:10 [INFO] [AssetManager] Initialized
-2026-08-26 21:49:10 [INFO] [Scene] Enter: Boot Scene
-2026-08-26 21:49:10 [INFO] [BootScene] Engine initialization complete.
-2026-08-26 21:49:10 [INFO] [BootScene] Opening Main Menu.
-2026-08-26 21:49:10 [INFO] [Scene] Exit: Boot Scene
-2026-08-26 21:49:10 [INFO] [Scene] Enter: Main Menu
-2026-08-26 21:49:10 [INFO] [MainMenuScene] Ready
-2026-08-26 21:49:10 [INFO] [GameManager] Running...
-2026-08-26 21:49:19 [INFO] [MainMenuScene] Selected Connect Four
-2026-08-26 21:49:19 [INFO] [Scene] Exit: Main Menu
-2026-08-26 21:49:19 [INFO] [Scene] Enter: Game Mode
-2026-08-26 21:49:19 [INFO] [GameModeScene] Choosing mode for Connect Four
-2026-08-26 21:49:21 [INFO] [GameModeScene] Mode: Human vs Human
-2026-08-26 21:49:21 [INFO] [Scene] Exit: Game Mode
-2026-08-26 21:49:21 [INFO] [Scene] Enter: Game Scene
-2026-08-26 21:49:21 [INFO] [GameScene] Initializing game.
-2026-08-26 21:49:21 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
-2026-08-26 21:49:23 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
-2026-08-26 21:50:11 [INFO] [GameManager] Shutting down...
-2026-08-26 21:50:11 [INFO] [GameManager] Runtime: 62.00s
-2026-08-26 21:50:11 [INFO] [Mesh] Released.
-2026-08-26 21:50:11 [INFO] [ShaderManager] Released 'primitive'.
-2026-08-26 21:50:11 [INFO] [Mesh] Released.
-2026-08-26 21:50:11 [INFO] [ShaderManager] Released 'text'.
-2026-08-26 21:50:11 [INFO] [Renderer] Shutdown
-2026-08-26 21:50:11 [INFO] [Window] Destroyed
+2026-09-04 14:38:26 [INFO] Logger Initialized
+2026-09-04 14:38:26 [INFO] [GameManager] Initializing...
+2026-09-04 14:38:26 [INFO] [Config] Loaded
+2026-09-04 14:38:28 [INFO] [Window] Created 1280x720
+2026-09-04 14:38:28 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-04 14:38:28 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-04 14:38:28 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:38:28 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-04 14:38:28 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:38:28 [INFO] [Renderer] Rendering system initialized.
+2026-09-04 14:38:28 [INFO] [Input] Initialized
+2026-09-04 14:38:28 [INFO] [AssetManager] Initialized
+2026-09-04 14:38:28 [INFO] [Scene] Enter: Boot Scene
+2026-09-04 14:38:28 [INFO] [BootScene] Engine initialization complete.
+2026-09-04 14:38:28 [INFO] [BootScene] Opening Main Menu.
+2026-09-04 14:38:28 [INFO] [Scene] Exit: Boot Scene
+2026-09-04 14:38:28 [INFO] [Scene] Enter: Main Menu
+2026-09-04 14:38:28 [INFO] [MainMenuScene] Ready
+2026-09-04 14:38:28 [INFO] [GameManager] Running...
+2026-09-04 14:38:32 [INFO] [MainMenuScene] Selected Othello
+2026-09-04 14:38:32 [INFO] [Scene] Exit: Main Menu
+2026-09-04 14:38:32 [INFO] [Scene] Enter: Game Mode
+2026-09-04 14:38:32 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-04 14:38:34 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-04 14:38:34 [INFO] [Scene] Exit: Game Mode
+2026-09-04 14:38:34 [INFO] [Scene] Enter: Game Scene
+2026-09-04 14:38:34 [INFO] [GameScene] Initializing game.
 
 ============================================================
-2026-08-27 22:12:03 [INFO] Logger Initialized
-2026-08-27 22:12:03 [INFO] [GameManager] Initializing...
-2026-08-27 22:12:03 [INFO] [Config] Loaded
-2026-08-27 22:12:04 [INFO] [Window] Created 1280x720
-2026-08-27 22:12:04 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
-2026-08-27 22:12:04 [INFO] [ShaderManager] Loaded shader 'primitive'.
-2026-08-27 22:12:04 [INFO] [Mesh] GPU mesh created.
-2026-08-27 22:12:04 [INFO] [ShaderManager] Loaded shader 'text'.
-2026-08-27 22:12:04 [INFO] [Mesh] GPU mesh created.
-2026-08-27 22:12:04 [INFO] [Renderer] Rendering system initialized.
-2026-08-27 22:12:04 [INFO] [Input] Initialized
-2026-08-27 22:12:04 [INFO] [AssetManager] Initialized
-2026-08-27 22:12:04 [INFO] [Scene] Enter: Boot Scene
-2026-08-27 22:12:04 [INFO] [BootScene] Engine initialization complete.
-2026-08-27 22:12:04 [INFO] [BootScene] Opening Main Menu.
-2026-08-27 22:12:04 [INFO] [Scene] Exit: Boot Scene
-2026-08-27 22:12:04 [INFO] [Scene] Enter: Main Menu
-2026-08-27 22:12:04 [INFO] [MainMenuScene] Ready
-2026-08-27 22:12:04 [INFO] [GameManager] Running...
-2026-08-27 22:12:35 [INFO] [MainMenuScene] Selected Tic-Tac-Toe
-2026-08-27 22:12:35 [INFO] [Scene] Exit: Main Menu
-2026-08-27 22:12:35 [INFO] [Scene] Enter: Game Mode
-2026-08-27 22:12:35 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
-2026-08-27 22:12:40 [INFO] [GameModeScene] Mode: Human vs Human
-2026-08-27 22:12:40 [INFO] [Scene] Exit: Game Mode
-2026-08-27 22:12:40 [INFO] [Scene] Enter: Game Scene
-2026-08-27 22:12:40 [INFO] [GameScene] Initializing game.
-2026-08-27 22:12:40 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
-2026-08-27 22:12:46 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
-2026-08-27 22:13:12 [INFO] [GameScene] Shutting down game.
-2026-08-27 22:13:12 [INFO] [Scene] Exit: Game Scene
-2026-08-27 22:13:12 [INFO] [Scene] Enter: Main Menu
-2026-08-27 22:13:12 [INFO] [MainMenuScene] Ready
-2026-08-27 22:14:30 [INFO] [GameManager] Shutting down...
-2026-08-27 22:14:30 [INFO] [GameManager] Runtime: 147.76s
-2026-08-27 22:14:30 [INFO] [Mesh] Released.
-2026-08-27 22:14:30 [INFO] [ShaderManager] Released 'primitive'.
-2026-08-27 22:14:30 [INFO] [Mesh] Released.
-2026-08-27 22:14:30 [INFO] [ShaderManager] Released 'text'.
-2026-08-27 22:14:30 [INFO] [Renderer] Shutdown
-2026-08-27 22:14:31 [INFO] [Window] Destroyed
+2026-09-04 14:38:53 [INFO] Logger Initialized
+2026-09-04 14:38:53 [INFO] [GameManager] Initializing...
+2026-09-04 14:38:53 [INFO] [Config] Loaded
+2026-09-04 14:38:53 [INFO] [Window] Created 1280x720
+2026-09-04 14:38:53 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-04 14:38:53 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-04 14:38:53 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:38:53 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-04 14:38:53 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:38:53 [INFO] [Renderer] Rendering system initialized.
+2026-09-04 14:38:53 [INFO] [Input] Initialized
+2026-09-04 14:38:53 [INFO] [AssetManager] Initialized
+2026-09-04 14:38:53 [INFO] [Scene] Enter: Boot Scene
+2026-09-04 14:38:53 [INFO] [BootScene] Engine initialization complete.
+2026-09-04 14:38:53 [INFO] [BootScene] Opening Main Menu.
+2026-09-04 14:38:53 [INFO] [Scene] Exit: Boot Scene
+2026-09-04 14:38:53 [INFO] [Scene] Enter: Main Menu
+2026-09-04 14:38:53 [INFO] [MainMenuScene] Ready
+2026-09-04 14:38:53 [INFO] [GameManager] Running...
+2026-09-04 14:39:00 [INFO] [MainMenuScene] Selected Othello
+2026-09-04 14:39:00 [INFO] [Scene] Exit: Main Menu
+2026-09-04 14:39:00 [INFO] [Scene] Enter: Game Mode
+2026-09-04 14:39:00 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-04 14:39:04 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-04 14:39:04 [INFO] [Scene] Exit: Game Mode
+2026-09-04 14:39:04 [INFO] [Scene] Enter: Game Scene
+2026-09-04 14:39:04 [INFO] [GameScene] Initializing game.
 
 ============================================================
-2026-08-28 13:13:19 [INFO] Logger Initialized
-2026-08-28 13:13:19 [INFO] [GameManager] Initializing...
-2026-08-28 13:13:19 [INFO] [Config] Loaded
-2026-08-28 13:13:20 [INFO] [Window] Created 1280x720
-2026-08-28 13:13:20 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
-2026-08-28 13:13:20 [INFO] [ShaderManager] Loaded shader 'primitive'.
-2026-08-28 13:13:20 [INFO] [Mesh] GPU mesh created.
-2026-08-28 13:13:20 [INFO] [ShaderManager] Loaded shader 'text'.
-2026-08-28 13:13:20 [INFO] [Mesh] GPU mesh created.
-2026-08-28 13:13:20 [INFO] [Renderer] Rendering system initialized.
-2026-08-28 13:13:20 [INFO] [Input] Initialized
-2026-08-28 13:13:20 [INFO] [AssetManager] Initialized
-2026-08-28 13:13:20 [INFO] [Scene] Enter: Boot Scene
-2026-08-28 13:13:20 [INFO] [BootScene] Engine initialization complete.
-2026-08-28 13:13:20 [INFO] [BootScene] Opening Main Menu.
-2026-08-28 13:13:20 [INFO] [Scene] Exit: Boot Scene
-2026-08-28 13:13:20 [INFO] [Scene] Enter: Main Menu
-2026-08-28 13:13:20 [INFO] [MainMenuScene] Ready
-2026-08-28 13:13:20 [INFO] [GameManager] Running...
-2026-08-28 13:13:24 [INFO] [MainMenuScene] Selected Pente
-2026-08-28 13:13:24 [INFO] [Scene] Exit: Main Menu
-2026-08-28 13:13:24 [INFO] [Scene] Enter: Game Mode
-2026-08-28 13:13:24 [INFO] [GameModeScene] Choosing mode for Pente
-2026-08-28 13:13:27 [INFO] [GameModeScene] Mode: Human vs Human
-2026-08-28 13:13:27 [INFO] [Scene] Exit: Game Mode
-2026-08-28 13:13:27 [INFO] [Scene] Enter: Game Scene
-2026-08-28 13:13:27 [INFO] [GameScene] Initializing game.
-2026-08-28 13:13:27 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
-2026-08-28 13:13:29 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
-2026-08-28 13:15:09 [INFO] [GameScene] Shutting down game.
-2026-08-28 13:15:09 [INFO] [Scene] Exit: Game Scene
-2026-08-28 13:15:09 [INFO] [Scene] Enter: Main Menu
-2026-08-28 13:15:09 [INFO] [MainMenuScene] Ready
-2026-08-28 13:15:12 [INFO] [GameManager] Shutting down...
-2026-08-28 13:15:12 [INFO] [GameManager] Runtime: 113.26s
-2026-08-28 13:15:12 [INFO] [Mesh] Released.
-2026-08-28 13:15:12 [INFO] [ShaderManager] Released 'primitive'.
-2026-08-28 13:15:12 [INFO] [Mesh] Released.
-2026-08-28 13:15:12 [INFO] [ShaderManager] Released 'text'.
-2026-08-28 13:15:12 [INFO] [Renderer] Shutdown
-2026-08-28 13:15:12 [INFO] [Window] Destroyed
+2026-09-04 14:42:30 [INFO] Logger Initialized
+2026-09-04 14:42:30 [INFO] [GameManager] Initializing...
+2026-09-04 14:42:30 [INFO] [Config] Loaded
+2026-09-04 14:42:30 [INFO] [Window] Created 1280x720
+2026-09-04 14:42:30 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-04 14:42:30 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-04 14:42:30 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:42:30 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-04 14:42:30 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:42:30 [INFO] [Renderer] Rendering system initialized.
+2026-09-04 14:42:30 [INFO] [Input] Initialized
+2026-09-04 14:42:30 [INFO] [AssetManager] Initialized
+2026-09-04 14:42:30 [INFO] [Scene] Enter: Boot Scene
+2026-09-04 14:42:30 [INFO] [BootScene] Engine initialization complete.
+2026-09-04 14:42:30 [INFO] [BootScene] Opening Main Menu.
+2026-09-04 14:42:30 [INFO] [Scene] Exit: Boot Scene
+2026-09-04 14:42:30 [INFO] [Scene] Enter: Main Menu
+2026-09-04 14:42:30 [INFO] [MainMenuScene] Ready
+2026-09-04 14:42:30 [INFO] [GameManager] Running...
+2026-09-04 14:42:35 [INFO] [MainMenuScene] Selected Othello
+2026-09-04 14:42:35 [INFO] [Scene] Exit: Main Menu
+2026-09-04 14:42:35 [INFO] [Scene] Enter: Game Mode
+2026-09-04 14:42:35 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-04 14:42:36 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-04 14:42:36 [INFO] [Scene] Exit: Game Mode
+2026-09-04 14:42:36 [INFO] [Scene] Enter: Game Scene
+2026-09-04 14:42:36 [INFO] [GameScene] Initializing game.
+2026-09-04 14:42:36 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-04 14:42:36 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-09-04 14:42:59 [INFO] [GameManager] Shutting down...
+2026-09-04 14:42:59 [INFO] [GameManager] Runtime: 29.78s
+2026-09-04 14:42:59 [INFO] [Mesh] Released.
+2026-09-04 14:42:59 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-04 14:42:59 [INFO] [Mesh] Released.
+2026-09-04 14:42:59 [INFO] [ShaderManager] Released 'text'.
+2026-09-04 14:42:59 [INFO] [Renderer] Shutdown
+2026-09-04 14:43:00 [INFO] [Window] Destroyed
 
 ============================================================
-2026-08-28 14:28:10 [INFO] Logger Initialized
-2026-08-28 14:28:10 [INFO] [GameManager] Initializing...
-2026-08-28 14:28:10 [INFO] [Config] Loaded
-2026-08-28 14:28:11 [INFO] [Window] Created 1280x720
-2026-08-28 14:28:11 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
-2026-08-28 14:28:11 [INFO] [ShaderManager] Loaded shader 'primitive'.
-2026-08-28 14:28:11 [INFO] [Mesh] GPU mesh created.
-2026-08-28 14:28:11 [INFO] [ShaderManager] Loaded shader 'text'.
-2026-08-28 14:28:11 [INFO] [Mesh] GPU mesh created.
-2026-08-28 14:28:11 [INFO] [Renderer] Rendering system initialized.
-2026-08-28 14:28:11 [INFO] [Input] Initialized
-2026-08-28 14:28:11 [INFO] [AssetManager] Initialized
-2026-08-28 14:28:11 [INFO] [Scene] Enter: Boot Scene
-2026-08-28 14:28:11 [INFO] [BootScene] Engine initialization complete.
-2026-08-28 14:28:11 [INFO] [BootScene] Opening Main Menu.
-2026-08-28 14:28:11 [INFO] [Scene] Exit: Boot Scene
-2026-08-28 14:28:11 [INFO] [Scene] Enter: Main Menu
-2026-08-28 14:28:11 [INFO] [MainMenuScene] Ready
-2026-08-28 14:28:11 [INFO] [GameManager] Running...
-2026-08-28 14:28:19 [INFO] [MainMenuScene] Selected Othello
-2026-08-28 14:28:19 [INFO] [Scene] Exit: Main Menu
-2026-08-28 14:28:19 [INFO] [Scene] Enter: Game Mode
-2026-08-28 14:28:19 [INFO] [GameModeScene] Choosing mode for Othello
-2026-08-28 14:28:20 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-04 14:52:42 [INFO] Logger Initialized
+2026-09-04 14:52:42 [INFO] [GameManager] Initializing...
+2026-09-04 14:52:42 [INFO] [Config] Loaded
+2026-09-04 14:52:43 [INFO] [Window] Created 1280x720
+2026-09-04 14:52:43 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-04 14:52:43 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-04 14:52:43 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:52:43 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-04 14:52:43 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:52:43 [INFO] [Renderer] Rendering system initialized.
+2026-09-04 14:52:43 [INFO] [Input] Initialized
+2026-09-04 14:52:43 [INFO] [AssetManager] Initialized
+2026-09-04 14:52:43 [INFO] [Scene] Enter: Boot Scene
+2026-09-04 14:52:43 [INFO] [BootScene] Engine initialization complete.
+2026-09-04 14:52:43 [INFO] [BootScene] Opening Main Menu.
+2026-09-04 14:52:43 [INFO] [Scene] Exit: Boot Scene
+2026-09-04 14:52:43 [INFO] [Scene] Enter: Main Menu
+2026-09-04 14:52:43 [INFO] [MainMenuScene] Ready
+2026-09-04 14:52:43 [INFO] [GameManager] Running...
+2026-09-04 14:52:46 [INFO] [MainMenuScene] Selected Othello
+2026-09-04 14:52:46 [INFO] [Scene] Exit: Main Menu
+2026-09-04 14:52:46 [INFO] [Scene] Enter: Game Mode
+2026-09-04 14:52:46 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-04 14:52:48 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-04 14:52:48 [INFO] [Scene] Exit: Game Mode
+2026-09-04 14:52:48 [INFO] [Scene] Enter: Game Scene
+2026-09-04 14:52:48 [INFO] [GameScene] Initializing game.
+2026-09-04 14:52:48 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-04 14:52:48 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-04 14:55:50 [INFO] [GameManager] Shutting down...
+2026-09-04 14:55:50 [INFO] [GameManager] Runtime: 187.67s
+2026-09-04 14:55:50 [INFO] [Mesh] Released.
+2026-09-04 14:55:50 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-04 14:55:50 [INFO] [Mesh] Released.
+2026-09-04 14:55:50 [INFO] [ShaderManager] Released 'text'.
+2026-09-04 14:55:50 [INFO] [Renderer] Shutdown
+2026-09-04 14:55:50 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-04 14:55:54 [INFO] Logger Initialized
+2026-09-04 14:55:54 [INFO] [GameManager] Initializing...
+2026-09-04 14:55:54 [INFO] [Config] Loaded
+2026-09-04 14:55:55 [INFO] [Window] Created 1280x720
+2026-09-04 14:55:55 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-04 14:55:55 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-04 14:55:55 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:55:55 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-04 14:55:55 [INFO] [Mesh] GPU mesh created.
+2026-09-04 14:55:55 [INFO] [Renderer] Rendering system initialized.
+2026-09-04 14:55:55 [INFO] [Input] Initialized
+2026-09-04 14:55:55 [INFO] [AssetManager] Initialized
+2026-09-04 14:55:55 [INFO] [Scene] Enter: Boot Scene
+2026-09-04 14:55:55 [INFO] [BootScene] Engine initialization complete.
+2026-09-04 14:55:55 [INFO] [BootScene] Opening Main Menu.
+2026-09-04 14:55:55 [INFO] [Scene] Exit: Boot Scene
+2026-09-04 14:55:55 [INFO] [Scene] Enter: Main Menu
+2026-09-04 14:55:55 [INFO] [MainMenuScene] Ready
+2026-09-04 14:55:55 [INFO] [GameManager] Running...
+2026-09-04 14:55:58 [INFO] [MainMenuScene] Selected Othello
+2026-09-04 14:55:58 [INFO] [Scene] Exit: Main Menu
+2026-09-04 14:55:58 [INFO] [Scene] Enter: Game Mode
+2026-09-04 14:55:58 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-04 14:56:00 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-04 14:56:00 [INFO] [Scene] Exit: Game Mode
+2026-09-04 14:56:00 [INFO] [Scene] Enter: Game Scene
+2026-09-04 14:56:00 [INFO] [GameScene] Initializing game.
+2026-09-04 14:56:00 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-04 14:56:00 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-04 14:59:45 [INFO] [GameManager] Shutting down...
+2026-09-04 14:59:45 [INFO] [GameManager] Runtime: 230.25s
+2026-09-04 14:59:45 [INFO] [Mesh] Released.
+2026-09-04 14:59:45 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-04 14:59:45 [INFO] [Mesh] Released.
+2026-09-04 14:59:45 [INFO] [ShaderManager] Released 'text'.
+2026-09-04 14:59:45 [INFO] [Renderer] Shutdown
+2026-09-04 14:59:45 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-04 15:25:11 [INFO] Logger Initialized
+2026-09-04 15:25:11 [INFO] [GameManager] Initializing...
+2026-09-04 15:25:11 [INFO] [Config] Loaded
+2026-09-04 15:25:11 [INFO] [Window] Created 1280x720
+2026-09-04 15:25:11 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-04 15:25:11 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-04 15:25:11 [INFO] [Mesh] GPU mesh created.
+2026-09-04 15:25:11 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-04 15:25:11 [INFO] [Mesh] GPU mesh created.
+2026-09-04 15:25:11 [INFO] [Renderer] Rendering system initialized.
+2026-09-04 15:25:11 [INFO] [Input] Initialized
+2026-09-04 15:25:11 [INFO] [AssetManager] Initialized
+2026-09-04 15:25:11 [INFO] [Scene] Enter: Boot Scene
+2026-09-04 15:25:11 [INFO] [BootScene] Engine initialization complete.
+2026-09-04 15:25:11 [INFO] [BootScene] Opening Main Menu.
+2026-09-04 15:25:11 [INFO] [Scene] Exit: Boot Scene
+2026-09-04 15:25:11 [INFO] [Scene] Enter: Main Menu
+2026-09-04 15:25:11 [INFO] [MainMenuScene] Ready
+2026-09-04 15:25:11 [INFO] [GameManager] Running...
+2026-09-04 15:25:14 [INFO] [MainMenuScene] Selected Othello
+2026-09-04 15:25:14 [INFO] [Scene] Exit: Main Menu
+2026-09-04 15:25:14 [INFO] [Scene] Enter: Game Mode
+2026-09-04 15:25:14 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-04 15:25:17 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-04 15:25:17 [INFO] [Scene] Exit: Game Mode
+2026-09-04 15:25:17 [INFO] [Scene] Enter: Game Scene
+2026-09-04 15:25:17 [INFO] [GameScene] Initializing game.
+2026-09-04 15:25:17 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-04 15:25:17 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-04 15:30:38 [INFO] [GameManager] Shutting down...
+2026-09-04 15:30:38 [INFO] [GameManager] Runtime: 327.11s
+2026-09-04 15:30:38 [INFO] [Mesh] Released.
+2026-09-04 15:30:38 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-04 15:30:38 [INFO] [Mesh] Released.
+2026-09-04 15:30:38 [INFO] [ShaderManager] Released 'text'.
+2026-09-04 15:30:38 [INFO] [Renderer] Shutdown
+2026-09-04 15:30:38 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-05 12:42:59 [INFO] Logger Initialized
+2026-09-05 12:42:59 [INFO] [GameManager] Initializing...
+2026-09-05 12:42:59 [INFO] [Config] Loaded
+2026-09-05 12:43:02 [INFO] [Window] Created 1280x720
+2026-09-05 12:43:02 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-05 12:43:02 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-05 12:43:02 [INFO] [Mesh] GPU mesh created.
+2026-09-05 12:43:02 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-05 12:43:02 [INFO] [Mesh] GPU mesh created.
+2026-09-05 12:43:02 [INFO] [Renderer] Rendering system initialized.
+2026-09-05 12:43:02 [INFO] [Input] Initialized
+2026-09-05 12:43:02 [INFO] [AssetManager] Initialized
+2026-09-05 12:43:02 [INFO] [Scene] Enter: Boot Scene
+2026-09-05 12:43:02 [INFO] [BootScene] Engine initialization complete.
+2026-09-05 12:43:02 [INFO] [BootScene] Opening Main Menu.
+2026-09-05 12:43:02 [INFO] [Scene] Exit: Boot Scene
+2026-09-05 12:43:02 [INFO] [Scene] Enter: Main Menu
+2026-09-05 12:43:02 [INFO] [MainMenuScene] Ready
+2026-09-05 12:43:02 [INFO] [GameManager] Running...
+2026-09-05 12:45:15 [INFO] [MainMenuScene] Selected Othello
+2026-09-05 12:45:15 [INFO] [Scene] Exit: Main Menu
+2026-09-05 12:45:15 [INFO] [Scene] Enter: Game Mode
+2026-09-05 12:45:15 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-05 12:45:16 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-05 12:45:16 [INFO] [Scene] Exit: Game Mode
+2026-09-05 12:45:16 [INFO] [Scene] Enter: Game Scene
+2026-09-05 12:45:16 [INFO] [GameScene] Initializing game.
+2026-09-05 12:45:16 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-05 12:45:17 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-05 12:48:54 [INFO] [GameManager] Shutting down...
+2026-09-05 12:48:54 [INFO] [GameManager] Runtime: 354.74s
+2026-09-05 12:48:54 [INFO] [Mesh] Released.
+2026-09-05 12:48:54 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-05 12:48:54 [INFO] [Mesh] Released.
+2026-09-05 12:48:54 [INFO] [ShaderManager] Released 'text'.
+2026-09-05 12:48:54 [INFO] [Renderer] Shutdown
+2026-09-05 12:48:54 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-07 13:07:38 [INFO] Logger Initialized
+2026-09-07 13:07:38 [INFO] [GameManager] Initializing...
+2026-09-07 13:07:38 [INFO] [Config] Loaded
+2026-09-07 13:07:40 [INFO] [Window] Created 1280x720
+2026-09-07 13:07:40 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-07 13:07:40 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-07 13:07:40 [INFO] [Mesh] GPU mesh created.
+2026-09-07 13:07:40 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-07 13:07:40 [INFO] [Mesh] GPU mesh created.
+2026-09-07 13:07:40 [INFO] [Renderer] Rendering system initialized.
+2026-09-07 13:07:40 [INFO] [Input] Initialized
+2026-09-07 13:07:40 [INFO] [AssetManager] Initialized
+2026-09-07 13:07:40 [INFO] [Scene] Enter: Boot Scene
+2026-09-07 13:07:40 [INFO] [BootScene] Engine initialization complete.
+2026-09-07 13:07:40 [INFO] [BootScene] Opening Main Menu.
+2026-09-07 13:07:40 [INFO] [Scene] Exit: Boot Scene
+2026-09-07 13:07:40 [INFO] [Scene] Enter: Main Menu
+2026-09-07 13:07:40 [INFO] [MainMenuScene] Ready
+2026-09-07 13:07:40 [INFO] [GameManager] Running...
+2026-09-07 13:07:43 [INFO] [MainMenuScene] Selected Othello
+2026-09-07 13:07:43 [INFO] [Scene] Exit: Main Menu
+2026-09-07 13:07:43 [INFO] [Scene] Enter: Game Mode
+2026-09-07 13:07:43 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-07 13:07:47 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-07 13:07:47 [INFO] [Scene] Exit: Game Mode
+2026-09-07 13:07:47 [INFO] [Scene] Enter: Game Scene
+2026-09-07 13:07:47 [INFO] [GameScene] Initializing game.
+2026-09-07 13:07:47 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-07 13:07:47 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-07 13:09:20 [INFO] [GameManager] Shutting down...
+2026-09-07 13:09:20 [INFO] [GameManager] Runtime: 101.33s
+2026-09-07 13:09:20 [INFO] [Mesh] Released.
+2026-09-07 13:09:20 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-07 13:09:20 [INFO] [Mesh] Released.
+2026-09-07 13:09:20 [INFO] [ShaderManager] Released 'text'.
+2026-09-07 13:09:20 [INFO] [Renderer] Shutdown
+2026-09-07 13:09:20 [INFO] [Window] Destroyed

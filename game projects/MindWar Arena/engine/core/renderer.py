@@ -35,6 +35,8 @@ class Renderer:
         self.primitives.draw_filled_rectangle(position,size,color, )
     def draw_circle(self,center,radius,color,segments=64, ):
         self.primitives.draw_circle(center,radius,color,segments, )
+    def draw_filled_circle(self,center,radius,color,segments=64,):
+        self.primitives.draw_filled_circle(center,radius,color,segments,)
     def draw_cross(self,center,size,color, ):
         self.primitives.draw_cross(center,size,color, )
     def draw_grid(self,origin,rows,columns,cell_size,color, ):
