@@ -100,3 +100,240 @@ Traceback (most recent call last):
     ^
 TypeError: Renderer.draw_rectangle() takes 4 positional arguments but 7 were given
 
+
+================================================================================
+Timestamp: 2026-09-11 08:48:06
+
+Exception: CheckersBoardRenderer.__init__() missing 1 required positional argument: 'renderer'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 30, in update
+    game = game_class(renderer =self.renderer,game_mode=mode,)
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 49, in __init__
+    self.board_renderer = CheckersBoardRenderer()
+                          ~~~~~~~~~~~~~~~~~~~~~^^
+TypeError: CheckersBoardRenderer.__init__() missing 1 required positional argument: 'renderer'
+
+
+================================================================================
+Timestamp: 2026-09-11 08:51:51
+
+Exception: Invalid player: <games.checkers.board_renderer.CheckersBoardRenderer object at 0x000001837FCAC980>
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 30, in update
+    game = game_class(renderer =self.renderer,game_mode=mode,)
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 57, in __init__
+    self.human_player = HumanPlayer(
+                        ~~~~~~~~~~~^
+        self.board_renderer
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\human_player.py", line 16, in __init__
+    raise ValueError(
+        f"Invalid player: {player}"
+    )
+ValueError: Invalid player: <games.checkers.board_renderer.CheckersBoardRenderer object at 0x000001837FCAC980>
+
+
+================================================================================
+Timestamp: 2026-09-11 08:53:42
+
+Exception: 'CheckersBoardRenderer' object has no attribute 'reset'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 31, in update
+    self.scene_manager.change_scene(GameScene(game))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 11, in change_scene
+    self.current_scene.enter()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 16, in enter
+    self.game.initialize()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 72, in initialize
+    self.reset()
+    ~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 102, in reset
+    self.board_renderer.reset()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckersBoardRenderer' object has no attribute 'reset'
+
+
+================================================================================
+Timestamp: 2026-09-11 08:55:22
+
+Exception: 'CheckersOverlayRenderer' object has no attribute 'reset'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 31, in update
+    self.scene_manager.change_scene(GameScene(game))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 11, in change_scene
+    self.current_scene.enter()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 16, in enter
+    self.game.initialize()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 72, in initialize
+    self.reset()
+    ~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 103, in reset
+    self.overlay_renderer.reset()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckersOverlayRenderer' object has no attribute 'reset'
+
+
+================================================================================
+Timestamp: 2026-09-11 08:56:52
+
+Exception: Renderer.draw_rectangle() takes 4 positional arguments but 6 were given
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 54, in run
+    self.render()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 46, in render
+    self.scene_manager.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 17, in render
+    self.current_scene.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 30, in render
+    self.game.render()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 115, in render
+    self.board_renderer.render(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.board,
+        ^^^^^^^^^^^
+    ...<2 lines>...
+        self.active_capture_piece,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\board_renderer.py", line 46, in render
+    self._draw_board()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\board_renderer.py", line 131, in _draw_board
+    self._draw_rectangle(
+    ~~~~~~~~~~~~~~~~~~~~^
+        left,
+        ^^^^^
+    ...<3 lines>...
+        square_color,
+        ^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\board_renderer.py", line 358, in _draw_rectangle
+    self.renderer.draw_rectangle(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        x,
+        ^^
+    ...<3 lines>...
+        color,
+        ^^^^^^
+    )
+    ^
+TypeError: Renderer.draw_rectangle() takes 4 positional arguments but 6 were given
+
+
+================================================================================
+Timestamp: 2026-09-11 09:19:42
+
+Exception: 'CheckersAI' object has no attribute 'get_action'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 22, in update
+    self.game.update()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 112, in update
+    self.update_current_player()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\checkers\game.py", line 317, in update_current_player
+    action = controller.get_action(self)
+             ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CheckersAI' object has no attribute 'get_action'. Did you mean: 'select_action'?
+

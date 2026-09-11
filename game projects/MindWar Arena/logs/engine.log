@@ -290,3 +290,290 @@
 2026-09-07 13:09:20 [INFO] [ShaderManager] Released 'text'.
 2026-09-07 13:09:20 [INFO] [Renderer] Shutdown
 2026-09-07 13:09:20 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-11 08:47:46 [INFO] Logger Initialized
+2026-09-11 08:47:46 [INFO] [GameManager] Initializing...
+2026-09-11 08:47:46 [INFO] [Config] Loaded
+2026-09-11 08:47:46 [INFO] [Window] Created 1280x720
+2026-09-11 08:47:46 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 08:47:46 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 08:47:46 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:47:47 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 08:47:47 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:47:47 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 08:47:47 [INFO] [Input] Initialized
+2026-09-11 08:47:47 [INFO] [AssetManager] Initialized
+2026-09-11 08:47:47 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 08:47:47 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 08:47:47 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 08:47:47 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 08:47:47 [INFO] [Scene] Enter: Main Menu
+2026-09-11 08:47:47 [INFO] [MainMenuScene] Ready
+2026-09-11 08:47:47 [INFO] [GameManager] Running...
+2026-09-11 08:47:51 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 08:47:51 [INFO] [Scene] Exit: Main Menu
+2026-09-11 08:47:51 [INFO] [Scene] Enter: Game Mode
+2026-09-11 08:47:51 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 08:48:06 [INFO] [GameModeScene] Mode: Human vs Human
+
+============================================================
+2026-09-11 08:51:38 [INFO] Logger Initialized
+2026-09-11 08:51:38 [INFO] [GameManager] Initializing...
+2026-09-11 08:51:38 [INFO] [Config] Loaded
+2026-09-11 08:51:38 [INFO] [Window] Created 1280x720
+2026-09-11 08:51:38 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 08:51:38 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 08:51:38 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:51:38 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 08:51:38 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:51:38 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 08:51:38 [INFO] [Input] Initialized
+2026-09-11 08:51:38 [INFO] [AssetManager] Initialized
+2026-09-11 08:51:38 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 08:51:38 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 08:51:38 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 08:51:38 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 08:51:38 [INFO] [Scene] Enter: Main Menu
+2026-09-11 08:51:38 [INFO] [MainMenuScene] Ready
+2026-09-11 08:51:38 [INFO] [GameManager] Running...
+2026-09-11 08:51:50 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 08:51:50 [INFO] [Scene] Exit: Main Menu
+2026-09-11 08:51:50 [INFO] [Scene] Enter: Game Mode
+2026-09-11 08:51:50 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 08:51:51 [INFO] [GameModeScene] Mode: Human vs Human
+
+============================================================
+2026-09-11 08:53:36 [INFO] Logger Initialized
+2026-09-11 08:53:36 [INFO] [GameManager] Initializing...
+2026-09-11 08:53:36 [INFO] [Config] Loaded
+2026-09-11 08:53:37 [INFO] [Window] Created 1280x720
+2026-09-11 08:53:37 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 08:53:37 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 08:53:37 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:53:37 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 08:53:37 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:53:37 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 08:53:37 [INFO] [Input] Initialized
+2026-09-11 08:53:37 [INFO] [AssetManager] Initialized
+2026-09-11 08:53:37 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 08:53:37 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 08:53:37 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 08:53:37 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 08:53:37 [INFO] [Scene] Enter: Main Menu
+2026-09-11 08:53:37 [INFO] [MainMenuScene] Ready
+2026-09-11 08:53:37 [INFO] [GameManager] Running...
+2026-09-11 08:53:41 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 08:53:41 [INFO] [Scene] Exit: Main Menu
+2026-09-11 08:53:41 [INFO] [Scene] Enter: Game Mode
+2026-09-11 08:53:41 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 08:53:42 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-11 08:53:42 [INFO] [Scene] Exit: Game Mode
+2026-09-11 08:53:42 [INFO] [Scene] Enter: Game Scene
+2026-09-11 08:53:42 [INFO] [GameScene] Initializing game.
+
+============================================================
+2026-09-11 08:55:16 [INFO] Logger Initialized
+2026-09-11 08:55:16 [INFO] [GameManager] Initializing...
+2026-09-11 08:55:16 [INFO] [Config] Loaded
+2026-09-11 08:55:16 [INFO] [Window] Created 1280x720
+2026-09-11 08:55:16 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 08:55:16 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 08:55:16 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:55:16 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 08:55:16 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:55:16 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 08:55:16 [INFO] [Input] Initialized
+2026-09-11 08:55:16 [INFO] [AssetManager] Initialized
+2026-09-11 08:55:16 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 08:55:16 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 08:55:16 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 08:55:16 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 08:55:16 [INFO] [Scene] Enter: Main Menu
+2026-09-11 08:55:16 [INFO] [MainMenuScene] Ready
+2026-09-11 08:55:16 [INFO] [GameManager] Running...
+2026-09-11 08:55:20 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 08:55:20 [INFO] [Scene] Exit: Main Menu
+2026-09-11 08:55:20 [INFO] [Scene] Enter: Game Mode
+2026-09-11 08:55:20 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 08:55:22 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-11 08:55:22 [INFO] [Scene] Exit: Game Mode
+2026-09-11 08:55:22 [INFO] [Scene] Enter: Game Scene
+2026-09-11 08:55:22 [INFO] [GameScene] Initializing game.
+
+============================================================
+2026-09-11 08:56:46 [INFO] Logger Initialized
+2026-09-11 08:56:46 [INFO] [GameManager] Initializing...
+2026-09-11 08:56:46 [INFO] [Config] Loaded
+2026-09-11 08:56:47 [INFO] [Window] Created 1280x720
+2026-09-11 08:56:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 08:56:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 08:56:47 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:56:47 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 08:56:47 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:56:47 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 08:56:47 [INFO] [Input] Initialized
+2026-09-11 08:56:47 [INFO] [AssetManager] Initialized
+2026-09-11 08:56:47 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 08:56:47 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 08:56:47 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 08:56:47 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 08:56:47 [INFO] [Scene] Enter: Main Menu
+2026-09-11 08:56:47 [INFO] [MainMenuScene] Ready
+2026-09-11 08:56:47 [INFO] [GameManager] Running...
+2026-09-11 08:56:50 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 08:56:50 [INFO] [Scene] Exit: Main Menu
+2026-09-11 08:56:50 [INFO] [Scene] Enter: Game Mode
+2026-09-11 08:56:50 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 08:56:52 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-11 08:56:52 [INFO] [Scene] Exit: Game Mode
+2026-09-11 08:56:52 [INFO] [Scene] Enter: Game Scene
+2026-09-11 08:56:52 [INFO] [GameScene] Initializing game.
+
+============================================================
+2026-09-11 08:57:51 [INFO] Logger Initialized
+2026-09-11 08:57:51 [INFO] [GameManager] Initializing...
+2026-09-11 08:57:51 [INFO] [Config] Loaded
+2026-09-11 08:57:51 [INFO] [Window] Created 1280x720
+2026-09-11 08:57:51 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 08:57:51 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 08:57:51 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:57:51 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 08:57:51 [INFO] [Mesh] GPU mesh created.
+2026-09-11 08:57:51 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 08:57:51 [INFO] [Input] Initialized
+2026-09-11 08:57:51 [INFO] [AssetManager] Initialized
+2026-09-11 08:57:51 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 08:57:51 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 08:57:51 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 08:57:51 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 08:57:51 [INFO] [Scene] Enter: Main Menu
+2026-09-11 08:57:51 [INFO] [MainMenuScene] Ready
+2026-09-11 08:57:51 [INFO] [GameManager] Running...
+2026-09-11 08:57:54 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 08:57:54 [INFO] [Scene] Exit: Main Menu
+2026-09-11 08:57:54 [INFO] [Scene] Enter: Game Mode
+2026-09-11 08:57:54 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 08:57:55 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-11 08:57:55 [INFO] [Scene] Exit: Game Mode
+2026-09-11 08:57:55 [INFO] [Scene] Enter: Game Scene
+2026-09-11 08:57:55 [INFO] [GameScene] Initializing game.
+2026-09-11 08:57:55 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-11 08:57:55 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-11 09:09:26 [INFO] [GameManager] Shutting down...
+2026-09-11 09:09:26 [INFO] [GameManager] Runtime: 694.26s
+2026-09-11 09:09:26 [INFO] [Mesh] Released.
+2026-09-11 09:09:26 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-11 09:09:26 [INFO] [Mesh] Released.
+2026-09-11 09:09:26 [INFO] [ShaderManager] Released 'text'.
+2026-09-11 09:09:26 [INFO] [Renderer] Shutdown
+2026-09-11 09:09:26 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-11 09:15:47 [INFO] Logger Initialized
+2026-09-11 09:15:47 [INFO] [GameManager] Initializing...
+2026-09-11 09:15:47 [INFO] [Config] Loaded
+2026-09-11 09:15:47 [INFO] [Window] Created 1280x720
+2026-09-11 09:15:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 09:15:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 09:15:47 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:15:47 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 09:15:47 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:15:47 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 09:15:47 [INFO] [Input] Initialized
+2026-09-11 09:15:47 [INFO] [AssetManager] Initialized
+2026-09-11 09:15:47 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 09:15:47 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 09:15:47 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 09:15:47 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 09:15:47 [INFO] [Scene] Enter: Main Menu
+2026-09-11 09:15:47 [INFO] [MainMenuScene] Ready
+2026-09-11 09:15:47 [INFO] [GameManager] Running...
+2026-09-11 09:15:51 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 09:15:51 [INFO] [Scene] Exit: Main Menu
+2026-09-11 09:15:51 [INFO] [Scene] Enter: Game Mode
+2026-09-11 09:15:51 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 09:15:53 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-11 09:15:53 [INFO] [Scene] Exit: Game Mode
+2026-09-11 09:15:53 [INFO] [Scene] Enter: Game Scene
+2026-09-11 09:15:53 [INFO] [GameScene] Initializing game.
+2026-09-11 09:15:53 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-11 09:15:53 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-11 09:19:21 [INFO] [GameManager] Shutting down...
+2026-09-11 09:19:21 [INFO] [GameManager] Runtime: 213.91s
+2026-09-11 09:19:21 [INFO] [Mesh] Released.
+2026-09-11 09:19:21 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-11 09:19:21 [INFO] [Mesh] Released.
+2026-09-11 09:19:21 [INFO] [ShaderManager] Released 'text'.
+2026-09-11 09:19:21 [INFO] [Renderer] Shutdown
+2026-09-11 09:19:21 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-11 09:19:32 [INFO] Logger Initialized
+2026-09-11 09:19:32 [INFO] [GameManager] Initializing...
+2026-09-11 09:19:32 [INFO] [Config] Loaded
+2026-09-11 09:19:33 [INFO] [Window] Created 1280x720
+2026-09-11 09:19:33 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 09:19:33 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 09:19:33 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:19:33 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 09:19:33 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:19:33 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 09:19:33 [INFO] [Input] Initialized
+2026-09-11 09:19:33 [INFO] [AssetManager] Initialized
+2026-09-11 09:19:33 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 09:19:33 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 09:19:33 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 09:19:33 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 09:19:33 [INFO] [Scene] Enter: Main Menu
+2026-09-11 09:19:33 [INFO] [MainMenuScene] Ready
+2026-09-11 09:19:33 [INFO] [GameManager] Running...
+2026-09-11 09:19:36 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 09:19:36 [INFO] [Scene] Exit: Main Menu
+2026-09-11 09:19:36 [INFO] [Scene] Enter: Game Mode
+2026-09-11 09:19:36 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 09:19:37 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-11 09:19:37 [INFO] [Scene] Exit: Game Mode
+2026-09-11 09:19:37 [INFO] [Scene] Enter: Game Scene
+2026-09-11 09:19:37 [INFO] [GameScene] Initializing game.
+2026-09-11 09:19:37 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-11 09:19:37 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+
+============================================================
+2026-09-11 09:21:07 [INFO] Logger Initialized
+2026-09-11 09:21:07 [INFO] [GameManager] Initializing...
+2026-09-11 09:21:07 [INFO] [Config] Loaded
+2026-09-11 09:21:07 [INFO] [Window] Created 1280x720
+2026-09-11 09:21:07 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 09:21:07 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 09:21:07 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:21:07 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 09:21:07 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:21:07 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 09:21:07 [INFO] [Input] Initialized
+2026-09-11 09:21:07 [INFO] [AssetManager] Initialized
+2026-09-11 09:21:07 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 09:21:07 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 09:21:07 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 09:21:07 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 09:21:07 [INFO] [Scene] Enter: Main Menu
+2026-09-11 09:21:07 [INFO] [MainMenuScene] Ready
+2026-09-11 09:21:07 [INFO] [GameManager] Running...
+2026-09-11 09:21:11 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 09:21:11 [INFO] [Scene] Exit: Main Menu
+2026-09-11 09:21:11 [INFO] [Scene] Enter: Game Mode
+2026-09-11 09:21:11 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 09:21:11 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-11 09:21:11 [INFO] [Scene] Exit: Game Mode
+2026-09-11 09:21:11 [INFO] [Scene] Enter: Game Scene
+2026-09-11 09:21:11 [INFO] [GameScene] Initializing game.
+2026-09-11 09:21:11 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-11 09:21:11 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-11 09:24:44 [INFO] [GameManager] Shutting down...
+2026-09-11 09:24:44 [INFO] [GameManager] Runtime: 217.46s
+2026-09-11 09:24:44 [INFO] [Mesh] Released.
+2026-09-11 09:24:44 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-11 09:24:44 [INFO] [Mesh] Released.
+2026-09-11 09:24:44 [INFO] [ShaderManager] Released 'text'.
+2026-09-11 09:24:44 [INFO] [Renderer] Shutdown
+2026-09-11 09:24:44 [INFO] [Window] Destroyed

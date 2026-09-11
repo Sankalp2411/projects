@@ -14936,7 +14936,1231 @@
     [✓] PHASE 6 — OTHELLO COMPLETE.
 }
 07(checkers){
+    01(update architecture){
+        games/
+        └── checkers/
+            ├── __init__.py
+            ├── constants.py
+            ├── board.py
+            ├── rules.py
+            ├── game.py
+            ├── ai.py
+            ├── human_player.py
+            ├── board_renderer.py
+            └── overlay_renderer.py
+    }
+    02(update constants.py){
+        "|"
+        # games/checkers/constants.py
+GAME_NAME = "Checkers"
+GAME_VERSION = "1.0.0"
+BOARD_ROWS = 8
+BOARD_COLUMNS = 8
+CELL_SIZE = 70
+BOARD_PADDING = 40
+LIGHT_SQUARE = 0
+DARK_SQUARE = 1
+EMPTY = 0
+BLACK_MAN = 1
+BLACK_KING = 2
+WHITE_MAN = 3
+WHITE_KING = 4
+PLAYER_BLACK = 1
+PLAYER_WHITE = 2
+FIRST_PLAYER = PLAYER_BLACK
+GAME_NOT_STARTED = 0
+GAME_RUNNING = 1
+GAME_DRAW = 2
+GAME_OVER = 3
+NO_WINNER = 0
+FORWARD_BLACK = 1
+FORWARD_WHITE = -1
+MAN_MOVE_DISTANCE = 1
+KING_MOVE_DISTANCE = 1
+CAPTURE_DISTANCE = 2
+GAME_MODE_HUMAN_VS_HUMAN = 0
+GAME_MODE_HUMAN_VS_AI = 1
+GAME_MODE_AI_VS_AI = 2
+DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+AI_RANDOM = "Random"
+AI_EASY = "Easy"
+AI_MEDIUM = "Medium"
+AI_HARD = "Hard"
+LIGHT_SQUARE_COLOR = (220, 220, 220)
+DARK_SQUARE_COLOR = (90, 60, 40)
+PLAYER_BLACK_COLOR = (30, 30, 30)
+PLAYER_WHITE_COLOR = (235, 235, 235)
+KING_INDICATOR_COLOR = (255, 200, 50)
+SELECTED_CELL_COLOR = (80, 180, 255)
+LEGAL_MOVE_COLOR = (100, 220, 120)
+CAPTURE_MOVE_COLOR = (255, 100, 100)
+BOARD_LINE_WIDTH = 1
+PIECE_RADIUS = CELL_SIZE * 0.38
+KING_INDICATOR_RADIUS = PIECE_RADIUS * 0.45
+WIN_LINE_COLOR = (50, 255, 50)
+        "|"
+    }
+    03(update board.py){
+        "|"
+        # games/checkers/board.py
+from copy import deepcopy
+from games.checkers.constants import (BOARD_COLUMNS,BOARD_ROWS,BLACK_KING,BLACK_MAN,EMPTY,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_MAN,)
+class CheckersBoard:
+    def __init__(self):
+        self._board = []
+        self.reset()
+    def reset(self):
+        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)] for _ in range(BOARD_ROWS)]
+        for row in range(3):
+            for column in range(BOARD_COLUMNS):
+                if self.is_dark_square(row, column):
+                    self._board[row][column] = BLACK_MAN
+        for row in range(BOARD_ROWS - 3, BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self.is_dark_square(row, column):
+                    self._board[row][column] = WHITE_MAN
+    def get_cell(self, row, column):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        return self._board[row][column]
+    def set_cell(self, row, column, value):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        if value not in (EMPTY,BLACK_MAN,BLACK_KING,WHITE_MAN,WHITE_KING,):
+            raise ValueError(f"Invalid piece value: {value}")
+        self._board[row][column] = value
+    def is_valid_position(self, row, column):
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+    def is_dark_square(self, row, column):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        return (row + column) % 2 == 1
+    def is_playable_square(self, row, column):
+        return self.is_dark_square(row, column)
+    def is_cell_empty(self, row, column):
+        return self.get_cell(row, column) == EMPTY
+    def count_pieces(self, player):
+        if player == PLAYER_BLACK:
+            pieces = (BLACK_MAN, BLACK_KING)
+        elif player == PLAYER_WHITE:
+            pieces = (WHITE_MAN, WHITE_KING)
+        else:
+            raise ValueError(f"Invalid player: {player}")
+        count = 0
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] in pieces:
+                    count += 1
+        return count
+    def get_piece_positions(self, player):
+        if player == PLAYER_BLACK:
+            pieces = (BLACK_MAN, BLACK_KING)
+        elif player == PLAYER_WHITE:
+            pieces = (WHITE_MAN, WHITE_KING)
+        else:
+            raise ValueError(f"Invalid player: {player}")
+        positions = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] in pieces:
+                    positions.append((row, column))
+        return positions
+    def get_board_state(self):
+        return deepcopy(self._board)
+    def copy(self):
+        new_board = CheckersBoard()
+        new_board._board = deepcopy(self._board)
+        return new_board
+    def __str__(self):
+        symbols = {EMPTY: ".",BLACK_MAN: "b",BLACK_KING: "B",WHITE_MAN: "w",WHITE_KING: "W",}
+        rows = []
+        for row in self._board:
+            rows.append(" ".join(symbols[cell] for cell in row))
+        return "\n".join(rows)
+        "|"
+    }
+    04(update rules.py){
+        "|"
+        # games/checkers/rules.py
+from engine.interfaces.game_result import GameResult
+from games.checkers.constants import (BLACK_KING,BLACK_MAN,BOARD_COLUMNS,BOARD_ROWS,EMPTY,FORWARD_BLACK,FORWARD_WHITE,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_MAN,)
+class CheckersRules:
+    _DIAGONAL_DIRECTIONS = ((-1, -1),(-1, 1),(1, -1),(1, 1),)
+    @staticmethod
+    def get_opponent(player):
+        if player == PLAYER_BLACK:
+            return PLAYER_WHITE
+        if player == PLAYER_WHITE:
+            return PLAYER_BLACK
+        raise ValueError(f"Invalid player: {player}")
+    @staticmethod
+    def is_player_piece(piece, player):
+        if player == PLAYER_BLACK:
+            return piece in (BLACK_MAN, BLACK_KING)
+        if player == PLAYER_WHITE:
+            return piece in (WHITE_MAN, WHITE_KING)
+        return False
+    @staticmethod
+    def is_man(piece):
+        return piece in (BLACK_MAN, WHITE_MAN)
+    @staticmethod
+    def is_king(piece):
+        return piece in (BLACK_KING, WHITE_KING)
+    @classmethod
+    def get_move_directions(cls, piece, player):
+        if not cls.is_player_piece(piece, player):
+            return ()
+        if cls.is_king(piece):
+            return cls._DIAGONAL_DIRECTIONS
+        if player == PLAYER_BLACK:
+            return ((FORWARD_BLACK, -1),(FORWARD_BLACK, 1),)
+        return ((FORWARD_WHITE, -1),(FORWARD_WHITE, 1),)
+    @classmethod
+    def get_simple_moves(cls, board, row, column):
+        if not board.is_valid_position(row, column):
+            return []
+        piece = board.get_cell(row, column)
+        if piece == EMPTY:
+            return []
+        if not cls.is_king(piece):
+            if piece == BLACK_MAN:
+                player = PLAYER_BLACK
+            elif piece == WHITE_MAN:
+                player = PLAYER_WHITE
+            else:
+                return []
+        else:
+            if piece == BLACK_KING:
+                player = PLAYER_BLACK
+            else:
+                player = PLAYER_WHITE
+        moves = []
+        for direction_row, direction_column in cls.get_move_directions(piece,player,):
+            destination_row = row + direction_row
+            destination_column = column + direction_column
+            if not board.is_valid_position(destination_row,destination_column,):
+                continue
+            if not board.is_playable_square(destination_row,destination_column,):
+                continue
+            if board.is_cell_empty(destination_row,destination_column,):
+                moves.append((row,column,destination_row,destination_column,))
+        return moves
+    @classmethod
+    def get_capture_moves(cls, board, row, column):
+        if not board.is_valid_position(row, column):
+            return []
+        piece = board.get_cell(row, column)
+        if piece == EMPTY:
+            return []
+        if piece == BLACK_MAN or piece == BLACK_KING:
+            player = PLAYER_BLACK
+        elif piece == WHITE_MAN or piece == WHITE_KING:
+            player = PLAYER_WHITE
+        else:
+            return []
+        opponent = cls.get_opponent(player)
+        capture_moves = []
+        for direction_row, direction_column in cls.get_move_directions(piece,player,):
+            jumped_row = row + direction_row
+            jumped_column = column + direction_column
+            landing_row = row + (direction_row * 2)
+            landing_column = column + (direction_column * 2)
+            if not board.is_valid_position(jumped_row,jumped_column,):
+                continue
+            if not board.is_valid_position(landing_row,landing_column,):
+                continue
+            jumped_piece = board.get_cell(jumped_row,jumped_column,)
+            if not cls.is_player_piece(jumped_piece,opponent,):
+                continue
+            if not board.is_cell_empty(landing_row,landing_column,):
+                continue
+            if not board.is_playable_square(landing_row,landing_column,):
+                continue
+            capture_moves.append((row,column,landing_row,landing_column,))
+        return capture_moves
+    @classmethod
+    def get_piece_moves(cls, board, row, column, player):
+        if not board.is_valid_position(row, column):
+            return []
+        piece = board.get_cell(row, column)
+        if not cls.is_player_piece(piece, player):
+            return []
+        capture_moves = cls.get_capture_moves(board,row,column,)
+        if capture_moves:
+            return capture_moves
+        return cls.get_simple_moves(board,row,column,)
+    @classmethod
+    def get_all_capture_moves(cls, board, player):
+        capture_moves = []
+        for row, column in board.get_piece_positions(player):
+            capture_moves.extend(cls.get_capture_moves(board,row,column,))
+        return capture_moves
+    @classmethod
+    def get_all_simple_moves(cls, board, player):
+        simple_moves = []
+        for row, column in board.get_piece_positions(player):
+            simple_moves.extend(cls.get_simple_moves(board,row,column,))
+        return simple_moves
+    @classmethod
+    def get_legal_moves(cls, board, player):
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return []
+        capture_moves = cls.get_all_capture_moves(board,player,)
+        if capture_moves:
+            return capture_moves
+        return cls.get_all_simple_moves(board,player,)
+    @classmethod
+    def has_capture(cls, board, player):
+        return bool(cls.get_all_capture_moves(board,player,))
+    @classmethod
+    def has_any_legal_move(cls, board, player):
+        return bool(cls.get_legal_moves(board,player,))
+    @classmethod
+    def is_valid_move(cls, board, move, player):
+        if not isinstance(move, tuple):
+            return False
+        if len(move) != 4:
+            return False
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return False
+        try:
+            from_row, from_column, to_row, to_column = move
+        except ValueError:
+            return False
+        legal_moves = cls.get_legal_moves(board,player,)
+        return move in legal_moves
+    @classmethod
+    def is_capture_move(cls, move):
+        if not isinstance(move, tuple):
+            return False
+        if len(move) != 4:
+            return False
+        from_row, from_column, to_row, to_column = move
+        return abs(to_row - from_row) == 2 and abs(to_column - from_column) == 2
+    @classmethod
+    def get_captured_position(cls, move):
+        if not cls.is_capture_move(move):
+            return None
+        from_row, from_column, to_row, to_column = move
+        captured_row = (from_row + to_row) // 2
+        captured_column = (from_column + to_column) // 2
+        return captured_row, captured_column
+    @classmethod
+    def should_promote(cls, piece, row):
+        if piece == BLACK_MAN:
+            return row == BOARD_ROWS - 1
+        if piece == WHITE_MAN:
+            return row == 0
+        return False
+    @staticmethod
+    def promote_piece(piece):
+        if piece == BLACK_MAN:
+            return BLACK_KING
+        if piece == WHITE_MAN:
+            return WHITE_KING
+        return piece
+    @classmethod
+    def apply_move(cls, board, move, player):
+        if not cls.is_valid_move(board,move,player,):
+            return False
+        from_row, from_column, to_row, to_column = move
+        piece = board.get_cell(from_row,from_column,)
+        board.set_cell(from_row,from_column,EMPTY,)
+        if cls.is_capture_move(move):
+            captured_position = cls.get_captured_position(move)
+            if captured_position is not None:
+                captured_row, captured_column = captured_position
+                board.set_cell(captured_row,captured_column,EMPTY,)
+        if cls.should_promote(piece, to_row):
+            piece = cls.promote_piece(piece)
+        board.set_cell(to_row,to_column,piece,)
+        return True
+    @classmethod
+    def get_winner(cls, board):
+        black_count = board.count_pieces(PLAYER_BLACK)
+        white_count = board.count_pieces(PLAYER_WHITE)
+        if black_count == 0 and white_count == 0:
+            return None
+        if black_count == 0:
+            return PLAYER_WHITE
+        if white_count == 0:
+            return PLAYER_BLACK
+        if not cls.has_any_legal_move(board,PLAYER_BLACK,):
+            return PLAYER_WHITE
+        if not cls.has_any_legal_move(board,PLAYER_WHITE,):
+            return PLAYER_BLACK
+        return None
+    @classmethod
+    def is_game_over(cls, board):
+        black_count = board.count_pieces(PLAYER_BLACK)
+        white_count = board.count_pieces(PLAYER_WHITE)
+        if black_count == 0 or white_count == 0:
+            return True
+        return (
+            not cls.has_any_legal_move(board,PLAYER_BLACK,) or not cls.has_any_legal_move(board,PLAYER_WHITE,))
+    @classmethod
+    def is_draw(cls, board):
+        return False
+    @classmethod
+    def evaluate_game(cls, board):
+        result = GameResult()
+        if not cls.is_game_over(board):
+            return result
+        result.game_over = True
+        winner = cls.get_winner(board)
+        if winner is not None:
+            result.winner = winner
+        else:
+            result.draw = True
+        return result
+        "|"
+    }
+    05(update game.py){
+        "|"
+        # games/checkers/game.py
+from engine.interfaces.game_interface import GameInterface
+from engine.interfaces.game_result import GameResult
+from games.checkers.ai import CheckersAI
+from games.checkers.board import CheckersBoard
+from games.checkers.board_renderer import CheckersBoardRenderer
+from games.checkers.constants import (FIRST_PLAYER,GAME_DRAW,GAME_MODE_AI_VS_AI,GAME_MODE_HUMAN_VS_AI,GAME_MODE_HUMAN_VS_HUMAN,GAME_NOT_STARTED,GAME_OVER,GAME_RUNNING,PLAYER_BLACK,PLAYER_WHITE,)
+from games.checkers.human_player import HumanPlayer
+from games.checkers.overlay_renderer import CheckersOverlayRenderer
+from games.checkers.rules import CheckersRules
+class CheckersGame(GameInterface):
+    def __init__(self,renderer,game_mode=GAME_MODE_HUMAN_VS_HUMAN,):
+        self.renderer = renderer
+        self.game_mode = game_mode
+        self.board = CheckersBoard()
+        self.current_player = FIRST_PLAYER
+        self.next_starting_player = FIRST_PLAYER
+        self.result = GameResult()
+        self.game_state = GAME_NOT_STARTED
+        self.move_count = 0
+        self.in_multi_capture = False
+        self.active_capture_piece = None
+        self.board_renderer = CheckersBoardRenderer(renderer)
+        self.overlay_renderer = CheckersOverlayRenderer(renderer)
+        self.human_player = HumanPlayer(self.board_renderer)
+        self.ai = CheckersAI(FIRST_PLAYER)
+    def initialize(self):
+        if self.game_mode in (GAME_MODE_HUMAN_VS_AI,GAME_MODE_AI_VS_AI,):
+            self.ai.initialize()
+        self.reset()
+    def reset(self):
+        self.board.reset()
+        self.current_player = (self.choose_starting_player())
+        self.result.reset()
+        self.game_state = GAME_RUNNING
+        self.move_count = 0
+        self.in_multi_capture = False
+        self.active_capture_piece = None
+        self.human_player.reset()
+        self.ai.set_player(self.current_player)
+        self.ai.reset()
+        if self.game_mode in (GAME_MODE_HUMAN_VS_AI,GAME_MODE_AI_VS_AI,):
+            self.ai.initialize()
+        self.board_renderer.reset()
+        self.overlay_renderer.reset()
+    def shutdown(self):
+        pass
+    def update(self):
+        if self.is_frozen():
+            return
+        self.update_current_player()
+    def render(self):
+        self.board_renderer.render(self.board,self.get_legal_moves(),self.human_player.get_selected_position(),self.active_capture_piece,)
+        self.overlay_renderer.render(self)
+    def make_move(self, move):
+        if self.is_frozen():
+            return False
+        if not isinstance(move, tuple):
+            return False
+        if len(move) != 4:
+            return False
+        if self.in_multi_capture:
+            if not self._is_valid_multi_capture_move(move):
+                return False
+        else:
+            if not CheckersRules.is_valid_move(self.board,move,self.current_player,):
+                return False
+        from_row, from_column, to_row, to_column = move
+        piece_before_move = self.board.get_cell(from_row,from_column,)
+        if not CheckersRules.apply_move(self.board,move,self.current_player,):
+            return False
+        piece_after_move = self.board.get_cell(to_row,to_column,)
+        self.move_count += 1
+        was_capture = CheckersRules.is_capture_move(move)
+        if was_capture:
+            self.active_capture_piece = (to_row,to_column,)
+            if (CheckersRules.is_man(piece_before_move) and CheckersRules.is_king(piece_after_move)):
+                self.in_multi_capture = False
+                self.active_capture_piece = None
+                self._finish_turn()
+                return True
+            additional_captures = (CheckersRules.get_capture_moves(self.board,to_row,to_column,))
+            if additional_captures:
+                self.in_multi_capture = True
+                return True
+        self.in_multi_capture = False
+        self.active_capture_piece = None
+        self._finish_turn()
+        return True
+    def _is_valid_multi_capture_move(self, move):
+        if self.active_capture_piece is None:
+            return False
+        from_row, from_column, _, _ = move
+        active_row, active_column = (self.active_capture_piece)
+        if (from_row != active_row or from_column != active_column):
+            return False
+        capture_moves = (CheckersRules.get_capture_moves(self.board,active_row,active_column,))
+        return move in capture_moves
+    def _finish_turn(self):
+        self.in_multi_capture = False
+        self.active_capture_piece = None
+        self.switch_player()
+        self.ai.set_player(self.current_player)
+        self.result = CheckersRules.evaluate_game(self.board)
+        if self.result.game_over:
+            if self.result.draw:
+                self.game_state = GAME_DRAW
+            else:
+                self.game_state = GAME_OVER
+            return
+        if not self.get_legal_moves():
+            self.result.reset()
+            self.result.game_over = True
+            self.result.winner = (PLAYER_WHITE if self.current_player == PLAYER_BLACK else PLAYER_BLACK)
+            self.game_state = GAME_OVER
+    def switch_player(self):
+        if self.current_player == PLAYER_BLACK:
+            self.current_player = PLAYER_WHITE
+        else:
+            self.current_player = PLAYER_BLACK
+    def choose_starting_player(self):
+        player = self.next_starting_player
+        if player == PLAYER_BLACK:
+            self.next_starting_player = PLAYER_WHITE
+        else:
+            self.next_starting_player = PLAYER_BLACK
+        return player
+    def get_current_controller(self):
+        if self.game_mode == GAME_MODE_HUMAN_VS_HUMAN:
+            return self.human_player
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            if self.current_player == PLAYER_BLACK:
+                return self.human_player
+            return self.ai
+        if self.game_mode == GAME_MODE_AI_VS_AI:
+            return self.ai
+        return None
+    def update_current_player(self):
+        controller = self.get_current_controller()
+        if controller is None:
+            return
+        action = controller.get_action(self)
+        if action is None:
+            return
+        if not isinstance(action, tuple):
+            return
+        if len(action) != 4:
+            return
+        self.make_move(action)
+    def get_legal_moves(self):
+        if self.in_multi_capture:
+            if self.active_capture_piece is None:
+                return []
+            row, column = self.active_capture_piece
+            return CheckersRules.get_capture_moves(self.board,row,column,)
+        return CheckersRules.get_legal_moves(self.board,self.current_player,)
+    def get_state(self):
+        return {"board": self.board.get_board_state(),"current_player": self.current_player,"winner": self.result.winner,"game_state": self.game_state,"game_over": self.result.game_over,"draw": self.result.draw,"move_count": self.move_count,"in_multi_capture": self.in_multi_capture,"active_capture_piece": (self.active_capture_piece),"legal_moves": self.get_legal_moves(),"black_count": self.board.count_pieces(PLAYER_BLACK),"white_count": self.board.count_pieces(PLAYER_WHITE),}
+    def get_board(self):
+        return self.board
+    def get_current_player(self):
+        return self.current_player
+    def get_winner(self):
+        return self.result.winner
+    def get_result(self):
+        return self.result
+    def get_game_state(self):
+        return self.game_state
+    def get_black_count(self):
+        return self.board.count_pieces(PLAYER_BLACK)
+    def get_white_count(self):
+        return self.board.count_pieces(PLAYER_WHITE)
+    def is_game_over(self):
+        return self.result.game_over
+    def is_in_multi_capture(self):
+        return self.in_multi_capture
+    def get_active_capture_piece(self):
+        return self.active_capture_piece
+    def is_frozen(self):
+        return self.result.game_over
+        "|"
+    }
+    06(update ai.py){
+        "|"
+        # games/checkers/ai.py
+import random
+from engine.interfaces.ai_interface import AIInterface
+from games.checkers.constants import (AI_RANDOM,PLAYER_BLACK,PLAYER_WHITE,)
+from games.checkers.rules import CheckersRules
+class CheckersAI(AIInterface):
+    def __init__(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+        self.difficulty = AI_RANDOM
+    def initialize(self):
+        pass
+    def get_action(self, game):
+        if game is None:
+            return None
+        if game.is_game_over():
+            return None
+        current_player = game.get_current_player()
+        if current_player != self.player:
+            self.set_player(current_player)
+        legal_moves = game.get_legal_moves()
+        if not legal_moves:
+            return None
+        game_state = game.get_state()
+        return self.select_action(game_state)
+    def select_action(self, game_state):
+        if not isinstance(game_state, dict):
+            return None
+        legal_moves = game_state.get("legal_moves",[],)
+        if not legal_moves:
+            return None
+        valid_moves = []
+        for move in legal_moves:
+            if self._is_valid_move_format(move):
+                valid_moves.append(tuple(move))
+        if not valid_moves:
+            return None
+        return random.choice(valid_moves)
+    def learn(self,state,action,reward,next_state,):
+        pass
+    def reset(self):
+        pass
+    def set_player(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+    def set_difficulty(self, difficulty):
+        if not isinstance(difficulty,str,):
+            raise ValueError("Difficulty must be a string.")
+        self.difficulty = difficulty
+    @staticmethod
+    def _is_valid_move_format(move):
+        if not isinstance(move,(tuple, list),):
+            return False
+        if len(move) != 4:
+            return False
+        return all(isinstance(value,int,) for value in move)
+    @staticmethod
+    def get_random_move(board, player):
+        legal_moves = CheckersRules.get_legal_moves(board,player,)
+        if not legal_moves:
+            return None
+        return random.choice(legal_moves)
+        "|"
+    }
+    07(update human_player.py){
+        "|"
+        # games/checkers/human_player.py
+import pygame
+from games.checkers.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+class HumanPlayer:
+    def __init__(self, board_renderer):
+        self.board_renderer = board_renderer
+        self.player = None
+        self.selected_position = None
+    def initialize(self):
+        self.reset()
+    def reset(self):
+        self.selected_position = None
+    def set_player(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+        self.selected_position = None
+    def get_action(self, game):
+        if game is None:
+            return None
+        if game.is_game_over():
+            return None
+        current_player = game.get_current_player()
+        if self.player != current_player:
+            self.set_player(current_player)
+        legal_moves = game.get_legal_moves()
+        if not legal_moves:
+            self.selected_position = None
+            return None
+        mouse_buttons = pygame.mouse.get_pressed()
+        if not mouse_buttons[0]:
+            return None
+        mouse_position = pygame.mouse.get_pos()
+        position = self.board_renderer.screen_to_board(mouse_position)
+        if position is None:
+            return None
+        row, column = position
+        if game.is_in_multi_capture():
+            active_piece = (game.get_active_capture_piece())
+            if active_piece is None:
+                return None
+            self.selected_position = active_piece
+            for move in legal_moves:
+                if (move[0] == active_piece[0] and move[1] == active_piece[1] and move[2] == row and move[3] == column):
+                    self.selected_position = (move[2],move[3],)
+                    return move
+            return None
+        if self.selected_position is None:
+            if self._is_selectable_position(position,legal_moves,):
+                self.selected_position = position
+            return None
+        if self._is_selectable_position(position,legal_moves,):
+            self.selected_position = position
+            return None
+        selected_row, selected_column = (self.selected_position)
+        move = (selected_row,selected_column,row,column,)
+        if move in legal_moves:
+            self.selected_position = None
+            return move
+        return None
+    def clear_selection(self):
+        self.selected_position = None
+    def get_selected_position(self):
+        return self.selected_position
+    def _is_selectable_position(self,position,legal_moves,):
+        row, column = position
+        for move in legal_moves:
+            if (move[0] == row and move[1] == column):
+                return True
+        return False
+        "|"
+    }
+    08(update board_renderer.py){
+        "|"
+        # games/checkers/board_renderer.py
+from games.checkers.constants import (BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CAPTURE_MOVE_COLOR,DARK_SQUARE_COLOR,EMPTY,KING_INDICATOR_COLOR,KING_INDICATOR_RADIUS,LEGAL_MOVE_COLOR,LIGHT_SQUARE_COLOR,PIECE_RADIUS,BLACK_KING,BLACK_MAN,PLAYER_BLACK,PLAYER_WHITE,SELECTED_CELL_COLOR,WHITE_KING,WHITE_MAN,)
+class CheckersBoardRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def reset(self):
+        pass
+    def render(self,board,legal_moves=None,selected_position=None,active_capture_piece=None,):
+        self._draw_board()
+        self._draw_highlights(legal_moves or [],selected_position,active_capture_piece,)
+        self._draw_pieces(board)
+    def board_to_screen(self, row, column):
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        cell_size = self._get_cell_size()
+        x = (BOARD_PADDING + (column + 0.5) * cell_size)
+        y = (BOARD_PADDING + (row + 0.5) * cell_size)
+        return x, y
+    def screen_to_board(self, position):
+        if position is None:
+            return None
+        x, y = position
+        cell_size = self._get_cell_size()
+        board_x = x - BOARD_PADDING
+        board_y = y - BOARD_PADDING
+        if board_x < 0 or board_y < 0:
+            return None
+        column = int(board_x // cell_size)
+        row = int(board_y // cell_size)
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return None
+        return row, column
+    def get_board_size(self):
+        size = (BOARD_COLUMNS * self._get_cell_size() + BOARD_PADDING * 2)
+        return size, size
+    def _draw_board(self):
+        cell_size = self._get_cell_size()
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if (row + column) % 2 == 1:
+                    square_color = DARK_SQUARE_COLOR
+                else:
+                    square_color = LIGHT_SQUARE_COLOR
+                left = (BOARD_PADDING + column * cell_size)
+                top = (BOARD_PADDING + row * cell_size)
+                self._draw_rectangle(left,top,cell_size,cell_size,square_color,)
+    def _draw_pieces(self, board):
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                piece = board.get_cell(row,column,)
+                if piece == EMPTY:
+                    continue
+                center = self.board_to_screen(row,column,)
+                self._draw_piece(center,piece,)
+    def _draw_piece(self, center, piece):
+        if piece in (BLACK_MAN,BLACK_KING,):
+            piece_color = (30,30,30,)
+        elif piece in (WHITE_MAN,WHITE_KING,):
+            piece_color = (235,235,235,)
+        else:
+            return
+        self.renderer.draw_filled_circle(center,PIECE_RADIUS,piece_color,)
+        if piece in (WHITE_MAN,WHITE_KING,):
+            self.renderer.draw_circle(center,PIECE_RADIUS,(40, 40, 40),2,)
+        if piece in (BLACK_KING,WHITE_KING,):
+            self.renderer.draw_filled_circle(center,KING_INDICATOR_RADIUS,KING_INDICATOR_COLOR,)
+    def _draw_highlights(self,legal_moves,selected_position,active_capture_piece,):
+        if selected_position is not None:
+            self._draw_cell_highlight(selected_position,SELECTED_CELL_COLOR,)
+        if active_capture_piece is not None:
+            self._draw_cell_highlight(active_capture_piece,SELECTED_CELL_COLOR,)
+        destinations = set()
+        for move in legal_moves:
+            if not isinstance(move,(tuple, list),):
+                continue
+            if len(move) != 4:
+                continue
+            destination = (move[2],move[3],)
+            destinations.add((destination,self._is_capture_move(move),))
+        for destination, is_capture in destinations:
+            if is_capture:
+                color = CAPTURE_MOVE_COLOR
+            else:
+                color = LEGAL_MOVE_COLOR
+            self._draw_destination_highlight(destination,color,)
+    def _draw_cell_highlight(self,position,color,):
+        row, column = position
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return
+        cell_size = self._get_cell_size()
+        left = (BOARD_PADDING + column * cell_size)
+        top = (BOARD_PADDING + row * cell_size)
+        self._draw_rectangle_outline(left,top,cell_size,cell_size,color,4,)
+    def _draw_destination_highlight(self,position,color,):
+        row, column = position
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return
+        center = self.board_to_screen(row,column,)
+        radius = (self._get_cell_size() * 0.13) 
+        self.renderer.draw_filled_circle(center,radius,color,)
+    @staticmethod
+    def _is_capture_move(move):
+        return (abs(move[2] - move[0]) == 2 and abs(move[3] - move[1]) == 2)
+    def _draw_rectangle(self,x,y,width,height,color,):
+        self.renderer.draw_rectangle((x, y),(width, height),color,)
+    def _draw_rectangle_outline(self,x,y,width,height,color,line_width,):
+        if hasattr(self.renderer,"draw_rectangle_outline",):
+            self.renderer.draw_rectangle_outline((x, y),(width, height),color,line_width,)
+            return
+        if hasattr(self.renderer,"draw_rectangle",):
+            self.renderer.draw_rectangle((x, y),(width, height),color,)
+    def _get_cell_size(self):
+        return (self._board_pixel_size() / BOARD_COLUMNS)
+    def _board_pixel_size(self):
+        return 560.0
+        "|"
+    }
+    09(update overlay_renderer.py){
+        "|"
+        # games/checkers/overlay_renderer.py
+from games.checkers.constants import (GAME_DRAW,GAME_OVER,GAME_RUNNING,PLAYER_BLACK,PLAYER_WHITE,)
+class CheckersOverlayRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def reset(self):
+        pass
+    def render(self, game):
+        if game is None:
+            return
+        game_state = game.get_state()
+        if game_state is None:
+            return
+        game_status = game_state.get("game_state",GAME_RUNNING,)
+        if game_status == GAME_RUNNING:
+            return
+        if game_status == GAME_OVER:
+            self._render_game_over(game_state)
+            return
+        if game_status == GAME_DRAW:
+            self._render_draw()
+    def _render_game_over(self, game_state):
+        winner = game_state.get("winner")
+        if winner == PLAYER_BLACK:
+            message = "Black Wins"
+        elif winner == PLAYER_WHITE:
+            message = "White Wins"
+        else:
+            message = "Game Over"
+        self._draw_overlay_message(message)
+    def _render_draw(self):
+        self._draw_overlay_message("Draw")
+    def _draw_overlay_message(self, message):
+        if hasattr(self.renderer,"draw_overlay_message",):
+            self.renderer.draw_overlay_message(message=message,size=56,)
+    def _draw_text(self, text, position):
+        if hasattr(self.renderer,"draw_text",):
+            self.renderer.draw_text(text,position,)
+    @staticmethod
+    def _get_status_position():
+        return 40, 10
+        "|"
+    }
+    10(testing){
+        run main.py
+        output =
+        "|"
+        pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+2026-09-11 09:21:07 [INFO] Logger Initialized
+2026-09-11 09:21:07 [INFO] [GameManager] Initializing...
+2026-09-11 09:21:07 [INFO] [Config] Loaded
+2026-09-11 09:21:07 [INFO] [Window] Created 1280x720
+2026-09-11 09:21:07 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 09:21:07 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 09:21:07 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:21:07 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 09:21:07 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:21:07 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 09:21:07 [INFO] [Input] Initialized
+2026-09-11 09:21:07 [INFO] [AssetManager] Initialized
+2026-09-11 09:21:07 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 09:21:07 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 09:21:07 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 09:21:07 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 09:21:07 [INFO] [Scene] Enter: Main Menu
+2026-09-11 09:21:07 [INFO] [MainMenuScene] Ready
+2026-09-11 09:21:07 [INFO] [GameManager] Running...
+2026-09-11 09:21:11 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 09:21:11 [INFO] [Scene] Exit: Main Menu
+2026-09-11 09:21:11 [INFO] [Scene] Enter: Game Mode
+2026-09-11 09:21:11 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 09:21:11 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-11 09:21:11 [INFO] [Scene] Exit: Game Mode
+2026-09-11 09:21:11 [INFO] [Scene] Enter: Game Scene
+2026-09-11 09:21:11 [INFO] [GameScene] Initializing game.
+2026-09-11 09:21:11 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-11 09:21:11 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-11 09:24:44 [INFO] [GameManager] Shutting down...
+2026-09-11 09:24:44 [INFO] [GameManager] Runtime: 217.46s
+2026-09-11 09:24:44 [INFO] [Mesh] Released.
+2026-09-11 09:24:44 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-11 09:24:44 [INFO] [Mesh] Released.
+2026-09-11 09:24:44 [INFO] [ShaderManager] Released 'text'.
+2026-09-11 09:24:44 [INFO] [Renderer] Shutdown
+2026-09-11 09:24:44 [INFO] [Window] Destroyed
+pygame 2.6.1 (SDL 2.28.4, Python 3.13.13)
+Hello from the pygame community. https://www.pygame.org/contribute.html
+2026-09-11 09:15:47 [INFO] Logger Initialized
+2026-09-11 09:15:47 [INFO] [GameManager] Initializing...
+2026-09-11 09:15:47 [INFO] [Config] Loaded
+2026-09-11 09:15:47 [INFO] [Window] Created 1280x720
+2026-09-11 09:15:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 09:15:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 09:15:47 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:15:47 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 09:15:47 [INFO] [Mesh] GPU mesh created.
+2026-09-11 09:15:47 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 09:15:47 [INFO] [Input] Initialized
+2026-09-11 09:15:47 [INFO] [AssetManager] Initialized
+2026-09-11 09:15:47 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 09:15:47 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 09:15:47 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 09:15:47 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 09:15:47 [INFO] [Scene] Enter: Main Menu
+2026-09-11 09:15:47 [INFO] [MainMenuScene] Ready
+2026-09-11 09:15:47 [INFO] [GameManager] Running...
+2026-09-11 09:15:51 [INFO] [MainMenuScene] Selected Checkers
+2026-09-11 09:15:51 [INFO] [Scene] Exit: Main Menu
+2026-09-11 09:15:51 [INFO] [Scene] Enter: Game Mode
+2026-09-11 09:15:51 [INFO] [GameModeScene] Choosing mode for Checkers
+2026-09-11 09:15:53 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-11 09:15:53 [INFO] [Scene] Exit: Game Mode
+2026-09-11 09:15:53 [INFO] [Scene] Enter: Game Scene
+2026-09-11 09:15:53 [INFO] [GameScene] Initializing game.
+2026-09-11 09:15:53 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-11 09:15:53 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-11 09:19:21 [INFO] [GameManager] Shutting down...
+2026-09-11 09:19:21 [INFO] [GameManager] Runtime: 213.91s
+2026-09-11 09:19:21 [INFO] [Mesh] Released.
+2026-09-11 09:19:21 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-11 09:19:21 [INFO] [Mesh] Released.
+2026-09-11 09:19:21 [INFO] [ShaderManager] Released 'text'.
+2026-09-11 09:19:21 [INFO] [Renderer] Shutdown
+2026-09-11 09:19:21 [INFO] [Window] Destroyed
+        "|"
+    }
+    PHASE 7 — CHECKERS SUMMARY
 
+Phase 7 of MindWar Arena focused on implementing Checkers as the seventh deterministic board game within the unified offline gaming platform. The selected ruleset is English/American Checkers, played on a standard 8×8 board with 12 pieces for each player. The implementation follows the existing MindWar Arena architecture, keeping board state, game rules, game control, AI behavior, human input, and rendering separated into dedicated components. The objective of this phase was not simply to create a playable Checkers board, but to integrate a complete and testable Checkers implementation into the common game-engine architecture.
+
+The Checkers module was organized using the established game structure containing constants.py, board.py, rules.py, game.py, ai.py, human_player.py, board_renderer.py, overlay_renderer.py, and __init__.py. The module follows the same architectural principles used by the previously completed games. The __init__.py file remains empty intentionally. Although Python packages can use __init__.py to re-export classes and provide a cleaner external import interface, doing so does not eliminate the need for explicit imports inside individual modules. Keeping the file empty maintains explicit dependencies between Checkers components and avoids unnecessary package-level imports and potential circular-import complexity.
+
+The constants.py module defines the fundamental Checkers configuration and identifiers. It contains the 8×8 board dimensions, cell size and padding, playable-square definitions, piece identifiers for black and white men and kings, player identifiers, starting-player configuration, game-state values, movement directions, capture distance, game modes, AI difficulty identifiers, and rendering colors. The constants provide a single source of game-specific values while allowing the rest of the Checkers implementation to remain readable and consistent.
+
+The CheckersBoard class is responsible for storing and managing board state. It represents the complete 8×8 board, including both playable dark squares and non-playable light squares. During reset, twelve black pieces are placed on the first three rows and twelve white pieces are placed on the final three rows, with pieces positioned only on playable squares. The board provides methods for retrieving and modifying individual cells, validating coordinates, identifying playable squares, checking whether a cell is empty, counting pieces belonging to a player, retrieving piece positions, obtaining a deep-copy board state, and creating independent board copies. This keeps raw state management separate from Checkers rules.
+
+The CheckersRules class contains the core rules engine. It determines player relationships, identifies men and kings, calculates movement directions, generates simple moves, generates capture moves, enforces mandatory captures, validates moves, identifies capture moves, determines captured positions, handles promotion, applies moves to the board, determines winners, detects game-over conditions, and produces GameResult objects. Men are restricted to their forward diagonal movement while kings can move and capture in both diagonal directions. Captures are represented as two-square diagonal moves, with the intervening opponent piece removed when a capture is applied.
+
+Mandatory capture behavior is an important part of the implementation. The legal-move generator first searches for capture moves for the current player. If at least one capture exists, only capture moves are returned. Simple diagonal moves are considered only when no capture is available. This ensures that the implementation follows the fundamental English/American Checkers rule requiring a player to capture whenever a capture is available.
+
+The game controller implements the complete turn-management layer through CheckersGame. It inherits from the common GameInterface and coordinates the board, rules, AI, human controller, board renderer, overlay renderer, game result, current player, move count, and multi-capture state. It supports Human vs Human, Human vs AI, and AI vs AI modes. The controller initializes and resets all required components, tracks the current player, alternates the starting player between games, and freezes the game once a terminal result has been reached.
+
+A major part of the Checkers implementation is multi-capture handling. After a capture, the game checks whether the same piece has another available capture. If another capture exists, the turn does not immediately switch to the opponent. Instead, the game enters in_multi_capture mode and stores the piece position in active_capture_piece. Only additional capture moves originating from that same piece are then accepted. This prevents the player from abandoning an ongoing capture sequence and moving another piece. Once no further capture is available, the multi-capture sequence ends and the turn switches to the opponent.
+
+Promotion was also implemented according to the selected American Checkers ruleset. A black man reaching the final row becomes a black king, while a white man reaching the opposite final row becomes a white king. An important rule was explicitly handled for captures: when a man reaches the king row during a capture, the capture sequence ends immediately after promotion. The implementation therefore promotes the piece and finishes the turn instead of allowing the newly crowned king to continue capturing during the same turn.
+
+The human-player controller converts mouse input into board coordinates through the board renderer. It supports selecting a piece, selecting a legal destination, respecting mandatory captures, and handling multi-capture continuation. During an active multi-capture sequence, the human player is restricted to the currently active capturing piece. Invalid selections and illegal destinations are ignored rather than being passed to the game controller as valid moves.
+
+The Checkers AI currently uses a random legal-move strategy. It implements the common AI interface while also providing the controller-compatible get_action(game) method required by the current game architecture. The AI obtains the current game's legal moves and randomly selects one. It therefore obeys the rules engine rather than generating arbitrary board coordinates. The architecture leaves room for future difficulty levels and stronger Checkers algorithms without requiring the game controller to be redesigned.
+
+The rendering system was integrated with the existing ModernGL-based engine. CheckersBoardRenderer draws the complete 8×8 board, differentiates playable and non-playable squares, renders black and white pieces, visually identifies kings, and displays selected cells and legal destinations. Capture destinations receive a distinct highlight from ordinary legal moves. The renderer also provides board-to-screen and screen-to-board coordinate conversion for human interaction. The CheckersOverlayRenderer handles terminal game messages and uses the centralized renderer overlay functionality rather than implementing an independent text-rendering system.
+
+During development, several integration issues were encountered and corrected. The first involved renderer construction because CheckersBoardRenderer and CheckersOverlayRenderer require the shared renderer instance. The human-player constructor was also aligned with the actual Checkers renderer-based input architecture. Missing reset() methods were added to the board and overlay renderers so they conform to the lifecycle expected by the game controller. A rendering API mismatch involving Renderer.draw_rectangle() was corrected so Checkers uses the existing renderer interface correctly. The Checkers AI initially lacked the controller-facing get_action() method, which was subsequently implemented while retaining select_action() for the AI interface.
+
+Runtime verification was performed in both Human vs Human and Human vs AI modes. The Checkers game successfully entered the game scene, initialized the renderer and shaders, ran for several minutes, and shut down cleanly without exceptions. The Human vs Human session ran for approximately 213.91 seconds, while the Human vs AI session ran for approximately 217.46 seconds. The logs showed normal renderer initialization, game execution, resource release, renderer shutdown, and window destruction.
+
+Automated testing was performed at multiple levels. The primary Checkers board and rules test suite contains 50 tests, covering board initialization, piece placement, movement, captures, promotion, validation, and rule behavior. All 50 tests passed. The Checkers game/controller/AI integration suite contains 21 tests, covering initialization, piece counts, player switching, move execution, multi-capture behavior, game state, reset behavior, AI operation, and state handling. All 21 tests passed.
+
+A separate edge-case suite was then introduced to verify situations that ordinary tests might miss. The edge-case suite contains 15 tests covering king captures in both directions, blocked pieces, multi-capture state, promotion during capture, invalid captures, game-over behavior, and the no-legal-move condition. Several early versions of these tests failed because the test fixtures accidentally inherited pieces from the standard starting position or incorrectly treated capturable opponent pieces as blockers. Those fixtures were corrected rather than modifying production code unnecessarily. The final edge-case suite completed with 15/15 tests passing.
+
+The combined automated verification therefore reached 86/86 passing tests across the Checkers board/rules, game/controller/AI, and edge-case suites. This provides strong evidence that the current Checkers implementation behaves correctly across normal and difficult rule situations. In addition to automated tests, both primary interactive modes tested successfully at runtime.
+
+One particularly important testing lesson from this phase was the distinction between a blocked piece and a piece that has an available capture. An opponent's adjacent piece does not necessarily block movement because it may create a mandatory capture. To construct a genuinely blocked position, the test must also prevent the corresponding capture landing square from being available. This was reflected in the final edge-case fixtures and helped verify the rules engine accurately.
+
+The Checkers implementation now forms a complete game module within MindWar Arena's multi-game architecture. It provides deterministic board state, complete movement and capture rules, promotion, king behavior, multi-capture sequences, terminal-state handling, human controls, random AI, rendering, overlays, and automated verification. The implementation remains compatible with the broader engine architecture and can later receive stronger AI algorithms without changing the fundamental game structure.
+
+From an architectural perspective, the Checkers phase also reinforces an important MindWar Arena design principle: game-specific rules remain inside the game module, while shared engine functionality remains outside it. The Checkers module does not attempt to modify the global engine merely to accommodate its own rules. It communicates through the established game, AI, rendering, and result interfaces. This separation will become increasingly important as the project approaches Chess, Go, and the final integration phases.
+
+At the completion of the current Checkers work, the project has successfully progressed through the first seven game-development phases: Tic-Tac-Toe, Connect Four, Gomoku, Pente, Othello, and now Checkers, following the established architecture. The remaining development roadmap continues with Chess, Nine Men's Morris, Go, full game integration, the Tkinter application layer, Windows packaging, and final documentation/testing/release work. After Phase 10, the planned architectural cleanup will consolidate shared constants/configuration, standardize code style, remove unnecessary duplication, and correct issues such as generic game-mode constants currently being sourced from a game-specific constants module.
+
+Phase 7 therefore establishes Checkers as a fully integrated, tested, and runtime-verified deterministic game within MindWar Arena, with 86/86 automated tests passing and both Human vs Human and Human vs AI modes verified successfully.
+
+PHASE 7 — CHECKERS CHECKLIST
+STEP 1 — Project Architecture
+[✓] Checkers module created inside games/checkers.
+[✓] Standard MindWar Arena game architecture followed.
+[✓] constants.py created.
+[✓] board.py created.
+[✓] rules.py created.
+[✓] game.py created.
+[✓] ai.py created.
+[✓] human_player.py created.
+[✓] board_renderer.py created.
+[✓] overlay_renderer.py created.
+[✓] __init__.py intentionally kept empty.
+[✓] Module dependencies kept explicit.
+[✓] No unnecessary package-level re-export system introduced.
+STEP 2 — Checkers Board Foundation
+[✓] Standard 8×8 board implemented.
+[✓] All board cells represented.
+[✓] Dark/playable squares identified.
+[✓] Light/non-playable squares identified.
+[✓] 12 black pieces initialized.
+[✓] 12 white pieces initialized.
+[✓] Black men represented correctly.
+[✓] White men represented correctly.
+[✓] Empty cells supported.
+[✓] Kings represented separately.
+[✓] Board coordinates validated.
+[✓] Invalid positions rejected.
+[✓] Piece values validated.
+[✓] Piece counting implemented.
+[✓] Piece-position retrieval implemented.
+[✓] Deep board-state copy implemented.
+[✓] Independent board copying implemented.
+[✓] String representation implemented.
+STEP 3 — Checkers Constants & Configuration
+[✓] Board dimensions defined.
+[✓] Cell size defined.
+[✓] Board padding defined.
+[✓] Piece identifiers defined.
+[✓] Player identifiers defined.
+[✓] Starting player defined.
+[✓] Game-state identifiers defined.
+[✓] Movement directions defined.
+[✓] Capture distance defined.
+[✓] Game modes defined.
+[✓] Default game mode defined.
+[✓] AI difficulty identifiers defined.
+[✓] Board colors defined.
+[✓] Piece colors defined.
+[✓] King indicator defined.
+[✓] Selection/highlight colors defined.
+STEP 4 — Movement Rules
+[✓] Black men move diagonally forward.
+[✓] White men move diagonally forward.
+[✓] Men cannot move backward.
+[✓] Kings move diagonally in both directions.
+[✓] Simple one-square movement implemented.
+[✓] Non-playable destinations rejected.
+[✓] Occupied destinations rejected.
+[✓] Opponent-piece identification implemented.
+[✓] Own-piece identification implemented.
+[✓] Invalid player handling implemented.
+STEP 5 — Capture Rules
+[✓] Diagonal captures implemented.
+[✓] Two-square capture distance enforced.
+[✓] Opponent piece required between source and destination.
+[✓] Landing square must be empty.
+[✓] Own pieces cannot be captured.
+[✓] Invalid captures rejected.
+[✓] Capture position calculation implemented.
+[✓] Captured piece removed correctly.
+[✓] Mandatory capture rule implemented.
+[✓] Simple moves suppressed when captures exist.
+[✓] King captures supported.
+[✓] Forward king captures tested.
+[✓] Backward king captures tested.
+STEP 6 — Multi-Capture System
+[✓] Multi-capture state implemented.
+[✓] Active capture piece tracked.
+[✓] Additional captures detected.
+[✓] Same-piece continuation enforced.
+[✓] Other pieces cannot interrupt an active capture.
+[✓] Legal continuation moves exposed.
+[✓] Multi-capture ends when no capture remains.
+[✓] Turn switches after capture sequence completion.
+[✓] Multi-capture state reset correctly.
+[✓] Active capture position reset correctly.
+Additional validation
+ Branching chained multi-capture tested.
+ Multiple legal continuation choices tested.
+ Each branching continuation preserves correct capture state.
+STEP 7 — Promotion & Kings
+[✓] Black promotion implemented.
+[✓] White promotion implemented.
+[✓] Men converted into kings on final row.
+[✓] Existing kings remain kings.
+[✓] King movement tested.
+[✓] King capture tested.
+[✓] Promotion during capture tested.
+[✓] American Checkers promotion rule implemented.
+[✓] Capture sequence ends when promotion occurs during capture.
+STEP 8 — Game State & Victory Conditions
+[✓] Game initialization implemented.
+[✓] Game reset implemented.
+[✓] Current player tracking implemented.
+[✓] Turn switching implemented.
+[✓] Move counter implemented.
+[✓] Winner tracking implemented.
+[✓] Game-over state implemented.
+[✓] Draw state supported by game-result architecture.
+[✓] Zero-piece victory condition implemented.
+[✓] No-legal-move victory condition implemented.
+[✓] Blocked-player scenario tested.
+[✓] Correct winner tested.
+[✓] Game freezes after game over.
+[✓] Moves rejected after game over.
+STEP 9 — Human Player
+[✓] Human controller implemented.
+[✓] Player assignment implemented.
+[✓] Mouse input supported.
+[✓] Screen-to-board conversion integrated.
+[✓] Piece selection implemented.
+[✓] Destination selection implemented.
+[✓] Illegal destination handling implemented.
+[✓] Mandatory capture respected.
+[✓] Multi-capture input supported.
+[✓] Active capture piece enforced.
+[✓] Selection reset implemented.
+STEP 10 — Checkers AI
+[✓] CheckersAI implemented.
+[✓] AIInterface integrated.
+[✓] AI player assignment implemented.
+[✓] AI initialization implemented.
+[✓] AI reset implemented.
+[✓] Legal move retrieval implemented.
+[✓] Random legal-move selection implemented.
+[✓] select_action() implemented.
+[✓] Controller-compatible get_action() implemented.
+[✓] AI action format validated.
+[✓] AI does not select illegal moves.
+[✓] AI works with multi-capture legal moves.
+[✓] AI player switching supported.
+[✓] Difficulty field prepared for future AI upgrades.
+STEP 11 — Board Rendering
+[✓] Checkers board renderer implemented.
+[✓] 8×8 board rendered.
+[✓] Light squares rendered.
+[✓] Dark squares rendered.
+[✓] Black pieces rendered.
+[✓] White pieces rendered.
+[✓] White-piece outline rendered.
+[✓] Kings visually identified.
+[✓] Board-to-screen conversion implemented.
+[✓] Screen-to-board conversion implemented.
+[✓] Selected-cell highlight implemented.
+[✓] Legal-move highlight implemented.
+[✓] Capture highlight implemented.
+[✓] Active capture piece highlighted.
+[✓] Renderer reset lifecycle implemented.
+STEP 12 — Overlay Rendering
+[✓] Checkers overlay renderer implemented.
+[✓] Game-over message implemented.
+[✓] Black victory message implemented.
+[✓] White victory message implemented.
+[✓] Draw message supported.
+[✓] Centralized renderer overlay functionality used.
+[✓] Overlay reset lifecycle implemented.
+STEP 13 — Game Integration
+[✓] GameInterface integrated.
+[✓] Checkers game registered with engine.
+[✓] Game Manager can initialize Checkers.
+[✓] Game Selection can select Checkers.
+[✓] Game Mode scene can select Checkers mode.
+[✓] Human vs Human supported.
+[✓] Human vs AI supported.
+[✓] AI vs AI supported architecturally.
+[✓] Renderer lifecycle integrated.
+[✓] Game shutdown lifecycle integrated.
+STEP 14 — Automated Testing
+Board & Rules
+[✓] tests/test_checkers.py created.
+[✓] 50/50 tests passed.
+[✓] Board initialization tested.
+[✓] Movement tested.
+[✓] Capture tested.
+[✓] Mandatory capture tested.
+[✓] Promotion tested.
+[✓] King behavior tested.
+[✓] Rule validation tested.
+Game / AI Integration
+[✓] tests/test_checkers_game.py created.
+[✓] 21/21 tests passed.
+[✓] Game initialization tested.
+[✓] Move execution tested.
+[✓] Turn switching tested.
+[✓] Multi-capture tested.
+[✓] Game state tested.
+[✓] Reset tested.
+[✓] AI integration tested.
+[✓] AI action format tested.
+Edge Cases
+[✓] tests/test_checkers_edge_cases.py created.
+[✓] 15/15 tests passed.
+[✓] King captures tested.
+[✓] Blocked pieces tested.
+[✓] Multi-capture behavior tested.
+[✓] Promotion during capture tested.
+[✓] Game-over freezing tested.
+[✓] No-legal-move condition tested.
+[✓] Invalid captures tested.
+Overall
+[✓] 86/86 automated tests passed.
+[✓] 0 failures.
+[✓] 0 errors.
+STEP 15 — Runtime Verification
+[✓] Checkers launches successfully.
+[✓] Game Selection → Checkers verified.
+[✓] Game Mode → Checkers verified.
+[✓] Human vs Human runtime verified.
+[✓] Human vs AI runtime verified.
+[✓] No runtime exception observed in verified sessions.
+[✓] OpenGL renderer initialized successfully.
+[✓] Checkers rendered successfully.
+[✓] Clean shutdown verified.
+[✓] Renderer resources released.
+[✓] Window destroyed correctly.
 }
 08(chess){
 

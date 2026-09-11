@@ -102,9 +102,12 @@ MINDWAR ARENA(
             )
             __init__.py
             ai.py
+            board_renderer.py
             board.py
             constants.py
             game.py
+            human_player.py
+            overlay_renderer.py
             rules.py
         )
         chess(
@@ -1340,6 +1343,838 @@ class MainMenuScene(Scene):
             prefix = "► " if index == self.selected_index else "  "
             self.renderer.draw_text(prefix + game_name,(80, y),size=34,)
             y += 55
+
+# games/checkers/ai.py
+import random
+from engine.interfaces.ai_interface import AIInterface
+from games.checkers.constants import (AI_RANDOM,PLAYER_BLACK,PLAYER_WHITE,)
+from games.checkers.rules import CheckersRules
+class CheckersAI(AIInterface):
+    def __init__(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+        self.difficulty = AI_RANDOM
+    def initialize(self):
+        pass
+    def get_action(self, game):
+        if game is None:
+            return None
+        if game.is_game_over():
+            return None
+        current_player = game.get_current_player()
+        if current_player != self.player:
+            self.set_player(current_player)
+        legal_moves = game.get_legal_moves()
+        if not legal_moves:
+            return None
+        game_state = game.get_state()
+        return self.select_action(game_state)
+    def select_action(self, game_state):
+        if not isinstance(game_state, dict):
+            return None
+        legal_moves = game_state.get("legal_moves",[],)
+        if not legal_moves:
+            return None
+        valid_moves = []
+        for move in legal_moves:
+            if self._is_valid_move_format(move):
+                valid_moves.append(tuple(move))
+        if not valid_moves:
+            return None
+        return random.choice(valid_moves)
+    def learn(self,state,action,reward,next_state,):
+        pass
+    def reset(self):
+        pass
+    def set_player(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+    def set_difficulty(self, difficulty):
+        if not isinstance(difficulty,str,):
+            raise ValueError("Difficulty must be a string.")
+        self.difficulty = difficulty
+    @staticmethod
+    def _is_valid_move_format(move):
+        if not isinstance(move,(tuple, list),):
+            return False
+        if len(move) != 4:
+            return False
+        return all(isinstance(value,int,) for value in move)
+    @staticmethod
+    def get_random_move(board, player):
+        legal_moves = CheckersRules.get_legal_moves(board,player,)
+        if not legal_moves:
+            return None
+        return random.choice(legal_moves)
+
+# games/checkers/board_renderer.py
+from games.checkers.constants import (BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CAPTURE_MOVE_COLOR,DARK_SQUARE_COLOR,EMPTY,KING_INDICATOR_COLOR,KING_INDICATOR_RADIUS,LEGAL_MOVE_COLOR,LIGHT_SQUARE_COLOR,PIECE_RADIUS,BLACK_KING,BLACK_MAN,PLAYER_BLACK,PLAYER_WHITE,SELECTED_CELL_COLOR,WHITE_KING,WHITE_MAN,)
+class CheckersBoardRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def reset(self):
+        pass
+    def render(self,board,legal_moves=None,selected_position=None,active_capture_piece=None,):
+        self._draw_board()
+        self._draw_highlights(legal_moves or [],selected_position,active_capture_piece,)
+        self._draw_pieces(board)
+    def board_to_screen(self, row, column):
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        cell_size = self._get_cell_size()
+        x = (BOARD_PADDING + (column + 0.5) * cell_size)
+        y = (BOARD_PADDING + (row + 0.5) * cell_size)
+        return x, y
+    def screen_to_board(self, position):
+        if position is None:
+            return None
+        x, y = position
+        cell_size = self._get_cell_size()
+        board_x = x - BOARD_PADDING
+        board_y = y - BOARD_PADDING
+        if board_x < 0 or board_y < 0:
+            return None
+        column = int(board_x // cell_size)
+        row = int(board_y // cell_size)
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return None
+        return row, column
+    def get_board_size(self):
+        size = (BOARD_COLUMNS * self._get_cell_size() + BOARD_PADDING * 2)
+        return size, size
+    def _draw_board(self):
+        cell_size = self._get_cell_size()
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if (row + column) % 2 == 1:
+                    square_color = DARK_SQUARE_COLOR
+                else:
+                    square_color = LIGHT_SQUARE_COLOR
+                left = (BOARD_PADDING + column * cell_size)
+                top = (BOARD_PADDING + row * cell_size)
+                self._draw_rectangle(left,top,cell_size,cell_size,square_color,)
+    def _draw_pieces(self, board):
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                piece = board.get_cell(row,column,)
+                if piece == EMPTY:
+                    continue
+                center = self.board_to_screen(row,column,)
+                self._draw_piece(center,piece,)
+    def _draw_piece(self, center, piece):
+        if piece in (BLACK_MAN,BLACK_KING,):
+            piece_color = (30,30,30,)
+        elif piece in (WHITE_MAN,WHITE_KING,):
+            piece_color = (235,235,235,)
+        else:
+            return
+        self.renderer.draw_filled_circle(center,PIECE_RADIUS,piece_color,)
+        if piece in (WHITE_MAN,WHITE_KING,):
+            self.renderer.draw_circle(center,PIECE_RADIUS,(40, 40, 40),2,)
+        if piece in (BLACK_KING,WHITE_KING,):
+            self.renderer.draw_filled_circle(center,KING_INDICATOR_RADIUS,KING_INDICATOR_COLOR,)
+    def _draw_highlights(self,legal_moves,selected_position,active_capture_piece,):
+        if selected_position is not None:
+            self._draw_cell_highlight(selected_position,SELECTED_CELL_COLOR,)
+        if active_capture_piece is not None:
+            self._draw_cell_highlight(active_capture_piece,SELECTED_CELL_COLOR,)
+        destinations = set()
+        for move in legal_moves:
+            if not isinstance(move,(tuple, list),):
+                continue
+            if len(move) != 4:
+                continue
+            destination = (move[2],move[3],)
+            destinations.add((destination,self._is_capture_move(move),))
+        for destination, is_capture in destinations:
+            if is_capture:
+                color = CAPTURE_MOVE_COLOR
+            else:
+                color = LEGAL_MOVE_COLOR
+            self._draw_destination_highlight(destination,color,)
+    def _draw_cell_highlight(self,position,color,):
+        row, column = position
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return
+        cell_size = self._get_cell_size()
+        left = (BOARD_PADDING + column * cell_size)
+        top = (BOARD_PADDING + row * cell_size)
+        self._draw_rectangle_outline(left,top,cell_size,cell_size,color,4,)
+    def _draw_destination_highlight(self,position,color,):
+        row, column = position
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return
+        center = self.board_to_screen(row,column,)
+        radius = (self._get_cell_size() * 0.13) 
+        self.renderer.draw_filled_circle(center,radius,color,)
+    @staticmethod
+    def _is_capture_move(move):
+        return (abs(move[2] - move[0]) == 2 and abs(move[3] - move[1]) == 2)
+    def _draw_rectangle(self,x,y,width,height,color,):
+        self.renderer.draw_rectangle((x, y),(width, height),color,)
+    def _draw_rectangle_outline(self,x,y,width,height,color,line_width,):
+        if hasattr(self.renderer,"draw_rectangle_outline",):
+            self.renderer.draw_rectangle_outline((x, y),(width, height),color,line_width,)
+            return
+        if hasattr(self.renderer,"draw_rectangle",):
+            self.renderer.draw_rectangle((x, y),(width, height),color,)
+    def _get_cell_size(self):
+        return (self._board_pixel_size() / BOARD_COLUMNS)
+    def _board_pixel_size(self):
+        return 560.0
+
+# games/checkers/board.py
+from copy import deepcopy
+from games.checkers.constants import (BOARD_COLUMNS,BOARD_ROWS,BLACK_KING,BLACK_MAN,EMPTY,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_MAN,)
+class CheckersBoard:
+    def __init__(self):
+        self._board = []
+        self.reset()
+    def reset(self):
+        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)] for _ in range(BOARD_ROWS)]
+        for row in range(3):
+            for column in range(BOARD_COLUMNS):
+                if self.is_dark_square(row, column):
+                    self._board[row][column] = BLACK_MAN
+        for row in range(BOARD_ROWS - 3, BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self.is_dark_square(row, column):
+                    self._board[row][column] = WHITE_MAN
+    def get_cell(self, row, column):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        return self._board[row][column]
+    def set_cell(self, row, column, value):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        if value not in (EMPTY,BLACK_MAN,BLACK_KING,WHITE_MAN,WHITE_KING,):
+            raise ValueError(f"Invalid piece value: {value}")
+        self._board[row][column] = value
+    def is_valid_position(self, row, column):
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+    def is_dark_square(self, row, column):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        return (row + column) % 2 == 1
+    def is_playable_square(self, row, column):
+        return self.is_dark_square(row, column)
+    def is_cell_empty(self, row, column):
+        return self.get_cell(row, column) == EMPTY
+    def count_pieces(self, player):
+        if player == PLAYER_BLACK:
+            pieces = (BLACK_MAN, BLACK_KING)
+        elif player == PLAYER_WHITE:
+            pieces = (WHITE_MAN, WHITE_KING)
+        else:
+            raise ValueError(f"Invalid player: {player}")
+        count = 0
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] in pieces:
+                    count += 1
+        return count
+    def get_piece_positions(self, player):
+        if player == PLAYER_BLACK:
+            pieces = (BLACK_MAN, BLACK_KING)
+        elif player == PLAYER_WHITE:
+            pieces = (WHITE_MAN, WHITE_KING)
+        else:
+            raise ValueError(f"Invalid player: {player}")
+        positions = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] in pieces:
+                    positions.append((row, column))
+        return positions
+    def get_board_state(self):
+        return deepcopy(self._board)
+    def copy(self):
+        new_board = CheckersBoard()
+        new_board._board = deepcopy(self._board)
+        return new_board
+    def __str__(self):
+        symbols = {EMPTY: ".",BLACK_MAN: "b",BLACK_KING: "B",WHITE_MAN: "w",WHITE_KING: "W",}
+        rows = []
+        for row in self._board:
+            rows.append(" ".join(symbols[cell] for cell in row))
+        return "\n".join(rows)
+
+        # games/checkers/constants.py
+GAME_NAME = "Checkers"
+GAME_VERSION = "1.0.0"
+BOARD_ROWS = 8
+BOARD_COLUMNS = 8
+CELL_SIZE = 70
+BOARD_PADDING = 40
+LIGHT_SQUARE = 0
+DARK_SQUARE = 1
+EMPTY = 0
+BLACK_MAN = 1
+BLACK_KING = 2
+WHITE_MAN = 3
+WHITE_KING = 4
+PLAYER_BLACK = 1
+PLAYER_WHITE = 2
+FIRST_PLAYER = PLAYER_BLACK
+GAME_NOT_STARTED = 0
+GAME_RUNNING = 1
+GAME_DRAW = 2
+GAME_OVER = 3
+NO_WINNER = 0
+FORWARD_BLACK = 1
+FORWARD_WHITE = -1
+MAN_MOVE_DISTANCE = 1
+KING_MOVE_DISTANCE = 1
+CAPTURE_DISTANCE = 2
+GAME_MODE_HUMAN_VS_HUMAN = 0
+GAME_MODE_HUMAN_VS_AI = 1
+GAME_MODE_AI_VS_AI = 2
+DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+AI_RANDOM = "Random"
+AI_EASY = "Easy"
+AI_MEDIUM = "Medium"
+AI_HARD = "Hard"
+LIGHT_SQUARE_COLOR = (220, 220, 220)
+DARK_SQUARE_COLOR = (90, 60, 40)
+PLAYER_BLACK_COLOR = (30, 30, 30)
+PLAYER_WHITE_COLOR = (235, 235, 235)
+KING_INDICATOR_COLOR = (255, 200, 50)
+SELECTED_CELL_COLOR = (80, 180, 255)
+LEGAL_MOVE_COLOR = (100, 220, 120)
+CAPTURE_MOVE_COLOR = (255, 100, 100)
+BOARD_LINE_WIDTH = 1
+PIECE_RADIUS = CELL_SIZE * 0.38
+KING_INDICATOR_RADIUS = PIECE_RADIUS * 0.45
+WIN_LINE_COLOR = (50, 255, 50)
+
+# games/checkers/game.py
+from engine.interfaces.game_interface import GameInterface
+from engine.interfaces.game_result import GameResult
+from games.checkers.ai import CheckersAI
+from games.checkers.board import CheckersBoard
+from games.checkers.board_renderer import CheckersBoardRenderer
+from games.checkers.constants import (FIRST_PLAYER,GAME_DRAW,GAME_MODE_AI_VS_AI,GAME_MODE_HUMAN_VS_AI,GAME_MODE_HUMAN_VS_HUMAN,GAME_NOT_STARTED,GAME_OVER,GAME_RUNNING,PLAYER_BLACK,PLAYER_WHITE,)
+from games.checkers.human_player import HumanPlayer
+from games.checkers.overlay_renderer import CheckersOverlayRenderer
+from games.checkers.rules import CheckersRules
+class CheckersGame(GameInterface):
+    def __init__(self,renderer,game_mode=GAME_MODE_HUMAN_VS_HUMAN,):
+        self.renderer = renderer
+        self.game_mode = game_mode
+        self.board = CheckersBoard()
+        self.current_player = FIRST_PLAYER
+        self.next_starting_player = FIRST_PLAYER
+        self.result = GameResult()
+        self.game_state = GAME_NOT_STARTED
+        self.move_count = 0
+        self.in_multi_capture = False
+        self.active_capture_piece = None
+        self.board_renderer = CheckersBoardRenderer(renderer)
+        self.overlay_renderer = CheckersOverlayRenderer(renderer)
+        self.human_player = HumanPlayer(self.board_renderer)
+        self.ai = CheckersAI(FIRST_PLAYER)
+    def initialize(self):
+        if self.game_mode in (GAME_MODE_HUMAN_VS_AI,GAME_MODE_AI_VS_AI,):
+            self.ai.initialize()
+        self.reset()
+    def reset(self):
+        self.board.reset()
+        self.current_player = (self.choose_starting_player())
+        self.result.reset()
+        self.game_state = GAME_RUNNING
+        self.move_count = 0
+        self.in_multi_capture = False
+        self.active_capture_piece = None
+        self.human_player.reset()
+        self.ai.set_player(self.current_player)
+        self.ai.reset()
+        if self.game_mode in (GAME_MODE_HUMAN_VS_AI,GAME_MODE_AI_VS_AI,):
+            self.ai.initialize()
+        self.board_renderer.reset()
+        self.overlay_renderer.reset()
+    def shutdown(self):
+        pass
+    def update(self):
+        if self.is_frozen():
+            return
+        self.update_current_player()
+    def render(self):
+        self.board_renderer.render(self.board,self.get_legal_moves(),self.human_player.get_selected_position(),self.active_capture_piece,)
+        self.overlay_renderer.render(self)
+    def make_move(self, move):
+        if self.is_frozen():
+            return False
+        if not isinstance(move, tuple):
+            return False
+        if len(move) != 4:
+            return False
+        if self.in_multi_capture:
+            if not self._is_valid_multi_capture_move(move):
+                return False
+        else:
+            if not CheckersRules.is_valid_move(self.board,move,self.current_player,):
+                return False
+        from_row, from_column, to_row, to_column = move
+        piece_before_move = self.board.get_cell(from_row,from_column,)
+        if not CheckersRules.apply_move(self.board,move,self.current_player,):
+            return False
+        piece_after_move = self.board.get_cell(to_row,to_column,)
+        self.move_count += 1
+        was_capture = CheckersRules.is_capture_move(move)
+        if was_capture:
+            self.active_capture_piece = (to_row,to_column,)
+            if (CheckersRules.is_man(piece_before_move) and CheckersRules.is_king(piece_after_move)):
+                self.in_multi_capture = False
+                self.active_capture_piece = None
+                self._finish_turn()
+                return True
+            additional_captures = (CheckersRules.get_capture_moves(self.board,to_row,to_column,))
+            if additional_captures:
+                self.in_multi_capture = True
+                return True
+        self.in_multi_capture = False
+        self.active_capture_piece = None
+        self._finish_turn()
+        return True
+    def _is_valid_multi_capture_move(self, move):
+        if self.active_capture_piece is None:
+            return False
+        from_row, from_column, _, _ = move
+        active_row, active_column = (self.active_capture_piece)
+        if (from_row != active_row or from_column != active_column):
+            return False
+        capture_moves = (CheckersRules.get_capture_moves(self.board,active_row,active_column,))
+        return move in capture_moves
+    def _finish_turn(self):
+        self.in_multi_capture = False
+        self.active_capture_piece = None
+        self.switch_player()
+        self.ai.set_player(self.current_player)
+        self.result = CheckersRules.evaluate_game(self.board)
+        if self.result.game_over:
+            if self.result.draw:
+                self.game_state = GAME_DRAW
+            else:
+                self.game_state = GAME_OVER
+            return
+        if not self.get_legal_moves():
+            self.result.reset()
+            self.result.game_over = True
+            self.result.winner = (PLAYER_WHITE if self.current_player == PLAYER_BLACK else PLAYER_BLACK)
+            self.game_state = GAME_OVER
+    def switch_player(self):
+        if self.current_player == PLAYER_BLACK:
+            self.current_player = PLAYER_WHITE
+        else:
+            self.current_player = PLAYER_BLACK
+    def choose_starting_player(self):
+        player = self.next_starting_player
+        if player == PLAYER_BLACK:
+            self.next_starting_player = PLAYER_WHITE
+        else:
+            self.next_starting_player = PLAYER_BLACK
+        return player
+    def get_current_controller(self):
+        if self.game_mode == GAME_MODE_HUMAN_VS_HUMAN:
+            return self.human_player
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            if self.current_player == PLAYER_BLACK:
+                return self.human_player
+            return self.ai
+        if self.game_mode == GAME_MODE_AI_VS_AI:
+            return self.ai
+        return None
+    def update_current_player(self):
+        controller = self.get_current_controller()
+        if controller is None:
+            return
+        action = controller.get_action(self)
+        if action is None:
+            return
+        if not isinstance(action, tuple):
+            return
+        if len(action) != 4:
+            return
+        self.make_move(action)
+    def get_legal_moves(self):
+        if self.in_multi_capture:
+            if self.active_capture_piece is None:
+                return []
+            row, column = self.active_capture_piece
+            return CheckersRules.get_capture_moves(self.board,row,column,)
+        return CheckersRules.get_legal_moves(self.board,self.current_player,)
+    def get_state(self):
+        return {"board": self.board.get_board_state(),"current_player": self.current_player,"winner": self.result.winner,"game_state": self.game_state,"game_over": self.result.game_over,"draw": self.result.draw,"move_count": self.move_count,"in_multi_capture": self.in_multi_capture,"active_capture_piece": (self.active_capture_piece),"legal_moves": self.get_legal_moves(),"black_count": self.board.count_pieces(PLAYER_BLACK),"white_count": self.board.count_pieces(PLAYER_WHITE),}
+    def get_board(self):
+        return self.board
+    def get_current_player(self):
+        return self.current_player
+    def get_winner(self):
+        return self.result.winner
+    def get_result(self):
+        return self.result
+    def get_game_state(self):
+        return self.game_state
+    def get_black_count(self):
+        return self.board.count_pieces(PLAYER_BLACK)
+    def get_white_count(self):
+        return self.board.count_pieces(PLAYER_WHITE)
+    def is_game_over(self):
+        return self.result.game_over
+    def is_in_multi_capture(self):
+        return self.in_multi_capture
+    def get_active_capture_piece(self):
+        return self.active_capture_piece
+    def is_frozen(self):
+        return self.result.game_over
+
+# games/checkers/human_player.py
+import pygame
+from games.checkers.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+class HumanPlayer:
+    def __init__(self, board_renderer):
+        self.board_renderer = board_renderer
+        self.player = None
+        self.selected_position = None
+    def initialize(self):
+        self.reset()
+    def reset(self):
+        self.selected_position = None
+    def set_player(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+        self.selected_position = None
+    def get_action(self, game):
+        if game is None:
+            return None
+        if game.is_game_over():
+            return None
+        current_player = game.get_current_player()
+        if self.player != current_player:
+            self.set_player(current_player)
+        legal_moves = game.get_legal_moves()
+        if not legal_moves:
+            self.selected_position = None
+            return None
+        mouse_buttons = pygame.mouse.get_pressed()
+        if not mouse_buttons[0]:
+            return None
+        mouse_position = pygame.mouse.get_pos()
+        position = self.board_renderer.screen_to_board(mouse_position)
+        if position is None:
+            return None
+        row, column = position
+        if game.is_in_multi_capture():
+            active_piece = (game.get_active_capture_piece())
+            if active_piece is None:
+                return None
+            self.selected_position = active_piece
+            for move in legal_moves:
+                if (move[0] == active_piece[0] and move[1] == active_piece[1] and move[2] == row and move[3] == column):
+                    self.selected_position = (move[2],move[3],)
+                    return move
+            return None
+        if self.selected_position is None:
+            if self._is_selectable_position(position,legal_moves,):
+                self.selected_position = position
+            return None
+        if self._is_selectable_position(position,legal_moves,):
+            self.selected_position = position
+            return None
+        selected_row, selected_column = (self.selected_position)
+        move = (selected_row,selected_column,row,column,)
+        if move in legal_moves:
+            self.selected_position = None
+            return move
+        return None
+    def clear_selection(self):
+        self.selected_position = None
+    def get_selected_position(self):
+        return self.selected_position
+    def _is_selectable_position(self,position,legal_moves,):
+        row, column = position
+        for move in legal_moves:
+            if (move[0] == row and move[1] == column):
+                return True
+        return False
+
+# games/checkers/overlay_renderer.py
+from games.checkers.constants import (GAME_DRAW,GAME_OVER,GAME_RUNNING,PLAYER_BLACK,PLAYER_WHITE,)
+class CheckersOverlayRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def reset(self):
+        pass
+    def render(self, game):
+        if game is None:
+            return
+        game_state = game.get_state()
+        if game_state is None:
+            return
+        game_status = game_state.get("game_state",GAME_RUNNING,)
+        if game_status == GAME_RUNNING:
+            return
+        if game_status == GAME_OVER:
+            self._render_game_over(game_state)
+            return
+        if game_status == GAME_DRAW:
+            self._render_draw()
+    def _render_game_over(self, game_state):
+        winner = game_state.get("winner")
+        if winner == PLAYER_BLACK:
+            message = "Black Wins"
+        elif winner == PLAYER_WHITE:
+            message = "White Wins"
+        else:
+            message = "Game Over"
+        self._draw_overlay_message(message)
+    def _render_draw(self):
+        self._draw_overlay_message("Draw")
+    def _draw_overlay_message(self, message):
+        if hasattr(self.renderer,"draw_overlay_message",):
+            self.renderer.draw_overlay_message(message=message,size=56,)
+    def _draw_text(self, text, position):
+        if hasattr(self.renderer,"draw_text",):
+            self.renderer.draw_text(text,position,)
+    @staticmethod
+    def _get_status_position():
+        return 40, 10
+
+# games/checkers/rules.py
+from engine.interfaces.game_result import GameResult
+from games.checkers.constants import (BLACK_KING,BLACK_MAN,BOARD_COLUMNS,BOARD_ROWS,EMPTY,FORWARD_BLACK,FORWARD_WHITE,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_MAN,)
+class CheckersRules:
+    _DIAGONAL_DIRECTIONS = ((-1, -1),(-1, 1),(1, -1),(1, 1),)
+    @staticmethod
+    def get_opponent(player):
+        if player == PLAYER_BLACK:
+            return PLAYER_WHITE
+        if player == PLAYER_WHITE:
+            return PLAYER_BLACK
+        raise ValueError(f"Invalid player: {player}")
+    @staticmethod
+    def is_player_piece(piece, player):
+        if player == PLAYER_BLACK:
+            return piece in (BLACK_MAN, BLACK_KING)
+        if player == PLAYER_WHITE:
+            return piece in (WHITE_MAN, WHITE_KING)
+        return False
+    @staticmethod
+    def is_man(piece):
+        return piece in (BLACK_MAN, WHITE_MAN)
+    @staticmethod
+    def is_king(piece):
+        return piece in (BLACK_KING, WHITE_KING)
+    @classmethod
+    def get_move_directions(cls, piece, player):
+        if not cls.is_player_piece(piece, player):
+            return ()
+        if cls.is_king(piece):
+            return cls._DIAGONAL_DIRECTIONS
+        if player == PLAYER_BLACK:
+            return ((FORWARD_BLACK, -1),(FORWARD_BLACK, 1),)
+        return ((FORWARD_WHITE, -1),(FORWARD_WHITE, 1),)
+    @classmethod
+    def get_simple_moves(cls, board, row, column):
+        if not board.is_valid_position(row, column):
+            return []
+        piece = board.get_cell(row, column)
+        if piece == EMPTY:
+            return []
+        if not cls.is_king(piece):
+            if piece == BLACK_MAN:
+                player = PLAYER_BLACK
+            elif piece == WHITE_MAN:
+                player = PLAYER_WHITE
+            else:
+                return []
+        else:
+            if piece == BLACK_KING:
+                player = PLAYER_BLACK
+            else:
+                player = PLAYER_WHITE
+        moves = []
+        for direction_row, direction_column in cls.get_move_directions(piece,player,):
+            destination_row = row + direction_row
+            destination_column = column + direction_column
+            if not board.is_valid_position(destination_row,destination_column,):
+                continue
+            if not board.is_playable_square(destination_row,destination_column,):
+                continue
+            if board.is_cell_empty(destination_row,destination_column,):
+                moves.append((row,column,destination_row,destination_column,))
+        return moves
+    @classmethod
+    def get_capture_moves(cls, board, row, column):
+        if not board.is_valid_position(row, column):
+            return []
+        piece = board.get_cell(row, column)
+        if piece == EMPTY:
+            return []
+        if piece == BLACK_MAN or piece == BLACK_KING:
+            player = PLAYER_BLACK
+        elif piece == WHITE_MAN or piece == WHITE_KING:
+            player = PLAYER_WHITE
+        else:
+            return []
+        opponent = cls.get_opponent(player)
+        capture_moves = []
+        for direction_row, direction_column in cls.get_move_directions(piece,player,):
+            jumped_row = row + direction_row
+            jumped_column = column + direction_column
+            landing_row = row + (direction_row * 2)
+            landing_column = column + (direction_column * 2)
+            if not board.is_valid_position(jumped_row,jumped_column,):
+                continue
+            if not board.is_valid_position(landing_row,landing_column,):
+                continue
+            jumped_piece = board.get_cell(jumped_row,jumped_column,)
+            if not cls.is_player_piece(jumped_piece,opponent,):
+                continue
+            if not board.is_cell_empty(landing_row,landing_column,):
+                continue
+            if not board.is_playable_square(landing_row,landing_column,):
+                continue
+            capture_moves.append((row,column,landing_row,landing_column,))
+        return capture_moves
+    @classmethod
+    def get_piece_moves(cls, board, row, column, player):
+        if not board.is_valid_position(row, column):
+            return []
+        piece = board.get_cell(row, column)
+        if not cls.is_player_piece(piece, player):
+            return []
+        capture_moves = cls.get_capture_moves(board,row,column,)
+        if capture_moves:
+            return capture_moves
+        return cls.get_simple_moves(board,row,column,)
+    @classmethod
+    def get_all_capture_moves(cls, board, player):
+        capture_moves = []
+        for row, column in board.get_piece_positions(player):
+            capture_moves.extend(cls.get_capture_moves(board,row,column,))
+        return capture_moves
+    @classmethod
+    def get_all_simple_moves(cls, board, player):
+        simple_moves = []
+        for row, column in board.get_piece_positions(player):
+            simple_moves.extend(cls.get_simple_moves(board,row,column,))
+        return simple_moves
+    @classmethod
+    def get_legal_moves(cls, board, player):
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return []
+        capture_moves = cls.get_all_capture_moves(board,player,)
+        if capture_moves:
+            return capture_moves
+        return cls.get_all_simple_moves(board,player,)
+    @classmethod
+    def has_capture(cls, board, player):
+        return bool(cls.get_all_capture_moves(board,player,))
+    @classmethod
+    def has_any_legal_move(cls, board, player):
+        return bool(cls.get_legal_moves(board,player,))
+    @classmethod
+    def is_valid_move(cls, board, move, player):
+        if not isinstance(move, tuple):
+            return False
+        if len(move) != 4:
+            return False
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return False
+        try:
+            from_row, from_column, to_row, to_column = move
+        except ValueError:
+            return False
+        legal_moves = cls.get_legal_moves(board,player,)
+        return move in legal_moves
+    @classmethod
+    def is_capture_move(cls, move):
+        if not isinstance(move, tuple):
+            return False
+        if len(move) != 4:
+            return False
+        from_row, from_column, to_row, to_column = move
+        return abs(to_row - from_row) == 2 and abs(to_column - from_column) == 2
+    @classmethod
+    def get_captured_position(cls, move):
+        if not cls.is_capture_move(move):
+            return None
+        from_row, from_column, to_row, to_column = move
+        captured_row = (from_row + to_row) // 2
+        captured_column = (from_column + to_column) // 2
+        return captured_row, captured_column
+    @classmethod
+    def should_promote(cls, piece, row):
+        if piece == BLACK_MAN:
+            return row == BOARD_ROWS - 1
+        if piece == WHITE_MAN:
+            return row == 0
+        return False
+    @staticmethod
+    def promote_piece(piece):
+        if piece == BLACK_MAN:
+            return BLACK_KING
+        if piece == WHITE_MAN:
+            return WHITE_KING
+        return piece
+    @classmethod
+    def apply_move(cls, board, move, player):
+        if not cls.is_valid_move(board,move,player,):
+            return False
+        from_row, from_column, to_row, to_column = move
+        piece = board.get_cell(from_row,from_column,)
+        board.set_cell(from_row,from_column,EMPTY,)
+        if cls.is_capture_move(move):
+            captured_position = cls.get_captured_position(move)
+            if captured_position is not None:
+                captured_row, captured_column = captured_position
+                board.set_cell(captured_row,captured_column,EMPTY,)
+        if cls.should_promote(piece, to_row):
+            piece = cls.promote_piece(piece)
+        board.set_cell(to_row,to_column,piece,)
+        return True
+    @classmethod
+    def get_winner(cls, board):
+        black_count = board.count_pieces(PLAYER_BLACK)
+        white_count = board.count_pieces(PLAYER_WHITE)
+        if black_count == 0 and white_count == 0:
+            return None
+        if black_count == 0:
+            return PLAYER_WHITE
+        if white_count == 0:
+            return PLAYER_BLACK
+        if not cls.has_any_legal_move(board,PLAYER_BLACK,):
+            return PLAYER_WHITE
+        if not cls.has_any_legal_move(board,PLAYER_WHITE,):
+            return PLAYER_BLACK
+        return None
+    @classmethod
+    def is_game_over(cls, board):
+        black_count = board.count_pieces(PLAYER_BLACK)
+        white_count = board.count_pieces(PLAYER_WHITE)
+        if black_count == 0 or white_count == 0:
+            return True
+        return (
+            not cls.has_any_legal_move(board,PLAYER_BLACK,) or not cls.has_any_legal_move(board,PLAYER_WHITE,))
+    @classmethod
+    def is_draw(cls, board):
+        return False
+    @classmethod
+    def evaluate_game(cls, board):
+        result = GameResult()
+        if not cls.is_game_over(board):
+            return result
+        result.game_over = True
+        winner = cls.get_winner(board)
+        if winner is not None:
+            result.winner = winner
+        else:
+            result.draw = True
+        return result
 
 #games/connect4/ai.py
 import random
