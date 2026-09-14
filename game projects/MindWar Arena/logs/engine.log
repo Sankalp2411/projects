@@ -577,3 +577,370 @@
 2026-09-11 09:24:44 [INFO] [ShaderManager] Released 'text'.
 2026-09-11 09:24:44 [INFO] [Renderer] Shutdown
 2026-09-11 09:24:44 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-11 23:54:44 [INFO] Logger Initialized
+2026-09-11 23:54:44 [INFO] [GameManager] Initializing...
+2026-09-11 23:54:44 [INFO] [Config] Loaded
+2026-09-11 23:54:46 [INFO] [Window] Created 1280x720
+2026-09-11 23:54:46 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 23:54:46 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 23:54:46 [INFO] [Mesh] GPU mesh created.
+2026-09-11 23:54:46 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 23:54:46 [INFO] [Mesh] GPU mesh created.
+2026-09-11 23:54:46 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 23:54:46 [INFO] [Input] Initialized
+2026-09-11 23:54:46 [INFO] [AssetManager] Initialized
+2026-09-11 23:54:46 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 23:54:46 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 23:54:46 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 23:54:46 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 23:54:46 [INFO] [Scene] Enter: Main Menu
+2026-09-11 23:54:46 [INFO] [MainMenuScene] Ready
+2026-09-11 23:54:46 [INFO] [GameManager] Running...
+2026-09-11 23:54:50 [INFO] [MainMenuScene] Selected Chess
+2026-09-11 23:54:50 [INFO] [Scene] Exit: Main Menu
+2026-09-11 23:54:50 [INFO] [Scene] Enter: Game Mode
+2026-09-11 23:54:50 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-11 23:54:53 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-11 23:54:53 [INFO] [Scene] Exit: Game Mode
+2026-09-11 23:54:53 [INFO] [Scene] Enter: Game Scene
+2026-09-11 23:54:53 [INFO] [GameScene] Initializing game.
+2026-09-11 23:54:53 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-11 23:54:53 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-11 23:55:48 [INFO] [GameManager] Shutting down...
+2026-09-11 23:55:48 [INFO] [GameManager] Runtime: 63.95s
+2026-09-11 23:55:48 [INFO] [Mesh] Released.
+2026-09-11 23:55:48 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-11 23:55:48 [INFO] [Mesh] Released.
+2026-09-11 23:55:48 [INFO] [ShaderManager] Released 'text'.
+2026-09-11 23:55:48 [INFO] [Renderer] Shutdown
+2026-09-11 23:55:48 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-11 23:59:54 [INFO] Logger Initialized
+2026-09-11 23:59:54 [INFO] [GameManager] Initializing...
+2026-09-11 23:59:54 [INFO] [Config] Loaded
+2026-09-11 23:59:55 [INFO] [Window] Created 1280x720
+2026-09-11 23:59:55 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-11 23:59:55 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-11 23:59:55 [INFO] [Mesh] GPU mesh created.
+2026-09-11 23:59:55 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-11 23:59:55 [INFO] [Mesh] GPU mesh created.
+2026-09-11 23:59:55 [INFO] [Renderer] Rendering system initialized.
+2026-09-11 23:59:55 [INFO] [Input] Initialized
+2026-09-11 23:59:55 [INFO] [AssetManager] Initialized
+2026-09-11 23:59:55 [INFO] [Scene] Enter: Boot Scene
+2026-09-11 23:59:55 [INFO] [BootScene] Engine initialization complete.
+2026-09-11 23:59:55 [INFO] [BootScene] Opening Main Menu.
+2026-09-11 23:59:55 [INFO] [Scene] Exit: Boot Scene
+2026-09-11 23:59:55 [INFO] [Scene] Enter: Main Menu
+2026-09-11 23:59:55 [INFO] [MainMenuScene] Ready
+2026-09-11 23:59:55 [INFO] [GameManager] Running...
+2026-09-11 23:59:59 [INFO] [MainMenuScene] Selected Chess
+2026-09-11 23:59:59 [INFO] [Scene] Exit: Main Menu
+2026-09-11 23:59:59 [INFO] [Scene] Enter: Game Mode
+2026-09-11 23:59:59 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-12 00:00:02 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-12 00:00:02 [INFO] [Scene] Exit: Game Mode
+2026-09-12 00:00:02 [INFO] [Scene] Enter: Game Scene
+2026-09-12 00:00:02 [INFO] [GameScene] Initializing game.
+2026-09-12 00:00:02 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-12 00:00:02 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-12 00:02:16 [INFO] [GameManager] Shutting down...
+2026-09-12 00:02:16 [INFO] [GameManager] Runtime: 142.52s
+2026-09-12 00:02:16 [INFO] [Mesh] Released.
+2026-09-12 00:02:16 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-12 00:02:16 [INFO] [Mesh] Released.
+2026-09-12 00:02:16 [INFO] [ShaderManager] Released 'text'.
+2026-09-12 00:02:16 [INFO] [Renderer] Shutdown
+2026-09-12 00:02:16 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-12 00:02:21 [INFO] Logger Initialized
+2026-09-12 00:02:21 [INFO] [GameManager] Initializing...
+2026-09-12 00:02:21 [INFO] [Config] Loaded
+2026-09-12 00:02:22 [INFO] [Window] Created 1280x720
+2026-09-12 00:02:22 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-12 00:02:22 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-12 00:02:22 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:02:22 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-12 00:02:22 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:02:22 [INFO] [Renderer] Rendering system initialized.
+2026-09-12 00:02:22 [INFO] [Input] Initialized
+2026-09-12 00:02:22 [INFO] [AssetManager] Initialized
+2026-09-12 00:02:22 [INFO] [Scene] Enter: Boot Scene
+2026-09-12 00:02:22 [INFO] [BootScene] Engine initialization complete.
+2026-09-12 00:02:22 [INFO] [BootScene] Opening Main Menu.
+2026-09-12 00:02:22 [INFO] [Scene] Exit: Boot Scene
+2026-09-12 00:02:22 [INFO] [Scene] Enter: Main Menu
+2026-09-12 00:02:22 [INFO] [MainMenuScene] Ready
+2026-09-12 00:02:22 [INFO] [GameManager] Running...
+2026-09-12 00:02:29 [INFO] [MainMenuScene] Selected Chess
+2026-09-12 00:02:29 [INFO] [Scene] Exit: Main Menu
+2026-09-12 00:02:29 [INFO] [Scene] Enter: Game Mode
+2026-09-12 00:02:29 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-12 00:02:32 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-12 00:02:32 [INFO] [Scene] Exit: Game Mode
+2026-09-12 00:02:32 [INFO] [Scene] Enter: Game Scene
+2026-09-12 00:02:32 [INFO] [GameScene] Initializing game.
+2026-09-12 00:02:32 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-12 00:02:32 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-12 00:06:43 [INFO] [GameManager] Shutting down...
+2026-09-12 00:06:43 [INFO] [GameManager] Runtime: 262.29s
+2026-09-12 00:06:43 [INFO] [Mesh] Released.
+2026-09-12 00:06:43 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-12 00:06:43 [INFO] [Mesh] Released.
+2026-09-12 00:06:43 [INFO] [ShaderManager] Released 'text'.
+2026-09-12 00:06:43 [INFO] [Renderer] Shutdown
+2026-09-12 00:06:44 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-12 00:06:47 [INFO] Logger Initialized
+2026-09-12 00:06:47 [INFO] [GameManager] Initializing...
+2026-09-12 00:06:47 [INFO] [Config] Loaded
+2026-09-12 00:06:47 [INFO] [Window] Created 1280x720
+2026-09-12 00:06:47 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-12 00:06:47 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-12 00:06:47 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:06:47 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-12 00:06:47 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:06:47 [INFO] [Renderer] Rendering system initialized.
+2026-09-12 00:06:47 [INFO] [Input] Initialized
+2026-09-12 00:06:47 [INFO] [AssetManager] Initialized
+2026-09-12 00:06:47 [INFO] [Scene] Enter: Boot Scene
+2026-09-12 00:06:47 [INFO] [BootScene] Engine initialization complete.
+2026-09-12 00:06:47 [INFO] [BootScene] Opening Main Menu.
+2026-09-12 00:06:47 [INFO] [Scene] Exit: Boot Scene
+2026-09-12 00:06:47 [INFO] [Scene] Enter: Main Menu
+2026-09-12 00:06:47 [INFO] [MainMenuScene] Ready
+2026-09-12 00:06:47 [INFO] [GameManager] Running...
+2026-09-12 00:07:05 [INFO] [MainMenuScene] Selected Chess
+2026-09-12 00:07:05 [INFO] [Scene] Exit: Main Menu
+2026-09-12 00:07:05 [INFO] [Scene] Enter: Game Mode
+2026-09-12 00:07:05 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-12 00:07:15 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-12 00:07:15 [INFO] [Scene] Exit: Game Mode
+2026-09-12 00:07:15 [INFO] [Scene] Enter: Game Scene
+2026-09-12 00:07:15 [INFO] [GameScene] Initializing game.
+2026-09-12 00:07:15 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-12 00:07:15 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-12 00:08:59 [INFO] [GameManager] Shutting down...
+2026-09-12 00:08:59 [INFO] [GameManager] Runtime: 132.45s
+2026-09-12 00:08:59 [INFO] [Mesh] Released.
+2026-09-12 00:08:59 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-12 00:08:59 [INFO] [Mesh] Released.
+2026-09-12 00:08:59 [INFO] [ShaderManager] Released 'text'.
+2026-09-12 00:08:59 [INFO] [Renderer] Shutdown
+2026-09-12 00:08:59 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-12 00:13:32 [INFO] Logger Initialized
+2026-09-12 00:13:32 [INFO] [GameManager] Initializing...
+2026-09-12 00:13:32 [INFO] [Config] Loaded
+2026-09-12 00:13:33 [INFO] [Window] Created 1280x720
+2026-09-12 00:13:33 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-12 00:13:33 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-12 00:13:33 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:13:33 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-12 00:13:33 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:13:33 [INFO] [Renderer] Rendering system initialized.
+2026-09-12 00:13:33 [INFO] [Input] Initialized
+2026-09-12 00:13:33 [INFO] [AssetManager] Initialized
+2026-09-12 00:13:33 [INFO] [Scene] Enter: Boot Scene
+2026-09-12 00:13:33 [INFO] [BootScene] Engine initialization complete.
+2026-09-12 00:13:33 [INFO] [BootScene] Opening Main Menu.
+2026-09-12 00:13:33 [INFO] [Scene] Exit: Boot Scene
+2026-09-12 00:13:33 [INFO] [Scene] Enter: Main Menu
+2026-09-12 00:13:33 [INFO] [MainMenuScene] Ready
+2026-09-12 00:13:33 [INFO] [GameManager] Running...
+2026-09-12 00:13:37 [INFO] [MainMenuScene] Selected Chess
+2026-09-12 00:13:37 [INFO] [Scene] Exit: Main Menu
+2026-09-12 00:13:37 [INFO] [Scene] Enter: Game Mode
+2026-09-12 00:13:37 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-12 00:13:41 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-12 00:13:41 [INFO] [Scene] Exit: Game Mode
+2026-09-12 00:13:41 [INFO] [Scene] Enter: Game Scene
+2026-09-12 00:13:41 [INFO] [GameScene] Initializing game.
+2026-09-12 00:13:41 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-12 00:13:41 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-12 00:14:44 [INFO] [GameManager] Shutting down...
+2026-09-12 00:14:44 [INFO] [GameManager] Runtime: 71.73s
+2026-09-12 00:14:44 [INFO] [Mesh] Released.
+2026-09-12 00:14:44 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-12 00:14:44 [INFO] [Mesh] Released.
+2026-09-12 00:14:44 [INFO] [ShaderManager] Released 'text'.
+2026-09-12 00:14:44 [INFO] [Renderer] Shutdown
+2026-09-12 00:14:44 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-12 00:20:19 [INFO] Logger Initialized
+2026-09-12 00:20:19 [INFO] [GameManager] Initializing...
+2026-09-12 00:20:19 [INFO] [Config] Loaded
+2026-09-12 00:20:21 [INFO] [Window] Created 1280x720
+2026-09-12 00:20:21 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-12 00:20:21 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-12 00:20:21 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:20:21 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-12 00:20:21 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:20:21 [INFO] [Renderer] Rendering system initialized.
+2026-09-12 00:20:21 [INFO] [Input] Initialized
+2026-09-12 00:20:21 [INFO] [AssetManager] Initialized
+2026-09-12 00:20:21 [INFO] [Scene] Enter: Boot Scene
+2026-09-12 00:20:21 [INFO] [BootScene] Engine initialization complete.
+2026-09-12 00:20:21 [INFO] [BootScene] Opening Main Menu.
+2026-09-12 00:20:21 [INFO] [Scene] Exit: Boot Scene
+2026-09-12 00:20:21 [INFO] [Scene] Enter: Main Menu
+2026-09-12 00:20:21 [INFO] [MainMenuScene] Ready
+2026-09-12 00:20:21 [INFO] [GameManager] Running...
+2026-09-12 00:20:24 [INFO] [MainMenuScene] Selected Chess
+2026-09-12 00:20:24 [INFO] [Scene] Exit: Main Menu
+2026-09-12 00:20:24 [INFO] [Scene] Enter: Game Mode
+2026-09-12 00:20:24 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-12 00:20:28 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-12 00:20:28 [INFO] [Scene] Exit: Game Mode
+2026-09-12 00:20:28 [INFO] [Scene] Enter: Game Scene
+2026-09-12 00:20:28 [INFO] [GameScene] Initializing game.
+2026-09-12 00:20:28 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-12 00:20:28 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-12 00:21:04 [INFO] [GameManager] Shutting down...
+2026-09-12 00:21:04 [INFO] [GameManager] Runtime: 44.76s
+2026-09-12 00:21:04 [INFO] [Mesh] Released.
+2026-09-12 00:21:04 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-12 00:21:04 [INFO] [Mesh] Released.
+2026-09-12 00:21:04 [INFO] [ShaderManager] Released 'text'.
+2026-09-12 00:21:04 [INFO] [Renderer] Shutdown
+2026-09-12 00:21:04 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-12 00:26:33 [INFO] Logger Initialized
+2026-09-12 00:26:33 [INFO] [GameManager] Initializing...
+2026-09-12 00:26:33 [INFO] [Config] Loaded
+2026-09-12 00:26:34 [INFO] [Window] Created 1280x720
+2026-09-12 00:26:34 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-12 00:26:34 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-12 00:26:34 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:26:34 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-12 00:26:34 [INFO] [Mesh] GPU mesh created.
+2026-09-12 00:26:34 [INFO] [Renderer] Rendering system initialized.
+2026-09-12 00:26:34 [INFO] [Input] Initialized
+2026-09-12 00:26:34 [INFO] [AssetManager] Initialized
+2026-09-12 00:26:34 [INFO] [Scene] Enter: Boot Scene
+2026-09-12 00:26:34 [INFO] [BootScene] Engine initialization complete.
+2026-09-12 00:26:34 [INFO] [BootScene] Opening Main Menu.
+2026-09-12 00:26:34 [INFO] [Scene] Exit: Boot Scene
+2026-09-12 00:26:34 [INFO] [Scene] Enter: Main Menu
+2026-09-12 00:26:34 [INFO] [MainMenuScene] Ready
+2026-09-12 00:26:34 [INFO] [GameManager] Running...
+2026-09-12 00:26:38 [INFO] [MainMenuScene] Selected Chess
+2026-09-12 00:26:38 [INFO] [Scene] Exit: Main Menu
+2026-09-12 00:26:38 [INFO] [Scene] Enter: Game Mode
+2026-09-12 00:26:38 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-12 00:26:39 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-12 00:26:39 [INFO] [Scene] Exit: Game Mode
+2026-09-12 00:26:39 [INFO] [Scene] Enter: Game Scene
+2026-09-12 00:26:39 [INFO] [GameScene] Initializing game.
+2026-09-12 00:26:39 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-12 00:26:39 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-12 00:27:18 [INFO] [GameScene] Shutting down game.
+2026-09-12 00:27:18 [INFO] [Scene] Exit: Game Scene
+2026-09-12 00:27:18 [INFO] [Scene] Enter: Main Menu
+2026-09-12 00:27:18 [INFO] [MainMenuScene] Ready
+2026-09-12 00:27:21 [INFO] [GameManager] Shutting down...
+2026-09-12 00:27:21 [INFO] [GameManager] Runtime: 47.60s
+2026-09-12 00:27:21 [INFO] [Mesh] Released.
+2026-09-12 00:27:21 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-12 00:27:21 [INFO] [Mesh] Released.
+2026-09-12 00:27:21 [INFO] [ShaderManager] Released 'text'.
+2026-09-12 00:27:21 [INFO] [Renderer] Shutdown
+2026-09-12 00:27:21 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-13 15:04:42 [INFO] Logger Initialized
+2026-09-13 15:04:42 [INFO] [GameManager] Initializing...
+2026-09-13 15:04:42 [INFO] [Config] Loaded
+2026-09-13 15:04:44 [INFO] [Window] Created 1280x720
+2026-09-13 15:04:44 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-13 15:04:44 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-13 15:04:44 [INFO] [Mesh] GPU mesh created.
+2026-09-13 15:04:44 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-13 15:04:44 [INFO] [Mesh] GPU mesh created.
+2026-09-13 15:04:44 [INFO] [Renderer] Rendering system initialized.
+2026-09-13 15:04:44 [INFO] [Input] Initialized
+2026-09-13 15:04:44 [INFO] [AssetManager] Initialized
+2026-09-13 15:04:44 [INFO] [Scene] Enter: Boot Scene
+2026-09-13 15:04:44 [INFO] [BootScene] Engine initialization complete.
+2026-09-13 15:04:44 [INFO] [BootScene] Opening Main Menu.
+2026-09-13 15:04:44 [INFO] [Scene] Exit: Boot Scene
+2026-09-13 15:04:44 [INFO] [Scene] Enter: Main Menu
+2026-09-13 15:04:44 [INFO] [MainMenuScene] Ready
+2026-09-13 15:04:44 [INFO] [GameManager] Running...
+2026-09-13 15:04:50 [INFO] [MainMenuScene] Selected Chess
+2026-09-13 15:04:50 [INFO] [Scene] Exit: Main Menu
+2026-09-13 15:04:50 [INFO] [Scene] Enter: Game Mode
+2026-09-13 15:04:50 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-13 15:04:55 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-13 15:04:55 [INFO] [Scene] Exit: Game Mode
+2026-09-13 15:04:55 [INFO] [Scene] Enter: Game Scene
+2026-09-13 15:04:55 [INFO] [GameScene] Initializing game.
+2026-09-13 15:04:55 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-13 15:04:55 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-13 15:06:26 [INFO] [GameManager] Shutting down...
+2026-09-13 15:06:26 [INFO] [GameManager] Runtime: 104.39s
+2026-09-13 15:06:26 [INFO] [Mesh] Released.
+2026-09-13 15:06:26 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-13 15:06:26 [INFO] [Mesh] Released.
+2026-09-13 15:06:26 [INFO] [ShaderManager] Released 'text'.
+2026-09-13 15:06:26 [INFO] [Renderer] Shutdown
+2026-09-13 15:06:26 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-13 17:53:18 [INFO] Logger Initialized
+2026-09-13 17:53:18 [INFO] [GameManager] Initializing...
+2026-09-13 17:53:18 [INFO] [Config] Loaded
+2026-09-13 17:53:19 [INFO] [Window] Created 1280x720
+2026-09-13 17:53:19 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-13 17:53:19 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-13 17:53:19 [INFO] [Mesh] GPU mesh created.
+2026-09-13 17:53:19 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-13 17:53:19 [INFO] [Mesh] GPU mesh created.
+2026-09-13 17:53:19 [INFO] [Renderer] Rendering system initialized.
+2026-09-13 17:53:19 [INFO] [Input] Initialized
+2026-09-13 17:53:19 [INFO] [AssetManager] Initialized
+2026-09-13 17:53:19 [INFO] [Scene] Enter: Boot Scene
+2026-09-13 17:53:19 [INFO] [BootScene] Engine initialization complete.
+2026-09-13 17:53:19 [INFO] [BootScene] Opening Main Menu.
+2026-09-13 17:53:19 [INFO] [Scene] Exit: Boot Scene
+2026-09-13 17:53:19 [INFO] [Scene] Enter: Main Menu
+2026-09-13 17:53:19 [INFO] [MainMenuScene] Ready
+2026-09-13 17:53:19 [INFO] [GameManager] Running...
+2026-09-13 17:53:27 [INFO] [MainMenuScene] Selected Chess
+2026-09-13 17:53:27 [INFO] [Scene] Exit: Main Menu
+2026-09-13 17:53:27 [INFO] [Scene] Enter: Game Mode
+2026-09-13 17:53:27 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-13 17:53:32 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-13 17:53:32 [INFO] [Scene] Exit: Game Mode
+2026-09-13 17:53:32 [INFO] [Scene] Enter: Game Scene
+2026-09-13 17:53:32 [INFO] [GameScene] Initializing game.
+2026-09-13 17:53:32 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-13 17:53:32 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-13 17:54:26 [INFO] [GameScene] Shutting down game.
+2026-09-13 17:54:26 [INFO] [Scene] Exit: Game Scene
+2026-09-13 17:54:26 [INFO] [Scene] Enter: Main Menu
+2026-09-13 17:54:26 [INFO] [MainMenuScene] Ready
+2026-09-13 17:54:37 [INFO] [MainMenuScene] Selected Chess
+2026-09-13 17:54:37 [INFO] [Scene] Exit: Main Menu
+2026-09-13 17:54:37 [INFO] [Scene] Enter: Game Mode
+2026-09-13 17:54:37 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-13 17:54:39 [INFO] [GameModeScene] Mode: Human vs AI
+2026-09-13 17:54:39 [INFO] [Scene] Exit: Game Mode
+2026-09-13 17:54:39 [INFO] [Scene] Enter: Game Scene
+2026-09-13 17:54:39 [INFO] [GameScene] Initializing game.
+2026-09-13 17:55:20 [INFO] [GameManager] Shutting down...
+2026-09-13 17:55:20 [INFO] [GameManager] Runtime: 122.17s
+2026-09-13 17:55:20 [INFO] [Mesh] Released.
+2026-09-13 17:55:20 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-13 17:55:20 [INFO] [Mesh] Released.
+2026-09-13 17:55:20 [INFO] [ShaderManager] Released 'text'.
+2026-09-13 17:55:20 [INFO] [Renderer] Shutdown
+2026-09-13 17:55:20 [INFO] [Window] Destroyed

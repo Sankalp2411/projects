@@ -116,9 +116,12 @@ MINDWAR ARENA(
             )
             __init__.py
             ai.py
+            board_renderer.py
             board.py
             constants.py
             game.py
+            human_player.py
+            overlay_renderer.py
             rules.py
         )
         connect4(
@@ -2175,6 +2178,1569 @@ class CheckersRules:
         else:
             result.draw = True
         return result
+
+# games/chess/ai.py
+import random
+from engine.interfaces.ai_interface import AIInterface
+from games.chess.board import ChessBoard
+from games.chess.constants import (AI_RANDOM,KING_VALUE,PLAYER_BLACK,PLAYER_WHITE,)
+from games.chess.rules import ChessRules
+class ChessAI(AIInterface):
+    def __init__(self, player):
+        if player not in (PLAYER_WHITE,PLAYER_BLACK,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+        self.difficulty = AI_RANDOM
+        self.search_depth = 1
+    def initialize(self):
+        pass
+    def reset(self):
+        pass
+    def get_action(self, game):
+        if game is None:
+            return None
+        if game.is_game_over():
+            return None
+        current_player = (game.get_current_player())
+        if current_player != self.player:
+            self.set_player(current_player)
+        legal_moves = game.get_legal_moves()
+        if not legal_moves:
+            return None
+        game_state = game.get_state()
+        return self.select_action(game_state)
+    def select_action(self, game_state):
+        if not isinstance(game_state,dict,):
+            return None
+        legal_moves = game_state.get("legal_moves",[],)
+        if not legal_moves:
+            return None
+        valid_moves = []
+        for move in legal_moves:
+            if self._is_valid_move_format(move):
+                valid_moves.append(tuple(move))
+        if not valid_moves:
+            return None
+        selected_move = random.choice(valid_moves)
+        return tuple(selected_move)
+    @staticmethod
+    def simulate_move(board,move,player,en_passant_target=None,castling_rights=None,):
+        if board is None:
+            return None
+        if player not in (PLAYER_WHITE,PLAYER_BLACK,):
+            return None
+        if not ChessAI._is_valid_move_format(move):
+            return None
+        simulated_board = board.copy()
+        if not ChessRules.apply_legal_move(simulated_board,move,player,en_passant_target,castling_rights,):
+            return None
+        return simulated_board
+    def select_minimax_move(self,board,player=None,depth=None,en_passant_target=None,castling_rights=None,):
+        if board is None:
+            return None
+        if player is None:
+            player = self.player
+        if player not in (PLAYER_WHITE,PLAYER_BLACK,):
+            return None
+        if depth is None:
+            depth = self.search_depth
+        if not isinstance(depth,int,):
+            return None
+        if depth < 1:
+            return None
+        legal_moves = (ChessRules.get_legal_moves(board,player,en_passant_target,castling_rights,))
+        if not legal_moves:
+            return None
+        best_move = None
+        if player == PLAYER_WHITE:
+            best_score = float("-inf")
+            for move in legal_moves:
+                simulated_board = (
+                    self.simulate_move(board,move,player,en_passant_target,castling_rights,))
+                if simulated_board is None:
+                    continue
+                score = self.minimax(simulated_board,depth - 1,PLAYER_BLACK,None,castling_rights,)
+                if (best_move is None or score > best_score):
+                    best_score = score
+                    best_move = tuple(move)
+        else:
+            best_score = float("inf")
+            for move in legal_moves:
+                simulated_board = (self.simulate_move(board,move,player,en_passant_target,castling_rights,))
+                if simulated_board is None:
+                    continue
+                score = self.minimax(simulated_board,depth - 1,PLAYER_WHITE,None,castling_rights,)
+                if (best_move is None or score < best_score):
+                    best_score = score
+                    best_move = tuple(move)
+        return best_move
+    def minimax(self,board,depth,player,en_passant_target=None,castling_rights=None,):
+        if board is None:
+            return 0
+        if player not in (PLAYER_WHITE,PLAYER_BLACK,):
+            return 0
+        if not isinstance(depth,int,):
+            return 0
+        if depth < 0:
+            return 0
+        legal_moves = (
+            ChessRules.get_legal_moves(board,player,en_passant_target,castling_rights,))
+        if not legal_moves:
+            if ChessRules.is_in_check(board,player,):
+                return self.get_checkmate_score(player,depth,)
+            return 0
+        if depth == 0:
+            return ChessRules.evaluate_material(board)
+        if player == PLAYER_WHITE:
+            best_score = float("-inf")
+            for move in legal_moves:
+                simulated_board = (self.simulate_move(board,move,player,en_passant_target,castling_rights,))
+                if simulated_board is None:
+                    continue
+                score = self.minimax(simulated_board,depth - 1,PLAYER_BLACK,None,castling_rights,)
+                if score > best_score:
+                    best_score = score
+            if best_score == float("-inf"):
+                return ChessRules.evaluate_material(board)
+            return best_score
+        best_score = float("inf")
+        for move in legal_moves:
+            simulated_board = (self.simulate_move(board,move,player,en_passant_target,castling_rights,))
+            if simulated_board is None:
+                continue
+            score = self.minimax(simulated_board,depth - 1,PLAYER_WHITE,None,castling_rights,)
+            if score < best_score:
+                best_score = score
+        if best_score == float("inf"):
+            return ChessRules.evaluate_material(board)
+        return best_score
+    @staticmethod
+    def get_checkmate_score(player,depth,):
+        if player not in (PLAYER_WHITE,PLAYER_BLACK,):
+            return 0
+        if not isinstance(depth,int,):
+            return 0
+        if depth < 0:
+            return 0
+        if player == PLAYER_WHITE:
+            return -(KING_VALUE + depth)
+        return (KING_VALUE + depth)
+    def learn(self,state,action,reward,next_state,):
+        pass
+    def set_player(self, player):
+        if player not in (PLAYER_WHITE,PLAYER_BLACK,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+    def set_difficulty(self, difficulty):
+        if not isinstance(difficulty,str,):
+            raise ValueError("Difficulty must be a string.")
+        self.difficulty = difficulty
+    def get_player(self):
+        return self.player
+    def get_difficulty(self):
+        return self.difficulty
+    def set_search_depth(self, depth):
+        if not isinstance(depth,int,):
+            raise ValueError("Search depth must be an integer.")
+        if depth < 1:
+            raise ValueError("Search depth must be at least 1.")
+        self.search_depth = depth
+    def get_search_depth(self):
+        return self.search_depth
+    @staticmethod
+    def _is_valid_move_format(move):
+        if not isinstance(move,(tuple, list),):
+            return False
+        if len(move) != 4:
+            return False
+        return all(isinstance(value,int,)for value in move)
+    @staticmethod
+    def get_random_move(board,player,):
+        legal_moves = (ChessRules.get_all_piece_moves(board,player,))
+        if not legal_moves:
+            return None
+        return tuple(random.choice(legal_moves))
+
+# games/chess/board_renderer.py
+from games.chess.constants import (BLACK_BISHOP,BLACK_KING,BLACK_KNIGHT,BLACK_PAWN,BLACK_QUEEN,BLACK_ROOK,BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CAPTURE_MOVE_COLOR,DARK_SQUARE_COLOR,EMPTY,KING_INDICATOR_RADIUS,LEGAL_MOVE_COLOR,LIGHT_SQUARE_COLOR,LAST_MOVE_COLOR,PIECE_OUTLINE_COLOR,PIECE_RADIUS,SELECTED_CELL_COLOR,WHITE_BISHOP,WHITE_KING,WHITE_KNIGHT,WHITE_PAWN,WHITE_QUEEN,WHITE_ROOK,)
+class ChessBoardRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def reset(self):
+        pass
+    def render(self,board,legal_moves=None,selected_position=None,last_move=None,check_position=None,en_passant_target=None,):
+        if board is None:
+            return
+        legal_moves = legal_moves or []
+        self._draw_board()
+        self._draw_last_move(last_move)
+        self._draw_highlights(board,legal_moves,selected_position,en_passant_target,)
+        self._draw_check(check_position)
+        self._draw_pieces(board)
+    def board_to_screen(self,row,column,):
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            raise ValueError(f"Invalid board position: "f"({row}, {column})")
+        cell_size = self._get_cell_size()
+        x = (BOARD_PADDING + (column + 0.5) * cell_size)
+        y = (BOARD_PADDING + (row + 0.5) * cell_size)
+        return x, y
+    def screen_to_board(self,position,):
+        if position is None:
+            return None
+        if not isinstance(position,(tuple, list),):
+            return None
+        if len(position) != 2:
+            return None
+        x, y = position
+        if not (isinstance(x, (int, float)) and isinstance(y, (int, float))):
+            return None
+        cell_size = self._get_cell_size()
+        board_x = (x - BOARD_PADDING)
+        board_y = (y - BOARD_PADDING)
+        if board_x < 0 or board_y < 0:
+            return None
+        board_pixel_size = (self._board_pixel_size())
+        if (board_x >= board_pixel_size or board_y >= board_pixel_size):
+            return None
+        column = int(board_x // cell_size)
+        row = int(board_y // cell_size)
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return None
+        return row, column
+    def get_board_size(self):
+        size = (self._board_pixel_size() + BOARD_PADDING * 2)
+        return size, size
+    def _draw_board(self):
+        cell_size = self._get_cell_size()
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if (row + column) % 2 == 0:
+                    square_color = (LIGHT_SQUARE_COLOR)
+                else:
+                    square_color = (DARK_SQUARE_COLOR)
+                left = (BOARD_PADDING + column * cell_size)
+                top = (BOARD_PADDING + row * cell_size)
+                self._draw_filled_rectangle(left,top,cell_size,cell_size,square_color,)
+    def _draw_pieces(self,board,):
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                piece = board.get_cell(row,column,)
+                if piece == EMPTY:
+                    continue
+                center = self.board_to_screen(row,column,)
+                self._draw_piece(center,piece,)
+    def _draw_piece(self,center,piece,):
+        if piece in (WHITE_PAWN,WHITE_KNIGHT,WHITE_BISHOP,WHITE_ROOK,WHITE_QUEEN,WHITE_KING,):
+            piece_color = (245,245,245,)
+            outline_color = (PIECE_OUTLINE_COLOR)
+            text_color = (30,30,30,)
+        elif piece in (BLACK_PAWN,BLACK_KNIGHT,BLACK_BISHOP,BLACK_ROOK,BLACK_QUEEN,BLACK_KING,):
+            piece_color = (35,35,35,)
+            outline_color = (220,220,220,)
+            text_color = (245,245,245,)
+        else:
+            return
+        self.renderer.draw_filled_circle(center,PIECE_RADIUS,piece_color,)
+        self.renderer.draw_circle(center,PIECE_RADIUS,outline_color,32,)
+        if piece in (WHITE_KING,BLACK_KING,):
+            self.renderer.draw_circle(center,KING_INDICATOR_RADIUS,outline_color,32,)
+        symbol = self._get_piece_symbol(piece)
+        text_size = 28
+        self._draw_centered_text(symbol,center,text_size,text_color,)
+    @staticmethod
+    def _get_piece_symbol(piece,):
+        symbols = {WHITE_PAWN: "P",WHITE_KNIGHT: "N",WHITE_BISHOP: "B",WHITE_ROOK: "R",WHITE_QUEEN: "Q",WHITE_KING: "K",BLACK_PAWN: "p",BLACK_KNIGHT: "n",BLACK_BISHOP: "b",BLACK_ROOK: "r",BLACK_QUEEN: "q",BLACK_KING: "k",}
+        return symbols.get(piece,"",)
+    def _draw_centered_text(self,text,center,size,color,):
+        x = center[0] - size * 0.30
+        y = center[1] - size * 0.50
+        self.renderer.draw_text(text,(x, y),size=size,color=color,)
+    def _draw_highlights(self,board,legal_moves,selected_position,en_passant_target,):
+        if selected_position is not None:
+            self._draw_cell_highlight(selected_position,SELECTED_CELL_COLOR,)
+        destinations = {}
+        for move in legal_moves:
+            if not isinstance(move,(tuple, list),):
+                continue
+            if len(move) not in (4,5,):
+                continue
+            destination = (move[2],move[3],)
+            is_capture = (self._is_capture_move(board,move,en_passant_target,))
+            if destination not in destinations:
+                destinations[destination] = is_capture
+            elif is_capture:
+                destinations[destination] = True
+        for (destination,is_capture,) in destinations.items():
+            if is_capture:
+                color = (CAPTURE_MOVE_COLOR)
+            else:
+                color = (LEGAL_MOVE_COLOR)
+            self._draw_destination_highlight(destination,color,)
+    def _draw_cell_highlight(self,position,color,):
+        if position is None:
+            return
+        if not isinstance(position,(tuple, list),):
+            return
+        if len(position) != 2:
+            return
+        row, column = position
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return
+        cell_size = self._get_cell_size()
+        left = (BOARD_PADDING + column * cell_size)
+        top = (BOARD_PADDING + row * cell_size)
+        self._draw_rectangle_outline(left,top,cell_size,cell_size,color,4,)
+    def _draw_destination_highlight(self,position,color,):
+        if position is None:
+            return
+        row, column = position
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return
+        center = self.board_to_screen(row,column,)
+        radius = (self._get_cell_size() * 0.13)
+        self.renderer.draw_filled_circle(center,radius,color,)
+    def _draw_last_move(self,last_move,):
+        if not isinstance(last_move,(tuple, list),):
+            return
+        if len(last_move) not in (4,5,):
+            return
+        from_position = (last_move[0],last_move[1],)
+        to_position = (last_move[2],last_move[3],)
+        self._draw_cell_highlight(from_position,LAST_MOVE_COLOR,)
+        self._draw_cell_highlight(to_position,LAST_MOVE_COLOR,)
+    def _draw_check(self,check_position,):
+        if check_position is None:
+            return
+        if not isinstance(check_position,(tuple, list),):
+            return
+        if len(check_position) != 2:
+            return
+        row, column = check_position
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return
+        center = self.board_to_screen(row,column,)
+        radius = (self._get_cell_size() * 0.30)
+        self.renderer.draw_circle(center,radius,(255, 80, 80),32,)
+    @staticmethod
+    def _is_capture_move(board,move,en_passant_target=None,):
+        if board is None:
+            return False
+        if not isinstance(move,(tuple, list),):
+            return False
+        if len(move) not in (4,5,):
+            return False
+        from_row = move[0]
+        from_column = move[1]
+        to_row = move[2]
+        to_column = move[3]
+        if not (0 <= from_row < BOARD_ROWS and 0 <= from_column < BOARD_COLUMNS and 0 <= to_row < BOARD_ROWS and 0 <= to_column < BOARD_COLUMNS):
+            return False
+        moving_piece = board.get_cell(from_row,from_column,)
+        destination_piece = board.get_cell(to_row,to_column,)
+        if destination_piece != EMPTY:
+            return True
+        if (en_passant_target is not None and ChessBoardRenderer._is_pawn(moving_piece)):
+            if ((to_row, to_column) == en_passant_target):
+                return (from_column != to_column and destination_piece == EMPTY)
+        return False
+    @staticmethod
+    def _is_pawn(piece,):
+        return piece in (WHITE_PAWN,BLACK_PAWN,)
+    def _draw_filled_rectangle(self,x,y,width,height,color,):
+        self.renderer.draw_filled_rectangle((x, y),(width, height),color,)
+    def _draw_rectangle_outline(self,x,y,width,height,color,line_width,):
+        self.renderer.draw_rectangle((x, y),(width, height),color,)
+    def _get_cell_size(self):
+        return (self._board_pixel_size() / BOARD_COLUMNS)
+    def _board_pixel_size(self):
+        return 560.0
+
+# games/chess/board.py
+from copy import deepcopy
+from games.chess.constants import (BLACK_BISHOP,BLACK_KING,BLACK_KNIGHT,BLACK_PAWN,BLACK_QUEEN,BLACK_ROOK,BOARD_COLUMNS,BOARD_ROWS,DARK_SQUARE,EMPTY,LIGHT_SQUARE,PLAYER_BLACK,PLAYER_WHITE,WHITE_BISHOP,WHITE_KING,WHITE_KNIGHT,WHITE_PAWN,WHITE_QUEEN,WHITE_ROOK,)
+class ChessBoard:
+    def __init__(self):
+        self._board = []
+        self.reset()
+    def reset(self):
+        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)]for _ in range(BOARD_ROWS)]
+        self._board[0] = [BLACK_ROOK,BLACK_KNIGHT,BLACK_BISHOP,BLACK_QUEEN,BLACK_KING,BLACK_BISHOP,BLACK_KNIGHT,BLACK_ROOK,]
+        self._board[1] = [BLACK_PAWN for _ in range(BOARD_COLUMNS)]
+        self._board[6] = [WHITE_PAWN for _ in range(BOARD_COLUMNS)]
+        self._board[7] = [WHITE_ROOK,WHITE_KNIGHT,WHITE_BISHOP,WHITE_QUEEN,WHITE_KING,WHITE_BISHOP,WHITE_KNIGHT,WHITE_ROOK,]
+    def get_cell(self, row, column):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        return self._board[row][column]
+    def set_cell(self, row, column, value):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        if not self.is_valid_piece(value):
+            raise ValueError(f"Invalid piece value: {value}")
+        self._board[row][column] = value
+    def is_valid_position(self, row, column):
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+    def get_square_color(self, row, column):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        if (row + column) % 2 == 0:
+            return LIGHT_SQUARE
+        return DARK_SQUARE
+    def is_light_square(self, row, column):
+        return (self.get_square_color(row, column) == LIGHT_SQUARE)
+    def is_dark_square(self, row, column):
+        return (self.get_square_color(row, column) == DARK_SQUARE)
+    def is_empty(self, row, column):
+        return (self.get_cell(row, column) == EMPTY)
+    def is_valid_piece(self, piece):
+        return piece in (EMPTY,WHITE_PAWN,WHITE_KNIGHT,WHITE_BISHOP,WHITE_ROOK,WHITE_QUEEN,WHITE_KING,BLACK_PAWN,BLACK_KNIGHT,BLACK_BISHOP,BLACK_ROOK,BLACK_QUEEN,BLACK_KING,)
+    @staticmethod
+    def is_white_piece(piece):
+        return piece in (WHITE_PAWN,WHITE_KNIGHT,WHITE_BISHOP,WHITE_ROOK,WHITE_QUEEN,WHITE_KING,)
+    @staticmethod
+    def is_black_piece(piece):
+        return piece in (BLACK_PAWN,BLACK_KNIGHT,BLACK_BISHOP,BLACK_ROOK,BLACK_QUEEN,BLACK_KING,)
+    @staticmethod
+    def is_player_piece(piece, player):
+        if player == PLAYER_WHITE:
+            return ChessBoard.is_white_piece(piece)
+        if player == PLAYER_BLACK:
+            return ChessBoard.is_black_piece(piece)
+        return False
+    @staticmethod
+    def get_piece_player(piece):
+        if ChessBoard.is_white_piece(piece):
+            return PLAYER_WHITE
+        if ChessBoard.is_black_piece(piece):
+            return PLAYER_BLACK
+        return None
+    def get_piece_positions(self, player):
+        positions = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                piece = self._board[row][column]
+                if self.is_player_piece(piece,player,):
+                    positions.append((row, column))
+        return positions
+    def get_all_piece_positions(self):
+        positions = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] != EMPTY:
+                    positions.append((row, column))
+        return positions
+    def count_pieces(self, player):
+        return len(self.get_piece_positions(player))
+    def count_piece(self, piece):
+        count = 0
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] == piece:
+                    count += 1
+        return count
+    def find_piece(self, piece):
+        positions = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] == piece:
+                    positions.append((row, column))
+        return positions
+    def find_king(self, player):
+        if player == PLAYER_WHITE:
+            king = WHITE_KING
+        elif player == PLAYER_BLACK:
+            king = BLACK_KING
+        else:
+            return None
+        positions = self.find_piece(king)
+        if not positions:
+            return None
+        return positions[0]
+    def get_board_state(self):
+        return deepcopy(self._board)
+    def copy(self):
+        new_board = ChessBoard()
+        new_board._board = deepcopy(self._board)
+        return new_board
+    def __str__(self):
+        symbols = {EMPTY: ".",WHITE_PAWN: "P",WHITE_KNIGHT: "N",WHITE_BISHOP: "B",WHITE_ROOK: "R",WHITE_QUEEN: "Q",WHITE_KING: "K",BLACK_PAWN: "p",BLACK_KNIGHT: "n",BLACK_BISHOP: "b",BLACK_ROOK: "r",BLACK_QUEEN: "q",BLACK_KING: "k",}
+        rows = []
+        for row in self._board:
+            rows.append(" ".join(symbols[piece] for piece in row))
+        return "\n".join(rows)
+
+# games/chess/constants.py
+GAME_NAME = "Chess"
+GAME_VERSION = "1.0.0"
+BOARD_ROWS = 8
+BOARD_COLUMNS = 8
+CELL_SIZE = 70
+BOARD_PADDING = 40
+LIGHT_SQUARE = 0
+DARK_SQUARE = 1
+EMPTY = 0
+WHITE_PAWN = 1
+WHITE_KNIGHT = 2
+WHITE_BISHOP = 3
+WHITE_ROOK = 4
+WHITE_QUEEN = 5
+WHITE_KING = 6
+BLACK_PAWN = 7
+BLACK_KNIGHT = 8
+BLACK_BISHOP = 9
+BLACK_ROOK = 10
+BLACK_QUEEN = 11
+BLACK_KING = 12
+PLAYER_WHITE = 1
+PLAYER_BLACK = 2
+FIRST_PLAYER = PLAYER_WHITE
+GAME_NOT_STARTED = 0
+GAME_RUNNING = 1
+GAME_DRAW = 2
+GAME_OVER = 3
+NO_WINNER = 0
+GAME_MODE_HUMAN_VS_HUMAN = 0
+GAME_MODE_HUMAN_VS_AI = 1
+GAME_MODE_AI_VS_AI = 2
+DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+AI_RANDOM = "Random"
+AI_EASY = "Easy"
+AI_MEDIUM = "Medium"
+AI_HARD = "Hard"
+WHITE_PAWN_DIRECTION = -1
+BLACK_PAWN_DIRECTION = 1
+PAWN_MOVE_DISTANCE = 1
+PAWN_DOUBLE_MOVE_DISTANCE = 2
+PAWN_CAPTURE_DISTANCE = 1
+WHITE_PAWN_START_ROW = 6
+BLACK_PAWN_START_ROW = 1
+WHITE_PROMOTION_ROW = 0
+BLACK_PROMOTION_ROW = 7
+KNIGHT_MOVE_DISTANCE = 1
+KING_MOVE_DISTANCE = 1
+BISHOP_DIRECTIONS = ((-1, -1),(-1, 1),(1, -1),(1, 1),)
+ROOK_DIRECTIONS = ((-1, 0),(1, 0),(0, -1),(0, 1),)
+QUEEN_DIRECTIONS = ((-1, -1),(-1, 1),(1, -1),(1, 1),(-1, 0),(1, 0),(0, -1),(0, 1),)
+KING_DIRECTIONS = QUEEN_DIRECTIONS
+KNIGHT_DIRECTIONS = ((-2, -1),(-2, 1),(-1, -2),(-1, 2),(1, -2),(1, 2),(2, -1),(2, 1),)
+CASTLING_NONE = 0
+CASTLING_KINGSIDE = 1
+CASTLING_QUEENSIDE = 2
+WHITE_KINGSIDE_CASTLING = "white_kingside"
+WHITE_QUEENSIDE_CASTLING = "white_queenside"
+BLACK_KINGSIDE_CASTLING = "black_kingside"
+BLACK_QUEENSIDE_CASTLING = "black_queenside"
+WHITE_KING_START_POSITION = (7, 4)
+BLACK_KING_START_POSITION = (0, 4)
+WHITE_KINGSIDE_ROOK_POSITION = (7, 7)
+WHITE_QUEENSIDE_ROOK_POSITION = (7, 0)
+BLACK_KINGSIDE_ROOK_POSITION = (0, 7)
+BLACK_QUEENSIDE_ROOK_POSITION = (0, 0)
+NO_EN_PASSANT = None
+EN_PASSANT_NONE = 0
+EN_PASSANT_AVAILABLE = 1
+PROMOTION_NONE = 0
+PROMOTION_QUEEN = 1
+PROMOTION_ROOK = 2
+PROMOTION_BISHOP = 3
+PROMOTION_KNIGHT = 4
+DEFAULT_PROMOTION = PROMOTION_QUEEN
+DRAW_NONE = 0
+DRAW_STALEMATE = 1
+DRAW_INSUFFICIENT_MATERIAL = 2
+DRAW_FIFTY_MOVE = 3
+DRAW_THREEFOLD_REPETITION = 4
+MOVE_NORMAL = 0
+MOVE_CAPTURE = 1
+MOVE_CASTLING = 2
+MOVE_EN_PASSANT = 3
+MOVE_PROMOTION = 4
+MOVE_PROMOTION_CAPTURE = 5
+LIGHT_SQUARE_COLOR = (238, 238, 210)
+DARK_SQUARE_COLOR = (118, 150, 86)
+WHITE_PIECE_COLOR = (245, 245, 245)
+BLACK_PIECE_COLOR = (35, 35, 35)
+PIECE_OUTLINE_COLOR = (50, 50, 50)
+SELECTED_CELL_COLOR = (80, 180, 255)
+LEGAL_MOVE_COLOR = (100, 220, 120)
+CAPTURE_MOVE_COLOR = (255, 100, 100)
+CHECK_COLOR = (255, 80, 80)
+LAST_MOVE_COLOR = (255, 220, 80)
+PROMOTION_COLOR = (255, 200, 50)
+WIN_LINE_COLOR = (50, 255, 50)
+BOARD_LINE_WIDTH = 1
+PIECE_RADIUS = CELL_SIZE * 0.38
+KING_INDICATOR_RADIUS = PIECE_RADIUS * 0.45
+LEGAL_MOVE_RADIUS = CELL_SIZE * 0.13
+CAPTURE_MOVE_RADIUS = CELL_SIZE * 0.16
+PIECE_SYMBOLS = {EMPTY: "",WHITE_PAWN: "P",WHITE_KNIGHT: "N",WHITE_BISHOP: "B",WHITE_ROOK: "R",WHITE_QUEEN: "Q",WHITE_KING: "K",BLACK_PAWN: "p",BLACK_KNIGHT: "n",BLACK_BISHOP: "b",BLACK_ROOK: "r",BLACK_QUEEN: "q",BLACK_KING: "k",}
+PAWN_VALUE = 100
+KNIGHT_VALUE = 320
+BISHOP_VALUE = 330
+ROOK_VALUE = 500
+QUEEN_VALUE = 900
+KING_VALUE = 20000
+INITIAL_MOVE_COUNT = 0
+INITIAL_HALF_MOVE_CLOCK = 0
+
+# games/chess/game.py
+from engine.interfaces.game_interface import GameInterface
+from engine.interfaces.game_result import GameResult
+from games.chess.ai import ChessAI
+from games.chess.board import ChessBoard
+from games.chess.board_renderer import ChessBoardRenderer
+from games.chess.constants import (BLACK_KING,BLACK_ROOK,FIRST_PLAYER,GAME_DRAW,GAME_MODE_AI_VS_AI,GAME_MODE_HUMAN_VS_AI,GAME_MODE_HUMAN_VS_HUMAN,GAME_NOT_STARTED,GAME_OVER,GAME_RUNNING,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_ROOK,)
+from games.chess.human_player import HumanPlayer
+from games.chess.overlay_renderer import ChessOverlayRenderer
+from games.chess.rules import ChessRules
+class ChessGame(GameInterface):
+    def __init__(self,renderer,game_mode=GAME_MODE_HUMAN_VS_HUMAN,):
+        self.renderer = renderer
+        self.game_mode = game_mode
+        self.board = ChessBoard()
+        self.board_renderer = ChessBoardRenderer(renderer)
+        self.overlay_renderer = ChessOverlayRenderer(renderer)
+        self.current_player = FIRST_PLAYER
+        self.next_starting_player = FIRST_PLAYER
+        self.result = GameResult()
+        self.game_state = GAME_NOT_STARTED
+        self.position_state = "NORMAL"
+        self.move_count = 0
+        self.half_move_clock = 0
+        self.last_move = None
+        self.castling_rights = {"white_kingside": True,"white_queenside": True,"black_kingside": True,"black_queenside": True,}
+        self.en_passant_target = None
+        self.white_controller = None
+        self.black_controller = None
+        self._create_controllers()
+    def initialize(self):
+        self.reset()
+    def reset(self):
+        self.board.reset()
+        self.current_player = (self.choose_starting_player())
+        self.result.reset()
+        self.game_state = GAME_RUNNING
+        self.position_state = "NORMAL"
+        self.move_count = 0
+        self.half_move_clock = 0
+        self.last_move = None
+        self.castling_rights = {"white_kingside": True,"white_queenside": True,"black_kingside": True,"black_queenside": True,}
+        self.en_passant_target = None
+        self.board_renderer.reset()
+        self.overlay_renderer.reset()
+        self._reset_controllers()
+    def shutdown(self):
+        pass
+    def _create_controllers(self):
+        if self.game_mode == GAME_MODE_HUMAN_VS_HUMAN:
+            self.white_controller = HumanPlayer(self.board_renderer)
+            self.black_controller = HumanPlayer(self.board_renderer)
+        elif self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.white_controller = HumanPlayer(self.board_renderer)
+            self.black_controller = ChessAI(PLAYER_BLACK)
+        elif self.game_mode == GAME_MODE_AI_VS_AI:
+            self.white_controller = ChessAI(PLAYER_WHITE)
+            self.black_controller = ChessAI(PLAYER_BLACK)
+        else:
+            raise ValueError(f"Invalid Chess game mode: "f"{self.game_mode}")
+    def _reset_controllers(self):
+        if self.white_controller is not None:
+            if hasattr(self.white_controller,"reset",):
+                self.white_controller.reset()
+        if self.black_controller is not None:
+            if hasattr(self.black_controller,"reset",):
+                self.black_controller.reset()
+    def update(self):
+        if self.is_frozen():
+            return
+        self.update_current_player()
+    def render(self):
+        if self.board_renderer is None:
+            return
+        check_position = (self._get_check_position())
+        selected_position = (self._get_selected_position())
+        self.board_renderer.render(board=self.board,legal_moves=self.get_legal_moves(),selected_position=selected_position,last_move=self.last_move,check_position=check_position,en_passant_target=self.en_passant_target,)
+        self._render_overlay()
+    def _render_overlay(self):
+        if self.overlay_renderer is None:
+            return
+        if self.position_state == "CHECKMATE":
+            self.overlay_renderer.draw_checkmate(winner=self.result.winner)
+            return
+        if self.position_state == "STALEMATE":
+            self.overlay_renderer.draw_stalemate()
+            return
+        if self.result.draw:
+            self.overlay_renderer.draw_draw()
+            return
+        if self.result.game_over:
+            self.overlay_renderer.draw_game_over(winner=self.result.winner,draw=self.result.draw,)
+            return
+        if self.position_state == "CHECK":
+            self.overlay_renderer.draw_check()
+    def make_move(self, move):
+        if self.is_frozen():
+            return False
+        if not isinstance(move, tuple):
+            return False
+        if len(move) not in (4, 5):
+            return False
+        if not ChessRules.is_valid_move(self.board,move,self.current_player,self.en_passant_target,self.castling_rights,):
+            return False
+        (from_row,from_column,to_row,to_column,) = move[:4]
+        piece = self.board.get_cell(from_row,from_column,)
+        is_capture = ChessRules.is_capture_move(self.board,move,self.current_player,self.en_passant_target,self.castling_rights,)
+        if is_capture or ChessRules.is_pawn(piece):
+            self.half_move_clock = 0
+        else:
+            self.half_move_clock += 1
+        if not ChessRules.apply_move(self.board,move,self.current_player,self.en_passant_target,self.castling_rights,):
+            return False
+        self.move_count += 1
+        self.last_move = move
+        self._update_castling_rights(piece,move,)
+        self._update_en_passant(piece,move,)
+        self.switch_player()
+        self._evaluate_position()
+        return True
+    def switch_player(self):
+        if self.current_player == PLAYER_WHITE:
+            self.current_player = PLAYER_BLACK
+        else:
+            self.current_player = PLAYER_WHITE
+    def choose_starting_player(self):
+        player = self.next_starting_player
+        if player == PLAYER_WHITE:
+            self.next_starting_player = PLAYER_BLACK
+        else:
+            self.next_starting_player = PLAYER_WHITE
+        return player
+    def get_current_controller(self):
+        if self.current_player == PLAYER_WHITE:
+            return self.white_controller
+        if self.current_player == PLAYER_BLACK:
+            return self.black_controller
+        return None
+    def update_current_player(self):
+        controller = self.get_current_controller()
+        if controller is None:
+            return
+        action = controller.get_action(self)
+        if action is None:
+            return
+        if not isinstance(action, tuple):
+            return
+        if len(action) not in (4, 5):
+            return
+        self.make_move(action)
+    def get_legal_moves(self):
+        return ChessRules.get_legal_moves(self.board,self.current_player,self.en_passant_target,self.castling_rights,)
+    def _get_selected_position(self):
+        controller = (self.get_current_controller())
+        if controller is None:
+            return None
+        if hasattr(controller,"get_selected_position",):
+            return controller.get_selected_position()
+        return None
+    def _get_check_position(self):
+        if self.result.game_over:
+            return None
+        if not ChessRules.is_in_check(self.board,self.current_player,):
+            return None
+        return self.board.find_king(self.current_player)
+    def get_board_renderer(self):
+        return self.board_renderer
+    def get_overlay_renderer(self):
+        return self.overlay_renderer
+    def _update_castling_rights(self,piece,move,):
+        (from_row,from_column,to_row,to_column,) = move[:4]
+        if piece == WHITE_KING:
+            self.castling_rights["white_kingside"] = False
+            self.castling_rights["white_queenside"] = False
+        elif piece == BLACK_KING:
+            self.castling_rights["black_kingside"] = False
+            self.castling_rights["black_queenside"] = False
+        elif piece == WHITE_ROOK:
+            if (from_row == 7 and from_column == 0):
+                self.castling_rights["white_queenside"] = False
+            elif (from_row == 7 and from_column == 7):
+                self.castling_rights["white_kingside"] = False
+        elif piece == BLACK_ROOK:
+            if (from_row == 0 and from_column == 0):
+                self.castling_rights["black_queenside"] = False
+            elif (from_row == 0 and from_column == 7):
+                self.castling_rights["black_kingside"] = False
+        if (to_row == 7 and to_column == 0):
+            self.castling_rights["white_queenside"] = False
+        elif (to_row == 7 and to_column == 7):
+            self.castling_rights["white_kingside"] = False
+        elif (to_row == 0 and to_column == 0):
+            self.castling_rights["black_queenside"] = False
+        elif (to_row == 0 and to_column == 7):
+            self.castling_rights["black_kingside"] = False
+    def _update_en_passant(self,piece,move,):
+        self.en_passant_target = None
+        if not ChessRules.is_pawn(piece):
+            return
+        (from_row,from_column,to_row,to_column,) = move[:4]
+        if abs(to_row - from_row) == 2:
+            self.en_passant_target = ((from_row + to_row) // 2,from_column,)
+    def _evaluate_position(self):
+        self.result.reset()
+        self.position_state = "NORMAL"
+        white_king = self.board.find_king(PLAYER_WHITE)
+        black_king = self.board.find_king(PLAYER_BLACK)
+        if white_king is None:
+            self.result.game_over = True
+            self.result.draw = False
+            self.result.winner = PLAYER_BLACK
+            self.game_state = GAME_OVER
+            self.position_state = "CHECKMATE"
+            return
+        if black_king is None:
+            self.result.game_over = True
+            self.result.draw = False
+            self.result.winner = PLAYER_WHITE
+            self.game_state = GAME_OVER
+            self.position_state = "CHECKMATE"
+            return
+        legal_moves = ChessRules.get_legal_moves(self.board,self.current_player,self.en_passant_target,self.castling_rights,)
+        current_player_in_check = (ChessRules.is_in_check(self.board,self.current_player,))
+        if not legal_moves:
+            if current_player_in_check:
+                if self.current_player == PLAYER_WHITE:
+                    self.result.winner = PLAYER_BLACK
+                else:
+                    self.result.winner = PLAYER_WHITE
+                self.result.game_over = True
+                self.result.draw = False
+                self.game_state = GAME_OVER
+                self.position_state = "CHECKMATE"
+            else:
+                self.result.winner = None
+                self.result.game_over = True
+                self.result.draw = True
+                self.game_state = GAME_DRAW
+                self.position_state = "STALEMATE"
+            return
+        self.result.game_over = False
+        self.result.draw = False
+        self.result.winner = None
+        self.game_state = GAME_RUNNING
+        if current_player_in_check:
+            self.position_state = "CHECK"
+        else:
+            self.position_state = "NORMAL"
+    def get_state(self):
+        return {"board": self.board.get_board_state(),"current_player": self.current_player,"winner": self.result.winner,"game_state": self.game_state,"position_state": self.position_state,"game_over": self.result.game_over,"draw": self.result.draw,"move_count": self.move_count,"half_move_clock": self.half_move_clock,"last_move": self.last_move,"castling_rights": dict(self.castling_rights),"en_passant_target": (self.en_passant_target),"legal_moves": self.get_legal_moves(),}
+    def get_board(self):
+        return self.board
+    def get_current_player(self):
+        return self.current_player
+    def get_winner(self):
+        return self.result.winner
+    def get_result(self):
+        return self.result
+    def get_game_state(self):
+        return self.game_state
+    def get_position_state(self):
+        return self.position_state
+    def get_move_count(self):
+        return self.move_count
+    def get_half_move_clock(self):
+        return self.half_move_clock
+    def get_last_move(self):
+        return self.last_move
+    def get_castling_rights(self):
+        return dict(self.castling_rights)
+    def get_en_passant_target(self):
+        return self.en_passant_target
+    def is_game_over(self):
+        return self.result.game_over
+    def is_frozen(self):
+        return self.result.game_over
+    def is_draw(self):
+        return self.result.draw
+    def set_draw(self):
+        self.result.reset()
+        self.result.game_over = True
+        self.result.draw = True
+        self.result.winner = None
+        self.game_state = GAME_DRAW
+        self.position_state = "NORMAL"
+
+# games/chess/human_player.py
+import pygame
+from games.chess.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+class HumanPlayer:
+    def __init__(self, board_renderer):
+        self.board_renderer = board_renderer
+        self.player = None
+        self.selected_position = None
+    def initialize(self):
+        self.reset()
+    def reset(self):
+        self.selected_position = None
+    def set_player(self, player):
+        if player not in (PLAYER_WHITE,PLAYER_BLACK,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+        self.selected_position = None
+    def get_action(self, game):
+        if game is None:
+            return None
+        if game.is_game_over():
+            return None
+        current_player = (game.get_current_player())
+        if self.player != current_player:
+            self.set_player(current_player)
+        legal_moves = game.get_legal_moves()
+        if not legal_moves:
+            self.selected_position = None
+            return None
+        mouse_buttons = pygame.mouse.get_pressed()
+        if not mouse_buttons[0]:
+            return None
+        mouse_position = pygame.mouse.get_pos()
+        position = (self.board_renderer.screen_to_board(mouse_position))
+        if position is None:
+            return None
+        if self.selected_position is None:
+            if self._is_selectable_position(position,legal_moves,):
+                self.selected_position = position
+            return None
+        if self._is_selectable_position(position,legal_moves,):
+            self.selected_position = position
+            return None
+        selected_row, selected_column = (self.selected_position)
+        move = (selected_row,selected_column,position[0],position[1],)
+        if move in legal_moves:
+            self.selected_position = None
+            return move
+        return None
+    def clear_selection(self):
+        self.selected_position = None
+    def get_selected_position(self):
+        return self.selected_position
+    def _is_selectable_position(self,position,legal_moves,):
+        row, column = position
+        for move in legal_moves:
+            if (move[0] == row and move[1] == column):
+                return True
+        return False
+
+# games/chess/overlay_renderer.py
+from games.chess.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+class ChessOverlayRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def reset(self):
+        pass
+    def render(self,game_state,winner=None,draw=False,):
+        if draw:
+            self.draw_draw()
+            return
+        if game_state == "CHECKMATE":
+            self.draw_checkmate(winner)
+            return
+        if game_state == "STALEMATE":
+            self.draw_stalemate()
+            return
+        if game_state == "CHECK":
+            self.draw_check()
+    def draw_game_over(self,winner=None,draw=False,):
+        if draw:
+            self.draw_draw()
+            return
+        if winner is not None:
+            self._draw_message(f"{self._get_player_name(winner)} WINS")
+            return
+        self._draw_message("GAME OVER")
+    def draw_checkmate(self,winner=None,):
+        if winner is None:
+            self._draw_message("CHECKMATE")
+            return
+        self._draw_message(f"CHECKMATE - "f"{self._get_player_name(winner)} WINS")
+    def draw_stalemate(self):
+        self._draw_message("STALEMATE - DRAW")
+    def draw_check(self):
+        self._draw_message("CHECK")
+    def draw_draw(self):
+        self._draw_message("DRAW")
+    @staticmethod
+    def _get_player_name(player):
+        if player == PLAYER_WHITE:
+            return "WHITE"
+        if player == PLAYER_BLACK:
+            return "BLACK"
+        return f"PLAYER {player}"
+    def _draw_message(self,message,):
+        if hasattr(self.renderer,"draw_overlay_message",):
+            self.renderer.draw_overlay_message(message)
+            return
+        if hasattr(self.renderer,"draw_text",):
+            self.renderer.draw_text(message,(40, 20),)
+
+# games/chess/rules.py
+from engine.interfaces.game_result import GameResult
+from games.chess.constants import (BLACK_BISHOP,BLACK_KING,BLACK_KNIGHT,BLACK_PAWN,BLACK_QUEEN,BLACK_ROOK,BLACK_PAWN_DIRECTION,BISHOP_DIRECTIONS,BOARD_COLUMNS,BOARD_ROWS,CASTLING_KINGSIDE,CASTLING_QUEENSIDE,EMPTY,KING_DIRECTIONS,KING_MOVE_DISTANCE,KNIGHT_DIRECTIONS,KNIGHT_MOVE_DISTANCE,PLAYER_BLACK,PLAYER_WHITE,PROMOTION_BISHOP,PROMOTION_KNIGHT,PROMOTION_NONE,PROMOTION_QUEEN,PROMOTION_ROOK,QUEEN_DIRECTIONS,ROOK_DIRECTIONS,WHITE_BISHOP,WHITE_KING,WHITE_KNIGHT,WHITE_PAWN,WHITE_PAWN_DIRECTION,WHITE_QUEEN,WHITE_ROOK,WHITE_PROMOTION_ROW,BLACK_PROMOTION_ROW,)
+class ChessRules:
+    @staticmethod
+    def get_opponent(player):
+        if player == PLAYER_WHITE:
+            return PLAYER_BLACK
+        if player == PLAYER_BLACK:
+            return PLAYER_WHITE
+        return None
+    @staticmethod
+    def is_valid_player(player):
+        return player in (PLAYER_WHITE,PLAYER_BLACK,)
+    @staticmethod
+    def is_white_piece(piece):
+        return piece in (WHITE_PAWN,WHITE_KNIGHT,WHITE_BISHOP,WHITE_ROOK,WHITE_QUEEN,WHITE_KING,)
+    @staticmethod
+    def is_black_piece(piece):
+        return piece in (BLACK_PAWN,BLACK_KNIGHT,BLACK_BISHOP,BLACK_ROOK,BLACK_QUEEN,BLACK_KING,)
+    @staticmethod
+    def is_pawn(piece):
+        return piece in (WHITE_PAWN,BLACK_PAWN,)
+    @staticmethod
+    def is_knight(piece):
+        return piece in (WHITE_KNIGHT,BLACK_KNIGHT,)
+    @staticmethod
+    def is_bishop(piece):
+        return piece in (WHITE_BISHOP,BLACK_BISHOP,)
+    @staticmethod
+    def is_rook(piece):
+        return piece in (WHITE_ROOK,BLACK_ROOK,)
+    @staticmethod
+    def is_queen(piece):
+        return piece in (WHITE_QUEEN,BLACK_QUEEN,)
+    @staticmethod
+    def is_king(piece):
+        return piece in (WHITE_KING,BLACK_KING,)
+    @staticmethod
+    def is_piece_of_player(piece, player):
+        if player == PLAYER_WHITE:
+            return ChessRules.is_white_piece(piece)
+        if player == PLAYER_BLACK:
+            return ChessRules.is_black_piece(piece)
+        return False
+    @staticmethod
+    def is_valid_position(row, column):
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+    @staticmethod
+    def is_same_position(position_a, position_b):
+        return position_a == position_b
+    @staticmethod
+    def get_pawn_direction(player):
+        if player == PLAYER_WHITE:
+            return WHITE_PAWN_DIRECTION
+        if player == PLAYER_BLACK:
+            return BLACK_PAWN_DIRECTION
+        return 0
+    @staticmethod
+    def get_pawn_start_row(player):
+        if player == PLAYER_WHITE:
+            return 6
+        if player == PLAYER_BLACK:
+            return 1
+        return None
+    @staticmethod
+    def get_promotion_row(player):
+        if player == PLAYER_WHITE:
+            return WHITE_PROMOTION_ROW
+        if player == PLAYER_BLACK:
+            return BLACK_PROMOTION_ROW
+        return None
+    @staticmethod
+    def is_valid_promotion_type(promotion_type):
+        return promotion_type in (PROMOTION_NONE,PROMOTION_QUEEN,PROMOTION_ROOK,PROMOTION_BISHOP,PROMOTION_KNIGHT,)
+    @staticmethod
+    def get_promotion_piece(player, promotion_type):
+        if promotion_type == PROMOTION_NONE:
+            return (WHITE_PAWN if player == PLAYER_WHITE else BLACK_PAWN)
+        if player == PLAYER_WHITE:
+            pieces = {PROMOTION_QUEEN: WHITE_QUEEN,PROMOTION_ROOK: WHITE_ROOK,PROMOTION_BISHOP: WHITE_BISHOP,PROMOTION_KNIGHT: WHITE_KNIGHT,}
+        elif player == PLAYER_BLACK:
+            pieces = {PROMOTION_QUEEN: BLACK_QUEEN,PROMOTION_ROOK: BLACK_ROOK,PROMOTION_BISHOP: BLACK_BISHOP,PROMOTION_KNIGHT: BLACK_KNIGHT,}
+        else:
+            return EMPTY
+        return pieces.get(promotion_type,EMPTY,)
+    @staticmethod
+    def is_promotion_move(board, move, player):
+        if not ChessRules.is_valid_move_format(move):
+            return False
+        from_row, _, to_row, _ = move[:4]
+        piece = board.get_cell(from_row,move[1],)
+        if not ChessRules.is_pawn(piece):
+            return False
+        return (to_row == ChessRules.get_promotion_row(player))
+    @staticmethod
+    def is_valid_move_format(move):
+        if not isinstance(move, tuple):
+            return False
+        if len(move) not in (4, 5):
+            return False
+        return all(isinstance(value, int) for value in move[:4])
+    @staticmethod
+    def get_pawn_moves(board, row, column, player):
+        moves = []
+        direction = ChessRules.get_pawn_direction(player)
+        start_row = ChessRules.get_pawn_start_row(player)
+        next_row = row + direction
+        if ChessRules.is_valid_position(next_row,column,):
+            if board.is_empty(next_row,column,):
+                moves.append((row,column,next_row,column,))
+                double_row = (row + 2 * direction)
+                if (row == start_row and board.is_empty(double_row,column,)):
+                    moves.append((row,column,double_row,column,))
+        for delta_column in (-1, 1):
+            target_row = row + direction
+            target_column = (column + delta_column)
+            if not ChessRules.is_valid_position(target_row,target_column,):
+                continue
+            target = board.get_cell(target_row,target_column,)
+            if (target != EMPTY and ChessRules.is_piece_of_player(target,ChessRules.get_opponent(player),) and not ChessRules.is_king(target)):
+                moves.append((row,column,target_row,target_column,))
+        return moves
+    @staticmethod
+    def get_knight_moves(board,row,column,player,):
+        moves = []
+        for delta_row, delta_column in KNIGHT_DIRECTIONS:
+            target_row = row + delta_row
+            target_column = (column + delta_column)
+            if not ChessRules.is_valid_position(target_row,target_column,):
+                continue
+            target = board.get_cell(target_row,target_column,)
+            if (target == EMPTY or (ChessRules.is_piece_of_player(target,ChessRules.get_opponent(player),) and not ChessRules.is_king(target))):
+                moves.append((row,column,target_row,target_column,))
+        return moves
+    @staticmethod
+    def get_sliding_moves(board,row,column,player,directions,):
+        moves = []
+        opponent = ChessRules.get_opponent(player)
+        for delta_row, delta_column in directions:
+            target_row = row + delta_row
+            target_column = (column + delta_column)
+            while ChessRules.is_valid_position(target_row,target_column,):
+                target = board.get_cell(target_row,target_column,)
+                if target == EMPTY:
+                    moves.append((row,column,target_row,target_column,))
+                else:
+                    if (ChessRules.is_piece_of_player(target,opponent,) and not ChessRules.is_king(target)):
+                        moves.append((row,column,target_row,target_column,))
+                    break
+                target_row += delta_row
+                target_column += delta_column
+        return moves
+    @staticmethod
+    def get_bishop_moves(board,row,column,player,):
+        return ChessRules.get_sliding_moves(board,row,column,player,BISHOP_DIRECTIONS,)
+    @staticmethod
+    def get_rook_moves(board,row,column,player,):
+        return ChessRules.get_sliding_moves(board,row,column,player,ROOK_DIRECTIONS,)
+    @staticmethod
+    def get_queen_moves(board,row,column,player,):
+        return ChessRules.get_sliding_moves(board,row,column,player,QUEEN_DIRECTIONS,)
+    @staticmethod
+    def get_king_moves(board,row,column,player,):
+        moves = []
+        opponent = ChessRules.get_opponent(player)
+        for delta_row, delta_column in KING_DIRECTIONS:
+            target_row = row + delta_row
+            target_column = (column + delta_column)
+            if not ChessRules.is_valid_position(target_row,target_column,):
+                continue
+            target = board.get_cell(target_row,target_column,)
+            if target == EMPTY:
+                moves.append((row,column,target_row,target_column,))
+            elif (ChessRules.is_piece_of_player(target,opponent,) and not ChessRules.is_king(target)):
+                moves.append((row,column,target_row,target_column,))
+        return moves
+    @staticmethod
+    def get_piece_moves(board,row,column,player,):
+        piece = board.get_cell(row,column,)
+        if not ChessRules.is_piece_of_player(piece,player,):
+            return []
+        if ChessRules.is_pawn(piece):
+            return ChessRules.get_pawn_moves(board,row,column,player,)
+        if ChessRules.is_knight(piece):
+            return ChessRules.get_knight_moves(board,row,column,player,)
+        if ChessRules.is_bishop(piece):
+            return ChessRules.get_bishop_moves(board,row,column,player,)
+        if ChessRules.is_rook(piece):
+            return ChessRules.get_rook_moves(board,row,column,player,)
+        if ChessRules.is_queen(piece):
+            return ChessRules.get_queen_moves(board,row,column,player,)
+        if ChessRules.is_king(piece):
+            return ChessRules.get_king_moves(board,row,column,player,)
+        return []
+    @staticmethod
+    def is_square_attacked(board,row,column,by_player,):
+        if not ChessRules.is_valid_player(by_player):
+            return False
+        opponent = ChessRules.get_opponent(by_player)
+        pawn_direction = (ChessRules.get_pawn_direction(by_player))
+        pawn_row = row - pawn_direction
+        for pawn_column in (column - 1,column + 1,):
+            if not ChessRules.is_valid_position(pawn_row,pawn_column,):
+                continue
+            piece = board.get_cell(pawn_row,pawn_column,)
+            if (piece == (WHITE_PAWN if by_player == PLAYER_WHITE else BLACK_PAWN)):
+                return True
+        knight = (WHITE_KNIGHT if by_player == PLAYER_WHITE else BLACK_KNIGHT)
+        for delta_row, delta_column in KNIGHT_DIRECTIONS:
+            source_row = row + delta_row
+            source_column = (column + delta_column)
+            if not ChessRules.is_valid_position(source_row,source_column,):
+                continue
+            if board.get_cell(source_row,source_column,) == knight:
+                return True
+        king = (WHITE_KING if by_player == PLAYER_WHITE else BLACK_KING)
+        for delta_row, delta_column in KING_DIRECTIONS:
+            source_row = row + delta_row
+            source_column = (column + delta_column)
+            if not ChessRules.is_valid_position(source_row,source_column,):
+                continue
+            if board.get_cell(source_row,source_column,) == king:
+                return True
+        bishop = (WHITE_BISHOP if by_player == PLAYER_WHITE else BLACK_BISHOP)
+        rook = (WHITE_ROOK if by_player == PLAYER_WHITE else BLACK_ROOK)
+        queen = (WHITE_QUEEN if by_player == PLAYER_WHITE else BLACK_QUEEN)
+        for delta_row, delta_column in BISHOP_DIRECTIONS:
+            source_row = row + delta_row
+            source_column = (column + delta_column)
+            while ChessRules.is_valid_position(source_row,source_column,):
+                piece = board.get_cell(source_row,source_column,)
+                if piece != EMPTY:
+                    if piece in (bishop,queen,):
+                        return True
+                    break
+                source_row += delta_row
+                source_column += delta_column
+        for delta_row, delta_column in ROOK_DIRECTIONS:
+            source_row = row + delta_row
+            source_column = (column + delta_column)
+            while ChessRules.is_valid_position(source_row,source_column,):
+                piece = board.get_cell(source_row,source_column,)
+                if piece != EMPTY:
+                    if piece in (rook,queen,):
+                        return True
+                    break
+                source_row += delta_row
+                source_column += delta_column
+        return False
+    @staticmethod
+    def is_in_check(board,player,):
+        king_position = board.find_king(player)
+        if king_position is None:
+            return True
+        king_row, king_column = king_position
+        return ChessRules.is_square_attacked(board,king_row,king_column,ChessRules.get_opponent(player),)
+    @staticmethod
+    def is_en_passant_move(board,move,player,en_passant_target=None,):
+        if en_passant_target is None:
+            return False
+        if not ChessRules.is_valid_move_format(move):
+            return False
+        if len(move) == 5:
+            move = move[:4]
+        from_row, from_column, to_row, to_column = move
+        if move[2:] != en_passant_target:
+            return False
+        piece = board.get_cell(from_row,from_column,)
+        if not ChessRules.is_pawn(piece):
+            return False
+        if not ChessRules.is_piece_of_player(piece,player,):
+            return False
+        if not board.is_empty(to_row,to_column,):
+            return False
+        direction = ChessRules.get_pawn_direction(player)
+        if to_row - from_row != direction:
+            return False
+        if abs(to_column - from_column) != 1:
+            return False
+        capture_row = to_row - direction
+        captured_piece = board.get_cell(capture_row,to_column,)
+        opponent_pawn = (BLACK_PAWN if player == PLAYER_WHITE else WHITE_PAWN)
+        return captured_piece == opponent_pawn
+    @staticmethod
+    def get_en_passant_capture_position(move,player,):
+        if not ChessRules.is_valid_move_format(move):
+            return None
+        from_row, _, to_row, to_column = move[:4]
+        direction = ChessRules.get_pawn_direction(player)
+        return (to_row - direction,to_column,)
+    @staticmethod
+    def _get_castling_data(player,castling_type,):
+        if player == PLAYER_WHITE:
+            row = 7
+            if castling_type == CASTLING_KINGSIDE:
+                return ((7, 4),(7, 7),(7, 6),(7, 5),("white_kingside"),)
+            if castling_type == CASTLING_QUEENSIDE:
+                return ((7, 4),(7, 0),(7, 2),(7, 3),("white_queenside"),)
+        elif player == PLAYER_BLACK:
+            row = 0
+            if castling_type == CASTLING_KINGSIDE:
+                return ((0, 4),(0, 7),(0, 6),(0, 5),("black_kingside"),)
+            if castling_type == CASTLING_QUEENSIDE:
+                return ((0, 4),(0, 0),(0, 2),(0, 3),("black_queenside"),)
+        return None
+    @staticmethod
+    def get_castling_type(move, player):
+        if not ChessRules.is_valid_move_format(move):
+            return None
+        from_row, from_column, to_row, to_column = (move[:4])
+        if player == PLAYER_WHITE:
+            expected_row = 7
+        elif player == PLAYER_BLACK:
+            expected_row = 0
+        else:
+            return None
+        if (from_row != expected_row or from_column != 4 or to_row != expected_row):
+            return None
+        if to_column == 6:
+            return CASTLING_KINGSIDE
+        if to_column == 2:
+            return CASTLING_QUEENSIDE
+        return None
+    @staticmethod
+    def is_castling_move(board,move,player,castling_rights=None,):
+        castling_type = ChessRules.get_castling_type(move,player,)
+        if castling_type is None:
+            return False
+        if castling_rights is None:
+            return False
+        data = ChessRules._get_castling_data(player,castling_type,)
+        if data is None:
+            return False
+        (king_position,rook_position,destination,rook_destination,rights_key,) = data
+        if not castling_rights.get(rights_key,False,):
+            return False
+        king_row, king_column = king_position
+        rook_row, rook_column = rook_position
+        king = (WHITE_KING if player == PLAYER_WHITE else BLACK_KING)
+        rook = (WHITE_ROOK if player == PLAYER_WHITE else BLACK_ROOK)
+        if board.get_cell(king_row,king_column,) != king:
+            return False
+        if board.get_cell(rook_row,rook_column,) != rook:
+            return False
+        if castling_type == CASTLING_KINGSIDE:
+            empty_columns = (5, 6)
+        else:
+            empty_columns = (1, 2, 3)
+        for column in empty_columns:
+            if not board.is_empty(king_row,column,):
+                return False
+        opponent = ChessRules.get_opponent(player)
+        if ChessRules.is_square_attacked(board,king_row,king_column,opponent,):
+            return False
+        transit_column = (5 if castling_type == CASTLING_KINGSIDE else 3)
+        if ChessRules.is_square_attacked(board,king_row,transit_column,opponent,):
+            return False
+        destination_column = (6 if castling_type == CASTLING_KINGSIDE else 2)
+        if ChessRules.is_square_attacked(board,king_row,destination_column,opponent,):
+            return False
+        return True
+    @staticmethod
+    def get_castling_rook_move(move,player,):
+        castling_type = ChessRules.get_castling_type(move,player,)
+        if castling_type == CASTLING_KINGSIDE:
+            if player == PLAYER_WHITE:
+                return ((7, 7),(7, 5),)
+            if player == PLAYER_BLACK:
+                return ((0, 7),(0, 5),)
+        elif castling_type == CASTLING_QUEENSIDE:
+            if player == PLAYER_WHITE:
+                return ((7, 0),(7, 3),)
+            if player == PLAYER_BLACK:
+                return ((0, 0),(0, 3),)
+        return None
+    @staticmethod
+    def is_valid_move(board,move,player,en_passant_target=None,castling_rights=None,):
+        if not ChessRules.is_valid_move_format(move):
+            return False
+        if not ChessRules.is_valid_player(player):
+            return False
+        from_row, from_column, to_row, to_column = (move[:4])
+        if not ChessRules.is_valid_position(from_row,from_column,):
+            return False
+        if not ChessRules.is_valid_position(to_row,to_column,):
+            return False
+        if (from_row == to_row and from_column == to_column):
+            return False
+        piece = board.get_cell(from_row,from_column,)
+        if not ChessRules.is_piece_of_player(piece,player,):
+            return False
+        target = board.get_cell(to_row,to_column,)
+        if ChessRules.is_piece_of_player(target,player,):
+            return False
+        if ChessRules.get_castling_type(move,player,) is not None:
+            return ChessRules.is_castling_move(board,move,player,castling_rights,)
+        if ChessRules.is_en_passant_move(board,move,player,en_passant_target,):
+            return True
+        return move[:4] in ChessRules.get_piece_moves(board,from_row,from_column,player,)
+    @staticmethod
+    def is_legal_move(board,move,player,en_passant_target=None,castling_rights=None,):
+        if not ChessRules.is_valid_move(board,move,player,en_passant_target,castling_rights,):
+            return False
+        simulated_board = board.copy()
+        if not ChessRules.apply_move(simulated_board,move,player,en_passant_target,castling_rights,):
+            return False
+        return not ChessRules.is_in_check(simulated_board,player,)
+    @staticmethod
+    def get_legal_moves(board,player,en_passant_target=None,castling_rights=None,):
+        legal_moves = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                piece = board.get_cell(row,column,)
+                if not ChessRules.is_piece_of_player(piece,player):
+                    continue
+                candidate_moves = (ChessRules.get_piece_moves(board,row,column,player,))
+                for move in candidate_moves:
+                    if ChessRules.is_legal_move(board,move,player,en_passant_target,castling_rights,):
+                        legal_moves.append(move)
+        if en_passant_target is not None:
+            target_row, target_column = (en_passant_target)
+            direction = (ChessRules.get_pawn_direction(player))
+            source_row = (target_row - direction)
+            for source_column in (target_column - 1,target_column + 1,):
+                if not ChessRules.is_valid_position(source_row,source_column,):
+                    continue
+                piece = board.get_cell(source_row,source_column,)
+                if not ChessRules.is_pawn(piece):
+                    continue
+                if not ChessRules.is_piece_of_player(piece,player,):
+                    continue
+                move = (source_row,source_column,target_row,target_column,)
+                if ChessRules.is_legal_move(board,move,player,en_passant_target,castling_rights,):
+                    legal_moves.append(move)
+        king_position = board.find_king(player)
+        if king_position is not None:
+            king_row, king_column = (king_position)
+            if king_column == 4:
+                for destination_column in (6,2,):
+                    move = (king_row,king_column,king_row,destination_column,)
+                    if ChessRules.is_legal_move(board,move,player,en_passant_target,castling_rights,):
+                        legal_moves.append(move)
+        return legal_moves
+    @staticmethod
+    def get_all_piece_moves(board,player,en_passant_target=None,castling_rights=None,):
+        return ChessRules.get_legal_moves(board,player,en_passant_target,castling_rights,)
+    @staticmethod
+    def apply_move(board,move,player,en_passant_target=None,castling_rights=None,):
+        if not ChessRules.is_valid_move_format(move):
+            return False
+        if len(move) == 5:
+            promotion_type = move[4]
+        else:
+            promotion_type = PROMOTION_NONE
+        from_row, from_column, to_row, to_column = (move[:4])
+        if not ChessRules.is_valid_position(from_row,from_column,):
+            return False
+        if not ChessRules.is_valid_position(to_row,to_column,):
+            return False
+        piece = board.get_cell(from_row,from_column,)
+        if not ChessRules.is_piece_of_player(piece,player,):
+            return False
+        target = board.get_cell(to_row,to_column,)
+        if ChessRules.get_castling_type(move,player,) is not None:
+            if not ChessRules.is_castling_move(board,move,player,castling_rights,):
+                return False
+            rook_move = (ChessRules.get_castling_rook_move(move,player,))
+            if rook_move is None:
+                return False
+            (rook_from,rook_to,) = rook_move
+            rook_piece = board.get_cell(rook_from[0],rook_from[1],)
+            board.set_cell(to_row,to_column,piece,)
+            board.set_cell(from_row,from_column,EMPTY,)
+            board.set_cell(rook_to[0],rook_to[1],rook_piece,)
+            board.set_cell(rook_from[0],rook_from[1],EMPTY,)
+            return True
+        is_en_passant = (ChessRules.is_en_passant_move(board,move,player,en_passant_target,))
+        if is_en_passant:
+            capture_position = (ChessRules.get_en_passant_capture_position(move,player,))
+            if capture_position is None:
+                return False
+            capture_row, capture_column = (capture_position)
+            board.set_cell(capture_row,capture_column,EMPTY,)
+        if ChessRules.is_promotion_move(board,move,player,):
+            if not ChessRules.is_valid_promotion_type(promotion_type):
+                return False
+            if promotion_type == PROMOTION_NONE:
+                promotion_type = PROMOTION_QUEEN
+            promoted_piece = (
+                ChessRules.get_promotion_piece(player,promotion_type,))
+            if promoted_piece == EMPTY:
+                return False
+            board.set_cell(from_row,from_column,EMPTY,)
+            board.set_cell(to_row,to_column,promoted_piece,)
+            return True
+        board.set_cell(from_row,from_column,EMPTY,)
+        board.set_cell(to_row,to_column,piece,)
+        return True
+    @staticmethod
+    def apply_legal_move(board,move,player,en_passant_target=None,castling_rights=None,):
+        if not ChessRules.is_legal_move(board,move,player,en_passant_target,castling_rights,):
+            return False
+        return ChessRules.apply_move(board,move,player,en_passant_target,castling_rights,)
+    @staticmethod
+    def is_capture_move(board,move,player,en_passant_target=None,castling_rights=None,):
+        if not ChessRules.is_valid_move_format(move):
+            return False
+        if ChessRules.is_en_passant_move(board,move,player,en_passant_target,):
+            return True
+        _, _, to_row, to_column = move[:4]
+        target = board.get_cell(to_row,to_column,)
+        return (target != EMPTY and ChessRules.is_piece_of_player(target,ChessRules.get_opponent(player),) and not ChessRules.is_king(target))
+    @staticmethod
+    def evaluate_game(board,player,en_passant_target=None,castling_rights=None,):
+        result = GameResult()
+        if board.find_king(PLAYER_WHITE) is None:
+            result.winner = PLAYER_BLACK
+            result.game_over = True
+            return result
+        if board.find_king(PLAYER_BLACK) is None:
+            result.winner = PLAYER_WHITE
+            result.game_over = True
+            return result
+        legal_moves = ChessRules.get_legal_moves(board,player,en_passant_target,castling_rights,)
+        if legal_moves:
+            return result
+        if ChessRules.is_in_check(board,player,):
+            result.winner = (ChessRules.get_opponent(player))
+            result.game_over = True
+            return result
+        result.draw = True
+        result.game_over = True
+        return result
+    @staticmethod
+    def get_piece_value(piece):
+        from games.chess.constants import (PAWN_VALUE,KNIGHT_VALUE,BISHOP_VALUE,ROOK_VALUE,QUEEN_VALUE,KING_VALUE,EMPTY,)
+        values = {EMPTY: 0,WHITE_PAWN: PAWN_VALUE,WHITE_KNIGHT: KNIGHT_VALUE,WHITE_BISHOP: BISHOP_VALUE,WHITE_ROOK: ROOK_VALUE,WHITE_QUEEN: QUEEN_VALUE,WHITE_KING: KING_VALUE,BLACK_PAWN: PAWN_VALUE,BLACK_KNIGHT: KNIGHT_VALUE,BLACK_BISHOP: BISHOP_VALUE,BLACK_ROOK: ROOK_VALUE,BLACK_QUEEN: QUEEN_VALUE,BLACK_KING: KING_VALUE,}
+        return values.get(piece,0,)
+    @staticmethod
+    def evaluate_material(board):
+        white_score = 0
+        black_score = 0
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                piece = board.get_cell(row,column,)
+                value = ChessRules.get_piece_value(piece)
+                if ChessRules.is_white_piece(piece):
+                    white_score += value
+                elif ChessRules.is_black_piece(piece):
+                    black_score += value
+        return white_score - black_score
+    @staticmethod
+    def get_material_score(board, player):
+        evaluation = ChessRules.evaluate_material(board)
+        if player == PLAYER_WHITE:
+            return evaluation
+        if player == PLAYER_BLACK:
+            return -evaluation
+        raise ValueError(f"Invalid player: {player}")
 
 #games/connect4/ai.py
 import random
