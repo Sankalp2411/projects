@@ -1,5 +1,6 @@
 #requirements.txt
 numpy
+pandas
 matplotlib
 yfinance
 scikit-learn

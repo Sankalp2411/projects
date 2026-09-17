@@ -337,3 +337,47 @@ Traceback (most recent call last):
              ^^^^^^^^^^^^^^^^^^^^^
 AttributeError: 'CheckersAI' object has no attribute 'get_action'. Did you mean: 'select_action'?
 
+
+================================================================================
+Timestamp: 2026-09-14 14:44:28
+
+Exception: name 'POSITION_RADIUS' is not defined
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 54, in run
+    self.render()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 46, in render
+    self.scene_manager.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 17, in render
+    self.current_scene.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 30, in render
+    self.game.render()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\nine_mens_morris\game.py", line 128, in render
+    self.board_renderer.render(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.board,
+        ^^^^^^^^^^^
+        self.result,
+        ^^^^^^^^^^^^
+        selected_position,
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\nine_mens_morris\board_renderer.py", line 54, in render
+    self.draw_position(position)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\nine_mens_morris\board_renderer.py", line 156, in draw_position
+    radius=POSITION_RADIUS,
+           ^^^^^^^^^^^^^^^
+NameError: name 'POSITION_RADIUS' is not defined. Did you mean: 'STONE_RADIUS'?
+

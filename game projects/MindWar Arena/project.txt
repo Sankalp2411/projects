@@ -169,9 +169,12 @@ MINDWAR ARENA(
             )
             __init__.py
             ai.py
+            board_renderer.py
             board.py
             constants.py
             game.py
+            human_player.py
+            overlay_renderer.py
             rules.py
         )
         othello(
@@ -4492,6 +4495,772 @@ class GomokuRules:
                 return []
             cells.append((next_row, next_column))
         return cells
+
+#games/nine_mens_morris/ai.py
+import random
+from engine.interfaces.ai_interface import AIInterface
+from games.nine_mens_morris.constants import (PLAYER_BLACK,PLAYER_WHITE,PHASE_PLACEMENT,PHASE_MOVEMENT,)
+from games.nine_mens_morris.rules import NineMensMorrisRules
+class NineMensMorrisAI(AIInterface):
+    def __init__(self):
+        self.initialized = False
+    def initialize(self):
+        self.initialized = True
+    def reset(self):
+        self.initialized = False
+    def select_action(self, game_state):
+        if not self.initialized:
+            return None
+        board = game_state.get("board")
+        if board is None:
+            return None
+        player = game_state.get("current_player")
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return None
+        phase = game_state.get("phase")
+        if phase == PHASE_PLACEMENT:
+            available_positions = []
+            for position in range(len(board)):
+                if board[position] == 0:
+                    available_positions.append(position)
+            if not available_positions:
+                return None
+            return random.choice(available_positions)
+        legal_moves = []
+        for source in range(len(board)):
+            if board[source] != player:
+                continue
+            destinations = []
+            if game_state.get("flying"):
+                for destination in range(len(board)):
+                    if board[destination] == 0:
+                        destinations.append(destination)
+            else:
+                destinations = (NineMensMorrisRules.get_adjacent_positions(source))
+                destinations = [destination for destination in destinations if board[destination] == 0]
+            for destination in destinations:
+                legal_moves.append((source, destination))
+        if not legal_moves:
+            return None
+        return random.choice(legal_moves)
+    def get_action(self, game):
+        return self.select_action(game.get_state())
+    def learn(self,state,action,reward,next_state,):
+        pass
+
+# games/nine_mens_morris/board_renderer.py
+import math
+from games.nine_mens_morris.constants import (BOARD_LEFT,BOARD_TOP,OUTER_SIZE,MIDDLE_SIZE,INNER_SIZE,STONE_RADIUS,POSITION_RADIUS,GRID_COLOR,POSITION_COLOR,PLAYER_BLACK,PLAYER_WHITE,PLAYER_BLACK_COLOR,PLAYER_WHITE_COLOR,SELECTED_COLOR,WIN_LINE_COLOR,POSITION_COORDINATES,)
+class BoardRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+        self.selected_position = None
+    def render(self,board,game_result=None,selected_position=None,):
+        self.selected_position = selected_position
+        self.draw_board()
+        for position in range(24):
+            value = board.get_position(position)
+            if value == PLAYER_BLACK:
+                self.draw_stone(position,PLAYER_BLACK_COLOR,)
+            elif value == PLAYER_WHITE:
+                self.draw_stone(position,PLAYER_WHITE_COLOR,)
+            else:
+                self.draw_position(position)
+        if ( game_result is not None and game_result.winning_cells):
+            self.draw_winning_line(game_result.winning_cells)
+        if selected_position is not None:
+            self.draw_selection(selected_position)
+    def draw_board(self):
+        outer_left = BOARD_LEFT
+        outer_top = BOARD_TOP
+        outer_right = (BOARD_LEFT + OUTER_SIZE)
+        outer_bottom = (BOARD_TOP + OUTER_SIZE)
+        middle_offset = (OUTER_SIZE - MIDDLE_SIZE) / 2
+        middle_left = (BOARD_LEFT + middle_offset)
+        middle_top = (BOARD_TOP + middle_offset)
+        middle_right = (middle_left + MIDDLE_SIZE)
+        middle_bottom = (middle_top + MIDDLE_SIZE)
+        inner_offset = (OUTER_SIZE - INNER_SIZE) / 2
+        inner_left = (BOARD_LEFT + inner_offset)
+        inner_top = (BOARD_TOP + inner_offset)
+        inner_right = (inner_left + INNER_SIZE)
+        inner_bottom = (inner_top + INNER_SIZE)
+        center_x = (BOARD_LEFT + OUTER_SIZE / 2)
+        center_y = (BOARD_TOP + OUTER_SIZE / 2)
+        self.renderer.draw_rectangle(position=(outer_left,outer_top,),size=(OUTER_SIZE,OUTER_SIZE,),color=GRID_COLOR,)
+        self.renderer.draw_rectangle(position=(middle_left,middle_top,),size=(MIDDLE_SIZE,MIDDLE_SIZE,),color=GRID_COLOR,)
+        self.renderer.draw_rectangle(position=(inner_left,inner_top,),size=(INNER_SIZE,INNER_SIZE,),color=GRID_COLOR,)
+        self.renderer.draw_line(start=(outer_left,center_y,),end=(inner_left,center_y,),color=GRID_COLOR,)
+        self.renderer.draw_line(start=(inner_right,center_y,),end=(outer_right,center_y,),color=GRID_COLOR,)
+        self.renderer.draw_line(start=(center_x,outer_top,),end=(center_x,inner_top,),color=GRID_COLOR,)
+        self.renderer.draw_line(start=(center_x,inner_bottom,),end=(center_x,outer_bottom,),color=GRID_COLOR,)
+    def draw_position(self, position):
+        center = POSITION_COORDINATES[position]
+        self.renderer.draw_filled_circle(center=center,radius=POSITION_RADIUS,color=POSITION_COLOR,)
+    def draw_stone(self,position,color,):
+        center = POSITION_COORDINATES[position]
+        self.renderer.draw_filled_circle(center=center,radius=STONE_RADIUS,color=color,)
+    def draw_selection(self, position):
+        center = POSITION_COORDINATES[position]
+        self.renderer.draw_circle(center=center,radius=STONE_RADIUS + 6,color=SELECTED_COLOR,)
+    def draw_winning_line(self,winning_cells,):
+        if len(winning_cells) < 2:
+            return
+        start = POSITION_COORDINATES[winning_cells[0]]
+        end = POSITION_COORDINATES[winning_cells[-1]]
+        self.renderer.draw_line(start=start,end=end,color=WIN_LINE_COLOR,)
+    def contains_point(self, x, y):
+        left = BOARD_LEFT
+        top = BOARD_TOP
+        right = (BOARD_LEFT + OUTER_SIZE)
+        bottom = (BOARD_TOP + OUTER_SIZE)
+        return (left - 25 <= x <= right + 25 and top - 25 <= y <= bottom + 25)
+    def screen_to_position(self, x, y):
+        if not self.contains_point(x, y):
+            return None
+        closest_position = None
+        closest_distance = float("inf")
+        for (position,coordinate,) in POSITION_COORDINATES.items():
+            dx = (x - coordinate[0])
+            dy = (y - coordinate[1])
+            distance = math.sqrt(dx * dx + dy * dy)
+            if (distance <= STONE_RADIUS + 15):
+                if (distance < closest_distance):
+                    closest_distance = distance
+                    closest_position = position
+        return closest_position
+    def reset(self):
+        self.selected_position = None
+
+# games/nine_mens_morris/board.py
+from copy import deepcopy
+from games.nine_mens_morris.constants import (BOARD_POSITIONS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,PIECES_PER_PLAYER,)
+class NineMensMorrisBoard:
+    def __init__(self):
+        self.reset()
+    def reset(self):
+        self._board = [EMPTY for _ in range(BOARD_POSITIONS)]
+    def get_position(self, position):
+        if not self.is_valid_position(position):
+            return EMPTY
+        return self._board[position]
+    def set_position(self, position, value):
+        if not self.is_valid_position(position):
+            return False
+        if value not in (EMPTY, PLAYER_BLACK, PLAYER_WHITE):
+            return False
+        self._board[position] = value
+        return True
+    def place_piece(self, position, player):
+        if not self.is_valid_position(position):
+            return False
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return False
+        if not self.is_position_empty(position):
+            return False
+        self._board[position] = player
+        return True
+    def remove_piece(self, position):
+        if not self.is_valid_position(position):
+            return False
+        if self._board[position] == EMPTY:
+            return False
+        self._board[position] = EMPTY
+        return True
+    def move_piece(self, source, destination, player):
+        if not self.is_valid_position(source):
+            return False
+        if not self.is_valid_position(destination):
+            return False
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return False
+        if self._board[source] != player:
+            return False
+        if self._board[destination] != EMPTY:
+            return False
+        self._board[source] = EMPTY
+        self._board[destination] = player
+        return True
+    def is_valid_position(self, position):
+        return 0 <= position < BOARD_POSITIONS
+    def is_position_empty(self, position):
+        if not self.is_valid_position(position):
+            return False
+        return self._board[position] == EMPTY
+    def get_available_positions(self):
+        positions = []
+        for position in range(BOARD_POSITIONS):
+            if self._board[position] == EMPTY:
+                positions.append(position)
+        return positions
+    def get_player_positions(self, player):
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return []
+        positions = []
+        for position in range(BOARD_POSITIONS):
+            if self._board[position] == player:
+                positions.append(position)
+        return positions
+    def count_pieces(self, player):
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return 0
+        count = 0
+        for position in range(BOARD_POSITIONS):
+            if self._board[position] == player:
+                count += 1
+        return count
+    def get_empty_count(self):
+        count = 0
+        for position in range(BOARD_POSITIONS):
+            if self._board[position] == EMPTY:
+                count += 1
+        return count
+    def is_board_full(self):
+        return self.get_empty_count() == 0
+    def has_minimum_pieces(self, player):
+        return self.count_pieces(player) >= 3
+    def get_board_state(self):
+        return deepcopy(self._board)
+    def copy(self):
+        board_copy = NineMensMorrisBoard()
+        board_copy._board = deepcopy(self._board)
+        return board_copy
+    def __str__(self):
+        symbols = {EMPTY: ".",PLAYER_BLACK: "B",PLAYER_WHITE: "W",}
+        return " ".join(symbols[position] for position in self._board)
+
+#games/nine_mens_morris/constants.py
+GAME_NAME = "Nine Men's Morris"
+GAME_VERSION = "1.0.0"
+BOARD_POSITIONS = 24
+EMPTY = 0
+PLAYER_BLACK = 1
+PLAYER_WHITE = 2
+FIRST_PLAYER = PLAYER_BLACK
+GAME_NOT_STARTED = 0
+GAME_RUNNING = 1
+GAME_DRAW = 2
+GAME_OVER = 3
+NO_WINNER = 0
+PHASE_PLACEMENT = 0
+PHASE_MOVEMENT = 1
+PHASE_FLYING = 2
+PIECES_PER_PLAYER = 9
+MIN_PIECES_TO_PLAY = 3
+GAME_MODE_HUMAN_VS_HUMAN = 0
+GAME_MODE_HUMAN_VS_AI = 1
+GAME_MODE_AI_VS_AI = 2
+DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+AI_RANDOM = "Random"
+AI_EASY = "Easy"
+AI_MEDIUM = "Medium"
+AI_HARD = "Hard"
+BOARD_WIDTH = 500
+BOARD_HEIGHT = 500
+BOARD_LEFT = 60
+BOARD_TOP = 80
+OUTER_SIZE = 500
+MIDDLE_SIZE = 320
+INNER_SIZE = 140
+BOARD_LINE_WIDTH = 4
+STONE_RADIUS = 18
+POSITION_RADIUS = 6
+GRID_COLOR = (150, 120, 80)
+POSITION_COLOR = (210, 170, 100)
+PLAYER_BLACK_COLOR = (30, 30, 30)
+PLAYER_WHITE_COLOR = (235, 235, 235)
+SELECTED_COLOR = (80, 220, 255)
+WIN_LINE_COLOR = (50, 255, 50)
+CAPTURE_MARK_COLOR = (255, 180, 50)
+POSITION_COORDINATES = {
+    0: (BOARD_LEFT,BOARD_TOP,),
+    1: (BOARD_LEFT + OUTER_SIZE / 2,BOARD_TOP,),
+    2: (BOARD_LEFT + OUTER_SIZE,BOARD_TOP,),
+    3: (BOARD_LEFT + (OUTER_SIZE - MIDDLE_SIZE) / 2,BOARD_TOP + (OUTER_SIZE - MIDDLE_SIZE) / 2,),
+    4: (BOARD_LEFT + OUTER_SIZE / 2,BOARD_TOP + (OUTER_SIZE - MIDDLE_SIZE) / 2,),
+    5: (BOARD_LEFT + OUTER_SIZE - (OUTER_SIZE - MIDDLE_SIZE) / 2,BOARD_TOP + (OUTER_SIZE - MIDDLE_SIZE) / 2,),
+    6: (BOARD_LEFT + (OUTER_SIZE - INNER_SIZE) / 2,BOARD_TOP + (OUTER_SIZE - INNER_SIZE) / 2,),
+    7: (BOARD_LEFT + OUTER_SIZE / 2,BOARD_TOP + (OUTER_SIZE - INNER_SIZE) / 2,),
+    8: (BOARD_LEFT + OUTER_SIZE - (OUTER_SIZE - INNER_SIZE) / 2,BOARD_TOP + (OUTER_SIZE - INNER_SIZE) / 2,),
+    9: (BOARD_LEFT,BOARD_TOP + OUTER_SIZE / 2,),
+    10: (BOARD_LEFT + (OUTER_SIZE - MIDDLE_SIZE) / 2,BOARD_TOP + OUTER_SIZE / 2,),
+    11: (BOARD_LEFT + (OUTER_SIZE - INNER_SIZE) / 2,BOARD_TOP + OUTER_SIZE / 2,),
+    12: (BOARD_LEFT + OUTER_SIZE - (OUTER_SIZE - INNER_SIZE) / 2,BOARD_TOP + OUTER_SIZE / 2,),
+    13: (BOARD_LEFT + OUTER_SIZE - (OUTER_SIZE - MIDDLE_SIZE) / 2,BOARD_TOP + OUTER_SIZE / 2,),
+    14: (BOARD_LEFT + OUTER_SIZE,BOARD_TOP + OUTER_SIZE / 2,),
+    15: (BOARD_LEFT + (OUTER_SIZE - INNER_SIZE) / 2,BOARD_TOP + OUTER_SIZE - (OUTER_SIZE - INNER_SIZE) / 2,),
+    16: (BOARD_LEFT + OUTER_SIZE / 2,BOARD_TOP + OUTER_SIZE - (OUTER_SIZE - INNER_SIZE) / 2,),
+    17: (BOARD_LEFT + OUTER_SIZE - (OUTER_SIZE - INNER_SIZE) / 2,BOARD_TOP + OUTER_SIZE - (OUTER_SIZE - INNER_SIZE) / 2,),
+    18: (BOARD_LEFT + (OUTER_SIZE - MIDDLE_SIZE) / 2,BOARD_TOP + OUTER_SIZE - (OUTER_SIZE - MIDDLE_SIZE) / 2,),
+    19: (BOARD_LEFT + OUTER_SIZE / 2,BOARD_TOP + OUTER_SIZE - (OUTER_SIZE - MIDDLE_SIZE) / 2,),
+    20: (BOARD_LEFT + OUTER_SIZE - (OUTER_SIZE - MIDDLE_SIZE) / 2,BOARD_TOP + OUTER_SIZE - (OUTER_SIZE - MIDDLE_SIZE) / 2,),
+    21: (BOARD_LEFT,BOARD_TOP + OUTER_SIZE,),
+    22: (BOARD_LEFT + OUTER_SIZE / 2,BOARD_TOP + OUTER_SIZE,),
+    23: (BOARD_LEFT + OUTER_SIZE,BOARD_TOP + OUTER_SIZE,),
+}
+
+#games/nine_mens_morris/game.py
+from engine.interfaces.game_interface import GameInterface
+from engine.interfaces.game_result import GameResult
+from games.nine_mens_morris.ai import NineMensMorrisAI
+from games.nine_mens_morris.board import NineMensMorrisBoard
+from games.nine_mens_morris.board_renderer import BoardRenderer
+from games.nine_mens_morris.constants import (PLAYER_BLACK,PLAYER_WHITE,FIRST_PLAYER,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,GAME_MODE_HUMAN_VS_HUMAN,GAME_MODE_HUMAN_VS_AI,PHASE_PLACEMENT,PHASE_MOVEMENT,PHASE_FLYING,PIECES_PER_PLAYER,)
+from games.nine_mens_morris.human_player import HumanPlayer
+from games.nine_mens_morris.overlay_renderer import OverlayRenderer
+from games.nine_mens_morris.rules import NineMensMorrisRules
+class NineMensMorrisGame(GameInterface):
+    def __init__(self,renderer,game_mode=GAME_MODE_HUMAN_VS_HUMAN,):
+        self.renderer = renderer
+        self.game_mode = game_mode
+        self.board = NineMensMorrisBoard()
+        self.current_player = FIRST_PLAYER
+        self.next_starting_player = FIRST_PLAYER
+        self.result = GameResult()
+        self.game_state = GAME_NOT_STARTED
+        self.move_count = 0
+        self.pieces_placed = {PLAYER_BLACK: 0,PLAYER_WHITE: 0,}
+        self.capture_pending = False
+        self.board_renderer = BoardRenderer(renderer)
+        self.overlay_renderer = OverlayRenderer(renderer)
+        self.human_player = HumanPlayer(self.board_renderer)
+        self.ai_player = NineMensMorrisAI()
+        self.player_black = self.human_player
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.player_white = self.ai_player
+        else:
+            self.player_white = self.human_player
+    def initialize(self):
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.initialize()
+        self.reset()
+    def reset(self):
+        self.board.reset()
+        self.choose_starting_player()
+        self.result = GameResult()
+        self.pieces_placed = {PLAYER_BLACK: 0,PLAYER_WHITE: 0,}
+        self.capture_pending = False
+        self.game_state = GAME_RUNNING
+        self.move_count = 0
+        self.board_renderer.reset()
+        self.overlay_renderer.reset()
+        self.human_player.reset()
+        if self.game_mode == GAME_MODE_HUMAN_VS_AI:
+            self.ai_player.reset()
+            self.ai_player.initialize()
+    def shutdown(self):
+        pass
+    def update(self):
+        if self.is_frozen():
+            return
+        if self.capture_pending:
+            self.update_capture_controller()
+            return
+        self.update_current_player()
+    def render(self):
+        selected_position = (self.human_player.selected_position)
+        self.board_renderer.render(self.board,self.result,selected_position,)
+        self.overlay_renderer.render(self.result)
+        self.render_information()
+    def render_information(self):
+        phase_name = self.get_phase_name()
+        self.renderer.draw_text(f"Phase: {phase_name}",(700, 80),size=28,)
+        self.renderer.draw_text(f"Black: {self.board.count_pieces(PLAYER_BLACK)}",(700, 125),size=26,)
+        self.renderer.draw_text(f"White: {self.board.count_pieces(PLAYER_WHITE)}",(700, 165),size=26,)
+        if self.capture_pending:
+            self.renderer.draw_text("Select an opponent piece to remove",(700, 225),size=24,)
+        else:
+            current_name = ("Black"if self.current_player == PLAYER_BLACK else "White")
+            self.renderer.draw_text(f"Turn: {current_name}",(700, 225),size=26,)
+    def make_move(self, *args):
+        if self.is_frozen():
+            return False
+        if self.capture_pending:
+            if len(args) != 1:
+                return False
+            return self.remove_opponent_piece(args[0])
+        phase = self.get_phase()
+        if phase == PHASE_PLACEMENT:
+            if len(args) != 1:
+                return False
+            return self.place_piece(args[0])
+        if phase in (PHASE_MOVEMENT,PHASE_FLYING,):
+            if len(args) != 2:
+                return False
+            return self.move_piece(args[0],args[1],)
+        return False
+    def place_piece(self, position):
+        if not self.board.is_valid_position(position):
+            return False
+        if not self.board.is_position_empty(position):
+            return False
+        if (self.pieces_placed[self.current_player] >= PIECES_PER_PLAYER):
+            return False
+        if not self.board.place_piece(position,self.current_player,):
+            return False
+        self.pieces_placed[self.current_player] += 1
+        self.move_count += 1
+        if NineMensMorrisRules.is_mill(self.board,position,self.current_player,):
+            self.capture_pending = True
+            removable = (NineMensMorrisRules.get_removable_pieces(self.board,self.current_player,))
+            if not removable:
+                self.capture_pending = False
+                self.switch_player()
+            return True
+        self.switch_player()
+        return True
+    def move_piece(self, source, destination):
+        if not self.board.is_valid_position(source):
+            return False
+        if not self.board.is_valid_position(destination):
+            return False
+        if self.board.get_position(source) != self.current_player:
+            return False
+        if not self.board.is_position_empty(destination):
+            return False
+        legal_destinations = (
+            NineMensMorrisRules.get_legal_destinations(self.board,source,self.current_player,))
+        if destination not in legal_destinations:
+            return False
+        if not self.board.move_piece(source,destination,self.current_player,):
+            return False
+        self.move_count += 1
+        if NineMensMorrisRules.is_mill(self.board,destination,self.current_player,):
+            self.capture_pending = True
+            removable = (NineMensMorrisRules.get_removable_pieces(self.board,self.current_player,))
+            if not removable:
+                self.capture_pending = False
+                self.check_game_result()
+                if not self.is_frozen():
+                    self.switch_player()
+            return True
+        self.check_game_result()
+        if self.is_frozen():
+            return True
+        self.switch_player()
+        return True
+    def remove_opponent_piece(self, position):
+        if not self.capture_pending:
+            return False
+        if not NineMensMorrisRules.can_remove_piece(self.board,position,self.current_player,):
+            return False
+        if not self.board.remove_piece(position):
+            return False
+        self.capture_pending = False
+        self.check_game_result()
+        if self.is_frozen():
+            return True
+        self.switch_player()
+        return True
+    def check_game_result(self):
+        if self.get_phase() == PHASE_PLACEMENT:
+            return
+        opponent = (NineMensMorrisRules.get_opponent(self.current_player))
+        if opponent == 0:
+            return
+        if self.board.count_pieces(opponent) < 3:
+            self.result = GameResult()
+            self.result.winner = (self.current_player)
+            self.result.game_over = True
+            self.game_state = GAME_OVER
+            return
+        if not NineMensMorrisRules.has_legal_move(self.board,opponent,):
+            self.result = GameResult()
+            self.result.winner = (self.current_player)
+            self.result.game_over = True
+            self.game_state = GAME_OVER
+            return
+        if self.board.is_board_full():
+            self.result = GameResult()
+            self.result.draw = True
+            self.result.game_over = True
+            self.game_state = GAME_DRAW
+    def switch_player(self):
+        if self.current_player == PLAYER_BLACK:
+            self.current_player = PLAYER_WHITE
+        else:
+            self.current_player = PLAYER_BLACK
+    def choose_starting_player(self):
+        self.current_player = (self.next_starting_player)
+        if self.next_starting_player == PLAYER_BLACK:
+            self.next_starting_player = PLAYER_WHITE
+        else:
+            self.next_starting_player = PLAYER_BLACK
+    def get_current_controller(self):
+        if self.current_player == PLAYER_BLACK:
+            return self.player_black
+        return self.player_white
+    def update_current_player(self):
+        controller = (self.get_current_controller())
+        move = controller.get_action(self)
+        if move is None:
+            return
+        if isinstance(move, tuple):
+            self.make_move(*move)
+        else:
+            self.make_move(move)
+    def update_capture_controller(self):
+        controller = (self.get_current_controller())
+        move = controller.get_action(self)
+        if move is None:
+            return
+        if isinstance(move, tuple):
+            return
+        self.make_move(move)
+    def get_result(self):
+        return self.result
+    def get_board(self):
+        return self.board
+    def get_current_player(self):
+        return self.current_player
+    def get_phase(self):
+        if (self.pieces_placed[PLAYER_BLACK] < PIECES_PER_PLAYER or self.pieces_placed[PLAYER_WHITE] < PIECES_PER_PLAYER):
+            return PHASE_PLACEMENT
+        if NineMensMorrisRules.can_fly(self.board,self.current_player,):
+            return PHASE_FLYING
+        return PHASE_MOVEMENT
+    def get_phase_name(self):
+        phase = self.get_phase()
+        if phase == PHASE_PLACEMENT:
+            return "Placement"
+        if phase == PHASE_MOVEMENT:
+            return "Movement"
+        if phase == PHASE_FLYING:
+            return "Flying"
+        return "Unknown"
+    def is_capture_pending(self):
+        return self.capture_pending
+    def get_piece_count(self, player):
+        return self.board.count_pieces(player)
+    def get_piece_counts(self):
+        return {PLAYER_BLACK: self.board.count_pieces(PLAYER_BLACK),PLAYER_WHITE: self.board.count_pieces(PLAYER_WHITE),}
+    def get_state(self):
+        return {"board": self.board.get_board_state(),"current_player": self.current_player,"winner": self.result.winner,"game_state": self.game_state,"game_over": self.result.game_over,"draw": self.result.draw,"move_count": self.move_count,"phase": self.get_phase(),"pieces_placed": dict(self.pieces_placed),"capture_pending": self.capture_pending,"flying": (NineMensMorrisRules.can_fly(self.board,self.current_player,)),}
+    def is_game_over(self):
+        return self.is_frozen()
+    def get_winner(self):
+        return self.result.winner
+    def is_frozen(self):
+        return self.result.game_over
+
+#games/nine_mens_morris/human_player.py
+from engine.core.input import Input
+from games.nine_mens_morris.constants import (PHASE_PLACEMENT,PHASE_MOVEMENT,PHASE_FLYING,)
+class HumanPlayer:
+    def __init__(self, board_renderer):
+        self.board_renderer = board_renderer
+        self.selected_position = None
+    def reset(self):
+        self.selected_position = None
+    def get_action(self, game):
+        if game.is_frozen():
+            return None
+        if not Input.is_left_mouse_clicked():
+            return None
+        mouse_x, mouse_y = Input.get_mouse_position()
+        position = self.board_renderer.screen_to_position(mouse_x,mouse_y,)
+        if position is None:
+            return None
+        if game.get_phase() == PHASE_PLACEMENT:
+            self.selected_position = None
+            return position
+        if game.is_capture_pending():
+            self.selected_position = None
+            return position
+        if self.selected_position is None:
+            if game.get_board().get_position(position) == game.get_current_player():
+                self.selected_position = position
+            return None
+        source = self.selected_position
+        self.selected_position = None
+        return (source, position)
+
+#games/nine_mens_morris/overlay_renderer.py
+from games.nine_mens_morris.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+class OverlayRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def render(self, result):
+        if result is None:
+            return
+        if not result.game_over:
+            return
+        self.draw_background()
+        if result.draw:
+            self.draw_draw_overlay()
+        else:
+            self.draw_winner_overlay(result.winner)
+    def draw_background(self):
+        pass
+    def draw_winner_overlay(self, winner):
+        if winner == PLAYER_BLACK:
+            message = "Black Wins!"
+        elif winner == PLAYER_WHITE:
+            message = "White Wins!"
+        else:
+            return
+        self.renderer.draw_overlay_message(message=message,color=(255, 255, 255),size=56,)
+    def draw_draw_overlay(self):
+        self.renderer.draw_overlay_message(message="Draw Game!",color=(255, 255, 255),size=56,)
+    def reset(self):
+        pass
+
+#games/nine_mens_morris/rules.py
+from engine.interfaces.game_result import GameResult
+from games.nine_mens_morris.constants import (EMPTY,PLAYER_BLACK,PLAYER_WHITE,NO_WINNER,PHASE_PLACEMENT,PHASE_MOVEMENT,PHASE_FLYING,PIECES_PER_PLAYER,)
+class NineMensMorrisRules:
+    _ADJACENCY = {0: (1, 9),1: (0, 2, 4),2: (1, 14),3: (4, 10),4: (1, 3, 5, 7),5: (4, 13),6: (7, 11),7: (4, 6, 8),8: (7, 12),9: (0, 10, 21),10: (3, 9, 11, 18),11: (6, 10, 15),12: (8, 13, 17),13: (5, 12, 14, 20),14: (2, 13, 23),15: (11, 16),16: (15, 17, 19),17: (12, 16),18: (10, 19),19: (16, 18, 20, 22),20: (13, 19),21: (9, 22),22: (19, 21, 23),23: (14, 22),}
+    _MILLS = ((0, 1, 2),(3, 4, 5),(6, 7, 8),(9, 10, 11),(12, 13, 14),(15, 16, 17),(18, 19, 20),(21, 22, 23),(0, 9, 21),(3, 10, 18),(6, 11, 15),(1, 4, 7),(16, 19, 22),(2, 14, 23),(5, 13, 20),(8, 12, 17),)
+    @staticmethod
+    def get_opponent(player):
+        if player == PLAYER_BLACK:
+            return PLAYER_WHITE
+        if player == PLAYER_WHITE:
+            return PLAYER_BLACK
+        return EMPTY
+    @staticmethod
+    def get_adjacent_positions(position):
+        return NineMensMorrisRules._ADJACENCY.get(position, ())
+    @staticmethod
+    def are_adjacent(source, destination):
+        if source not in NineMensMorrisRules._ADJACENCY:
+            return False
+        return destination in NineMensMorrisRules._ADJACENCY[source]
+    @staticmethod
+    def get_mills_for_position(position):
+        mills = []
+        for mill in NineMensMorrisRules._MILLS:
+            if position in mill:
+                mills.append(mill)
+        return mills
+    @staticmethod
+    def is_mill(board, position, player=None):
+        if not board.is_valid_position(position):
+            return False
+        if player is None:
+            player = board.get_position(position)
+        if player == EMPTY:
+            return False
+        for mill in NineMensMorrisRules.get_mills_for_position(position):
+            if all(board.get_position(cell) == player for cell in mill):
+                return True
+        return False
+    @staticmethod
+    def get_mill_cells(board, player):
+        mills = []
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return mills
+        for mill in NineMensMorrisRules._MILLS:
+            if all(board.get_position(position) == player for position in mill):
+                mills.append(mill)
+        return mills
+    @staticmethod
+    def get_winning_cells(board, player):
+        mills = NineMensMorrisRules.get_mill_cells(board, player)
+        if not mills:
+            return []
+        return list(mills[0])
+    @staticmethod
+    def can_fly(board, player):
+        return board.count_pieces(player) == 3
+    @staticmethod
+    def get_phase(board, pieces_placed):
+        if pieces_placed < PIECES_PER_PLAYER * 2:
+            return PHASE_PLACEMENT
+        return PHASE_MOVEMENT
+    @staticmethod
+    def get_legal_destinations(board, source, player):
+        if not board.is_valid_position(source):
+            return []
+        if board.get_position(source) != player:
+            return []
+        destinations = []
+        if NineMensMorrisRules.can_fly(board, player):
+            for position in board.get_available_positions():
+                destinations.append(position)
+            return destinations
+        for position in NineMensMorrisRules.get_adjacent_positions(source):
+            if board.is_position_empty(position):
+                destinations.append(position)
+        return destinations
+    @staticmethod
+    def get_legal_moves(board, player):
+        moves = []
+        player_positions = board.get_player_positions(player)
+        for source in player_positions:
+            destinations = NineMensMorrisRules.get_legal_destinations(board,source,player,)
+            for destination in destinations:
+                moves.append((source, destination))
+        return moves
+    @staticmethod
+    def has_legal_move(board, player):
+        return len(NineMensMorrisRules.get_legal_moves(board, player)) > 0
+    @staticmethod
+    def can_remove_piece(board, position, player):
+        if not board.is_valid_position(position):
+            return False
+        opponent = NineMensMorrisRules.get_opponent(player)
+        if opponent == EMPTY:
+            return False
+        if board.get_position(position) != opponent:
+            return False
+        opponent_positions = board.get_player_positions(opponent)
+        if NineMensMorrisRules.is_mill(board,position,opponent,):
+            non_mill_positions = []
+            for opponent_position in opponent_positions:
+                if not NineMensMorrisRules.is_mill(board,opponent_position,opponent,):
+                    non_mill_positions.append(opponent_position)
+            if non_mill_positions:
+                return False
+        return True
+    @staticmethod
+    def get_removable_pieces(board, player):
+        opponent = NineMensMorrisRules.get_opponent(player)
+        if opponent == EMPTY:
+            return []
+        opponent_positions = board.get_player_positions(opponent)
+        non_mill_positions = [ position for position in opponent_positions if not NineMensMorrisRules.is_mill(board,position,opponent,)]
+        if non_mill_positions:
+            return non_mill_positions
+        return opponent_positions
+    @staticmethod
+    def is_winner(board, player):
+        opponent = NineMensMorrisRules.get_opponent(player)
+        if opponent == EMPTY:
+            return False
+        opponent_piece_count = board.count_pieces(opponent)
+        if opponent_piece_count < 3:
+            return True
+        if not NineMensMorrisRules.has_legal_move(board, opponent):
+            return True
+        return False
+    @staticmethod
+    def is_draw(board, player):
+        if board.is_board_full():
+            return True
+        return False
+    @staticmethod
+    def evaluate_game(board, current_player):
+        result = GameResult()
+        opponent = NineMensMorrisRules.get_opponent(current_player)
+        if opponent != EMPTY:
+            if NineMensMorrisRules.is_winner(board, current_player):
+                result.winner = current_player
+                result.game_over = True
+                result.winning_cells = (
+                    NineMensMorrisRules.get_winning_cells(board,current_player,))
+                return result
+        if current_player != EMPTY:
+            if NineMensMorrisRules.is_winner(board, opponent):
+                result.winner = opponent
+                result.game_over = True
+                result.winning_cells = (NineMensMorrisRules.get_winning_cells(board,opponent,))
+                return result
+        if NineMensMorrisRules.is_draw(board,current_player,):
+            result.draw = True
+            result.game_over = True
+            return result
+        return result
 
 # games/othello/ai.py
 import random

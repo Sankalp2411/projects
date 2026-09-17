@@ -10,6 +10,9 @@ def run_prediction(symbol, period, epochs, window, sims):
     df = yf.download(symbol, period=period, progress=False)
     if df.empty:
         raise RuntimeError("No data")
+    # Flatten MultiIndex columns from newer yfinance versions
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
     prices = df["Close"].values.reshape(-1, 1)
     scaler = MinMaxScaler()
     scaled = scaler.fit_transform(prices)

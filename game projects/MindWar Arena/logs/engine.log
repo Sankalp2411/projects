@@ -944,3 +944,189 @@
 2026-09-13 17:55:20 [INFO] [ShaderManager] Released 'text'.
 2026-09-13 17:55:20 [INFO] [Renderer] Shutdown
 2026-09-13 17:55:20 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-14 14:44:22 [INFO] Logger Initialized
+2026-09-14 14:44:22 [INFO] [GameManager] Initializing...
+2026-09-14 14:44:22 [INFO] [Config] Loaded
+2026-09-14 14:44:22 [INFO] [Window] Created 1280x720
+2026-09-14 14:44:22 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-14 14:44:22 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-14 14:44:22 [INFO] [Mesh] GPU mesh created.
+2026-09-14 14:44:22 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-14 14:44:22 [INFO] [Mesh] GPU mesh created.
+2026-09-14 14:44:22 [INFO] [Renderer] Rendering system initialized.
+2026-09-14 14:44:22 [INFO] [Input] Initialized
+2026-09-14 14:44:22 [INFO] [AssetManager] Initialized
+2026-09-14 14:44:22 [INFO] [Scene] Enter: Boot Scene
+2026-09-14 14:44:22 [INFO] [BootScene] Engine initialization complete.
+2026-09-14 14:44:22 [INFO] [BootScene] Opening Main Menu.
+2026-09-14 14:44:22 [INFO] [Scene] Exit: Boot Scene
+2026-09-14 14:44:22 [INFO] [Scene] Enter: Main Menu
+2026-09-14 14:44:22 [INFO] [MainMenuScene] Ready
+2026-09-14 14:44:22 [INFO] [GameManager] Running...
+2026-09-14 14:44:26 [INFO] [MainMenuScene] Selected Nine Men's Morris
+2026-09-14 14:44:26 [INFO] [Scene] Exit: Main Menu
+2026-09-14 14:44:26 [INFO] [Scene] Enter: Game Mode
+2026-09-14 14:44:26 [INFO] [GameModeScene] Choosing mode for Nine Men's Morris
+2026-09-14 14:44:28 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-14 14:44:28 [INFO] [Scene] Exit: Game Mode
+2026-09-14 14:44:28 [INFO] [Scene] Enter: Game Scene
+2026-09-14 14:44:28 [INFO] [GameScene] Initializing game.
+2026-09-14 14:44:28 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+
+============================================================
+2026-09-14 14:45:56 [INFO] Logger Initialized
+2026-09-14 14:45:56 [INFO] [GameManager] Initializing...
+2026-09-14 14:45:56 [INFO] [Config] Loaded
+2026-09-14 14:45:56 [INFO] [Window] Created 1280x720
+2026-09-14 14:45:56 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-14 14:45:56 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-14 14:45:56 [INFO] [Mesh] GPU mesh created.
+2026-09-14 14:45:56 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-14 14:45:56 [INFO] [Mesh] GPU mesh created.
+2026-09-14 14:45:56 [INFO] [Renderer] Rendering system initialized.
+2026-09-14 14:45:56 [INFO] [Input] Initialized
+2026-09-14 14:45:56 [INFO] [AssetManager] Initialized
+2026-09-14 14:45:56 [INFO] [Scene] Enter: Boot Scene
+2026-09-14 14:45:56 [INFO] [BootScene] Engine initialization complete.
+2026-09-14 14:45:56 [INFO] [BootScene] Opening Main Menu.
+2026-09-14 14:45:56 [INFO] [Scene] Exit: Boot Scene
+2026-09-14 14:45:56 [INFO] [Scene] Enter: Main Menu
+2026-09-14 14:45:56 [INFO] [MainMenuScene] Ready
+2026-09-14 14:45:56 [INFO] [GameManager] Running...
+2026-09-14 14:46:00 [INFO] [MainMenuScene] Selected Nine Men's Morris
+2026-09-14 14:46:00 [INFO] [Scene] Exit: Main Menu
+2026-09-14 14:46:00 [INFO] [Scene] Enter: Game Mode
+2026-09-14 14:46:00 [INFO] [GameModeScene] Choosing mode for Nine Men's Morris
+2026-09-14 14:46:02 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-14 14:46:02 [INFO] [Scene] Exit: Game Mode
+2026-09-14 14:46:02 [INFO] [Scene] Enter: Game Scene
+2026-09-14 14:46:02 [INFO] [GameScene] Initializing game.
+2026-09-14 14:46:02 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-14 14:46:02 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-14 14:46:33 [INFO] [GameManager] Shutting down...
+2026-09-14 14:46:33 [INFO] [GameManager] Runtime: 37.03s
+2026-09-14 14:46:33 [INFO] [Mesh] Released.
+2026-09-14 14:46:33 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-14 14:46:33 [INFO] [Mesh] Released.
+2026-09-14 14:46:33 [INFO] [ShaderManager] Released 'text'.
+2026-09-14 14:46:33 [INFO] [Renderer] Shutdown
+2026-09-14 14:46:33 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-14 14:49:26 [INFO] Logger Initialized
+2026-09-14 14:49:26 [INFO] [GameManager] Initializing...
+2026-09-14 14:49:26 [INFO] [Config] Loaded
+2026-09-14 14:49:27 [INFO] [Window] Created 1280x720
+2026-09-14 14:49:27 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-14 14:49:27 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-14 14:49:27 [INFO] [Mesh] GPU mesh created.
+2026-09-14 14:49:27 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-14 14:49:27 [INFO] [Mesh] GPU mesh created.
+2026-09-14 14:49:27 [INFO] [Renderer] Rendering system initialized.
+2026-09-14 14:49:27 [INFO] [Input] Initialized
+2026-09-14 14:49:27 [INFO] [AssetManager] Initialized
+2026-09-14 14:49:27 [INFO] [Scene] Enter: Boot Scene
+2026-09-14 14:49:27 [INFO] [BootScene] Engine initialization complete.
+2026-09-14 14:49:27 [INFO] [BootScene] Opening Main Menu.
+2026-09-14 14:49:27 [INFO] [Scene] Exit: Boot Scene
+2026-09-14 14:49:27 [INFO] [Scene] Enter: Main Menu
+2026-09-14 14:49:27 [INFO] [MainMenuScene] Ready
+2026-09-14 14:49:27 [INFO] [GameManager] Running...
+2026-09-14 14:49:30 [INFO] [MainMenuScene] Selected Nine Men's Morris
+2026-09-14 14:49:30 [INFO] [Scene] Exit: Main Menu
+2026-09-14 14:49:30 [INFO] [Scene] Enter: Game Mode
+2026-09-14 14:49:30 [INFO] [GameModeScene] Choosing mode for Nine Men's Morris
+2026-09-14 14:49:32 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-14 14:49:32 [INFO] [Scene] Exit: Game Mode
+2026-09-14 14:49:32 [INFO] [Scene] Enter: Game Scene
+2026-09-14 14:49:32 [INFO] [GameScene] Initializing game.
+2026-09-14 14:49:32 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-14 14:49:32 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-14 14:59:22 [INFO] [GameManager] Shutting down...
+2026-09-14 14:59:22 [INFO] [GameManager] Runtime: 596.09s
+2026-09-14 14:59:22 [INFO] [Mesh] Released.
+2026-09-14 14:59:22 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-14 14:59:23 [INFO] [Mesh] Released.
+2026-09-14 14:59:23 [INFO] [ShaderManager] Released 'text'.
+2026-09-14 14:59:23 [INFO] [Renderer] Shutdown
+2026-09-14 14:59:23 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-14 15:02:26 [INFO] Logger Initialized
+2026-09-14 15:02:26 [INFO] [GameManager] Initializing...
+2026-09-14 15:02:26 [INFO] [Config] Loaded
+2026-09-14 15:02:26 [INFO] [Window] Created 1280x720
+2026-09-14 15:02:26 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-14 15:02:26 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-14 15:02:26 [INFO] [Mesh] GPU mesh created.
+2026-09-14 15:02:26 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-14 15:02:26 [INFO] [Mesh] GPU mesh created.
+2026-09-14 15:02:26 [INFO] [Renderer] Rendering system initialized.
+2026-09-14 15:02:26 [INFO] [Input] Initialized
+2026-09-14 15:02:26 [INFO] [AssetManager] Initialized
+2026-09-14 15:02:26 [INFO] [Scene] Enter: Boot Scene
+2026-09-14 15:02:26 [INFO] [BootScene] Engine initialization complete.
+2026-09-14 15:02:26 [INFO] [BootScene] Opening Main Menu.
+2026-09-14 15:02:26 [INFO] [Scene] Exit: Boot Scene
+2026-09-14 15:02:26 [INFO] [Scene] Enter: Main Menu
+2026-09-14 15:02:26 [INFO] [MainMenuScene] Ready
+2026-09-14 15:02:26 [INFO] [GameManager] Running...
+2026-09-14 15:02:30 [INFO] [MainMenuScene] Selected Nine Men's Morris
+2026-09-14 15:02:30 [INFO] [Scene] Exit: Main Menu
+2026-09-14 15:02:30 [INFO] [Scene] Enter: Game Mode
+2026-09-14 15:02:30 [INFO] [GameModeScene] Choosing mode for Nine Men's Morris
+2026-09-14 15:02:31 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-14 15:02:31 [INFO] [Scene] Exit: Game Mode
+2026-09-14 15:02:31 [INFO] [Scene] Enter: Game Scene
+2026-09-14 15:02:31 [INFO] [GameScene] Initializing game.
+2026-09-14 15:02:31 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-14 15:02:31 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-14 15:07:03 [INFO] [GameManager] Shutting down...
+2026-09-14 15:07:03 [INFO] [GameManager] Runtime: 277.55s
+2026-09-14 15:07:03 [INFO] [Mesh] Released.
+2026-09-14 15:07:03 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-14 15:07:03 [INFO] [Mesh] Released.
+2026-09-14 15:07:03 [INFO] [ShaderManager] Released 'text'.
+2026-09-14 15:07:03 [INFO] [Renderer] Shutdown
+2026-09-14 15:07:03 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-15 15:57:33 [INFO] Logger Initialized
+2026-09-15 15:57:33 [INFO] [GameManager] Initializing...
+2026-09-15 15:57:33 [INFO] [Config] Loaded
+2026-09-15 15:57:34 [INFO] [Window] Created 1280x720
+2026-09-15 15:57:34 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-15 15:57:34 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-15 15:57:34 [INFO] [Mesh] GPU mesh created.
+2026-09-15 15:57:34 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-15 15:57:34 [INFO] [Mesh] GPU mesh created.
+2026-09-15 15:57:34 [INFO] [Renderer] Rendering system initialized.
+2026-09-15 15:57:34 [INFO] [Input] Initialized
+2026-09-15 15:57:34 [INFO] [AssetManager] Initialized
+2026-09-15 15:57:34 [INFO] [Scene] Enter: Boot Scene
+2026-09-15 15:57:34 [INFO] [BootScene] Engine initialization complete.
+2026-09-15 15:57:34 [INFO] [BootScene] Opening Main Menu.
+2026-09-15 15:57:34 [INFO] [Scene] Exit: Boot Scene
+2026-09-15 15:57:34 [INFO] [Scene] Enter: Main Menu
+2026-09-15 15:57:34 [INFO] [MainMenuScene] Ready
+2026-09-15 15:57:34 [INFO] [GameManager] Running...
+2026-09-15 15:57:38 [INFO] [MainMenuScene] Selected Nine Men's Morris
+2026-09-15 15:57:38 [INFO] [Scene] Exit: Main Menu
+2026-09-15 15:57:38 [INFO] [Scene] Enter: Game Mode
+2026-09-15 15:57:38 [INFO] [GameModeScene] Choosing mode for Nine Men's Morris
+2026-09-15 15:57:40 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-15 15:57:40 [INFO] [Scene] Exit: Game Mode
+2026-09-15 15:57:40 [INFO] [Scene] Enter: Game Scene
+2026-09-15 15:57:40 [INFO] [GameScene] Initializing game.
+2026-09-15 15:57:40 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-15 15:57:40 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-15 16:00:17 [INFO] [GameManager] Shutting down...
+2026-09-15 16:00:17 [INFO] [GameManager] Runtime: 164.20s
+2026-09-15 16:00:17 [INFO] [Mesh] Released.
+2026-09-15 16:00:17 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-15 16:00:17 [INFO] [Mesh] Released.
+2026-09-15 16:00:17 [INFO] [ShaderManager] Released 'text'.
+2026-09-15 16:00:17 [INFO] [Renderer] Shutdown
+2026-09-15 16:00:18 [INFO] [Window] Destroyed
