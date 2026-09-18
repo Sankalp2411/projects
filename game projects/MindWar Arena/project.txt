@@ -144,9 +144,12 @@ MINDWAR ARENA(
             )
             __init__.py
             ai.py
+            board_renderer.py
             board.py
             constants.py
             game.py
+            human_player.py
+            overlay_renderer.py
             rules.py
         )
         gomoku(
@@ -4120,6 +4123,968 @@ class Connect4Rules:
                 return []
             cells.append((next_row, next_column))
         return cells
+
+#games/go/ai.py
+import random
+from engine.interfaces.ai_interface import AIInterface
+from games.go.constants import (ACTION_PASS,PLAYER_BLACK,PLAYER_WHITE,)
+from games.go.rules import GoRules
+class GoAI(AIInterface):
+    def __init__(self, player):
+        self.player = player
+        self.initialized = False
+    def initialize(self):
+        self.initialized = True
+    def reset(self):
+        self.initialized = False
+    def select_action(self, game_state):
+        if not self.initialized:
+            return None
+        if not game_state:
+            return None
+        board_state = game_state.get("board")
+        if board_state is None:
+            return None
+        current_player = game_state.get("current_player")
+        if current_player != self.player:
+            return None
+        previous_board_state = game_state.get("previous_board")
+        from games.go.board import GoBoard
+        board = GoBoard()
+        board.set_board_state(board_state)
+        previous_board = None
+        if previous_board_state is not None:
+            previous_board = GoBoard()
+            previous_board.set_board_state(previous_board_state)
+        legal_moves = GoRules.get_legal_moves(board,self.player,previous_board,)
+        if not legal_moves:
+            return ACTION_PASS
+        return random.choice(legal_moves)
+    def get_action(self, game):
+        return self.select_action(game.get_state())
+    def learn(self,state,action,reward,next_state,):
+        pass
+
+#games/go/board_renderer.py
+from games.go.constants import (BOARD_COLUMNS,BOARD_COLOR,BOARD_LINE_WIDTH,BOARD_PADDING,BOARD_ROWS,CELL_SIZE,GRID_COLOR,KO_COLOR,LAST_MOVE_COLOR,LEGAL_MOVE_COLOR,PLAYER_BLACK,PLAYER_BLACK_COLOR,PLAYER_WHITE,PLAYER_WHITE_COLOR,STAR_POINTS,STONE_RADIUS,)
+class GoBoardRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+        self.origin_x = BOARD_PADDING
+        self.origin_y = BOARD_PADDING
+    def reset(self):
+        pass
+    def render(self,board,legal_moves=None,last_move=None,ko_position=None,):
+        self._render_board()
+        self._render_star_points()
+        self._render_stones(board)
+        if legal_moves:
+            self.render_legal_moves(legal_moves)
+        self.render_last_move(last_move)
+        self.render_ko_position(ko_position)
+    def _render_board(self):
+        board_width = ((BOARD_COLUMNS - 1) * CELL_SIZE)
+        board_height = ((BOARD_ROWS - 1) * CELL_SIZE)
+        half_cell = CELL_SIZE / 2
+        self.renderer.draw_filled_rectangle(
+            (self.origin_x - half_cell,self.origin_y - half_cell,),(board_width + CELL_SIZE,board_height + CELL_SIZE,),BOARD_COLOR,)
+        for row in range(BOARD_ROWS):
+            y = (self.origin_y + row * CELL_SIZE)
+            self.renderer.draw_line((self.origin_x,y,),(self.origin_x + board_width,y,),GRID_COLOR,)
+        for column in range(BOARD_COLUMNS):
+            x = (self.origin_x + column * CELL_SIZE)
+            self.renderer.draw_line((x,self.origin_y,),(x,self.origin_y + board_height,),GRID_COLOR,)
+    def _render_star_points(self):
+        for row, column in STAR_POINTS:
+            center = self.get_cell_center(row,column,)
+            self.renderer.draw_filled_circle(center,CELL_SIZE * 0.07,GRID_COLOR,)
+    def _render_stones(self, board):
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                cell = board.get_cell(row,column,)
+                if cell == PLAYER_BLACK:
+                    color = PLAYER_BLACK_COLOR
+                elif cell == PLAYER_WHITE:
+                    color = PLAYER_WHITE_COLOR
+                else:
+                    continue
+                center = self.get_cell_center(row,column,)
+                self.renderer.draw_filled_circle(center,STONE_RADIUS,color,)
+    def render_legal_moves(self, legal_moves):
+        if not legal_moves:
+            return
+        indicator_radius = (STONE_RADIUS * 0.20)
+        for row, column in legal_moves:
+            center = self.get_cell_center(row,column,)
+            self.renderer.draw_filled_circle(center,indicator_radius,LEGAL_MOVE_COLOR,)
+    def render_last_move(self, move):
+        if move is None:
+            return
+        if not isinstance(move, tuple):
+            return
+        if len(move) != 2:
+            return
+        row, column = move
+        center = self.get_cell_center(row,column,)
+        self.renderer.draw_filled_circle(center,STONE_RADIUS * 0.10,LAST_MOVE_COLOR,)
+    def render_ko_position(self, position):
+        if position is None:
+            return
+        if not isinstance(position, tuple):
+            return
+        if len(position) != 2:
+            return
+        row, column = position
+        center = self.get_cell_center(row,column,)
+        self.renderer.draw_filled_circle(center,STONE_RADIUS * 0.18,KO_COLOR,)
+    def get_cell_center(self, row, column):
+        if not 0 <= row < BOARD_ROWS:
+            raise ValueError(f"Invalid row: {row}")
+        if not 0 <= column < BOARD_COLUMNS:
+            raise ValueError(f"Invalid column: {column}")
+        x = (self.origin_x + column * CELL_SIZE)
+        y = (self.origin_y + row * CELL_SIZE)
+        return (x, y)
+    def contains_point(self, x, y):
+        board_width = ((BOARD_COLUMNS - 1) * CELL_SIZE)
+        board_height = ((BOARD_ROWS - 1) * CELL_SIZE)
+        half_cell = CELL_SIZE / 2
+        return ( self.origin_x - half_cell <= x <= self.origin_x + board_width + half_cell and self.origin_y - half_cell <= y <= self.origin_y + board_height + half_cell)
+    def screen_to_board(self, position):
+        if position is None:
+            return None
+        x, y = position
+        if not self.contains_point(x, y):
+            return None
+        column = round(
+            (x - self.origin_x) / CELL_SIZE)
+        row = round((y - self.origin_y) / CELL_SIZE)
+        if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
+            return None
+        return (row, column)
+    def screen_to_cell(self, x, y):
+        return self.screen_to_board((x, y))
+
+#games/go/board.py
+from copy import deepcopy
+from games.go.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
+class GoBoard:
+    def __init__(self):
+        self._board = []
+        self.reset()
+    def reset(self):
+        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)] for _ in range(BOARD_ROWS)]
+    def is_valid_position(self, row, column):
+        return ( 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+    def get_cell(self, row, column):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        return self._board[row][column]
+    def set_cell(self, row, column, value):
+        if not self.is_valid_position(row, column):
+            raise ValueError(f"Invalid board position: ({row}, {column})")
+        if value not in (EMPTY,PLAYER_BLACK,PLAYER_WHITE,):
+            raise ValueError(f"Invalid cell value: {value}")
+        self._board[row][column] = value
+    def place_stone(self, row, column, player):
+        if not self.is_valid_position(row, column):
+            return False
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            return False
+        if not self.is_cell_empty(row, column):
+            return False
+        self._board[row][column] = player
+        return True
+    def remove_stone(self, row, column):
+        if not self.is_valid_position(row, column):
+            return False
+        if self._board[row][column] == EMPTY:
+            return False
+        self._board[row][column] = EMPTY
+        return True
+    def is_cell_empty(self, row, column):
+        if not self.is_valid_position(row, column):
+            return False
+        return self._board[row][column] == EMPTY
+    def get_empty_positions(self):
+        positions = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] == EMPTY:
+                    positions.append((row, column))
+        return positions
+    def get_player_positions(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            return []
+        positions = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] == player:
+                    positions.append((row, column))
+        return positions
+    def count_stones(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            return 0
+        count = 0
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] == player:
+                    count += 1
+        return count
+    def get_empty_count(self):
+        count = 0
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if self._board[row][column] == EMPTY:
+                    count += 1
+        return count
+    def is_board_full(self):
+        return self.get_empty_count() == 0
+    def get_board_state(self):
+        return deepcopy(self._board)
+    def set_board_state(self, board_state):
+        if not isinstance(board_state, list):
+            raise ValueError("Invalid board state.")
+        if len(board_state) != BOARD_ROWS:
+            raise ValueError("Invalid board state.")
+        for row in board_state:
+            if not isinstance(row, list):
+                raise ValueError("Invalid board state.")
+            if len(row) != BOARD_COLUMNS:
+                raise ValueError("Invalid board state.")
+            for value in row:
+                if value not in (EMPTY,PLAYER_BLACK,PLAYER_WHITE,):
+                    raise ValueError("Invalid board value.")
+        self._board = deepcopy(board_state)
+    def copy(self):
+        new_board = GoBoard()
+        new_board._board = deepcopy(self._board)
+        return new_board
+    def __str__(self):
+        symbols = {EMPTY: ".",PLAYER_BLACK: "B",PLAYER_WHITE: "W",}
+        rows = []
+        for row in self._board:
+            rows.append(" ".join(symbols[cell] for cell in row))
+        return "\n".join(rows)
+
+#games/go/constants.py
+GAME_NAME = "Go"
+GAME_VERSION = "1.0.0"
+BOARD_ROWS = 9
+BOARD_COLUMNS = 9
+EMPTY = 0
+PLAYER_BLACK = 1
+PLAYER_WHITE = 2
+FIRST_PLAYER = PLAYER_BLACK
+GAME_NOT_STARTED = 0
+GAME_RUNNING = 1
+GAME_DRAW = 2
+GAME_OVER = 3
+NO_WINNER = 0
+GAME_MODE_HUMAN_VS_HUMAN = 0
+GAME_MODE_HUMAN_VS_AI = 1
+GAME_MODE_AI_VS_AI = 2
+DEFAULT_GAME_MODE = GAME_MODE_HUMAN_VS_HUMAN
+AI_RANDOM = "Random"
+AI_EASY = "Easy"
+AI_MEDIUM = "Medium"
+AI_HARD = "Hard"
+CONSECUTIVE_PASSES_TO_END = 2
+KOMI = 6.5
+ACTION_PLACE = "place"
+ACTION_PASS = "pass"
+BOARD_SIZE = 560
+BOARD_PADDING = 50
+CELL_SIZE = BOARD_SIZE / (BOARD_COLUMNS - 1)
+BOARD_LINE_WIDTH = 2
+STONE_RADIUS = CELL_SIZE * 0.43
+BOARD_COLOR = (205, 170, 110)
+GRID_COLOR = (40, 40, 40)
+PLAYER_BLACK_COLOR = (25, 25, 25)
+PLAYER_WHITE_COLOR = (235, 235, 235)
+LEGAL_MOVE_COLOR = (80, 220, 120)
+LAST_MOVE_COLOR = (255, 200, 50)
+KO_COLOR = (255, 80, 80)
+WIN_LINE_COLOR = (50, 255, 50)
+STAR_POINTS = ((2, 2),(2, 6),(4, 4),(6, 2),(6, 6),)
+
+#games/go/game.py
+from engine.interfaces.game_interface import GameInterface
+from engine.interfaces.game_result import GameResult
+from games.go.ai import GoAI
+from games.go.board import GoBoard
+from games.go.board_renderer import GoBoardRenderer
+from games.go.constants import (ACTION_PASS,FIRST_PLAYER,GAME_DRAW,GAME_MODE_AI_VS_AI,GAME_MODE_HUMAN_VS_AI,GAME_MODE_HUMAN_VS_HUMAN,GAME_NOT_STARTED,GAME_OVER,GAME_RUNNING,PLAYER_BLACK,PLAYER_WHITE,)
+from games.go.human_player import HumanPlayer
+from games.go.overlay_renderer import GoOverlayRenderer
+from games.go.rules import GoRules
+class GoGame(GameInterface):
+    def __init__(self,renderer,game_mode=GAME_MODE_HUMAN_VS_HUMAN,):
+        self.renderer = renderer
+        self.game_mode = game_mode
+        self.board = GoBoard()
+        self.board_renderer = GoBoardRenderer(renderer)
+        self.overlay_renderer = GoOverlayRenderer(renderer)
+        self.current_player = FIRST_PLAYER
+        self.next_starting_player = FIRST_PLAYER
+        self.result = GameResult()
+        self.game_state = GAME_NOT_STARTED
+        self.move_count = 0
+        self.consecutive_passes = 0
+        self.last_move = None
+        self.ko_position = None
+        self.previous_board = None
+        self.black_controller = None
+        self.white_controller = None
+        self._create_controllers()
+    def initialize(self):
+        self.reset()
+    def reset(self):
+        self.board.reset()
+        self.current_player = (self.choose_starting_player())
+        self.result.reset()
+        self.game_state = GAME_RUNNING
+        self.move_count = 0
+        self.consecutive_passes = 0
+        self.last_move = None
+        self.ko_position = None
+        self.previous_board = None
+        self.board_renderer.reset()
+        self.overlay_renderer.reset()
+        self._reset_controllers()
+    def shutdown(self):
+        pass
+    def _create_controllers(self):
+        if self.game_mode == (GAME_MODE_HUMAN_VS_HUMAN):
+            self.black_controller = HumanPlayer(self.board_renderer)
+            self.white_controller = HumanPlayer(self.board_renderer)
+        elif self.game_mode == (GAME_MODE_HUMAN_VS_AI):
+            self.black_controller = HumanPlayer(self.board_renderer)
+            self.white_controller = GoAI(PLAYER_WHITE)
+        elif self.game_mode == (GAME_MODE_AI_VS_AI):
+            self.black_controller = GoAI(PLAYER_BLACK)
+            self.white_controller = GoAI(PLAYER_WHITE)
+        else:
+            raise ValueError(f"Invalid Go game mode: "f"{self.game_mode}")
+    def _reset_controllers(self):
+        if self.black_controller is not None:
+            if hasattr(self.black_controller,"reset",):
+                self.black_controller.reset()
+            if hasattr(self.black_controller,"initialize",):
+                self.black_controller.initialize()
+            if hasattr(self.black_controller,"set_player",):
+                self.black_controller.set_player(PLAYER_BLACK)
+        if self.white_controller is not None:
+            if hasattr(self.white_controller,"reset",):
+                self.white_controller.reset()
+            if hasattr(self.white_controller,"initialize",):
+                self.white_controller.initialize()
+            if hasattr(self.white_controller,"set_player",):
+                self.white_controller.set_player(PLAYER_WHITE)
+    def update(self):
+        if self.is_frozen():
+            return
+        self.update_current_player()
+    def render(self):
+        if self.board_renderer is None:
+            return
+        self.board_renderer.render(board=self.board,legal_moves=self.get_legal_moves(),last_move=self.last_move,ko_position=self.ko_position,)
+        self.overlay_renderer.render(result=self.result,board=self.board,consecutive_passes=(self.consecutive_passes),)
+    def make_move(self, row, column):
+        if self.is_frozen():
+            return False
+        if not self.board.is_valid_position(row,column,):
+            return False
+        if not GoRules.is_valid_move(self.board,row,column,self.current_player,self.ko_position,):
+            return False
+        old_board = self.board.copy()
+        if not GoRules.apply_move(self.board,row,column,self.current_player,self.ko_position,):
+            return False
+        self.previous_board = old_board
+        self.move_count += 1
+        self.consecutive_passes = 0
+        self.last_move = (row, column)
+        self._update_ko_position()
+        self._switch_player()
+        return True
+    def pass_turn(self):
+        if self.is_frozen():
+            return False
+        self.previous_board = self.board.copy()
+        self.last_move = None
+        self.ko_position = None
+        self.consecutive_passes += 1
+        self.move_count += 1
+        if self.consecutive_passes >= 2:
+            self._finish_game()
+            return True
+        self._switch_player()
+        return True
+    def _finish_game(self):
+        self.result = GoRules.evaluate_game(self.board)
+        scores = GoRules.get_scores(self.board)
+        self.result.scores = scores
+        if self.result.draw:
+            self.game_state = GAME_DRAW
+        else:
+            self.game_state = GAME_OVER
+    def _update_ko_position(self):
+        self.ko_position = None
+        if self.previous_board is None:
+            return
+        current_state = (self.board.get_board_state())
+        previous_state = (self.previous_board.get_board_state())
+        differences = []
+        for row in range(len(current_state)):
+            for column in range(len(current_state[row])):
+                if (current_state[row][column] != previous_state[row][column]):
+                    differences.append((row, column))
+        if len(differences) != 1:
+            return
+        row, column = differences[0]
+        if (current_state[row][column] == self.current_player):
+            self.ko_position = (row,column,)
+    def _switch_player(self):
+        if self.current_player == PLAYER_BLACK:
+            self.current_player = PLAYER_WHITE
+        else:
+            self.current_player = PLAYER_BLACK
+    def choose_starting_player(self):
+        player = self.next_starting_player
+        if player == PLAYER_BLACK:
+            self.next_starting_player = PLAYER_WHITE
+        else:
+            self.next_starting_player = PLAYER_BLACK
+        return player
+    def get_current_controller(self):
+        if self.current_player == PLAYER_BLACK:
+            return self.black_controller
+        if self.current_player == PLAYER_WHITE:
+            return self.white_controller
+        return None
+    def update_current_player(self):
+        controller = (self.get_current_controller())
+        if controller is None:
+            return
+        action = controller.get_action(self)
+        if action is None:
+            return
+        if action == ACTION_PASS:
+            self.pass_turn()
+            return
+        if not isinstance(action, tuple):
+            return
+        if len(action) != 2:
+            return
+        row, column = action
+        self.make_move(row,column,)
+    def get_state(self):
+        previous_board_state = None
+        if self.previous_board is not None:
+            previous_board_state = (self.previous_board.get_board_state())
+        scores = GoRules.get_scores(self.board)
+        return {"board": (self.board.get_board_state()),"previous_board": (previous_board_state),"current_player": (self.current_player),"winner": self.result.winner,"game_state": self.game_state,"game_over": (self.result.game_over),"draw": self.result.draw,"move_count": self.move_count,"consecutive_passes": (self.consecutive_passes),"last_move": self.last_move,"ko_position": self.ko_position,"black_count": (self.board.count_stones(PLAYER_BLACK)),"white_count": (self.board.count_stones(PLAYER_WHITE)),"black_score": scores[PLAYER_BLACK],"white_score": scores[PLAYER_WHITE],"legal_moves": (self.get_legal_moves()),}
+    def get_board(self):
+        return self.board
+    def get_current_player(self):
+        return self.current_player
+    def get_winner(self):
+        return self.result.winner
+    def get_result(self):
+        return self.result
+    def get_game_state(self):
+        return self.game_state
+    def get_legal_moves(self):
+        return GoRules.get_legal_moves(self.board,self.current_player,self.ko_position,)
+    def get_black_count(self):
+        return self.board.count_stones(PLAYER_BLACK)
+    def get_white_count(self):
+        return self.board.count_stones(PLAYER_WHITE)
+    def get_black_score(self):
+        return GoRules.calculate_score(self.board,PLAYER_BLACK,)
+    def get_white_score(self):
+        return GoRules.calculate_score(self.board,PLAYER_WHITE,)
+    def get_last_move(self):
+        return self.last_move
+    def get_ko_position(self):
+        return self.ko_position
+    def get_move_count(self):
+        return self.move_count
+    def get_consecutive_passes(self):
+        return self.consecutive_passes
+    def is_game_over(self):
+        return self.result.game_over
+    def is_frozen(self):
+        return self.result.game_over
+    def is_draw(self):
+        return self.result.draw
+
+#games/go/human_player.py
+import pygame
+from engine.core.input import Input
+from games.go.constants import (ACTION_PASS,PLAYER_BLACK,PLAYER_WHITE,)
+class HumanPlayer:
+    def __init__(self, board_renderer):
+        self.board_renderer = board_renderer
+        self.player = None
+    def initialize(self):
+        self.reset()
+    def reset(self):
+        self.player = None
+    def set_player(self, player):
+        if player not in (PLAYER_BLACK,PLAYER_WHITE,):
+            raise ValueError(f"Invalid player: {player}")
+        self.player = player
+    def get_action(self, game):
+        if game is None:
+            return None
+        if game.is_game_over():
+            return None
+        current_player = game.get_current_player()
+        if self.player != current_player:
+            self.set_player(current_player)
+        if Input.is_left_mouse_clicked():
+            mouse_x, mouse_y = (Input.get_mouse_position())
+            position = (self.board_renderer.screen_to_board((mouse_x, mouse_y)))
+            if position is not None:
+                return position
+        keyboard = pygame.key.get_pressed()
+        if keyboard[pygame.K_p]:
+            return ACTION_PASS
+        return None
+
+#games/go/overlay_renderer.py
+from games.go.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+class GoOverlayRenderer:
+    def __init__(self, renderer):
+        self.renderer = renderer
+    def reset(self):
+        pass
+    def render(self,result,board,consecutive_passes=0,):
+        if result is None:
+            return
+        if not result.game_over:
+            return
+        black_score = self._get_score(result,board,PLAYER_BLACK,)
+        white_score = self._get_score(result,board,PLAYER_WHITE,)
+        if result.draw:
+            message = (f"DRAW - "f"BLACK: {black_score:.1f} "f"WHITE: {white_score:.1f}")
+        elif result.winner == PLAYER_BLACK:
+            message = (f"BLACK WINS - "f"BLACK: {black_score:.1f} "f"WHITE: {white_score:.1f}")
+        elif result.winner == PLAYER_WHITE:
+            message = (f"WHITE WINS - "f"BLACK: {black_score:.1f} "f"WHITE: {white_score:.1f}")
+        else:
+            message = "GAME OVER"
+        if hasattr(self.renderer,"draw_overlay_message",):
+            self.renderer.draw_overlay_message(message)
+    @staticmethod
+    def _get_score(result,board,player,):
+        scores = getattr(result,"scores",None,)
+        if isinstance(scores, dict):
+            return scores.get(player,0.0,)
+        from games.go.rules import GoRules
+        return GoRules.calculate_score(board,player,)
+
+#games/go/rules.py
+from engine.interfaces.game_result import GameResult
+from games.go.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,NO_WINNER,KOMI,)
+class GoRules:
+    @staticmethod
+    def get_opponent(player):
+        if player == PLAYER_BLACK:
+            return PLAYER_WHITE
+        if player == PLAYER_WHITE:
+            return PLAYER_BLACK
+        return None
+    @staticmethod
+    def is_valid_player(player):
+        return player in (PLAYER_BLACK, PLAYER_WHITE)
+    @staticmethod
+    def is_valid_position(row, column):
+        return (isinstance(row, int) and isinstance(column, int) and 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+    @staticmethod
+    def is_same_position(position_a, position_b):
+        return position_a == position_b
+    @classmethod
+    def get_neighbors(cls, row, column):
+        if not cls.is_valid_position(row, column):
+            return []
+        neighbors = []
+        directions = ((-1, 0),(1, 0),(0, -1),(0, 1),)
+        for delta_row, delta_column in directions:
+            neighbor_row = row + delta_row
+            neighbor_column = column + delta_column
+            if cls.is_valid_position(neighbor_row,neighbor_column,):
+                neighbors.append((neighbor_row,neighbor_column,))
+        return neighbors
+    @classmethod
+    def get_group(cls, board, row, column):
+        if board is None:
+            return set()
+        if not cls.is_valid_position(row, column):
+            return set()
+        player = board.get_cell(row, column)
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return set()
+        group = set()
+        stack = [(row, column)]
+        while stack:
+            current = stack.pop()
+            if current in group:
+                continue
+            current_row, current_column = current
+            if not cls.is_valid_position(current_row,current_column,):
+                continue
+            if board.get_cell(current_row,current_column,) != player:
+                continue
+            group.add(current)
+            for neighbor in cls.get_neighbors(current_row,current_column,):
+                if neighbor not in group:
+                    stack.append(neighbor)
+        return group
+    @classmethod
+    def get_group_liberties(cls, board, group):
+        if board is None:
+            return set()
+        if not group:
+            return set()
+        liberties = set()
+        for row, column in group:
+            for neighbor in cls.get_neighbors(row,column,):
+                neighbor_row, neighbor_column = neighbor
+                if board.get_cell(neighbor_row,neighbor_column,) == EMPTY:
+                    liberties.add(neighbor)
+        return liberties
+    @classmethod
+    def get_liberties(cls, board, row, column):
+        group = cls.get_group(board,row,column,)
+        return cls.get_group_liberties(board,group,)
+    @classmethod
+    def count_liberties(cls, board, row, column):
+        return len(cls.get_liberties(board,row,column,))
+    @classmethod
+    def is_group_captured(cls, board, row, column):
+        if board is None:
+            return False
+        if not cls.is_valid_position(row, column):
+            return False
+        player = board.get_cell(row, column)
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return False
+        group = cls.get_group(board,row,column,)
+        liberties = cls.get_group_liberties(board,group,)
+        return len(liberties) == 0
+    @classmethod
+    def get_captured_positions(cls,board,player,row,column,):
+        if board is None:
+            return set()
+        if not cls.is_valid_player(player):
+            return set()
+        if not cls.is_valid_position(row, column):
+            return set()
+        if not board.is_cell_empty(row, column):
+            return set()
+        opponent = cls.get_opponent(player)
+        simulated_board = board.copy()
+        if not simulated_board.place_stone(row,column,player,):
+            return set()
+        captured_positions = set()
+        for neighbor in cls.get_neighbors(row,column,):
+            neighbor_row, neighbor_column = neighbor
+            if simulated_board.get_cell(neighbor_row,neighbor_column,) != opponent:
+                continue
+            group = cls.get_group(simulated_board,neighbor_row,neighbor_column,)
+            liberties = cls.get_group_liberties(simulated_board,group,)
+            if not liberties:
+                captured_positions.update(group)
+        return captured_positions
+    @classmethod
+    def capture_group(cls, board, row, column):
+        if board is None:
+            return 0
+        if not cls.is_valid_position(row, column):
+            return 0
+        player = board.get_cell(row, column)
+        if player not in (PLAYER_BLACK, PLAYER_WHITE):
+            return 0
+        group = cls.get_group(board,row,column,)
+        liberties = cls.get_group_liberties(board,group,)
+        if liberties:
+            return 0
+        removed = 0
+        for group_row, group_column in group:
+            if board.remove_stone(group_row,group_column,):
+                removed += 1
+        return removed
+    @classmethod
+    def capture_opponent_groups(cls,board,player,row,column,):
+        if board is None:
+            return 0
+        if not cls.is_valid_player(player):
+            return 0
+        opponent = cls.get_opponent(player)
+        captured_positions = set()
+        for neighbor in cls.get_neighbors(row,column,):
+            neighbor_row, neighbor_column = neighbor
+            if board.get_cell(neighbor_row,neighbor_column,) != opponent:
+                continue
+            group = cls.get_group(board,neighbor_row,neighbor_column,)
+            liberties = cls.get_group_liberties(board,group,)
+            if not liberties:
+                captured_positions.update(group)
+        removed = 0
+        for captured_row, captured_column in captured_positions:
+            if board.remove_stone(captured_row,captured_column,):
+                removed += 1
+        return removed
+    @classmethod
+    def is_suicide(cls,board,row,column,player,):
+        if board is None:
+            return False
+        if not cls.is_valid_player(player):
+            return False
+        if not cls.is_valid_position(row, column):
+            return False
+        if not board.is_cell_empty(row, column):
+            return False
+        simulated_board = board.copy()
+        if not simulated_board.place_stone(row,column,player,):
+            return False
+        cls.capture_opponent_groups(simulated_board,player,row,column,)
+        group = cls.get_group(simulated_board,row,column,)
+        liberties = cls.get_group_liberties(simulated_board,group,)
+        return len(liberties) == 0
+    @classmethod
+    def is_valid_move(cls,board,row,column,player,ko_position=None,):
+        if board is None:
+            return False
+        if not cls.is_valid_player(player):
+            return False
+        if not cls.is_valid_position(row, column):
+            return False
+        if not board.is_cell_empty(row, column):
+            return False
+        position = (row, column)
+        if ko_position is not None:
+            if position == ko_position:
+                return False
+        captured_positions = cls.get_captured_positions(board,player,row,column,)
+        if captured_positions:
+            return True
+        if cls.is_suicide(board,row,column,player,):
+            return False
+        return True
+    @classmethod
+    def get_valid_moves(cls,board,player,ko_position=None,):
+        if board is None:
+            return []
+        if not cls.is_valid_player(player):
+            return []
+        moves = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if cls.is_valid_move(board,row,column,player,ko_position,):
+                    moves.append((row,column,))
+        return moves
+    @classmethod
+    def get_legal_moves(cls,board,player,ko_position=None,):
+        return cls.get_valid_moves(board,player,ko_position,)
+    @classmethod
+    def simulate_move(cls,board,row,column,player,ko_position=None,):
+        if board is None:
+            return None
+        if not cls.is_valid_move(board,row,column,player,ko_position,):
+            return None
+        simulated_board = board.copy()
+        if not simulated_board.place_stone(row,column,player,):
+            return None
+        cls.capture_opponent_groups(simulated_board,player,row,column,)
+        return simulated_board
+    @classmethod
+    def apply_move(cls,board,row,column,player,ko_position=None,):
+        if board is None:
+            return False
+        if not cls.is_valid_move(board,row,column,player,ko_position,):
+            return False
+        if not board.place_stone(row,column,player,):
+            return False
+        cls.capture_opponent_groups(board,player,row,column,)
+        return True
+    @classmethod
+    def get_ko_position(cls,previous_board,current_board,move_row,move_column,player,):
+        if previous_board is None or current_board is None:
+            return None
+        if not cls.is_valid_player(player):
+            return None
+        if not cls.is_valid_position(move_row,move_column,):
+            return None
+        opponent = cls.get_opponent(player)
+        previous_opponent_positions = set(previous_board.get_player_positions(opponent))
+        current_opponent_positions = set(current_board.get_player_positions(opponent))
+        captured_positions = (previous_opponent_positions - current_opponent_positions)
+        if len(captured_positions) != 1:
+            return None
+        captured_position = next(iter(captured_positions))
+        current_player_positions = set(current_board.get_player_positions(player))
+        previous_player_positions = set(previous_board.get_player_positions(player))
+        new_player_positions = (current_player_positions - previous_player_positions)
+        if len(new_player_positions) != 1:
+            return None
+        new_position = next(iter(new_player_positions))
+        if new_position != (move_row,move_column,):
+            return None
+        recapture_board = current_board.copy()
+        recapture_row, recapture_column = (captured_position)
+        if not recapture_board.is_cell_empty(recapture_row,recapture_column,):
+            return None
+        if not cls.is_valid_move(recapture_board,recapture_row,recapture_column,opponent,None,):
+            return None
+        if not cls.apply_move(recapture_board,recapture_row,recapture_column,opponent,None,):
+            return None
+        if (recapture_board.get_board_state() == previous_board.get_board_state()):
+            return captured_position
+        return None
+    @classmethod
+    def is_ko_move(cls,previous_board,current_board,move_row,move_column,player,):
+        return (
+            cls.get_ko_position(previous_board,current_board,move_row,move_column,player,) is not None)
+    @staticmethod
+    def boards_equal(board_a, board_b):
+        if board_a is None or board_b is None:
+            return board_a is board_b
+        return (board_a.get_board_state() == board_b.get_board_state())
+    @classmethod
+    def get_empty_regions(cls, board):
+        if board is None:
+            return []
+        regions = []
+        visited = set()
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                position = (row, column)
+                if position in visited:
+                    continue
+                if board.get_cell(row,column,) != EMPTY:
+                    continue
+                region = set()
+                stack = [position]
+                while stack:
+                    current = stack.pop()
+                    if current in region:
+                        continue
+                    current_row, current_column = current
+                    if board.get_cell(current_row,current_column,) != EMPTY:
+                        continue
+                    region.add(current)
+                    visited.add(current)
+                    for neighbor in cls.get_neighbors(current_row,current_column,):
+                        if neighbor in region:
+                            continue
+                        neighbor_row, neighbor_column = neighbor
+                        if board.get_cell(neighbor_row,neighbor_column,) == EMPTY:
+                            stack.append(neighbor)
+                if region:
+                    regions.append(region)
+        return regions
+    @classmethod
+    def get_region_owner(cls,board,region,):
+        if board is None:
+            return None
+        if not region:
+            return None
+        for row, column in region:
+            if (row == 0 or row == BOARD_ROWS - 1 or column == 0 or column == BOARD_COLUMNS - 1):
+                return None
+        bordering_players = set()
+        for row, column in region:
+            for neighbor in cls.get_neighbors(row,column,):
+                neighbor_row, neighbor_column = neighbor
+                value = board.get_cell(neighbor_row,neighbor_column,)
+                if value in (PLAYER_BLACK,PLAYER_WHITE,):
+                    bordering_players.add(value)
+        if len(bordering_players) != 1:
+            return None
+        return next(iter(bordering_players))
+    @classmethod
+    def count_territory(cls,board,player,):
+        if board is None:
+            return 0
+        if not cls.is_valid_player(player):
+            return 0
+        territory = 0
+        regions = cls.get_empty_regions(board)
+        for region in regions:
+            owner = cls.get_region_owner(board,region,)
+            if owner == player:
+                territory += len(region)
+        return territory
+    @classmethod
+    def calculate_score(cls,board,player,):
+        if board is None:
+            return 0.0
+        if not cls.is_valid_player(player):
+            return 0.0
+        stone_count = board.count_stones(player)
+        territory_count = cls.count_territory(board,player,)
+        score = (stone_count + territory_count)
+        if player == PLAYER_WHITE:
+            score += KOMI
+        return float(score)
+    @classmethod
+    def get_scores(cls, board):
+        return {PLAYER_BLACK: cls.calculate_score(board,PLAYER_BLACK,),PLAYER_WHITE: cls.calculate_score(board,PLAYER_WHITE,),}
+    @classmethod
+    def get_winner(cls, board):
+        scores = cls.get_scores(board)
+        black_score = scores[PLAYER_BLACK]
+        white_score = scores[PLAYER_WHITE]
+        if black_score > white_score:
+            return PLAYER_BLACK
+        if white_score > black_score:
+            return PLAYER_WHITE
+        return None
+    @classmethod
+    def is_draw(cls, board):
+        scores = cls.get_scores(board)
+        return (scores[PLAYER_BLACK] == scores[PLAYER_WHITE])
+    @classmethod
+    def evaluate_game(cls, board):
+        result = GameResult()
+        if board is None:
+            return result
+        scores = cls.get_scores(board)
+        result.scores = scores
+        result.game_over = True
+        black_score = scores[PLAYER_BLACK]
+        white_score = scores[PLAYER_WHITE]
+        if black_score > white_score:
+            result.winner = PLAYER_BLACK
+            result.draw = False
+        elif white_score > black_score:
+            result.winner = PLAYER_WHITE
+            result.draw = False
+        else:
+            result.winner = None
+            result.draw = True
+        return result
+    @classmethod
+    def has_legal_moves(cls,board,player,ko_position=None,):
+        return bool(cls.get_legal_moves(board,player,ko_position,))
+    @classmethod
+    def is_board_full(cls, board):
+        if board is None:
+            return False
+        return board.is_board_full()
+    @classmethod
+    def get_stone_count(cls, board, player):
+        if board is None:
+            return 0
+        if not cls.is_valid_player(player):
+            return 0
+        return board.count_stones(player)
+    @classmethod
+    def get_position_count(cls, board, player):
+        return cls.get_stone_count(board,player,)
 
 # games/gomoku/ai.py
 import random

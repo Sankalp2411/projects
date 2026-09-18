@@ -381,3 +381,193 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^
 NameError: name 'POSITION_RADIUS' is not defined. Did you mean: 'STONE_RADIUS'?
 
+
+================================================================================
+Timestamp: 2026-09-17 13:20:08
+
+Exception: GoGame.__init__() got an unexpected keyword argument 'renderer'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 30, in update
+    game = game_class(renderer =self.renderer,game_mode=mode,)
+TypeError: GoGame.__init__() got an unexpected keyword argument 'renderer'
+
+
+================================================================================
+Timestamp: 2026-09-17 13:20:18
+
+Exception: GoGame.__init__() got an unexpected keyword argument 'renderer'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 30, in update
+    game = game_class(renderer =self.renderer,game_mode=mode,)
+TypeError: GoGame.__init__() got an unexpected keyword argument 'renderer'
+
+
+================================================================================
+Timestamp: 2026-09-17 13:22:42
+
+Exception: GoGame.render() missing 1 required positional argument: 'surface'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 54, in run
+    self.render()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 46, in render
+    self.scene_manager.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 17, in render
+    self.current_scene.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 30, in render
+    self.game.render()
+    ~~~~~~~~~~~~~~~~^^
+TypeError: GoGame.render() missing 1 required positional argument: 'surface'
+
+
+================================================================================
+Timestamp: 2026-09-17 13:22:53
+
+Exception: GoGame.render() missing 1 required positional argument: 'surface'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 54, in run
+    self.render()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 46, in render
+    self.scene_manager.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 17, in render
+    self.current_scene.render()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 30, in render
+    self.game.render()
+    ~~~~~~~~~~~~~~~~^^
+TypeError: GoGame.render() missing 1 required positional argument: 'surface'
+
+
+================================================================================
+Timestamp: 2026-09-17 21:45:06
+
+Exception: type object 'GoRules' has no attribute 'is_legal_move'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 22, in update
+    self.game.update()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\go\game.py", line 173, in update
+    self.update_current_player()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\go\game.py", line 368, in update_current_player
+    self.make_move(
+    ~~~~~~~~~~~~~~^
+        row,
+        ^^^^
+        column,
+        ^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\go\game.py", line 204, in make_move
+    if not GoRules.is_legal_move(
+           ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'GoRules' has no attribute 'is_legal_move'. Did you mean: 'has_legal_moves'?
+
+
+================================================================================
+Timestamp: 2026-09-17 21:45:27
+
+Exception: type object 'GoRules' has no attribute 'is_legal_move'
+
+Traceback (most recent call last):
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
+    launcher.start()
+    ~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
+    self.game_manager.run()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
+    self.update()
+    ~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
+    self.scene_manager.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
+    self.current_scene.update()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_scene.py", line 22, in update
+    self.game.update()
+    ~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\go\game.py", line 173, in update
+    self.update_current_player()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\go\game.py", line 368, in update_current_player
+    self.make_move(
+    ~~~~~~~~~~~~~~^
+        row,
+        ^^^^
+        column,
+        ^^^^^^^
+    )
+    ^
+  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\games\go\game.py", line 204, in make_move
+    if not GoRules.is_legal_move(
+           ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'GoRules' has no attribute 'is_legal_move'. Did you mean: 'has_legal_moves'?
+
