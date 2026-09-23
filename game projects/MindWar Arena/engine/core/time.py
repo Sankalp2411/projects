@@ -1,4 +1,4 @@
-#engine/core/time.py
+# engine/core/time.py
 import time
 class TimeManager:
     def __init__(self):
@@ -11,7 +11,7 @@ class TimeManager:
         self.total_runtime = 0.0
     def update(self):
         self.current_time = time.perf_counter()
-        self.delta_time = (self.current_time - self.previous_time)
+        self.delta_time = self.current_time - self.previous_time
         self.previous_time = self.current_time
         self.total_runtime += self.delta_time
         self.frame_count += 1

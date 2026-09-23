@@ -1534,3 +1534,857 @@
 2026-09-18 12:30:29 [INFO] [ShaderManager] Released 'text'.
 2026-09-18 12:30:29 [INFO] [Renderer] Shutdown
 2026-09-18 12:30:29 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-20 15:13:39 [INFO] Logger Initialized
+2026-09-20 15:13:39 [INFO] [GameManager] Initializing...
+2026-09-20 15:13:39 [INFO] [Config] Loaded
+2026-09-20 15:13:41 [INFO] [Window] Created 1280x720
+2026-09-20 15:13:41 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-20 15:13:41 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-20 15:13:41 [INFO] [Mesh] GPU mesh created.
+2026-09-20 15:13:41 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-20 15:13:41 [INFO] [Mesh] GPU mesh created.
+2026-09-20 15:13:41 [INFO] [Renderer] Rendering system initialized.
+2026-09-20 15:13:41 [INFO] [Input] Initialized
+2026-09-20 15:13:41 [INFO] [AssetManager] Initialized
+2026-09-20 15:13:41 [INFO] [Scene] Enter: Boot Scene
+2026-09-20 15:13:41 [INFO] [BootScene] Engine initialization complete.
+2026-09-20 15:13:41 [INFO] [BootScene] Opening Main Menu.
+2026-09-20 15:13:41 [INFO] [Scene] Exit: Boot Scene
+2026-09-20 15:13:41 [INFO] [Scene] Enter: Main Menu
+2026-09-20 15:13:41 [INFO] [MainMenuScene] Ready
+2026-09-20 15:13:41 [INFO] [GameManager] Running...
+2026-09-20 15:13:45 [INFO] [MainMenuScene] Selected Go
+2026-09-20 15:13:45 [INFO] [Scene] Exit: Main Menu
+2026-09-20 15:13:45 [INFO] [Scene] Enter: Game Mode
+2026-09-20 15:13:45 [INFO] [GameModeScene] Choosing mode for Go
+2026-09-20 15:13:50 [INFO] [GameModeScene] Mode: Human vs AI
+
+============================================================
+2026-09-20 15:39:48 [INFO] Logger Initialized
+2026-09-20 15:39:48 [INFO] [GameManager] Initializing...
+2026-09-20 15:39:48 [INFO] [Config] Loaded
+2026-09-20 15:39:50 [INFO] [Window] Created 1280x720
+2026-09-20 15:39:50 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-20 15:39:50 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-20 15:39:50 [INFO] [Mesh] GPU mesh created.
+2026-09-20 15:39:50 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-20 15:39:50 [INFO] [Mesh] GPU mesh created.
+2026-09-20 15:39:50 [INFO] [Renderer] Rendering system initialized.
+2026-09-20 15:39:50 [INFO] [Input] Initialized
+2026-09-20 15:39:50 [INFO] [AssetManager] Initialized
+2026-09-20 15:39:50 [INFO] [Scene] Enter: Boot Scene
+2026-09-20 15:39:50 [INFO] [BootScene] Engine initialization complete.
+2026-09-20 15:39:50 [INFO] [BootScene] Opening Main Menu.
+2026-09-20 15:39:50 [INFO] [Scene] Exit: Boot Scene
+2026-09-20 15:39:50 [INFO] [Scene] Enter: Main Menu
+2026-09-20 15:39:50 [INFO] [MainMenuScene] Ready
+2026-09-20 15:39:50 [INFO] [GameManager] Running...
+2026-09-20 15:40:07 [INFO] [MainMenuScene] Selected Go
+2026-09-20 15:40:07 [INFO] [Scene] Exit: Main Menu
+2026-09-20 15:40:07 [INFO] [Scene] Enter: Game Mode
+2026-09-20 15:40:07 [INFO] [GameModeScene] Choosing mode for Go
+2026-09-20 15:40:08 [INFO] [GameModeScene] Mode: Human vs Human
+2026-09-20 15:40:08 [INFO] [Scene] Exit: Game Mode
+2026-09-20 15:40:08 [INFO] [Scene] Enter: Game Scene
+2026-09-20 15:40:08 [INFO] [GameScene] Initializing game.
+2026-09-20 15:40:08 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-20 15:40:08 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-20 15:40:31 [INFO] [GameManager] Shutting down...
+2026-09-20 15:40:31 [INFO] [GameManager] Runtime: 43.34s
+2026-09-20 15:40:31 [INFO] [Mesh] Released.
+2026-09-20 15:40:31 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-20 15:40:31 [INFO] [Mesh] Released.
+2026-09-20 15:40:31 [INFO] [ShaderManager] Released 'text'.
+2026-09-20 15:40:31 [INFO] [Renderer] Shutdown
+2026-09-20 15:40:32 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-20 16:11:55 [INFO] Logger Initialized
+2026-09-20 16:11:55 [INFO] [GameManager] Initializing...
+2026-09-20 16:11:55 [INFO] [Config] Loaded
+2026-09-20 16:11:57 [INFO] [Window] Created 1280x720
+2026-09-20 16:11:57 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-20 16:11:57 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-20 16:11:57 [INFO] [Mesh] GPU mesh created.
+2026-09-20 16:11:57 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-20 16:11:57 [INFO] [Mesh] GPU mesh created.
+2026-09-20 16:11:57 [INFO] [Renderer] Rendering system initialized.
+2026-09-20 16:11:57 [INFO] [Input] Initialized
+2026-09-20 16:11:57 [INFO] [AssetManager] Initialized
+2026-09-20 16:11:57 [INFO] [Scene] Enter: Boot Scene
+2026-09-20 16:11:57 [INFO] [BootScene] Engine initialization complete.
+2026-09-20 16:11:57 [INFO] [BootScene] Opening Main Menu.
+2026-09-20 16:11:57 [INFO] [Scene] Exit: Boot Scene
+2026-09-20 16:11:57 [INFO] [Scene] Enter: Main Menu
+2026-09-20 16:11:57 [INFO] [MainMenuScene] Ready
+2026-09-20 16:11:57 [INFO] [GameManager] Running...
+2026-09-20 16:11:59 [INFO] [MainMenuScene] Selected Go
+2026-09-20 16:11:59 [INFO] [Scene] Exit: Main Menu
+2026-09-20 16:11:59 [INFO] [Scene] Enter: Game Mode
+2026-09-20 16:11:59 [INFO] [GameModeScene] Choosing mode for Go
+2026-09-20 16:12:06 [INFO] [GameModeScene] Selected: AI vs AI (Spectate)
+2026-09-20 16:12:06 [INFO] [Scene] Exit: Game Mode
+2026-09-20 16:12:06 [INFO] [Scene] Enter: Game Scene
+2026-09-20 16:12:06 [INFO] [GameScene] Initializing game.
+2026-09-20 16:12:06 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-20 16:12:06 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-20 16:12:38 [INFO] [GameScene] Returning to Main Menu.
+2026-09-20 16:12:38 [INFO] [GameScene] Shutting down game.
+2026-09-20 16:12:38 [INFO] [Scene] Exit: Game Scene
+2026-09-20 16:12:38 [INFO] [Scene] Enter: Main Menu
+2026-09-20 16:12:38 [INFO] [MainMenuScene] Ready
+2026-09-20 16:12:46 [INFO] [MainMenuScene] Selected Chess
+2026-09-20 16:12:46 [INFO] [Scene] Exit: Main Menu
+2026-09-20 16:12:46 [INFO] [Scene] Enter: Game Mode
+2026-09-20 16:12:46 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-20 16:12:49 [INFO] [GameModeScene] Selected: AI vs AI (Spectate)
+2026-09-20 16:12:49 [INFO] [Scene] Exit: Game Mode
+2026-09-20 16:12:49 [INFO] [Scene] Enter: Game Scene
+2026-09-20 16:12:49 [INFO] [GameScene] Initializing game.
+2026-09-20 16:13:07 [INFO] [GameScene] Returning to Main Menu.
+2026-09-20 16:13:07 [INFO] [GameScene] Shutting down game.
+2026-09-20 16:13:07 [INFO] [Scene] Exit: Game Scene
+2026-09-20 16:13:07 [INFO] [Scene] Enter: Main Menu
+2026-09-20 16:13:07 [INFO] [MainMenuScene] Ready
+2026-09-20 16:13:15 [INFO] [GameManager] Shutting down...
+2026-09-20 16:13:15 [INFO] [GameManager] Runtime: 79.63s
+2026-09-20 16:13:15 [INFO] [Mesh] Released.
+2026-09-20 16:13:15 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-20 16:13:15 [INFO] [Mesh] Released.
+2026-09-20 16:13:15 [INFO] [ShaderManager] Released 'text'.
+2026-09-20 16:13:15 [INFO] [Renderer] Shutdown
+2026-09-20 16:13:15 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-20 17:07:36 [INFO] Logger Initialized
+2026-09-20 17:07:36 [INFO] [GameManager] Initializing...
+2026-09-20 17:07:36 [INFO] [Config] Loaded
+2026-09-20 17:07:38 [INFO] [Window] Created 1280x720
+2026-09-20 17:07:38 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-20 17:07:38 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-20 17:07:38 [INFO] [Mesh] GPU mesh created.
+2026-09-20 17:07:38 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-20 17:07:38 [INFO] [Mesh] GPU mesh created.
+2026-09-20 17:07:38 [INFO] [Renderer] Rendering system initialized.
+2026-09-20 17:07:38 [INFO] [Input] Initialized
+2026-09-20 17:07:38 [INFO] [AssetManager] Initialized
+2026-09-20 17:07:38 [INFO] [Scene] Enter: Boot Scene
+2026-09-20 17:07:38 [INFO] [BootScene] Engine initialization complete.
+2026-09-20 17:07:38 [INFO] [BootScene] Opening Main Menu.
+2026-09-20 17:07:38 [INFO] [Scene] Exit: Boot Scene
+2026-09-20 17:07:38 [INFO] [Scene] Enter: Main Menu
+2026-09-20 17:07:38 [INFO] [MainMenuScene] Ready
+2026-09-20 17:07:38 [INFO] [GameManager] Running...
+2026-09-20 17:07:40 [INFO] [MainMenuScene] Selected Tic-Tac-Toe
+2026-09-20 17:07:40 [INFO] [Scene] Exit: Main Menu
+2026-09-20 17:07:40 [INFO] [Scene] Enter: Game Mode
+2026-09-20 17:07:40 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-20 17:07:48 [INFO] [GameModeScene] Selected: Human vs Human
+2026-09-20 17:07:48 [INFO] [Scene] Exit: Game Mode
+2026-09-20 17:07:48 [INFO] [Scene] Enter: Game Scene
+2026-09-20 17:07:48 [INFO] [GameScene] Initializing game.
+2026-09-20 17:07:48 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-20 17:07:52 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-09-20 17:08:01 [INFO] [GameManager] Shutting down...
+2026-09-20 17:08:01 [INFO] [GameManager] Runtime: 24.76s
+2026-09-20 17:08:01 [INFO] [Mesh] Released.
+2026-09-20 17:08:01 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-20 17:08:01 [INFO] [Mesh] Released.
+2026-09-20 17:08:01 [INFO] [ShaderManager] Released 'text'.
+2026-09-20 17:08:01 [INFO] [Renderer] Shutdown
+2026-09-20 17:08:01 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-20 21:51:56 [INFO] Logger Initialized
+2026-09-20 21:51:56 [INFO] [GameManager] Initializing...
+2026-09-20 21:51:56 [INFO] [Config] Loaded
+2026-09-20 21:51:58 [INFO] [Window] Created 1280x720
+2026-09-20 21:51:58 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-20 21:51:58 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-20 21:51:58 [INFO] [Mesh] GPU mesh created.
+2026-09-20 21:51:58 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-20 21:51:58 [INFO] [Mesh] GPU mesh created.
+2026-09-20 21:51:58 [INFO] [Renderer] Rendering system initialized.
+2026-09-20 21:51:58 [INFO] [Input] Initialized
+2026-09-20 21:51:58 [INFO] [AssetManager] Initialized
+2026-09-20 21:51:58 [INFO] [Scene] Enter: Boot Scene
+2026-09-20 21:51:58 [INFO] [BootScene] Engine initialization complete.
+2026-09-20 21:51:58 [INFO] [BootScene] Opening Main Menu.
+2026-09-20 21:51:58 [INFO] [Scene] Exit: Boot Scene
+2026-09-20 21:51:58 [INFO] [Scene] Enter: Main Menu
+2026-09-20 21:51:58 [INFO] [MainMenuScene] Ready
+2026-09-20 21:51:58 [INFO] [GameManager] Running...
+2026-09-20 21:52:03 [INFO] [MainMenuScene] Selected Go
+2026-09-20 21:52:03 [INFO] [Scene] Exit: Main Menu
+2026-09-20 21:52:03 [INFO] [Scene] Enter: Game Mode
+2026-09-20 21:52:03 [INFO] [GameModeScene] Choosing mode for Go
+2026-09-20 21:52:37 [INFO] [Scene] Exit: Game Mode
+2026-09-20 21:52:37 [INFO] [Scene] Enter: Main Menu
+2026-09-20 21:52:37 [INFO] [MainMenuScene] Ready
+2026-09-20 21:52:47 [INFO] [MainMenuScene] Selected Tic-Tac-Toe
+2026-09-20 21:52:47 [INFO] [Scene] Exit: Main Menu
+2026-09-20 21:52:47 [INFO] [Scene] Enter: Game Mode
+2026-09-20 21:52:47 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-20 21:52:49 [INFO] [GameModeScene] Selected: Human vs Human
+2026-09-20 21:52:49 [INFO] [Scene] Exit: Game Mode
+2026-09-20 21:52:49 [INFO] [Scene] Enter: Game Scene
+2026-09-20 21:52:49 [INFO] [GameScene] Initializing game.
+2026-09-20 21:52:49 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-20 21:55:50 [DEBUG] [Mesh] GPU buffer resized to 520 bytes.
+2026-09-20 21:56:34 [INFO] [GameScene] Game reset.
+2026-09-20 21:56:37 [INFO] [GameScene] Returning to Main Menu.
+2026-09-20 21:56:37 [INFO] [GameScene] Shutting down game.
+2026-09-20 21:56:37 [INFO] [Scene] Exit: Game Scene
+2026-09-20 21:56:37 [INFO] [Scene] Enter: Main Menu
+2026-09-20 21:56:37 [INFO] [MainMenuScene] Ready
+2026-09-20 22:02:16 [INFO] [MainMenuScene] Selected Othello
+2026-09-20 22:02:16 [INFO] [Scene] Exit: Main Menu
+2026-09-20 22:02:16 [INFO] [Scene] Enter: Game Mode
+2026-09-20 22:02:16 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-20 22:02:18 [INFO] [GameModeScene] Selected: Human vs Human
+2026-09-20 22:02:18 [INFO] [Scene] Exit: Game Mode
+2026-09-20 22:02:18 [INFO] [Scene] Enter: Game Scene
+2026-09-20 22:02:18 [INFO] [GameScene] Initializing game.
+2026-09-20 22:02:18 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-20 22:05:41 [INFO] [GameScene] Returning to Main Menu.
+2026-09-20 22:05:41 [INFO] [GameScene] Shutting down game.
+2026-09-20 22:05:41 [INFO] [Scene] Exit: Game Scene
+2026-09-20 22:05:41 [INFO] [Scene] Enter: Main Menu
+2026-09-20 22:05:41 [INFO] [MainMenuScene] Ready
+2026-09-20 22:05:43 [INFO] [GameManager] Shutting down...
+2026-09-20 22:05:43 [INFO] [GameManager] Runtime: 827.01s
+2026-09-20 22:05:43 [INFO] [Mesh] Released.
+2026-09-20 22:05:43 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-20 22:05:43 [INFO] [Mesh] Released.
+2026-09-20 22:05:43 [INFO] [ShaderManager] Released 'text'.
+2026-09-20 22:05:43 [INFO] [Renderer] Shutdown
+2026-09-20 22:05:43 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-21 00:04:25 [INFO] Logger Initialized
+2026-09-21 00:04:25 [INFO] [GameManager] Initializing...
+2026-09-21 00:04:25 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-21 00:04:26 [INFO] [Window] Created 1280x720
+2026-09-21 00:04:26 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-21 00:04:26 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-21 00:04:26 [INFO] [Mesh] GPU mesh created.
+2026-09-21 00:04:26 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-21 00:04:26 [INFO] [Mesh] GPU mesh created.
+2026-09-21 00:04:26 [INFO] [Renderer] Rendering system initialized.
+2026-09-21 00:04:26 [INFO] [Input] Initialized
+2026-09-21 00:04:26 [INFO] [AssetManager] Initialized
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Boot Scene
+2026-09-21 00:04:26 [INFO] [BootScene] Engine initialization complete.
+2026-09-21 00:04:26 [INFO] [BootScene] Opening Main Menu.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Boot Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Main Menu
+2026-09-21 00:04:26 [INFO] [MainMenuScene] Ready
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Main Menu
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Mode
+2026-09-21 00:04:26 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Mode
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [DEBUG] [Mesh] GPU buffer resized to 16 bytes.
+2026-09-21 00:04:26 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [DEBUG] [Mesh] GPU buffer resized to 48 bytes.
+2026-09-21 00:04:26 [DEBUG] [Mesh] GPU buffer resized to 528 bytes.
+2026-09-21 00:04:26 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:04:26 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:04:26 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:04:26 [INFO] [GameScene] Initializing game.
+2026-09-21 00:04:26 [INFO] [GameManager] Shutting down...
+2026-09-21 00:04:26 [INFO] [GameManager] Runtime: 0.00s
+2026-09-21 00:04:26 [INFO] [Mesh] Released.
+2026-09-21 00:04:26 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-21 00:04:26 [INFO] [Mesh] Released.
+2026-09-21 00:04:26 [INFO] [ShaderManager] Released 'text'.
+2026-09-21 00:04:26 [INFO] [Renderer] Shutdown
+2026-09-21 00:04:26 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-21 00:49:01 [INFO] Logger Initialized
+2026-09-21 00:49:01 [INFO] [GameManager] Initializing...
+2026-09-21 00:49:01 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-21 00:49:01 [INFO] [Window] Created 1280x720
+2026-09-21 00:49:01 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-21 00:49:01 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-21 00:49:01 [INFO] [Mesh] GPU mesh created.
+2026-09-21 00:49:01 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-21 00:49:01 [INFO] [Mesh] GPU mesh created.
+2026-09-21 00:49:01 [INFO] [Renderer] Rendering system initialized.
+2026-09-21 00:49:01 [INFO] [Input] Initialized
+2026-09-21 00:49:01 [INFO] [AssetManager] Initialized
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Boot Scene
+2026-09-21 00:49:01 [INFO] [BootScene] Engine initialization complete.
+2026-09-21 00:49:01 [INFO] [BootScene] Opening Main Menu.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Boot Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Main Menu
+2026-09-21 00:49:01 [INFO] [MainMenuScene] Ready
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Main Menu
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Mode
+2026-09-21 00:49:01 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Mode
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:01 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:01 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:01 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:01 [INFO] [GameManager] Shutting down...
+2026-09-21 00:49:01 [INFO] [GameManager] Runtime: 0.00s
+2026-09-21 00:49:01 [INFO] [Mesh] Released.
+2026-09-21 00:49:01 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-21 00:49:01 [INFO] [Mesh] Released.
+2026-09-21 00:49:01 [INFO] [ShaderManager] Released 'text'.
+2026-09-21 00:49:01 [INFO] [Renderer] Shutdown
+2026-09-21 00:49:01 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-21 00:49:51 [INFO] Logger Initialized
+2026-09-21 00:49:51 [INFO] [GameManager] Initializing...
+2026-09-21 00:49:51 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-21 00:49:51 [INFO] [Window] Created 1280x720
+2026-09-21 00:49:51 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-21 00:49:51 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-21 00:49:51 [INFO] [Mesh] GPU mesh created.
+2026-09-21 00:49:51 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-21 00:49:51 [INFO] [Mesh] GPU mesh created.
+2026-09-21 00:49:51 [INFO] [Renderer] Rendering system initialized.
+2026-09-21 00:49:51 [INFO] [Input] Initialized
+2026-09-21 00:49:51 [INFO] [AssetManager] Initialized
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Boot Scene
+2026-09-21 00:49:51 [INFO] [BootScene] Engine initialization complete.
+2026-09-21 00:49:51 [INFO] [BootScene] Opening Main Menu.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Boot Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Main Menu
+2026-09-21 00:49:51 [INFO] [MainMenuScene] Ready
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Main Menu
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Mode
+2026-09-21 00:49:51 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Mode
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameScene] Shutting down game.
+2026-09-21 00:49:51 [INFO] [Scene] Exit: Game Scene
+2026-09-21 00:49:51 [INFO] [Scene] Enter: Game Scene
+2026-09-21 00:49:51 [INFO] [GameScene] Initializing game.
+2026-09-21 00:49:51 [INFO] [GameManager] Shutting down...
+2026-09-21 00:49:51 [INFO] [GameManager] Runtime: 0.00s
+2026-09-21 00:49:51 [INFO] [Mesh] Released.
+2026-09-21 00:49:51 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-21 00:49:51 [INFO] [Mesh] Released.
+2026-09-21 00:49:51 [INFO] [ShaderManager] Released 'text'.
+2026-09-21 00:49:51 [INFO] [Renderer] Shutdown
+2026-09-21 00:49:51 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-21 02:04:18 [INFO] Logger Initialized
+2026-09-21 02:04:18 [INFO] [GameManager] Initializing...
+2026-09-21 02:04:18 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-21 02:04:19 [INFO] [Window] Created 1280x720
+2026-09-21 02:04:19 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-21 02:04:19 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-21 02:04:19 [INFO] [Mesh] GPU mesh created.
+2026-09-21 02:04:19 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-21 02:04:19 [INFO] [Mesh] GPU mesh created.
+2026-09-21 02:04:19 [INFO] [Renderer] Rendering system initialized.
+2026-09-21 02:04:19 [INFO] [Input] Initialized
+2026-09-21 02:04:19 [INFO] [AssetManager] Initialized
+2026-09-21 02:04:19 [INFO] [Scene] Enter: Boot Scene
+2026-09-21 02:04:19 [INFO] [BootScene] Engine initialization complete.
+2026-09-21 02:04:19 [INFO] [BootScene] Opening Main Menu.
+2026-09-21 02:04:19 [INFO] [Scene] Exit: Boot Scene
+2026-09-21 02:04:19 [INFO] [Scene] Enter: Main Menu
+2026-09-21 02:04:19 [INFO] [MainMenuScene] Ready
+2026-09-21 02:04:19 [INFO] [GameManager] Running...
+2026-09-21 02:04:23 [INFO] [MainMenuScene] Selected Go
+2026-09-21 02:04:23 [INFO] [Scene] Exit: Main Menu
+2026-09-21 02:04:23 [INFO] [Scene] Enter: Game Mode
+2026-09-21 02:04:23 [INFO] [GameModeScene] Choosing mode for Go
+2026-09-21 02:04:25 [INFO] [GameModeScene] Selected: Human vs Human
+2026-09-21 02:04:25 [INFO] [Scene] Exit: Game Mode
+2026-09-21 02:04:25 [INFO] [Scene] Enter: Game Scene
+2026-09-21 02:04:25 [INFO] [GameScene] Initializing game.
+2026-09-21 02:04:49 [INFO] [GameManager] Shutting down...
+2026-09-21 02:04:49 [INFO] [GameManager] Runtime: 31.38s
+2026-09-21 02:04:49 [INFO] [Mesh] Released.
+2026-09-21 02:04:49 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-21 02:04:49 [INFO] [Mesh] Released.
+2026-09-21 02:04:49 [INFO] [ShaderManager] Released 'text'.
+2026-09-21 02:04:49 [INFO] [Renderer] Shutdown
+2026-09-21 02:04:50 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-21 10:10:51 [INFO] Logger Initialized
+2026-09-21 10:10:51 [INFO] [GameManager] Initializing...
+2026-09-21 10:10:51 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-21 10:10:52 [INFO] [Window] Created 1280x720
+2026-09-21 10:10:52 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-21 10:10:52 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-21 10:10:52 [INFO] [Mesh] GPU mesh created.
+2026-09-21 10:10:52 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-21 10:10:52 [INFO] [Mesh] GPU mesh created.
+2026-09-21 10:10:52 [INFO] [Renderer] Rendering system initialized.
+2026-09-21 10:10:52 [INFO] [Input] Initialized
+2026-09-21 10:10:52 [INFO] [AssetManager] Initialized
+2026-09-21 10:10:52 [INFO] [Scene] Enter: Boot Scene
+2026-09-21 10:10:52 [INFO] [BootScene] Engine initialization complete.
+2026-09-21 10:10:52 [INFO] [BootScene] Opening Main Menu.
+2026-09-21 10:10:52 [INFO] [Scene] Exit: Boot Scene
+2026-09-21 10:10:52 [INFO] [Scene] Enter: Main Menu
+2026-09-21 10:10:52 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 10:10:52 [INFO] [GameManager] Running...
+2026-09-21 10:10:55 [INFO] [MainMenuScene] Selected: Tic-Tac-Toe
+2026-09-21 10:10:55 [INFO] [Scene] Exit: Main Menu
+2026-09-21 10:10:55 [INFO] [Scene] Enter: Game Mode
+2026-09-21 10:10:55 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-21 10:10:57 [INFO] [GameModeScene] Selected mode: Human vs Human
+2026-09-21 10:10:57 [INFO] [Scene] Exit: Game Mode
+2026-09-21 10:10:57 [INFO] [Scene] Enter: Game Scene
+2026-09-21 10:10:57 [INFO] [GameScene] Initializing game.
+2026-09-21 10:11:04 [INFO] [GameScene] Game reset.
+2026-09-21 10:11:07 [INFO] [GameScene] Returning to Main Menu.
+2026-09-21 10:11:07 [INFO] [GameScene] Shutting down game.
+2026-09-21 10:11:07 [INFO] [Scene] Exit: Game Scene
+2026-09-21 10:11:07 [INFO] [Scene] Enter: Main Menu
+2026-09-21 10:11:07 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 10:11:10 [INFO] [MainMenuScene] Selected: Othello
+2026-09-21 10:11:10 [INFO] [Scene] Exit: Main Menu
+2026-09-21 10:11:10 [INFO] [Scene] Enter: Game Mode
+2026-09-21 10:11:10 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-21 10:11:11 [INFO] [GameModeScene] Selected mode: Human vs Human
+2026-09-21 10:11:11 [INFO] [Scene] Exit: Game Mode
+2026-09-21 10:11:11 [INFO] [Scene] Enter: Game Scene
+2026-09-21 10:11:11 [INFO] [GameScene] Initializing game.
+2026-09-21 10:11:58 [INFO] [GameScene] Returning to Main Menu.
+2026-09-21 10:11:58 [INFO] [GameScene] Shutting down game.
+2026-09-21 10:11:58 [INFO] [Scene] Exit: Game Scene
+2026-09-21 10:11:58 [INFO] [Scene] Enter: Main Menu
+2026-09-21 10:11:58 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 10:12:14 [INFO] [MainMenuScene] Selected: Tic-Tac-Toe
+2026-09-21 10:12:14 [INFO] [Scene] Exit: Main Menu
+2026-09-21 10:12:14 [INFO] [Scene] Enter: Game Mode
+2026-09-21 10:12:14 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-21 10:12:19 [INFO] [GameModeScene] Selected mode: Human vs AI
+2026-09-21 10:12:19 [INFO] [Scene] Exit: Game Mode
+2026-09-21 10:12:19 [INFO] [Scene] Enter: Difficulty Selection
+2026-09-21 10:12:19 [INFO] [DifficultyScene] Selecting difficulty for Tic-Tac-Toe
+2026-09-21 10:12:22 [INFO] [DifficultyScene] Selected difficulty: Beginner for Tic-Tac-Toe
+2026-09-21 10:12:22 [INFO] [Scene] Exit: Difficulty Selection
+2026-09-21 10:12:22 [INFO] [Scene] Enter: Game Scene
+2026-09-21 10:12:22 [INFO] [GameScene] Initializing game.
+2026-09-21 10:12:40 [INFO] [GameScene] Returning to Main Menu.
+2026-09-21 10:12:40 [INFO] [GameScene] Shutting down game.
+2026-09-21 10:12:40 [INFO] [Scene] Exit: Game Scene
+2026-09-21 10:12:40 [INFO] [Scene] Enter: Main Menu
+2026-09-21 10:12:40 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 10:12:42 [INFO] [MainMenuScene] Selected: Connect Four
+2026-09-21 10:12:42 [INFO] [Scene] Exit: Main Menu
+2026-09-21 10:12:42 [INFO] [Scene] Enter: Game Mode
+2026-09-21 10:12:42 [INFO] [GameModeScene] Choosing mode for Connect Four
+2026-09-21 10:12:44 [INFO] [GameModeScene] Selected mode: Human vs AI
+2026-09-21 10:12:44 [INFO] [Scene] Exit: Game Mode
+2026-09-21 10:12:44 [INFO] [Scene] Enter: Difficulty Selection
+2026-09-21 10:12:44 [INFO] [DifficultyScene] Selecting difficulty for Connect Four
+2026-09-21 10:12:46 [INFO] [DifficultyScene] Selected difficulty: Beginner for Connect Four
+2026-09-21 10:12:46 [INFO] [Scene] Exit: Difficulty Selection
+2026-09-21 10:12:46 [INFO] [Scene] Enter: Game Scene
+2026-09-21 10:12:46 [INFO] [GameScene] Initializing game.
+2026-09-21 10:12:58 [INFO] [GameScene] Returning to Main Menu.
+2026-09-21 10:12:58 [INFO] [GameScene] Shutting down game.
+2026-09-21 10:12:58 [INFO] [Scene] Exit: Game Scene
+2026-09-21 10:12:58 [INFO] [Scene] Enter: Main Menu
+2026-09-21 10:12:58 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 10:13:00 [INFO] [MainMenuScene] Selected: Gomoku
+2026-09-21 10:13:00 [INFO] [Scene] Exit: Main Menu
+2026-09-21 10:13:00 [INFO] [Scene] Enter: Game Mode
+2026-09-21 10:13:00 [INFO] [GameModeScene] Choosing mode for Gomoku
+2026-09-21 10:13:02 [INFO] [GameModeScene] Selected mode: Human vs Human
+2026-09-21 10:13:02 [INFO] [Scene] Exit: Game Mode
+2026-09-21 10:13:02 [INFO] [Scene] Enter: Game Scene
+2026-09-21 10:13:02 [INFO] [GameScene] Initializing game.
+2026-09-21 10:13:12 [INFO] [GameScene] Returning to Main Menu.
+2026-09-21 10:13:12 [INFO] [GameScene] Shutting down game.
+2026-09-21 10:13:12 [INFO] [Scene] Exit: Game Scene
+2026-09-21 10:13:12 [INFO] [Scene] Enter: Main Menu
+2026-09-21 10:13:12 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 10:13:14 [INFO] [MainMenuScene] Selected: Pente
+2026-09-21 10:13:14 [INFO] [Scene] Exit: Main Menu
+2026-09-21 10:13:14 [INFO] [Scene] Enter: Game Mode
+2026-09-21 10:13:14 [INFO] [GameModeScene] Choosing mode for Pente
+2026-09-21 10:13:15 [INFO] [GameModeScene] Selected mode: Human vs Human
+2026-09-21 10:13:15 [INFO] [Scene] Exit: Game Mode
+2026-09-21 10:13:15 [INFO] [Scene] Enter: Game Scene
+2026-09-21 10:13:15 [INFO] [GameScene] Initializing game.
+2026-09-21 10:13:21 [INFO] [GameScene] Returning to Main Menu.
+2026-09-21 10:13:21 [INFO] [GameScene] Shutting down game.
+2026-09-21 10:13:21 [INFO] [Scene] Exit: Game Scene
+2026-09-21 10:13:21 [INFO] [Scene] Enter: Main Menu
+2026-09-21 10:13:21 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 10:13:36 [INFO] [GameManager] Shutting down...
+2026-09-21 10:13:36 [INFO] [GameManager] Runtime: 164.75s
+2026-09-21 10:13:36 [INFO] [Mesh] Released.
+2026-09-21 10:13:36 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-21 10:13:36 [INFO] [Mesh] Released.
+2026-09-21 10:13:36 [INFO] [ShaderManager] Released 'text'.
+2026-09-21 10:13:36 [INFO] [Renderer] Shutdown
+2026-09-21 10:13:36 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-21 12:16:42 [INFO] Logger Initialized
+2026-09-21 12:16:42 [INFO] [GameManager] Initializing...
+2026-09-21 12:16:42 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-21 12:16:42 [INFO] [Window] Created 1280x720
+2026-09-21 12:16:42 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-21 12:16:42 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-21 12:16:42 [INFO] [Mesh] GPU mesh created.
+2026-09-21 12:16:42 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-21 12:16:42 [INFO] [Mesh] GPU mesh created.
+2026-09-21 12:16:42 [INFO] [Renderer] Rendering system initialized.
+2026-09-21 12:16:42 [INFO] [Input] Initialized
+2026-09-21 12:16:42 [INFO] [AssetManager] Initialized
+2026-09-21 12:16:42 [INFO] [Scene] Enter: Boot Scene
+2026-09-21 12:16:42 [INFO] [BootScene] Engine initialization complete.
+2026-09-21 12:16:42 [INFO] [BootScene] Opening Main Menu.
+2026-09-21 12:16:42 [INFO] [Scene] Exit: Boot Scene
+2026-09-21 12:16:42 [INFO] [Scene] Enter: Main Menu
+2026-09-21 12:16:42 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 12:16:42 [INFO] [GameManager] Running...
+2026-09-21 12:16:44 [INFO] [MainMenuScene] Selected: Nine Men's Morris
+2026-09-21 12:16:44 [INFO] [Scene] Exit: Main Menu
+2026-09-21 12:16:44 [INFO] [Scene] Enter: Game Mode
+2026-09-21 12:16:44 [INFO] [GameModeScene] Choosing mode for Nine Men's Morris
+2026-09-21 12:16:45 [INFO] [GameModeScene] Selected mode: Human vs Human
+2026-09-21 12:16:46 [INFO] [Scene] Exit: Game Mode
+2026-09-21 12:16:46 [INFO] [Scene] Enter: Game Scene
+2026-09-21 12:16:46 [INFO] [GameScene] Initializing game.
+2026-09-21 12:17:26 [INFO] [GameManager] Shutting down...
+2026-09-21 12:17:26 [INFO] [GameManager] Runtime: 43.52s
+2026-09-21 12:17:26 [INFO] [Mesh] Released.
+2026-09-21 12:17:26 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-21 12:17:26 [INFO] [Mesh] Released.
+2026-09-21 12:17:26 [INFO] [ShaderManager] Released 'text'.
+2026-09-21 12:17:26 [INFO] [Renderer] Shutdown
+2026-09-21 12:17:26 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-21 12:56:23 [INFO] Logger Initialized
+2026-09-21 12:56:23 [INFO] [GameManager] Initializing...
+2026-09-21 12:56:23 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-21 12:56:23 [INFO] [Window] Created 1280x720
+2026-09-21 12:56:23 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-21 12:56:23 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-21 12:56:23 [INFO] [Mesh] GPU mesh created.
+2026-09-21 12:56:23 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-21 12:56:23 [INFO] [Mesh] GPU mesh created.
+2026-09-21 12:56:23 [INFO] [Renderer] Rendering system initialized.
+2026-09-21 12:56:23 [INFO] [Input] Initialized
+2026-09-21 12:56:23 [INFO] [AssetManager] Initialized
+2026-09-21 12:56:23 [INFO] [Scene] Enter: Boot Scene
+2026-09-21 12:56:23 [INFO] [BootScene] Engine initialization complete.
+2026-09-21 12:56:23 [INFO] [BootScene] Opening Main Menu.
+2026-09-21 12:56:23 [INFO] [Scene] Exit: Boot Scene
+2026-09-21 12:56:23 [INFO] [Scene] Enter: Main Menu
+2026-09-21 12:56:23 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 12:56:23 [INFO] [GameManager] Running...
+2026-09-21 12:56:27 [INFO] [MainMenuScene] Selected: Othello
+2026-09-21 12:56:27 [INFO] [Scene] Exit: Main Menu
+2026-09-21 12:56:27 [INFO] [Scene] Enter: Game Mode
+2026-09-21 12:56:27 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-21 12:56:29 [INFO] [GameModeScene] Selected mode: Human vs AI
+2026-09-21 12:56:29 [INFO] [Scene] Exit: Game Mode
+2026-09-21 12:56:29 [INFO] [Scene] Enter: Difficulty Selection
+2026-09-21 12:56:29 [INFO] [DifficultyScene] Selecting difficulty for Othello
+2026-09-21 12:56:34 [INFO] [DifficultyScene] Selected difficulty: Impossible for Othello
+2026-09-21 12:56:34 [INFO] [Scene] Exit: Difficulty Selection
+2026-09-21 12:56:34 [INFO] [Scene] Enter: Game Scene
+2026-09-21 12:56:34 [INFO] [GameScene] Initializing game.
+2026-09-21 12:59:44 [INFO] [GameScene] Returning to Main Menu.
+2026-09-21 12:59:44 [INFO] [GameScene] Shutting down game.
+2026-09-21 12:59:44 [INFO] [Scene] Exit: Game Scene
+2026-09-21 12:59:44 [INFO] [Scene] Enter: Main Menu
+2026-09-21 12:59:44 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-21 12:59:47 [INFO] [MainMenuScene] Selected: Chess
+2026-09-21 12:59:47 [INFO] [Scene] Exit: Main Menu
+2026-09-21 12:59:47 [INFO] [Scene] Enter: Game Mode
+2026-09-21 12:59:47 [INFO] [GameModeScene] Choosing mode for Chess
+2026-09-21 12:59:49 [INFO] [GameModeScene] Selected mode: Human vs AI
+2026-09-21 12:59:49 [INFO] [Scene] Exit: Game Mode
+2026-09-21 12:59:49 [INFO] [Scene] Enter: Difficulty Selection
+2026-09-21 12:59:49 [INFO] [DifficultyScene] Selecting difficulty for Chess
+2026-09-21 12:59:50 [INFO] [DifficultyScene] Selected difficulty: Impossible for Chess
+2026-09-21 12:59:50 [INFO] [Scene] Exit: Difficulty Selection
+2026-09-21 12:59:50 [INFO] [Scene] Enter: Game Scene
+2026-09-21 12:59:50 [INFO] [GameScene] Initializing game.
+2026-09-21 13:01:05 [INFO] [GameManager] Shutting down...
+2026-09-21 13:01:05 [INFO] [GameManager] Runtime: 282.16s
+2026-09-21 13:01:05 [INFO] [Mesh] Released.
+2026-09-21 13:01:05 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-21 13:01:05 [INFO] [Mesh] Released.
+2026-09-21 13:01:05 [INFO] [ShaderManager] Released 'text'.
+2026-09-21 13:01:05 [INFO] [Renderer] Shutdown
+2026-09-21 13:01:05 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-22 12:13:06 [INFO] Logger Initialized
+2026-09-22 12:13:06 [INFO] [GameManager] Initializing...
+2026-09-22 12:13:06 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-22 12:13:08 [INFO] [Window] Created 1280x720
+2026-09-22 12:13:08 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-22 12:13:08 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-22 12:13:08 [INFO] [Mesh] GPU mesh created.
+2026-09-22 12:13:08 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-22 12:13:08 [INFO] [Mesh] GPU mesh created.
+2026-09-22 12:13:08 [INFO] [Renderer] Rendering system initialized.
+2026-09-22 12:13:08 [INFO] [Input] Initialized
+2026-09-22 12:13:08 [INFO] [AssetManager] Initialized
+2026-09-22 12:13:08 [INFO] [Scene] Enter: Boot Scene
+2026-09-22 12:13:08 [INFO] [BootScene] Engine initialization complete.
+2026-09-22 12:13:08 [INFO] [BootScene] Opening Main Menu.
+2026-09-22 12:13:08 [INFO] [Scene] Exit: Boot Scene
+2026-09-22 12:13:08 [INFO] [Scene] Enter: Main Menu
+2026-09-22 12:13:08 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-22 12:13:08 [INFO] [GameManager] Running...
+2026-09-22 12:13:14 [INFO] [MainMenuScene] Selected: Othello
+2026-09-22 12:13:14 [INFO] [Scene] Exit: Main Menu
+2026-09-22 12:13:14 [INFO] [Scene] Enter: Game Mode
+2026-09-22 12:13:14 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-22 12:13:27 [INFO] [GameModeScene] Selected mode: Human vs AI
+2026-09-22 12:13:27 [INFO] [Scene] Exit: Game Mode
+2026-09-22 12:13:27 [INFO] [Scene] Enter: Difficulty Selection
+2026-09-22 12:13:27 [INFO] [DifficultyScene] Selecting difficulty for Othello
+2026-09-22 12:13:34 [INFO] [DifficultyScene] Selected difficulty: Hard for Othello
+2026-09-22 12:13:34 [INFO] [Scene] Exit: Difficulty Selection
+2026-09-22 12:13:34 [INFO] [Scene] Enter: Game Scene
+2026-09-22 12:13:34 [INFO] [GameScene] Initializing game.
+2026-09-22 12:16:40 [INFO] [GameManager] Shutting down...
+2026-09-22 12:16:40 [INFO] [GameManager] Runtime: 214.45s
+2026-09-22 12:16:40 [INFO] [Mesh] Released.
+2026-09-22 12:16:40 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-22 12:16:40 [INFO] [Mesh] Released.
+2026-09-22 12:16:40 [INFO] [ShaderManager] Released 'text'.
+2026-09-22 12:16:40 [INFO] [Renderer] Shutdown
+2026-09-22 12:16:41 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-22 17:18:39 [INFO] Logger Initialized
+2026-09-22 17:18:39 [INFO] [GameManager] Initializing...
+2026-09-22 17:18:39 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-22 17:18:41 [INFO] [Window] Created 1280x720
+2026-09-22 17:18:41 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-22 17:18:41 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-22 17:18:41 [INFO] [Mesh] GPU mesh created.
+2026-09-22 17:18:41 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-22 17:18:41 [INFO] [Mesh] GPU mesh created.
+2026-09-22 17:18:41 [INFO] [Renderer] Rendering system initialized.
+2026-09-22 17:18:41 [INFO] [Input] Initialized
+2026-09-22 17:18:41 [INFO] [AssetManager] Initialized
+2026-09-22 17:18:41 [INFO] [Scene] Enter: Boot Scene
+2026-09-22 17:18:41 [INFO] [BootScene] Engine initialization complete.
+2026-09-22 17:18:41 [INFO] [BootScene] Opening Main Menu.
+2026-09-22 17:18:41 [INFO] [Scene] Exit: Boot Scene
+2026-09-22 17:18:41 [INFO] [Scene] Enter: Main Menu
+2026-09-22 17:18:41 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-22 17:18:41 [INFO] [GameManager] Running...
+2026-09-22 17:18:51 [INFO] [MainMenuScene] Selected: Tic-Tac-Toe
+2026-09-22 17:18:51 [INFO] [Scene] Exit: Main Menu
+2026-09-22 17:18:51 [INFO] [Scene] Enter: Game Mode
+2026-09-22 17:18:51 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-22 17:18:55 [INFO] [GameModeScene] Selected mode: Human vs Human
+2026-09-22 17:18:55 [INFO] [Scene] Exit: Game Mode
+2026-09-22 17:18:55 [INFO] [Scene] Enter: Game Scene
+2026-09-22 17:18:55 [INFO] [GameScene] Initializing game.
+2026-09-22 17:19:17 [INFO] [GameScene] Returning to Main Menu.
+2026-09-22 17:19:17 [INFO] [GameScene] Shutting down game.
+2026-09-22 17:19:17 [INFO] [Scene] Exit: Game Scene
+2026-09-22 17:19:17 [INFO] [Scene] Enter: Main Menu
+2026-09-22 17:19:17 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-22 17:19:19 [INFO] [MainMenuScene] Selected: Connect Four
+2026-09-22 17:19:19 [INFO] [Scene] Exit: Main Menu
+2026-09-22 17:19:19 [INFO] [Scene] Enter: Game Mode
+2026-09-22 17:19:19 [INFO] [GameModeScene] Choosing mode for Connect Four
+2026-09-22 17:19:23 [INFO] [GameModeScene] Selected mode: Human vs AI
+2026-09-22 17:19:23 [INFO] [Scene] Exit: Game Mode
+2026-09-22 17:19:23 [INFO] [Scene] Enter: Difficulty Selection
+2026-09-22 17:19:23 [INFO] [DifficultyScene] Selecting difficulty for Connect Four
+2026-09-22 17:19:26 [INFO] [DifficultyScene] Selected difficulty: Easy for Connect Four
+2026-09-22 17:19:26 [INFO] [Scene] Exit: Difficulty Selection
+2026-09-22 17:19:26 [INFO] [Scene] Enter: Game Scene
+2026-09-22 17:19:26 [INFO] [GameScene] Initializing game.
+2026-09-22 17:19:52 [INFO] [GameScene] Returning to Main Menu.
+2026-09-22 17:19:52 [INFO] [GameScene] Shutting down game.
+2026-09-22 17:19:52 [INFO] [Scene] Exit: Game Scene
+2026-09-22 17:19:52 [INFO] [Scene] Enter: Main Menu
+2026-09-22 17:19:52 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-22 17:19:56 [INFO] [MainMenuScene] Selected: Gomoku
+2026-09-22 17:19:56 [INFO] [Scene] Exit: Main Menu
+2026-09-22 17:19:56 [INFO] [Scene] Enter: Game Mode
+2026-09-22 17:19:56 [INFO] [GameModeScene] Choosing mode for Gomoku
+2026-09-22 17:19:58 [INFO] [GameModeScene] Selected mode: Human vs Human
+2026-09-22 17:19:58 [INFO] [Scene] Exit: Game Mode
+2026-09-22 17:19:58 [INFO] [Scene] Enter: Game Scene
+2026-09-22 17:19:58 [INFO] [GameScene] Initializing game.
+2026-09-22 17:20:13 [INFO] [GameScene] Returning to Main Menu.
+2026-09-22 17:20:13 [INFO] [GameScene] Shutting down game.
+2026-09-22 17:20:13 [INFO] [Scene] Exit: Game Scene
+2026-09-22 17:20:13 [INFO] [Scene] Enter: Main Menu
+2026-09-22 17:20:13 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-22 17:20:20 [INFO] [MainMenuScene] Selected: Tic-Tac-Toe
+2026-09-22 17:20:20 [INFO] [Scene] Exit: Main Menu
+2026-09-22 17:20:20 [INFO] [Scene] Enter: Game Mode
+2026-09-22 17:20:20 [INFO] [GameModeScene] Choosing mode for Tic-Tac-Toe
+2026-09-22 17:20:21 [INFO] [GameModeScene] Selected mode: Human vs AI
+2026-09-22 17:20:21 [INFO] [Scene] Exit: Game Mode
+2026-09-22 17:20:21 [INFO] [Scene] Enter: Difficulty Selection
+2026-09-22 17:20:21 [INFO] [DifficultyScene] Selecting difficulty for Tic-Tac-Toe
+2026-09-22 17:20:22 [INFO] [DifficultyScene] Selected difficulty: Impossible for Tic-Tac-Toe
+2026-09-22 17:20:22 [INFO] [Scene] Exit: Difficulty Selection
+2026-09-22 17:20:22 [INFO] [Scene] Enter: Game Scene
+2026-09-22 17:20:22 [INFO] [GameScene] Initializing game.
+2026-09-22 17:20:58 [INFO] [GameScene] Turn timeout! Player 1 forfeited.
+2026-09-22 17:21:19 [INFO] [GameScene] Game reset.
+2026-09-22 17:21:37 [INFO] [GameScene] Game reset.
+2026-09-22 17:21:50 [INFO] [GameScene] Game reset.
+2026-09-22 17:22:05 [INFO] [GameScene] Game reset.
+2026-09-22 17:22:18 [INFO] [GameScene] Game reset.
+2026-09-22 17:22:25 [INFO] [GameScene] Game reset.
+2026-09-22 17:24:10 [INFO] [GameScene] Game reset.
+2026-09-22 17:24:18 [INFO] [GameScene] Game reset.
+2026-09-22 17:24:26 [INFO] [GameScene] Game reset.
+2026-09-22 17:24:35 [INFO] [GameScene] Game reset.
+2026-09-22 17:24:45 [INFO] [GameScene] Game reset.
+2026-09-22 17:24:58 [INFO] [GameManager] Shutting down...
+2026-09-22 17:24:58 [INFO] [GameManager] Runtime: 378.71s
+2026-09-22 17:24:58 [INFO] [Mesh] Released.
+2026-09-22 17:24:58 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-22 17:24:58 [INFO] [Mesh] Released.
+2026-09-22 17:24:58 [INFO] [ShaderManager] Released 'text'.
+2026-09-22 17:24:58 [INFO] [Renderer] Shutdown
+2026-09-22 17:24:58 [INFO] [Window] Destroyed
+
+============================================================
+2026-09-23 16:45:59 [INFO] Logger Initialized
+2026-09-23 16:45:59 [INFO] [GameManager] Initializing...
+2026-09-23 16:45:59 [INFO] [Config] Loaded from E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\config\settings.json
+2026-09-23 16:45:59 [INFO] [Window] Created 1280x720
+2026-09-23 16:45:59 [INFO] [Renderer] OpenGL Version: 3.3.0 - Build 32.0.101.7084
+2026-09-23 16:45:59 [INFO] [ShaderManager] Loaded shader 'primitive'.
+2026-09-23 16:45:59 [INFO] [Mesh] GPU mesh created.
+2026-09-23 16:45:59 [INFO] [ShaderManager] Loaded shader 'text'.
+2026-09-23 16:45:59 [INFO] [Mesh] GPU mesh created.
+2026-09-23 16:45:59 [INFO] [Renderer] Rendering system initialized.
+2026-09-23 16:45:59 [INFO] [Input] Initialized
+2026-09-23 16:45:59 [INFO] [AssetManager] Initialized
+2026-09-23 16:45:59 [INFO] [Scene] Enter: Boot Scene
+2026-09-23 16:45:59 [INFO] [BootScene] Engine initialization complete.
+2026-09-23 16:45:59 [INFO] [BootScene] Opening Main Menu.
+2026-09-23 16:45:59 [INFO] [Scene] Exit: Boot Scene
+2026-09-23 16:45:59 [INFO] [Scene] Enter: Main Menu
+2026-09-23 16:45:59 [INFO] [MainMenuScene] Main Menu ready with 3x3 game grid
+2026-09-23 16:45:59 [INFO] [GameManager] Running...
+2026-09-23 16:46:01 [INFO] [MainMenuScene] Selected: Othello
+2026-09-23 16:46:01 [INFO] [Scene] Exit: Main Menu
+2026-09-23 16:46:01 [INFO] [Scene] Enter: Game Mode
+2026-09-23 16:46:01 [INFO] [GameModeScene] Choosing mode for Othello
+2026-09-23 16:46:03 [INFO] [GameModeScene] Selected mode: Human vs AI
+2026-09-23 16:46:03 [INFO] [Scene] Exit: Game Mode
+2026-09-23 16:46:03 [INFO] [Scene] Enter: Difficulty Selection
+2026-09-23 16:46:03 [INFO] [DifficultyScene] Selecting difficulty for Othello
+2026-09-23 16:46:04 [INFO] [DifficultyScene] Selected difficulty: Impossible for Othello
+2026-09-23 16:46:04 [INFO] [Scene] Exit: Difficulty Selection
+2026-09-23 16:46:04 [INFO] [Scene] Enter: Game Scene
+2026-09-23 16:46:04 [INFO] [GameScene] Initializing game.
+2026-09-23 16:47:05 [INFO] [GameManager] Shutting down...
+2026-09-23 16:47:05 [INFO] [GameManager] Runtime: 66.13s
+2026-09-23 16:47:05 [INFO] [Mesh] Released.
+2026-09-23 16:47:05 [INFO] [ShaderManager] Released 'primitive'.
+2026-09-23 16:47:05 [INFO] [Mesh] Released.
+2026-09-23 16:47:05 [INFO] [ShaderManager] Released 'text'.
+2026-09-23 16:47:05 [INFO] [Renderer] Shutdown
+2026-09-23 16:47:05 [INFO] [Window] Destroyed

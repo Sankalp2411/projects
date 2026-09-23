@@ -1,10 +1,10 @@
 # games/nine_mens_morris/board.py
-from copy import deepcopy
-from games.nine_mens_morris.constants import (BOARD_POSITIONS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,PIECES_PER_PLAYER,)
+from __future__ import annotations
+from games.nine_mens_morris.constants import (BOARD_POSITIONS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
 class NineMensMorrisBoard:
-    def __init__(self):
-        self.reset()
-    def reset(self):
+    def __init__(self) -> None:
+        self._board: list[int] = [EMPTY for _ in range(BOARD_POSITIONS)]
+    def reset(self) -> None:
         self._board = [EMPTY for _ in range(BOARD_POSITIONS)]
     def get_position(self, position):
         if not self.is_valid_position(position):
@@ -47,19 +47,19 @@ class NineMensMorrisBoard:
         self._board[source] = EMPTY
         self._board[destination] = player
         return True
-    def is_valid_position(self, position):
+    def is_valid_position(self, position: int) -> bool:
         return 0 <= position < BOARD_POSITIONS
-    def is_position_empty(self, position):
+    def is_position_empty(self, position: int) -> bool:
         if not self.is_valid_position(position):
             return False
         return self._board[position] == EMPTY
-    def get_available_positions(self):
+    def get_available_positions(self) -> list[int]:
         positions = []
         for position in range(BOARD_POSITIONS):
             if self._board[position] == EMPTY:
                 positions.append(position)
         return positions
-    def get_player_positions(self, player):
+    def get_player_positions(self, player: int) -> list[int]:
         if player not in (PLAYER_BLACK, PLAYER_WHITE):
             return []
         positions = []
@@ -67,7 +67,7 @@ class NineMensMorrisBoard:
             if self._board[position] == player:
                 positions.append(position)
         return positions
-    def count_pieces(self, player):
+    def count_pieces(self, player: int) -> int:
         if player not in (PLAYER_BLACK, PLAYER_WHITE):
             return 0
         count = 0
@@ -75,21 +75,21 @@ class NineMensMorrisBoard:
             if self._board[position] == player:
                 count += 1
         return count
-    def get_empty_count(self):
+    def get_empty_count(self) -> int:
         count = 0
         for position in range(BOARD_POSITIONS):
             if self._board[position] == EMPTY:
                 count += 1
         return count
-    def is_board_full(self):
+    def is_board_full(self) -> bool:
         return self.get_empty_count() == 0
-    def has_minimum_pieces(self, player):
+    def has_minimum_pieces(self, player: int) -> bool:
         return self.count_pieces(player) >= 3
-    def get_board_state(self):
-        return deepcopy(self._board)
-    def copy(self):
+    def get_board_state(self) -> list[int]:
+        return self._board[:]
+    def copy(self) -> NineMensMorrisBoard:
         board_copy = NineMensMorrisBoard()
-        board_copy._board = deepcopy(self._board)
+        board_copy._board = self._board[:]
         return board_copy
     def __str__(self):
         symbols = {EMPTY: ".",PLAYER_BLACK: "B",PLAYER_WHITE: "W",}

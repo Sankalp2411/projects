@@ -1,6 +1,6 @@
 # games/othello/rules.py
 from engine.interfaces.game_result import GameResult
-from games.othello.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
+from games.othello.constants import (BOARD_COLUMNS,BOARD_ROWS,PLAYER_BLACK,PLAYER_WHITE,)
 class OthelloRules:
     _DIRECTIONS = ((-1, -1),(-1, 0),(-1, 1),(0, -1),(0, 1),(1, -1),(1, 0),(1, 1),)
     @staticmethod
@@ -77,7 +77,7 @@ class OthelloRules:
     def is_game_over(cls, board):
         if board.is_board_full():
             return True
-        return (not cls.can_player_move(board,PLAYER_BLACK,) and not cls.can_player_move( board,PLAYER_WHITE,))
+        return not cls.can_player_move(board,PLAYER_BLACK,) and not cls.can_player_move(board,PLAYER_WHITE,)
     @staticmethod
     def get_winner(board):
         black_count = board.count_stones(PLAYER_BLACK)

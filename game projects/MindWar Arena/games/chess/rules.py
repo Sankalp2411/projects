@@ -1,6 +1,6 @@
 # games/chess/rules.py
 from engine.interfaces.game_result import GameResult
-from games.chess.constants import (BLACK_BISHOP,BLACK_KING,BLACK_KNIGHT,BLACK_PAWN,BLACK_QUEEN,BLACK_ROOK,BLACK_PAWN_DIRECTION,BISHOP_DIRECTIONS,BOARD_COLUMNS,BOARD_ROWS,CASTLING_KINGSIDE,CASTLING_QUEENSIDE,EMPTY,KING_DIRECTIONS,KING_MOVE_DISTANCE,KNIGHT_DIRECTIONS,KNIGHT_MOVE_DISTANCE,PLAYER_BLACK,PLAYER_WHITE,PROMOTION_BISHOP,PROMOTION_KNIGHT,PROMOTION_NONE,PROMOTION_QUEEN,PROMOTION_ROOK,QUEEN_DIRECTIONS,ROOK_DIRECTIONS,WHITE_BISHOP,WHITE_KING,WHITE_KNIGHT,WHITE_PAWN,WHITE_PAWN_DIRECTION,WHITE_QUEEN,WHITE_ROOK,WHITE_PROMOTION_ROW,BLACK_PROMOTION_ROW,)
+from games.chess.constants import (BISHOP_DIRECTIONS,BLACK_BISHOP,BLACK_KING,BLACK_KNIGHT,BLACK_PAWN,BLACK_PAWN_DIRECTION,BLACK_PROMOTION_ROW,BLACK_QUEEN,BLACK_ROOK,BOARD_COLUMNS,BOARD_ROWS,CASTLING_KINGSIDE,CASTLING_QUEENSIDE,EMPTY,KING_DIRECTIONS,KNIGHT_DIRECTIONS,PLAYER_BLACK,PLAYER_WHITE,PROMOTION_BISHOP,PROMOTION_KNIGHT,PROMOTION_NONE,PROMOTION_QUEEN,PROMOTION_ROOK,QUEEN_DIRECTIONS,ROOK_DIRECTIONS,WHITE_BISHOP,WHITE_KING,WHITE_KNIGHT,WHITE_PAWN,WHITE_PAWN_DIRECTION,WHITE_PROMOTION_ROW,WHITE_QUEEN,WHITE_ROOK,)
 class ChessRules:
     @staticmethod
     def get_opponent(player):
@@ -45,7 +45,7 @@ class ChessRules:
         return False
     @staticmethod
     def is_valid_position(row, column):
-        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+        return 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS
     @staticmethod
     def is_same_position(position_a, position_b):
         return position_a == position_b
@@ -76,7 +76,7 @@ class ChessRules:
     @staticmethod
     def get_promotion_piece(player, promotion_type):
         if promotion_type == PROMOTION_NONE:
-            return (WHITE_PAWN if player == PLAYER_WHITE else BLACK_PAWN)
+            return WHITE_PAWN if player == PLAYER_WHITE else BLACK_PAWN
         if player == PLAYER_WHITE:
             pieces = {PROMOTION_QUEEN: WHITE_QUEEN,PROMOTION_ROOK: WHITE_ROOK,PROMOTION_BISHOP: WHITE_BISHOP,PROMOTION_KNIGHT: WHITE_KNIGHT,}
         elif player == PLAYER_BLACK:
@@ -92,7 +92,7 @@ class ChessRules:
         piece = board.get_cell(from_row,move[1],)
         if not ChessRules.is_pawn(piece):
             return False
-        return (to_row == ChessRules.get_promotion_row(player))
+        return to_row == ChessRules.get_promotion_row(player)
     @staticmethod
     def is_valid_move_format(move):
         if not isinstance(move, tuple):
@@ -109,12 +109,12 @@ class ChessRules:
         if ChessRules.is_valid_position(next_row,column,):
             if board.is_empty(next_row,column,):
                 moves.append((row,column,next_row,column,))
-                double_row = (row + 2 * direction)
-                if (row == start_row and board.is_empty(double_row,column,)):
+                double_row = row + 2 * direction
+                if row == start_row and board.is_empty(double_row,column,):
                     moves.append((row,column,double_row,column,))
         for delta_column in (-1, 1):
             target_row = row + direction
-            target_column = (column + delta_column)
+            target_column = column + delta_column
             if not ChessRules.is_valid_position(target_row,target_column,):
                 continue
             target = board.get_cell(target_row,target_column,)
@@ -126,11 +126,11 @@ class ChessRules:
         moves = []
         for delta_row, delta_column in KNIGHT_DIRECTIONS:
             target_row = row + delta_row
-            target_column = (column + delta_column)
+            target_column = column + delta_column
             if not ChessRules.is_valid_position(target_row,target_column,):
                 continue
             target = board.get_cell(target_row,target_column,)
-            if (target == EMPTY or (ChessRules.is_piece_of_player(target,ChessRules.get_opponent(player),) and not ChessRules.is_king(target))):
+            if target == EMPTY or (ChessRules.is_piece_of_player(target,ChessRules.get_opponent(player),) and not ChessRules.is_king(target)):
                 moves.append((row,column,target_row,target_column,))
         return moves
     @staticmethod
@@ -139,13 +139,13 @@ class ChessRules:
         opponent = ChessRules.get_opponent(player)
         for delta_row, delta_column in directions:
             target_row = row + delta_row
-            target_column = (column + delta_column)
+            target_column = column + delta_column
             while ChessRules.is_valid_position(target_row,target_column,):
                 target = board.get_cell(target_row,target_column,)
                 if target == EMPTY:
                     moves.append((row,column,target_row,target_column,))
                 else:
-                    if (ChessRules.is_piece_of_player(target,opponent,) and not ChessRules.is_king(target)):
+                    if ChessRules.is_piece_of_player(target,opponent,) and not ChessRules.is_king(target):
                         moves.append((row,column,target_row,target_column,))
                     break
                 target_row += delta_row
@@ -166,13 +166,13 @@ class ChessRules:
         opponent = ChessRules.get_opponent(player)
         for delta_row, delta_column in KING_DIRECTIONS:
             target_row = row + delta_row
-            target_column = (column + delta_column)
+            target_column = column + delta_column
             if not ChessRules.is_valid_position(target_row,target_column,):
                 continue
             target = board.get_cell(target_row,target_column,)
             if target == EMPTY:
                 moves.append((row,column,target_row,target_column,))
-            elif (ChessRules.is_piece_of_player(target,opponent,) and not ChessRules.is_king(target)):
+            elif ChessRules.is_piece_of_player(target,opponent,) and not ChessRules.is_king(target):
                 moves.append((row,column,target_row,target_column,))
         return moves
     @staticmethod
@@ -197,37 +197,36 @@ class ChessRules:
     def is_square_attacked(board,row,column,by_player,):
         if not ChessRules.is_valid_player(by_player):
             return False
-        opponent = ChessRules.get_opponent(by_player)
-        pawn_direction = (ChessRules.get_pawn_direction(by_player))
+        pawn_direction = ChessRules.get_pawn_direction(by_player)
         pawn_row = row - pawn_direction
         for pawn_column in (column - 1,column + 1,):
             if not ChessRules.is_valid_position(pawn_row,pawn_column,):
                 continue
             piece = board.get_cell(pawn_row,pawn_column,)
-            if (piece == (WHITE_PAWN if by_player == PLAYER_WHITE else BLACK_PAWN)):
+            if piece == (WHITE_PAWN if by_player == PLAYER_WHITE else BLACK_PAWN):
                 return True
-        knight = (WHITE_KNIGHT if by_player == PLAYER_WHITE else BLACK_KNIGHT)
+        knight = WHITE_KNIGHT if by_player == PLAYER_WHITE else BLACK_KNIGHT
         for delta_row, delta_column in KNIGHT_DIRECTIONS:
             source_row = row + delta_row
-            source_column = (column + delta_column)
+            source_column = column + delta_column
             if not ChessRules.is_valid_position(source_row,source_column,):
                 continue
-            if board.get_cell(source_row,source_column,) == knight:
+            if (board.get_cell(source_row,source_column,) == knight):
                 return True
-        king = (WHITE_KING if by_player == PLAYER_WHITE else BLACK_KING)
+        king = WHITE_KING if by_player == PLAYER_WHITE else BLACK_KING
         for delta_row, delta_column in KING_DIRECTIONS:
             source_row = row + delta_row
-            source_column = (column + delta_column)
+            source_column = column + delta_column
             if not ChessRules.is_valid_position(source_row,source_column,):
                 continue
-            if board.get_cell(source_row,source_column,) == king:
+            if (board.get_cell(source_row,source_column,) == king):
                 return True
-        bishop = (WHITE_BISHOP if by_player == PLAYER_WHITE else BLACK_BISHOP)
-        rook = (WHITE_ROOK if by_player == PLAYER_WHITE else BLACK_ROOK)
-        queen = (WHITE_QUEEN if by_player == PLAYER_WHITE else BLACK_QUEEN)
+        bishop = WHITE_BISHOP if by_player == PLAYER_WHITE else BLACK_BISHOP
+        rook = WHITE_ROOK if by_player == PLAYER_WHITE else BLACK_ROOK
+        queen = WHITE_QUEEN if by_player == PLAYER_WHITE else BLACK_QUEEN
         for delta_row, delta_column in BISHOP_DIRECTIONS:
             source_row = row + delta_row
-            source_column = (column + delta_column)
+            source_column = column + delta_column
             while ChessRules.is_valid_position(source_row,source_column,):
                 piece = board.get_cell(source_row,source_column,)
                 if piece != EMPTY:
@@ -238,7 +237,7 @@ class ChessRules:
                 source_column += delta_column
         for delta_row, delta_column in ROOK_DIRECTIONS:
             source_row = row + delta_row
-            source_column = (column + delta_column)
+            source_column = column + delta_column
             while ChessRules.is_valid_position(source_row,source_column,):
                 piece = board.get_cell(source_row,source_column,)
                 if piece != EMPTY:
@@ -280,7 +279,7 @@ class ChessRules:
             return False
         capture_row = to_row - direction
         captured_piece = board.get_cell(capture_row,to_column,)
-        opponent_pawn = (BLACK_PAWN if player == PLAYER_WHITE else WHITE_PAWN)
+        opponent_pawn = BLACK_PAWN if player == PLAYER_WHITE else WHITE_PAWN
         return captured_piece == opponent_pawn
     @staticmethod
     def get_en_passant_capture_position(move,player,):
@@ -292,13 +291,11 @@ class ChessRules:
     @staticmethod
     def _get_castling_data(player,castling_type,):
         if player == PLAYER_WHITE:
-            row = 7
             if castling_type == CASTLING_KINGSIDE:
                 return ((7, 4),(7, 7),(7, 6),(7, 5),("white_kingside"),)
             if castling_type == CASTLING_QUEENSIDE:
                 return ((7, 4),(7, 0),(7, 2),(7, 3),("white_queenside"),)
         elif player == PLAYER_BLACK:
-            row = 0
             if castling_type == CASTLING_KINGSIDE:
                 return ((0, 4),(0, 7),(0, 6),(0, 5),("black_kingside"),)
             if castling_type == CASTLING_QUEENSIDE:
@@ -308,14 +305,14 @@ class ChessRules:
     def get_castling_type(move, player):
         if not ChessRules.is_valid_move_format(move):
             return None
-        from_row, from_column, to_row, to_column = (move[:4])
+        from_row, from_column, to_row, to_column = move[:4]
         if player == PLAYER_WHITE:
             expected_row = 7
         elif player == PLAYER_BLACK:
             expected_row = 0
         else:
             return None
-        if (from_row != expected_row or from_column != 4 or to_row != expected_row):
+        if from_row != expected_row or from_column != 4 or to_row != expected_row:
             return None
         if to_column == 6:
             return CASTLING_KINGSIDE
@@ -337,11 +334,11 @@ class ChessRules:
             return False
         king_row, king_column = king_position
         rook_row, rook_column = rook_position
-        king = (WHITE_KING if player == PLAYER_WHITE else BLACK_KING)
-        rook = (WHITE_ROOK if player == PLAYER_WHITE else BLACK_ROOK)
-        if board.get_cell(king_row,king_column,) != king:
+        king = WHITE_KING if player == PLAYER_WHITE else BLACK_KING
+        rook = WHITE_ROOK if player == PLAYER_WHITE else BLACK_ROOK
+        if (board.get_cell(king_row,king_column,) != king):
             return False
-        if board.get_cell(rook_row,rook_column,) != rook:
+        if (board.get_cell(rook_row,rook_column,) != rook):
             return False
         if castling_type == CASTLING_KINGSIDE:
             empty_columns = (5, 6)
@@ -353,10 +350,10 @@ class ChessRules:
         opponent = ChessRules.get_opponent(player)
         if ChessRules.is_square_attacked(board,king_row,king_column,opponent,):
             return False
-        transit_column = (5 if castling_type == CASTLING_KINGSIDE else 3)
+        transit_column = 5 if castling_type == CASTLING_KINGSIDE else 3
         if ChessRules.is_square_attacked(board,king_row,transit_column,opponent,):
             return False
-        destination_column = (6 if castling_type == CASTLING_KINGSIDE else 2)
+        destination_column = 6 if castling_type == CASTLING_KINGSIDE else 2
         if ChessRules.is_square_attacked(board,king_row,destination_column,opponent,):
             return False
         return True
@@ -380,12 +377,12 @@ class ChessRules:
             return False
         if not ChessRules.is_valid_player(player):
             return False
-        from_row, from_column, to_row, to_column = (move[:4])
+        from_row, from_column, to_row, to_column = move[:4]
         if not ChessRules.is_valid_position(from_row,from_column,):
             return False
         if not ChessRules.is_valid_position(to_row,to_column,):
             return False
-        if (from_row == to_row and from_column == to_column):
+        if from_row == to_row and from_column == to_column:
             return False
         piece = board.get_cell(from_row,from_column,)
         if not ChessRules.is_piece_of_player(piece,player,):
@@ -393,7 +390,7 @@ class ChessRules:
         target = board.get_cell(to_row,to_column,)
         if ChessRules.is_piece_of_player(target,player,):
             return False
-        if ChessRules.get_castling_type(move,player,) is not None:
+        if (ChessRules.get_castling_type(move,player,) is not None):
             return ChessRules.is_castling_move(board,move,player,castling_rights,)
         if ChessRules.is_en_passant_move(board,move,player,en_passant_target,):
             return True
@@ -412,16 +409,16 @@ class ChessRules:
         for row in range(BOARD_ROWS):
             for column in range(BOARD_COLUMNS):
                 piece = board.get_cell(row,column,)
-                if not ChessRules.is_piece_of_player(piece,player):
+                if not ChessRules.is_piece_of_player(piece, player):
                     continue
-                candidate_moves = (ChessRules.get_piece_moves(board,row,column,player,))
+                candidate_moves = ChessRules.get_piece_moves(board,row,column,player,)
                 for move in candidate_moves:
                     if ChessRules.is_legal_move(board,move,player,en_passant_target,castling_rights,):
                         legal_moves.append(move)
         if en_passant_target is not None:
-            target_row, target_column = (en_passant_target)
-            direction = (ChessRules.get_pawn_direction(player))
-            source_row = (target_row - direction)
+            target_row, target_column = en_passant_target
+            direction = ChessRules.get_pawn_direction(player)
+            source_row = target_row - direction
             for source_column in (target_column - 1,target_column + 1,):
                 if not ChessRules.is_valid_position(source_row,source_column,):
                     continue
@@ -435,7 +432,7 @@ class ChessRules:
                     legal_moves.append(move)
         king_position = board.find_king(player)
         if king_position is not None:
-            king_row, king_column = (king_position)
+            king_row, king_column = king_position
             if king_column == 4:
                 for destination_column in (6,2,):
                     move = (king_row,king_column,king_row,destination_column,)
@@ -453,7 +450,7 @@ class ChessRules:
             promotion_type = move[4]
         else:
             promotion_type = PROMOTION_NONE
-        from_row, from_column, to_row, to_column = (move[:4])
+        from_row, from_column, to_row, to_column = move[:4]
         if not ChessRules.is_valid_position(from_row,from_column,):
             return False
         if not ChessRules.is_valid_position(to_row,to_column,):
@@ -461,11 +458,10 @@ class ChessRules:
         piece = board.get_cell(from_row,from_column,)
         if not ChessRules.is_piece_of_player(piece,player,):
             return False
-        target = board.get_cell(to_row,to_column,)
-        if ChessRules.get_castling_type(move,player,) is not None:
+        if (ChessRules.get_castling_type(move,player,) is not None):
             if not ChessRules.is_castling_move(board,move,player,castling_rights,):
                 return False
-            rook_move = (ChessRules.get_castling_rook_move(move,player,))
+            rook_move = ChessRules.get_castling_rook_move(move,player,)
             if rook_move is None:
                 return False
             (rook_from,rook_to,) = rook_move
@@ -475,20 +471,19 @@ class ChessRules:
             board.set_cell(rook_to[0],rook_to[1],rook_piece,)
             board.set_cell(rook_from[0],rook_from[1],EMPTY,)
             return True
-        is_en_passant = (ChessRules.is_en_passant_move(board,move,player,en_passant_target,))
+        is_en_passant = ChessRules.is_en_passant_move(board,move,player,en_passant_target,)
         if is_en_passant:
-            capture_position = (ChessRules.get_en_passant_capture_position(move,player,))
+            capture_position = ChessRules.get_en_passant_capture_position(move,player,)
             if capture_position is None:
                 return False
-            capture_row, capture_column = (capture_position)
+            capture_row, capture_column = capture_position
             board.set_cell(capture_row,capture_column,EMPTY,)
         if ChessRules.is_promotion_move(board,move,player,):
             if not ChessRules.is_valid_promotion_type(promotion_type):
                 return False
             if promotion_type == PROMOTION_NONE:
                 promotion_type = PROMOTION_QUEEN
-            promoted_piece = (
-                ChessRules.get_promotion_piece(player,promotion_type,))
+            promoted_piece = ChessRules.get_promotion_piece(player,promotion_type,)
             if promoted_piece == EMPTY:
                 return False
             board.set_cell(from_row,from_column,EMPTY,)
@@ -512,6 +507,37 @@ class ChessRules:
         target = board.get_cell(to_row,to_column,)
         return (target != EMPTY and ChessRules.is_piece_of_player(target,ChessRules.get_opponent(player),) and not ChessRules.is_king(target))
     @staticmethod
+    def is_insufficient_material(board):
+        white_pieces = []
+        black_pieces = []
+        for r in range(BOARD_ROWS):
+            for c in range(BOARD_COLUMNS):
+                p = board.get_cell(r, c)
+                if p == EMPTY:
+                    continue
+                if ChessRules.is_white_piece(p):
+                    white_pieces.append((p, r, c))
+                elif ChessRules.is_black_piece(p):
+                    black_pieces.append((p, r, c))
+        white_non_kings = [p for p in white_pieces if not ChessRules.is_king(p[0])]
+        black_non_kings = [p for p in black_pieces if not ChessRules.is_king(p[0])]
+        for p, _, _ in white_non_kings + black_non_kings:
+            if ChessRules.is_pawn(p) or ChessRules.is_rook(p) or ChessRules.is_queen(p):
+                return False
+        if len(white_non_kings) == 0 and len(black_non_kings) == 0:
+            return True
+        if len(white_non_kings) == 1 and len(black_non_kings) == 0:
+            return True
+        if len(black_non_kings) == 1 and len(white_non_kings) == 0:
+            return True
+        if len(white_non_kings) == 1 and len(black_non_kings) == 1:
+            wp, wr, wc = white_non_kings[0]
+            bp, br, bc = black_non_kings[0]
+            if ChessRules.is_bishop(wp) and ChessRules.is_bishop(bp):
+                if (wr + wc) % 2 == (br + bc) % 2:
+                    return True
+        return False
+    @staticmethod
     def evaluate_game(board,player,en_passant_target=None,castling_rights=None,):
         result = GameResult()
         if board.find_king(PLAYER_WHITE) is None:
@@ -522,11 +548,15 @@ class ChessRules:
             result.winner = PLAYER_WHITE
             result.game_over = True
             return result
+        if ChessRules.is_insufficient_material(board):
+            result.draw = True
+            result.game_over = True
+            return result
         legal_moves = ChessRules.get_legal_moves(board,player,en_passant_target,castling_rights,)
         if legal_moves:
             return result
         if ChessRules.is_in_check(board,player,):
-            result.winner = (ChessRules.get_opponent(player))
+            result.winner = ChessRules.get_opponent(player)
             result.game_over = True
             return result
         result.draw = True
@@ -534,7 +564,7 @@ class ChessRules:
         return result
     @staticmethod
     def get_piece_value(piece):
-        from games.chess.constants import (PAWN_VALUE,KNIGHT_VALUE,BISHOP_VALUE,ROOK_VALUE,QUEEN_VALUE,KING_VALUE,EMPTY,)
+        from games.chess.constants import (BISHOP_VALUE,EMPTY,KING_VALUE,KNIGHT_VALUE,PAWN_VALUE,QUEEN_VALUE,ROOK_VALUE,)
         values = {EMPTY: 0,WHITE_PAWN: PAWN_VALUE,WHITE_KNIGHT: KNIGHT_VALUE,WHITE_BISHOP: BISHOP_VALUE,WHITE_ROOK: ROOK_VALUE,WHITE_QUEEN: QUEEN_VALUE,WHITE_KING: KING_VALUE,BLACK_PAWN: PAWN_VALUE,BLACK_KNIGHT: KNIGHT_VALUE,BLACK_BISHOP: BISHOP_VALUE,BLACK_ROOK: ROOK_VALUE,BLACK_QUEEN: QUEEN_VALUE,BLACK_KING: KING_VALUE,}
         return values.get(piece,0,)
     @staticmethod

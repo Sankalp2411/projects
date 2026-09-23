@@ -1,5 +1,5 @@
 # games/gomoku/board_renderer.py
-from games.gomoku.constants import (BOARD_ROWS, BOARD_COLUMNS, CELL_SIZE, BOARD_PADDING, GRID_COLOR, PLAYER_BLACK, PLAYER_WHITE, PLAYER_BLACK_COLOR, PLAYER_WHITE_COLOR, STONE_RADIUS, WIN_LINE_COLOR,)
+from games.gomoku.constants import (BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CELL_SIZE,GRID_COLOR,PLAYER_BLACK,PLAYER_BLACK_COLOR,PLAYER_WHITE,PLAYER_WHITE_COLOR,STONE_RADIUS,WIN_LINE_COLOR,)
 class BoardRenderer:
     def __init__(self, renderer):
         self.renderer = renderer
@@ -11,19 +11,19 @@ class BoardRenderer:
             for column in range(BOARD_COLUMNS):
                 value = board.get_cell(row, column)
                 if value == PLAYER_BLACK:
-                    self.draw_stone(row, column, PLAYER_BLACK_COLOR,)
+                    self.draw_stone(row,column,PLAYER_BLACK_COLOR,)
                 elif value == PLAYER_WHITE:
-                    self.draw_stone(row, column, PLAYER_WHITE_COLOR, )
-        if (game_result is not None and game_result.winning_cells):
+                    self.draw_stone(row,column,PLAYER_WHITE_COLOR,)
+        if game_result is not None and game_result.winning_cells:
             self.draw_winning_line(game_result.winning_cells)
     def draw_grid(self):
-        self.renderer.draw_grid(origin=( self.origin_x, self.origin_y, ), rows=BOARD_ROWS, columns=BOARD_COLUMNS, cell_size=CELL_SIZE, color=GRID_COLOR, )
+        self.renderer.draw_grid(origin=(self.origin_x,self.origin_y,),rows=BOARD_ROWS,columns=BOARD_COLUMNS,cell_size=CELL_SIZE,color=GRID_COLOR,)
     def draw_stone(self, row, column, color):
-        center = self.get_cell_center(row, column,)
-        self.renderer.draw_circle(center=center, radius=STONE_RADIUS, color=color, )
+        center = self.get_cell_center(row,column,)
+        self.renderer.draw_circle(center=center,radius=STONE_RADIUS,color=color,)
     def get_cell_center(self, row, column):
-        x = (self.origin_x + column * CELL_SIZE + CELL_SIZE / 2)
-        y = (self.origin_y + row * CELL_SIZE + CELL_SIZE / 2)
+        x = self.origin_x + column * CELL_SIZE + CELL_SIZE / 2
+        y = self.origin_y + row * CELL_SIZE + CELL_SIZE / 2
         return (x, y)
     def contains_point(self, x, y):
         board_width = BOARD_COLUMNS * CELL_SIZE
@@ -40,6 +40,6 @@ class BoardRenderer:
             return
         start = self.get_cell_center(*winning_cells[0])
         end = self.get_cell_center(*winning_cells[-1])
-        self.renderer.draw_line(start=start, end=end, color=WIN_LINE_COLOR,)
+        self.renderer.draw_line(start=start,end=end,color=WIN_LINE_COLOR,)
     def reset(self):
         pass

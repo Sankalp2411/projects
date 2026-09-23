@@ -1,5 +1,5 @@
 # games/othello/overlay_renderer.py
-from games.othello.constants import (GAME_DRAW,GAME_OVER,PLAYER_BLACK,PLAYER_WHITE,)
+from games.othello.constants import (PLAYER_BLACK,PLAYER_WHITE,)
 class OthelloOverlayRenderer:
     def __init__(self):
         self.message = ""
@@ -17,12 +17,12 @@ class OthelloOverlayRenderer:
         black_count = board.count_stones(PLAYER_BLACK)
         white_count = board.count_stones(PLAYER_WHITE)
         if result.draw:
-            return (f"Draw-Black:{black_count}"f"White:{white_count}")
+            return f"Draw-Black:{black_count}White:{white_count}"
         if result.winner == PLAYER_BLACK:
-            return (f"Black Wins-Black:{black_count}"f"White:{white_count}")
+            return f"Black Wins-Black:{black_count}White:{white_count}"
         if result.winner == PLAYER_WHITE:
-            return (f"White Wins-Black:{black_count}"f"White:{white_count}")
-        return (f"Game Over-Black:{black_count}"f"White:{white_count}")
+            return f"White Wins-Black:{black_count}White:{white_count}"
+        return f"Game Over-Black:{black_count}White:{white_count}"
     def reset(self):
         self.message = ""
         self.visible = False

@@ -1,4 +1,4 @@
-#games/tic_tac_toe/constants.py
+# games/tic_tac_toe/constants.py
 GAME_NAME = "Tic-Tac-Toe"
 GAME_VERSION = "1.0.0"
 BOARD_ROWS = 3

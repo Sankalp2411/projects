@@ -29,7 +29,7 @@ class ChessOverlayRenderer:
         if winner is None:
             self._draw_message("CHECKMATE")
             return
-        self._draw_message(f"CHECKMATE - "f"{self._get_player_name(winner)} WINS")
+        self._draw_message(f"CHECKMATE - {self._get_player_name(winner)} WINS")
     def draw_stalemate(self):
         self._draw_message("STALEMATE - DRAW")
     def draw_check(self):

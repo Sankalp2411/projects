@@ -1,6 +1,6 @@
-#games/tic_tac_toe/rules.py
+# games/tic_tac_toe/rules.py
 from engine.interfaces.game_result import GameResult
-from games.tic_tac_toe.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,NO_WINNER,)
+from games.tic_tac_toe.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,NO_WINNER,)
 class TicTacToeRules:
     @staticmethod
     def check_winner(board):
@@ -82,7 +82,7 @@ class TicTacToeRules:
         if first != EMPTY:
             winner = True
             for index in range(1, BOARD_ROWS):
-                if (board.get_cell(index,BOARD_COLUMNS - 1 - index,)!= first):
+                if (board.get_cell(index,BOARD_COLUMNS - 1 - index,) != first):
                     winner = False
                     break
             if winner:
@@ -90,7 +90,18 @@ class TicTacToeRules:
         return []
     @staticmethod
     def is_draw(board):
-        return (TicTacToeRules.check_winner(board) == NO_WINNER and board.is_board_full())
+        return TicTacToeRules.check_winner(board) == NO_WINNER and board.is_board_full()
+    @staticmethod
+    def get_legal_moves(board):
+        moves = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if board.is_cell_empty(row, column):
+                    moves.append((row, column))
+        return moves
+    @staticmethod
+    def is_valid_move(board, row, column):
+        return board.is_valid_position(row, column) and board.is_cell_empty(row, column)
     @staticmethod
     def is_game_over(board):
         if TicTacToeRules.check_winner(board) != NO_WINNER:

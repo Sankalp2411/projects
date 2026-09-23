@@ -1,4 +1,4 @@
-#game/scene/boot_scene.py
+# game/scene/boot_scene.py
 from engine.core.scene import Scene
 from engine.utils.logger import Logger
 from game.scenes.main_menu_scene import MainMenuScene

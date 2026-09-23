@@ -1,6 +1,6 @@
 # games/nine_mens_morris/board_renderer.py
 import math
-from games.nine_mens_morris.constants import (BOARD_LEFT,BOARD_TOP,OUTER_SIZE,MIDDLE_SIZE,INNER_SIZE,STONE_RADIUS,POSITION_RADIUS,GRID_COLOR,POSITION_COLOR,PLAYER_BLACK,PLAYER_WHITE,PLAYER_BLACK_COLOR,PLAYER_WHITE_COLOR,SELECTED_COLOR,WIN_LINE_COLOR,POSITION_COORDINATES,)
+from games.nine_mens_morris.constants import (BOARD_LEFT,BOARD_TOP,GRID_COLOR,INNER_SIZE,MIDDLE_SIZE,OUTER_SIZE,PLAYER_BLACK,PLAYER_BLACK_COLOR,PLAYER_WHITE,PLAYER_WHITE_COLOR,POSITION_COLOR,POSITION_COORDINATES,POSITION_RADIUS,SELECTED_COLOR,STONE_RADIUS,WIN_LINE_COLOR,)
 class BoardRenderer:
     def __init__(self, renderer):
         self.renderer = renderer
@@ -16,27 +16,25 @@ class BoardRenderer:
                 self.draw_stone(position,PLAYER_WHITE_COLOR,)
             else:
                 self.draw_position(position)
-        if ( game_result is not None and game_result.winning_cells):
+        if game_result is not None and game_result.winning_cells:
             self.draw_winning_line(game_result.winning_cells)
         if selected_position is not None:
             self.draw_selection(selected_position)
     def draw_board(self):
         outer_left = BOARD_LEFT
         outer_top = BOARD_TOP
-        outer_right = (BOARD_LEFT + OUTER_SIZE)
-        outer_bottom = (BOARD_TOP + OUTER_SIZE)
+        outer_right = BOARD_LEFT + OUTER_SIZE
+        outer_bottom = BOARD_TOP + OUTER_SIZE
         middle_offset = (OUTER_SIZE - MIDDLE_SIZE) / 2
-        middle_left = (BOARD_LEFT + middle_offset)
-        middle_top = (BOARD_TOP + middle_offset)
-        middle_right = (middle_left + MIDDLE_SIZE)
-        middle_bottom = (middle_top + MIDDLE_SIZE)
+        middle_left = BOARD_LEFT + middle_offset
+        middle_top = BOARD_TOP + middle_offset
         inner_offset = (OUTER_SIZE - INNER_SIZE) / 2
-        inner_left = (BOARD_LEFT + inner_offset)
-        inner_top = (BOARD_TOP + inner_offset)
-        inner_right = (inner_left + INNER_SIZE)
-        inner_bottom = (inner_top + INNER_SIZE)
-        center_x = (BOARD_LEFT + OUTER_SIZE / 2)
-        center_y = (BOARD_TOP + OUTER_SIZE / 2)
+        inner_left = BOARD_LEFT + inner_offset
+        inner_top = BOARD_TOP + inner_offset
+        inner_right = inner_left + INNER_SIZE
+        inner_bottom = inner_top + INNER_SIZE
+        center_x = BOARD_LEFT + OUTER_SIZE / 2
+        center_y = BOARD_TOP + OUTER_SIZE / 2
         self.renderer.draw_rectangle(position=(outer_left,outer_top,),size=(OUTER_SIZE,OUTER_SIZE,),color=GRID_COLOR,)
         self.renderer.draw_rectangle(position=(middle_left,middle_top,),size=(MIDDLE_SIZE,MIDDLE_SIZE,),color=GRID_COLOR,)
         self.renderer.draw_rectangle(position=(inner_left,inner_top,),size=(INNER_SIZE,INNER_SIZE,),color=GRID_COLOR,)
@@ -62,20 +60,20 @@ class BoardRenderer:
     def contains_point(self, x, y):
         left = BOARD_LEFT
         top = BOARD_TOP
-        right = (BOARD_LEFT + OUTER_SIZE)
-        bottom = (BOARD_TOP + OUTER_SIZE)
-        return (left - 25 <= x <= right + 25 and top - 25 <= y <= bottom + 25)
+        right = BOARD_LEFT + OUTER_SIZE
+        bottom = BOARD_TOP + OUTER_SIZE
+        return left - 25 <= x <= right + 25 and top - 25 <= y <= bottom + 25
     def screen_to_position(self, x, y):
         if not self.contains_point(x, y):
             return None
         closest_position = None
         closest_distance = float("inf")
         for (position,coordinate,) in POSITION_COORDINATES.items():
-            dx = (x - coordinate[0])
-            dy = (y - coordinate[1])
+            dx = x - coordinate[0]
+            dy = y - coordinate[1]
             distance = math.sqrt(dx * dx + dy * dy)
-            if (distance <= STONE_RADIUS + 15):
-                if (distance < closest_distance):
+            if distance <= STONE_RADIUS + 15:
+                if distance < closest_distance:
                     closest_distance = distance
                     closest_position = position
         return closest_position

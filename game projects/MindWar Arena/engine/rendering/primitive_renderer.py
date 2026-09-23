@@ -1,16 +1,24 @@
-#engine/rendering/primitive_renderer.py
-from __future__ import annotations
+# engine/rendering/primitive_renderer.py
 import math
+from pathlib import Path
 import moderngl
+from engine.rendering.camera2d import Camera2D
 from engine.rendering.mesh import Mesh
 from engine.rendering.shader_manager import ShaderManager
-from engine.rendering.camera2d import Camera2D
+_SHADERS_DIR = Path(__file__).resolve().parent / "shaders"
+_UNIT_CIRCLE_CACHE: dict[int, list[tuple[float, float]]] = {}
+def _get_circle_offsets(segments: int) -> list[tuple[float, float]]:
+    if segments not in _UNIT_CIRCLE_CACHE:
+        _UNIT_CIRCLE_CACHE[segments] = [(math.cos((i / segments) * math.pi * 2), math.sin((i / segments) * math.pi * 2)) for i in range(segments + 1)]
+    return _UNIT_CIRCLE_CACHE[segments]
 class PrimitiveRenderer:
-    def __init__(self,context: moderngl.Context,camera: Camera2D,):
+    def __init__(self, context: moderngl.Context, camera: Camera2D):
         self.context = context
         self.camera = camera
         self.shader_manager = ShaderManager(context)
-        self.program = self.shader_manager.load_program("primitive","engine/rendering/shaders/primitive.vert","engine/rendering/shaders/primitive.frag",)
+        vert_path = str(_SHADERS_DIR / "primitive.vert")
+        frag_path = str(_SHADERS_DIR / "primitive.frag")
+        self.program = self.shader_manager.load_program("primitive", vert_path, frag_path)
         self.mesh = Mesh(context=self.context,program=self.program,vertices=[0.0, 0.0],dynamic=True,)
     def _set_color(self, color):
         if len(color) == 3:
@@ -51,36 +59,38 @@ class PrimitiveRenderer:
         y = center[1]
         self.draw_line((x - half, y - half),(x + half, y + half),color,)
         self.draw_line((x + half, y - half),(x - half, y + half),color,)
-    def draw_circle(self,center,radius,color,segments=64,):
+    def draw_circle(self, center, radius, color, segments=64):
         self._set_color(color)
+        offsets = _get_circle_offsets(segments)
+        cx, cy = center
         vertices = []
-        for i in range(segments + 1):
-            angle = ((i / segments) * math.pi * 2)
-            x = (center[0] + math.cos(angle) * radius)
-            y = (center[1] + math.sin(angle) * radius)
-            vertices.extend([x,y,])
+        for cos_a, sin_a in offsets:
+            vertices.extend([cx + cos_a * radius, cy + sin_a * radius])
         self.mesh.update_vertices(vertices)
         self.mesh.render(moderngl.LINE_STRIP)
-    def draw_filled_circle(self,center,radius,color,segments=64,):
+    def draw_filled_circle(self, center, radius, color, segments=64):
         self._set_color(color)
-        vertices = [center[0],center[1],]
-        for i in range(segments + 1):
-            angle = ((i / segments) * math.pi * 2)
-            x = (center[0] + math.cos(angle) * radius)
-            y = (center[1] + math.sin(angle) * radius)
-            vertices.extend([x,y,])
+        offsets = _get_circle_offsets(segments)
+        cx, cy = center
+        vertices = [cx, cy]
+        for cos_a, sin_a in offsets:
+            vertices.extend([cx + cos_a * radius, cy + sin_a * radius])
         self.mesh.update_vertices(vertices)
         self.mesh.render(moderngl.TRIANGLE_FAN)
-    def draw_grid(self,origin,rows,columns,cell_size,color,):
+    def draw_grid(self, origin, rows, columns, cell_size, color):
         ox, oy = origin
         width = columns * cell_size
         height = rows * cell_size
+        self._set_color(color)
+        vertices = []
         for row in range(rows + 1):
             y = oy + row * cell_size
-            self.draw_line((ox, y),(ox + width, y),color,)
+            vertices.extend([ox, y, ox + width, y])
         for column in range(columns + 1):
             x = ox + column * cell_size
-            self.draw_line((x, oy),(x, oy + height),color,)
+            vertices.extend([x, oy, x, oy + height])
+        self.mesh.update_vertices(vertices)
+        self.mesh.render(moderngl.LINES)
     def release(self):
         self.mesh.release()
         self.shader_manager.release()

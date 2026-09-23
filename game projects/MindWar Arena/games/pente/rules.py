@@ -1,6 +1,6 @@
 # games/pente/rules.py
 from engine.interfaces.game_result import GameResult
-from games.pente.constants import (BOARD_ROWS,BOARD_COLUMNS,WIN_LENGTH,EMPTY,PLAYER_BLACK,PLAYER_WHITE,NO_WINNER,CAPTURE_WIN_PAIRS,)
+from games.pente.constants import (BOARD_COLUMNS,BOARD_ROWS,CAPTURE_WIN_PAIRS,EMPTY,NO_WINNER,PLAYER_BLACK,PLAYER_WHITE,WIN_LENGTH,)
 class PenteRules:
     _DIRECTIONS = ((0, 1),(1, 0),(1, 1),(1, -1),)
     @staticmethod
@@ -74,11 +74,11 @@ class PenteRules:
             return None
         if not board.is_valid_position(third_row,third_column,):
             return None
-        if board.get_cell(first_row,first_column,) != opponent:
+        if (board.get_cell(first_row,first_column,) != opponent):
             return None
-        if board.get_cell(second_row,second_column,) != opponent:
+        if (board.get_cell(second_row,second_column,) != opponent):
             return None
-        if board.get_cell(third_row,third_column,) != player:
+        if (board.get_cell(third_row,third_column,) != player):
             return None
         return ((first_row, first_column),(second_row, second_column),)
     @staticmethod
@@ -145,7 +145,7 @@ class PenteRules:
         if winner != NO_WINNER:
             result.winner = winner
             result.game_over = True
-            result.winning_cells = (PenteRules.get_winning_cells(board))
+            result.winning_cells = PenteRules.get_winning_cells(board)
             return result
         if capture_counts is not None:
             black_captures = capture_counts.get(PLAYER_BLACK,0,)
@@ -170,7 +170,7 @@ class PenteRules:
             next_column = column + column_delta * index
             if not board.is_valid_position(next_row,next_column,):
                 return False
-            if board.get_cell(next_row,next_column,) != player:
+            if (board.get_cell(next_row,next_column,) != player):
                 return False
         return True
     @staticmethod
@@ -181,7 +181,7 @@ class PenteRules:
             next_column = column + column_delta * index
             if not board.is_valid_position(next_row,next_column,):
                 return []
-            if board.get_cell(next_row,next_column,) != player:
+            if (board.get_cell(next_row,next_column,) != player):
                 return []
             cells.append((next_row,next_column,))
         return cells

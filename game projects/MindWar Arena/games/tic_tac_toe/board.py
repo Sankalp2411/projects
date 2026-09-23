@@ -1,11 +1,10 @@
-#games/tic_tac_toe/board.py
-from copy import deepcopy
-from games.tic_tac_toe.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,)
+# games/tic_tac_toe/board.py
+from games.tic_tac_toe.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,)
 class TicTacToeBoard:
     def __init__(self):
         self.reset()
     def reset(self):
-        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)]for _ in range(BOARD_ROWS)]
+        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)] for _ in range(BOARD_ROWS)]
     def get_cell(self, row, column):
         return self._board[row][column]
     def set_cell(self, row, column, value):
@@ -31,13 +30,13 @@ class TicTacToeBoard:
                     moves.append((row, column))
         return moves
     def is_valid_position(self, row, column):
-        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+        return 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS
     def copy(self):
         board_copy = TicTacToeBoard()
-        board_copy._board = deepcopy(self._board)
+        board_copy._board = [row[:] for row in self._board]
         return board_copy
     def get_board_state(self):
-        return deepcopy(self._board)
+        return [row[:] for row in self._board]
     def __str__(self):
         symbols = {EMPTY: ".",1: "X",2: "O",}
         rows = []

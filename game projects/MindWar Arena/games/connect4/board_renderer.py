@@ -1,5 +1,5 @@
-#games/connect4/board_renderer.py
-from games.connect4.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,PLAYER_RED,PLAYER_YELLOW,PLAYER_RED_COLOR,PLAYER_YELLOW_COLOR,DISC_RADIUS,WIN_LINE_COLOR,)
+# games/connect4/board_renderer.py
+from games.connect4.constants import (BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CELL_SIZE,DISC_RADIUS,GRID_COLOR,PLAYER_RED,PLAYER_RED_COLOR,PLAYER_YELLOW,PLAYER_YELLOW_COLOR,WIN_LINE_COLOR,)
 class BoardRenderer:
     def __init__(self, renderer):
         self.renderer = renderer
@@ -22,13 +22,13 @@ class BoardRenderer:
         center = self.get_cell_center(row, column)
         self.renderer.draw_circle(center=center,radius=DISC_RADIUS,color=color,)
     def get_cell_center(self, row, column):
-        x = (self.origin_x + column * CELL_SIZE + CELL_SIZE / 2)
-        y = (self.origin_y + row * CELL_SIZE + CELL_SIZE / 2 )
+        x = self.origin_x + column * CELL_SIZE + CELL_SIZE / 2
+        y = self.origin_y + row * CELL_SIZE + CELL_SIZE / 2
         return (x, y)
     def contains_point(self, x, y):
         board_width = BOARD_COLUMNS * CELL_SIZE
         board_height = BOARD_ROWS * CELL_SIZE
-        return (self.origin_x <= x < self.origin_x + board_width and self.origin_y <= y < self.origin_y + board_height )
+        return (self.origin_x <= x < self.origin_x + board_width and self.origin_y <= y < self.origin_y + board_height)
     def screen_to_column(self, x, y):
         if not self.contains_point(x, y):
             return None
@@ -38,6 +38,6 @@ class BoardRenderer:
             return
         start = self.get_cell_center(*winning_cells[0])
         end = self.get_cell_center(*winning_cells[-1])
-        self.renderer.draw_line(start=start, end=end, color=WIN_LINE_COLOR,)
+        self.renderer.draw_line(start=start,end=end,color=WIN_LINE_COLOR,)
     def reset(self):
         pass

@@ -1,6 +1,6 @@
 # games/gomoku/rules.py
 from engine.interfaces.game_result import GameResult
-from games.gomoku.constants import (BOARD_ROWS,BOARD_COLUMNS,WIN_LENGTH,EMPTY,NO_WINNER,)
+from games.gomoku.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,NO_WINNER,WIN_LENGTH,)
 class GomokuRules:
     _DIRECTIONS = ((0, 1),(1, 0),(1, 1),(1, -1),)
     @staticmethod
@@ -11,7 +11,7 @@ class GomokuRules:
                 if player == EMPTY:
                     continue
                 for row_delta, column_delta in GomokuRules._DIRECTIONS:
-                    if GomokuRules._check_direction(board, row, column, row_delta, column_delta, player,):
+                    if GomokuRules._check_direction(board,row,column,row_delta,column_delta,player,):
                         return player
         return NO_WINNER
     @staticmethod
@@ -22,13 +22,24 @@ class GomokuRules:
                 if player == EMPTY:
                     continue
                 for row_delta, column_delta in GomokuRules._DIRECTIONS:
-                    cells = GomokuRules._collect_direction(board, row, column, row_delta, column_delta, player, )
+                    cells = GomokuRules._collect_direction(board,row,column,row_delta,column_delta,player,)
                     if cells:
                         return cells
         return []
     @staticmethod
     def is_draw(board):
-        return (GomokuRules.check_winner(board) == NO_WINNER and board.is_board_full())
+        return GomokuRules.check_winner(board) == NO_WINNER and board.is_board_full()
+    @staticmethod
+    def get_legal_moves(board):
+        moves = []
+        for row in range(BOARD_ROWS):
+            for column in range(BOARD_COLUMNS):
+                if board.is_cell_empty(row, column):
+                    moves.append((row, column))
+        return moves
+    @staticmethod
+    def is_valid_move(board, row, column):
+        return board.is_valid_position(row, column) and board.is_cell_empty(row, column)
     @staticmethod
     def is_game_over(board):
         if GomokuRules.check_winner(board) != NO_WINNER:
@@ -51,13 +62,13 @@ class GomokuRules:
             return result
         return result
     @staticmethod
-    def _check_direction(board, row, column, row_delta, column_delta, player, ):
+    def _check_direction(board,row,column,row_delta,column_delta,player,):
         for index in range(1, WIN_LENGTH):
             next_row = row + row_delta * index
             next_column = column + column_delta * index
             if not board.is_valid_position(next_row,next_column,):
                 return False
-            if board.get_cell(next_row, next_column,) != player:
+            if (board.get_cell(next_row,next_column,) != player):
                 return False
         return True
     @staticmethod
@@ -66,9 +77,9 @@ class GomokuRules:
         for index in range(WIN_LENGTH):
             next_row = row + row_delta * index
             next_column = column + column_delta * index
-            if not board.is_valid_position(next_row, next_column,):
+            if not board.is_valid_position(next_row,next_column,):
                 return []
-            if board.get_cell(next_row,next_column,) != player:
+            if (board.get_cell(next_row,next_column,) != player):
                 return []
             cells.append((next_row, next_column))
         return cells

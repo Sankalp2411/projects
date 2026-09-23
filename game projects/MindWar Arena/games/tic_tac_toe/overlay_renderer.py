@@ -1,5 +1,5 @@
-#games/tic_tac_toe/overlay_renderer.py
-from games.tic_tac_toe.constants import (PLAYER_X,PLAYER_O,)
+# games/tic_tac_toe/overlay_renderer.py
+from games.tic_tac_toe.constants import (PLAYER_O,PLAYER_X,)
 class OverlayRenderer:
     def __init__(self, renderer):
         self.renderer = renderer
@@ -22,8 +22,8 @@ class OverlayRenderer:
             message = "Player O Wins!"
         else:
             return
-        self.renderer.draw_overlay_message(message=message,color=(255,255,255),size=56,)
+        self.renderer.draw_overlay_message(message=message,color=(255, 255, 255),size=56,)
     def draw_draw_overlay(self):
-        self.renderer.draw_overlay_message(message="Draw Game!",color=(255,255,255),size=56,)
+        self.renderer.draw_overlay_message(message="Draw Game!",color=(255, 255, 255),size=56,)
     def reset(self):
         pass

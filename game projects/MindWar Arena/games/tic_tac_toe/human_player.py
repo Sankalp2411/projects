@@ -1,4 +1,4 @@
-#games/tic_tac_toe/human_player.py
+# games/tic_tac_toe/human_player.py
 from engine.core.input import Input
 class HumanPlayer:
     def __init__(self, board_renderer):

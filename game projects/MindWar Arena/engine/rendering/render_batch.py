@@ -1,4 +1,4 @@
-#engine/rendering/render_batch.py
+# engine/rendering/render_batch.py
 class RenderCommand:
     def __init__(self, function, *args, **kwargs):
         self.function = function
@@ -10,7 +10,7 @@ class RenderBatch:
     def __init__(self):
         self._commands = []
     def add(self, function, *args, **kwargs):
-        self._commands.append(RenderCommand(function,*args,**kwargs, ))
+        self._commands.append(RenderCommand(function,*args,**kwargs,))
     def render(self):
         for command in self._commands:
             command.execute()

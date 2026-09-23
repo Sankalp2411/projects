@@ -1,6 +1,5 @@
 # games/pente/board.py
-from copy import deepcopy
-from games.pente.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
+from games.pente.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
 class PenteBoard:
     def __init__(self):
         self.reset()
@@ -32,7 +31,7 @@ class PenteBoard:
         self._board[row][column] = EMPTY
         return True
     def is_valid_position(self, row, column):
-        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
+        return 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS
     def is_cell_empty(self, row, column):
         if not self.is_valid_position(row, column):
             return False
@@ -50,6 +49,8 @@ class PenteBoard:
                 if self._board[row][column] == EMPTY:
                     moves.append((row, column))
         return moves
+    def get_empty_positions(self):
+        return self.get_available_moves()
     def count_stones(self, player):
         if player not in (PLAYER_BLACK, PLAYER_WHITE):
             return 0
@@ -68,10 +69,10 @@ class PenteBoard:
         return count
     def copy(self):
         board_copy = PenteBoard()
-        board_copy._board = deepcopy(self._board)
+        board_copy._board = [row[:] for row in self._board]
         return board_copy
     def get_board_state(self):
-        return deepcopy(self._board)
+        return [row[:] for row in self._board]
     def __str__(self):
         symbols = {EMPTY: ".",PLAYER_BLACK: "B",PLAYER_WHITE: "W",}
         rows = []
