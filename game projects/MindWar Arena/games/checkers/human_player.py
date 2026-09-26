@@ -36,7 +36,7 @@ class HumanPlayer:
             return None
         row, column = position
         if game.is_in_multi_capture():
-            active_piece = game.get_active_capture_piece()
+            active_piece = (game.get_active_capture_piece())
             if active_piece is None:
                 return None
             self.selected_position = active_piece
@@ -52,7 +52,7 @@ class HumanPlayer:
         if self._is_selectable_position(position,legal_moves,):
             self.selected_position = position
             return None
-        selected_row, selected_column = self.selected_position
+        selected_row, selected_column = (self.selected_position)
         move = (selected_row,selected_column,row,column,)
         if move in legal_moves:
             self.selected_position = None
@@ -65,6 +65,6 @@ class HumanPlayer:
     def _is_selectable_position(self,position,legal_moves,):
         row, column = position
         for move in legal_moves:
-            if move[0] == row and move[1] == column:
+            if (move[0] == row and move[1] == column):
                 return True
         return False

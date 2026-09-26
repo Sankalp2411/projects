@@ -1,4 +1,4 @@
-# games/go/constants.py
+#games/go/constants.py
 GAME_NAME = "Go"
 GAME_VERSION = "1.0.0"
 BOARD_ROWS = 9

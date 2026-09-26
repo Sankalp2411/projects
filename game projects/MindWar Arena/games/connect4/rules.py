@@ -1,8 +1,8 @@
-# games/connect4/rules.py
+#games/connect4/rules.py
 from engine.interfaces.game_result import GameResult
-from games.connect4.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,NO_WINNER,WIN_LENGTH,)
+from games.connect4.constants import (BOARD_ROWS, BOARD_COLUMNS, WIN_LENGTH, EMPTY, NO_WINNER,)
 class Connect4Rules:
-    _DIRECTIONS = ((0, 1),(1, 0),(1, 1),(-1, 1),)
+    _DIRECTIONS = ((0, 1), (1, 0), (1, 1), (-1, 1), )
     @staticmethod
     def check_winner(board):
         for row in range(BOARD_ROWS):
@@ -11,7 +11,7 @@ class Connect4Rules:
                 if player == EMPTY:
                     continue
                 for row_delta, column_delta in Connect4Rules._DIRECTIONS:
-                    if Connect4Rules._check_direction(board,row,column,row_delta,column_delta,player,):
+                    if Connect4Rules._check_direction(board, row, column, row_delta, column_delta, player,):
                         return player
         return NO_WINNER
     @staticmethod
@@ -22,16 +22,16 @@ class Connect4Rules:
                 if player == EMPTY:
                     continue
                 for row_delta, column_delta in Connect4Rules._DIRECTIONS:
-                    cells = Connect4Rules._collect_direction(board,row,column,row_delta,column_delta,player,)
+                    cells = Connect4Rules._collect_direction(board, row, column, row_delta, column_delta, player,)
                     if cells:
                         return cells
         return []
     @staticmethod
     def is_draw(board):
-        return Connect4Rules.check_winner(board) == NO_WINNER and board.is_board_full()
+        return (Connect4Rules.check_winner(board) == NO_WINNER and board.is_board_full())
     @staticmethod
     def is_game_over(board):
-        return Connect4Rules.check_winner(board) != NO_WINNER or board.is_board_full()
+        return (Connect4Rules.check_winner(board) != NO_WINNER or board.is_board_full())
     @staticmethod
     def evaluate_game(board):
         result = GameResult()
@@ -46,7 +46,7 @@ class Connect4Rules:
             result.game_over = True
         return result
     @staticmethod
-    def _check_direction(board,row,column,row_delta,column_delta,player,):
+    def _check_direction(board, row, column, row_delta, column_delta, player, ):
         for index in range(1, WIN_LENGTH):
             next_row = row + row_delta * index
             next_column = column + column_delta * index
@@ -56,7 +56,7 @@ class Connect4Rules:
                 return False
         return True
     @staticmethod
-    def _collect_direction(board,row,column,row_delta,column_delta,player,):
+    def _collect_direction(board, row, column, row_delta, column_delta, player,):
         cells = []
         for index in range(WIN_LENGTH):
             next_row = row + row_delta * index

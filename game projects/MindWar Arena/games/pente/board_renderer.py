@@ -1,5 +1,5 @@
 # games/pente/board_renderer.py
-from games.pente.constants import (BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CELL_SIZE,GRID_COLOR,PLAYER_BLACK,PLAYER_BLACK_COLOR,PLAYER_WHITE,PLAYER_WHITE_COLOR,STONE_RADIUS,WIN_LINE_COLOR,)
+from games.pente.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,PLAYER_BLACK,PLAYER_WHITE,PLAYER_BLACK_COLOR,PLAYER_WHITE_COLOR,STONE_RADIUS,WIN_LINE_COLOR,)
 class BoardRenderer:
     def __init__(self, renderer):
         self.renderer = renderer
@@ -14,7 +14,7 @@ class BoardRenderer:
                     self.draw_stone(row,column,PLAYER_BLACK_COLOR,)
                 elif value == PLAYER_WHITE:
                     self.draw_stone(row,column,PLAYER_WHITE_COLOR,)
-        if game_result is not None and game_result.winning_cells:
+        if (game_result is not None and game_result.winning_cells):
             self.draw_winning_line(game_result.winning_cells)
     def draw_grid(self):
         self.renderer.draw_grid(origin=(self.origin_x,self.origin_y,),rows=BOARD_ROWS,columns=BOARD_COLUMNS,cell_size=CELL_SIZE,color=GRID_COLOR,)
@@ -22,12 +22,12 @@ class BoardRenderer:
         center = self.get_cell_center(row,column,)
         self.renderer.draw_circle(center=center,radius=STONE_RADIUS,color=color,)
     def get_cell_center(self, row, column):
-        x = self.origin_x + column * CELL_SIZE
-        y = self.origin_y + row * CELL_SIZE
+        x = (self.origin_x + column * CELL_SIZE)
+        y = (self.origin_y + row * CELL_SIZE)
         return (x, y)
     def contains_point(self, x, y):
-        board_width = (BOARD_COLUMNS - 1) * CELL_SIZE
-        board_height = (BOARD_ROWS - 1) * CELL_SIZE
+        board_width = ((BOARD_COLUMNS - 1) * CELL_SIZE)
+        board_height = ((BOARD_ROWS - 1) * CELL_SIZE)
         return (self.origin_x <= x <= self.origin_x + board_width and self.origin_y <= y <= self.origin_y + board_height)
     def screen_to_cell(self, x, y):
         if not self.contains_point(x, y):

@@ -1,5 +1,6 @@
 # games/checkers/board.py
-from games.checkers.constants import (BLACK_KING,BLACK_MAN,BOARD_COLUMNS,BOARD_ROWS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_MAN,)
+from copy import deepcopy
+from games.checkers.constants import (BOARD_COLUMNS,BOARD_ROWS,BLACK_KING,BLACK_MAN,EMPTY,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_MAN,)
 class CheckersBoard:
     def __init__(self):
         self._board = []
@@ -25,7 +26,7 @@ class CheckersBoard:
             raise ValueError(f"Invalid piece value: {value}")
         self._board[row][column] = value
     def is_valid_position(self, row, column):
-        return 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
     def is_dark_square(self, row, column):
         if not self.is_valid_position(row, column):
             raise ValueError(f"Invalid board position: ({row}, {column})")
@@ -61,10 +62,10 @@ class CheckersBoard:
                     positions.append((row, column))
         return positions
     def get_board_state(self):
-        return [row[:] for row in self._board]
+        return deepcopy(self._board)
     def copy(self):
         new_board = CheckersBoard()
-        new_board._board = [row[:] for row in self._board]
+        new_board._board = deepcopy(self._board)
         return new_board
     def __str__(self):
         symbols = {EMPTY: ".",BLACK_MAN: "b",BLACK_KING: "B",WHITE_MAN: "w",WHITE_KING: "W",}

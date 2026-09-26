@@ -1,4 +1,4 @@
-# games/nine_mens_morris/overlay_renderer.py
+#games/nine_mens_morris/overlay_renderer.py
 from games.nine_mens_morris.constants import (PLAYER_BLACK,PLAYER_WHITE,)
 class OverlayRenderer:
     def __init__(self, renderer):

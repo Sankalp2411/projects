@@ -1,4 +1,4 @@
-# games/go/overlay_renderer.py
+#games/go/overlay_renderer.py
 from games.go.constants import (PLAYER_BLACK,PLAYER_WHITE,)
 class GoOverlayRenderer:
     def __init__(self, renderer):
@@ -13,11 +13,11 @@ class GoOverlayRenderer:
         black_score = self._get_score(result,board,PLAYER_BLACK,)
         white_score = self._get_score(result,board,PLAYER_WHITE,)
         if result.draw:
-            message = f"DRAW - BLACK: {black_score:.1f} WHITE: {white_score:.1f}"
+            message = (f"DRAW - "f"BLACK: {black_score:.1f} "f"WHITE: {white_score:.1f}")
         elif result.winner == PLAYER_BLACK:
-            message = f"BLACK WINS - BLACK: {black_score:.1f} WHITE: {white_score:.1f}"
+            message = (f"BLACK WINS - "f"BLACK: {black_score:.1f} "f"WHITE: {white_score:.1f}")
         elif result.winner == PLAYER_WHITE:
-            message = f"WHITE WINS - BLACK: {black_score:.1f} WHITE: {white_score:.1f}"
+            message = (f"WHITE WINS - "f"BLACK: {black_score:.1f} "f"WHITE: {white_score:.1f}")
         else:
             message = "GAME OVER"
         if hasattr(self.renderer,"draw_overlay_message",):

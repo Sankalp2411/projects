@@ -1,4 +1,5 @@
-# games/go/board.py
+#games/go/board.py
+from copy import deepcopy
 from games.go.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
 class GoBoard:
     def __init__(self):
@@ -7,7 +8,7 @@ class GoBoard:
     def reset(self):
         self._board = [[EMPTY for _ in range(BOARD_COLUMNS)] for _ in range(BOARD_ROWS)]
     def is_valid_position(self, row, column):
-        return 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS
+        return ( 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
     def get_cell(self, row, column):
         if not self.is_valid_position(row, column):
             raise ValueError(f"Invalid board position: ({row}, {column})")
@@ -73,7 +74,7 @@ class GoBoard:
     def is_board_full(self):
         return self.get_empty_count() == 0
     def get_board_state(self):
-        return [row[:] for row in self._board]
+        return deepcopy(self._board)
     def set_board_state(self, board_state):
         if not isinstance(board_state, list):
             raise ValueError("Invalid board state.")
@@ -87,10 +88,10 @@ class GoBoard:
             for value in row:
                 if value not in (EMPTY,PLAYER_BLACK,PLAYER_WHITE,):
                     raise ValueError("Invalid board value.")
-        self._board = [row[:] for row in board_state]
+        self._board = deepcopy(board_state)
     def copy(self):
         new_board = GoBoard()
-        new_board._board = [row[:] for row in self._board]
+        new_board._board = deepcopy(self._board)
         return new_board
     def __str__(self):
         symbols = {EMPTY: ".",PLAYER_BLACK: "B",PLAYER_WHITE: "W",}

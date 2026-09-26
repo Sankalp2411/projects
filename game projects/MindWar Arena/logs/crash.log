@@ -571,29 +571,3 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^^^^^^^^^^
 AttributeError: type object 'GoRules' has no attribute 'is_legal_move'. Did you mean: 'has_legal_moves'?
 
-
-================================================================================
-Timestamp: 2026-09-20 15:13:50
-
-Exception: Can't instantiate abstract class GoGame without an implementation for abstract methods 'can_redo', 'can_undo', 'deserialize', 'get_hint', 'get_valid_moves_for_cell', 'redo', 'serialize', 'undo'
-
-Traceback (most recent call last):
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\main.py", line 7, in main
-    launcher.start()
-    ~~~~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\launcher.py", line 8, in start
-    self.game_manager.run()
-    ~~~~~~~~~~~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 53, in run
-    self.update()
-    ~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\game_manager.py", line 43, in update
-    self.scene_manager.update()
-    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\engine\core\scene_manager.py", line 14, in update
-    self.current_scene.update()
-    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "E:\SJ\visualStudioCode\projects\game projects\MindWar Arena\game\scenes\game_mode_scene.py", line 30, in update
-    game = game_class(renderer =self.renderer,game_mode=mode,)
-TypeError: Can't instantiate abstract class GoGame without an implementation for abstract methods 'can_redo', 'can_undo', 'deserialize', 'get_hint', 'get_valid_moves_for_cell', 'redo', 'serialize', 'undo'
-

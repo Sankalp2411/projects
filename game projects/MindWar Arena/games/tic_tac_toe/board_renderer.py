@@ -1,11 +1,11 @@
-# games/tic_tac_teo/board_renderer.py
-from games.tic_tac_toe.constants import (BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CELL_SIZE,GRID_COLOR,O_COLOR,PLAYER_O,PLAYER_X,WIN_LINE_COLOR,X_COLOR,)
+#games/tic_tac_teo/board_renderer.py
+from games.tic_tac_toe.constants import (BOARD_ROWS,BOARD_COLUMNS,CELL_SIZE,BOARD_PADDING,GRID_COLOR,X_COLOR,O_COLOR,PLAYER_X,PLAYER_O,WIN_LINE_COLOR,)
 class BoardRenderer:
     def __init__(self, renderer):
         self.renderer = renderer
         self.origin_x = BOARD_PADDING
         self.origin_y = BOARD_PADDING
-    def render(self,board,game_result=None,):
+    def render(self, board,game_result=None,):
         self.draw_grid()
         for row in range(BOARD_ROWS):
             for column in range(BOARD_COLUMNS):
@@ -14,7 +14,7 @@ class BoardRenderer:
                     self.draw_x(row, column)
                 elif value == PLAYER_O:
                     self.draw_o(row, column)
-        if game_result is not None and game_result.winning_cells:
+        if (game_result is not None and game_result.winning_cells):
             self.draw_winning_line(game_result.winning_cells)
     def draw_grid(self):
         self.renderer.draw_grid(origin=(self.origin_x, self.origin_y),rows=BOARD_ROWS,columns=BOARD_COLUMNS,cell_size=CELL_SIZE,color=GRID_COLOR,)
@@ -25,8 +25,8 @@ class BoardRenderer:
         center = self.get_cell_center(row, column)
         self.renderer.draw_circle(center=center,radius=CELL_SIZE * 0.30,color=O_COLOR,)
     def get_cell_center(self, row, column):
-        x = self.origin_x + column * CELL_SIZE + CELL_SIZE / 2
-        y = self.origin_y + row * CELL_SIZE + CELL_SIZE / 2
+        x = (self.origin_x + column * CELL_SIZE + CELL_SIZE / 2)
+        y = (self.origin_y + row * CELL_SIZE + CELL_SIZE / 2 )
         return (x, y)
     def contains_point(self, x, y):
         board_width = BOARD_COLUMNS * CELL_SIZE

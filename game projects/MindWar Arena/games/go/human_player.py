@@ -1,4 +1,4 @@
-# games/go/human_player.py
+#games/go/human_player.py
 import pygame
 from engine.core.input import Input
 from games.go.constants import (ACTION_PASS,PLAYER_BLACK,PLAYER_WHITE,)
@@ -23,8 +23,8 @@ class HumanPlayer:
         if self.player != current_player:
             self.set_player(current_player)
         if Input.is_left_mouse_clicked():
-            mouse_x, mouse_y = Input.get_mouse_position()
-            position = self.board_renderer.screen_to_board((mouse_x, mouse_y))
+            mouse_x, mouse_y = (Input.get_mouse_position())
+            position = (self.board_renderer.screen_to_board((mouse_x, mouse_y)))
             if position is not None:
                 return position
         keyboard = pygame.key.get_pressed()

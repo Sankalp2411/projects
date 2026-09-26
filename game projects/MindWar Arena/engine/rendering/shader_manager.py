@@ -1,4 +1,4 @@
-# engine/rendering/shader_manager.py
+#engine/rendering/shader_manager.py
 from pathlib import Path
 from engine.utils.logger import Logger
 class ShaderManager:

@@ -1,5 +1,5 @@
 # games/gomoku/overlay_renderer.py
-from games.gomoku.constants import (PLAYER_BLACK,PLAYER_WHITE,)
+from games.gomoku.constants import (PLAYER_BLACK, PLAYER_WHITE,)
 class OverlayRenderer:
     def __init__(self, renderer):
         self.renderer = renderer

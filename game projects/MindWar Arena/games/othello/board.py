@@ -1,5 +1,6 @@
 # games/othello/board.py
-from games.othello.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
+from copy import deepcopy
+from games.othello.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,)
 class OthelloBoard:
     def __init__(self):
         self._board = []
@@ -23,7 +24,7 @@ class OthelloBoard:
             raise ValueError(f"Invalid cell value: {value}")
         self._board[row][column] = value
     def is_valid_position(self, row, column):
-        return 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
     def is_cell_empty(self, row, column):
         return self.get_cell(row, column) == EMPTY
     def is_board_full(self):
@@ -53,10 +54,10 @@ class OthelloBoard:
         return count
     def copy(self):
         new_board = OthelloBoard()
-        new_board._board = [row[:] for row in self._board]
+        new_board._board = deepcopy(self._board)
         return new_board
     def get_board_state(self):
-        return [row[:] for row in self._board]
+        return deepcopy(self._board)
     def __str__(self):
         symbols = {EMPTY: ".",PLAYER_BLACK: "B",PLAYER_WHITE: "W",}
         rows = []

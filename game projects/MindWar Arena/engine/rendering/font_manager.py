@@ -1,7 +1,6 @@
-# engine/rendering/font_manager.py
+#engine/rendering/font_manager.py
 from pathlib import Path
 import pygame
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 class FontManager:
     _fonts = {}
     _initialized = False
@@ -12,16 +11,16 @@ class FontManager:
         pygame.font.init()
         cls._initialized = True
     @classmethod
-    def get_font(cls, size, filename=None):
+    def get_font(cls,size,filename=None,):
         cls.initialize()
         key = (filename, size)
         if key in cls._fonts:
             return cls._fonts[key]
         if filename is None:
-            font = pygame.font.Font(None, size)
+            font = pygame.font.Font(None,size,)
         else:
-            path = _PROJECT_ROOT / "assets" / "fonts" / filename
-            font = pygame.font.Font(str(path), size)
+            path = (Path("assets")/ "fonts"/ filename)
+            font = pygame.font.Font(str(path),size,)
         cls._fonts[key] = font
         return font
     @classmethod

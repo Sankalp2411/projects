@@ -1,6 +1,6 @@
-# games/go/rules.py
+#games/go/rules.py
 from engine.interfaces.game_result import GameResult
-from games.go.constants import (BOARD_COLUMNS,BOARD_ROWS,EMPTY,KOMI,PLAYER_BLACK,PLAYER_WHITE,)
+from games.go.constants import (BOARD_ROWS,BOARD_COLUMNS,EMPTY,PLAYER_BLACK,PLAYER_WHITE,GAME_NOT_STARTED,GAME_RUNNING,GAME_DRAW,GAME_OVER,NO_WINNER,KOMI,)
 class GoRules:
     @staticmethod
     def get_opponent(player):
@@ -48,7 +48,7 @@ class GoRules:
             current_row, current_column = current
             if not cls.is_valid_position(current_row,current_column,):
                 continue
-            if (board.get_cell(current_row,current_column,) != player):
+            if board.get_cell(current_row,current_column,) != player:
                 continue
             group.add(current)
             for neighbor in cls.get_neighbors(current_row,current_column,):
@@ -65,7 +65,7 @@ class GoRules:
         for row, column in group:
             for neighbor in cls.get_neighbors(row,column,):
                 neighbor_row, neighbor_column = neighbor
-                if (board.get_cell(neighbor_row,neighbor_column,) == EMPTY):
+                if board.get_cell(neighbor_row,neighbor_column,) == EMPTY:
                     liberties.add(neighbor)
         return liberties
     @classmethod
@@ -104,7 +104,7 @@ class GoRules:
         captured_positions = set()
         for neighbor in cls.get_neighbors(row,column,):
             neighbor_row, neighbor_column = neighbor
-            if (simulated_board.get_cell(neighbor_row,neighbor_column,) != opponent):
+            if simulated_board.get_cell(neighbor_row,neighbor_column,) != opponent:
                 continue
             group = cls.get_group(simulated_board,neighbor_row,neighbor_column,)
             liberties = cls.get_group_liberties(simulated_board,group,)
@@ -139,7 +139,7 @@ class GoRules:
         captured_positions = set()
         for neighbor in cls.get_neighbors(row,column,):
             neighbor_row, neighbor_column = neighbor
-            if (board.get_cell(neighbor_row,neighbor_column,) != opponent):
+            if board.get_cell(neighbor_row,neighbor_column,) != opponent:
                 continue
             group = cls.get_group(board,neighbor_row,neighbor_column,)
             liberties = cls.get_group_liberties(board,group,)
@@ -234,37 +234,38 @@ class GoRules:
         opponent = cls.get_opponent(player)
         previous_opponent_positions = set(previous_board.get_player_positions(opponent))
         current_opponent_positions = set(current_board.get_player_positions(opponent))
-        captured_positions = previous_opponent_positions - current_opponent_positions
+        captured_positions = (previous_opponent_positions - current_opponent_positions)
         if len(captured_positions) != 1:
             return None
         captured_position = next(iter(captured_positions))
         current_player_positions = set(current_board.get_player_positions(player))
         previous_player_positions = set(previous_board.get_player_positions(player))
-        new_player_positions = current_player_positions - previous_player_positions
+        new_player_positions = (current_player_positions - previous_player_positions)
         if len(new_player_positions) != 1:
             return None
         new_position = next(iter(new_player_positions))
         if new_position != (move_row,move_column,):
             return None
         recapture_board = current_board.copy()
-        recapture_row, recapture_column = captured_position
+        recapture_row, recapture_column = (captured_position)
         if not recapture_board.is_cell_empty(recapture_row,recapture_column,):
             return None
         if not cls.is_valid_move(recapture_board,recapture_row,recapture_column,opponent,None,):
             return None
         if not cls.apply_move(recapture_board,recapture_row,recapture_column,opponent,None,):
             return None
-        if recapture_board.get_board_state() == previous_board.get_board_state():
+        if (recapture_board.get_board_state() == previous_board.get_board_state()):
             return captured_position
         return None
     @classmethod
     def is_ko_move(cls,previous_board,current_board,move_row,move_column,player,):
-        return (cls.get_ko_position(previous_board,current_board,move_row,move_column,player,) is not None)
+        return (
+            cls.get_ko_position(previous_board,current_board,move_row,move_column,player,) is not None)
     @staticmethod
     def boards_equal(board_a, board_b):
         if board_a is None or board_b is None:
             return board_a is board_b
-        return board_a.get_board_state() == board_b.get_board_state()
+        return (board_a.get_board_state() == board_b.get_board_state())
     @classmethod
     def get_empty_regions(cls, board):
         if board is None:
@@ -276,7 +277,7 @@ class GoRules:
                 position = (row, column)
                 if position in visited:
                     continue
-                if (board.get_cell(row,column,) != EMPTY):
+                if board.get_cell(row,column,) != EMPTY:
                     continue
                 region = set()
                 stack = [position]
@@ -285,7 +286,7 @@ class GoRules:
                     if current in region:
                         continue
                     current_row, current_column = current
-                    if (board.get_cell(current_row,current_column,) != EMPTY):
+                    if board.get_cell(current_row,current_column,) != EMPTY:
                         continue
                     region.add(current)
                     visited.add(current)
@@ -293,7 +294,7 @@ class GoRules:
                         if neighbor in region:
                             continue
                         neighbor_row, neighbor_column = neighbor
-                        if (board.get_cell(neighbor_row,neighbor_column,) == EMPTY):
+                        if board.get_cell(neighbor_row,neighbor_column,) == EMPTY:
                             stack.append(neighbor)
                 if region:
                     regions.append(region)
@@ -304,6 +305,9 @@ class GoRules:
             return None
         if not region:
             return None
+        for row, column in region:
+            if (row == 0 or row == BOARD_ROWS - 1 or column == 0 or column == BOARD_COLUMNS - 1):
+                return None
         bordering_players = set()
         for row, column in region:
             for neighbor in cls.get_neighbors(row,column,):
@@ -335,7 +339,7 @@ class GoRules:
             return 0.0
         stone_count = board.count_stones(player)
         territory_count = cls.count_territory(board,player,)
-        score = stone_count + territory_count
+        score = (stone_count + territory_count)
         if player == PLAYER_WHITE:
             score += KOMI
         return float(score)
@@ -355,7 +359,7 @@ class GoRules:
     @classmethod
     def is_draw(cls, board):
         scores = cls.get_scores(board)
-        return scores[PLAYER_BLACK] == scores[PLAYER_WHITE]
+        return (scores[PLAYER_BLACK] == scores[PLAYER_WHITE])
     @classmethod
     def evaluate_game(cls, board):
         result = GameResult()

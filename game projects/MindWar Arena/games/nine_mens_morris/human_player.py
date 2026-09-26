@@ -1,6 +1,6 @@
-# games/nine_mens_morris/human_player.py
+#games/nine_mens_morris/human_player.py
 from engine.core.input import Input
-from games.nine_mens_morris.constants import (PHASE_PLACEMENT,)
+from games.nine_mens_morris.constants import (PHASE_PLACEMENT,PHASE_MOVEMENT,PHASE_FLYING,)
 class HumanPlayer:
     def __init__(self, board_renderer):
         self.board_renderer = board_renderer

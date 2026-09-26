@@ -1,6 +1,6 @@
 # games/checkers/rules.py
 from engine.interfaces.game_result import GameResult
-from games.checkers.constants import (BLACK_KING,BLACK_MAN,BOARD_ROWS,EMPTY,FORWARD_BLACK,FORWARD_WHITE,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_MAN,)
+from games.checkers.constants import (BLACK_KING,BLACK_MAN,BOARD_COLUMNS,BOARD_ROWS,EMPTY,FORWARD_BLACK,FORWARD_WHITE,PLAYER_BLACK,PLAYER_WHITE,WHITE_KING,WHITE_MAN,)
 class CheckersRules:
     _DIAGONAL_DIRECTIONS = ((-1, -1),(-1, 1),(1, -1),(1, 1),)
     @staticmethod
@@ -105,8 +105,6 @@ class CheckersRules:
         capture_moves = cls.get_capture_moves(board,row,column,)
         if capture_moves:
             return capture_moves
-        if cls.has_capture(board, player):
-            return []
         return cls.get_simple_moves(board,row,column,)
     @classmethod
     def get_all_capture_moves(cls, board, player):
@@ -215,22 +213,14 @@ class CheckersRules:
         white_count = board.count_pieces(PLAYER_WHITE)
         if black_count == 0 or white_count == 0:
             return True
-        return not cls.has_any_legal_move(board,PLAYER_BLACK,) or not cls.has_any_legal_move(board,PLAYER_WHITE,)
+        return (
+            not cls.has_any_legal_move(board,PLAYER_BLACK,) or not cls.has_any_legal_move(board,PLAYER_WHITE,))
     @classmethod
-    def is_draw(cls, board, no_capture_count=0):
-        if no_capture_count >= 80:
-            return True
-        if not cls.has_any_legal_move(board, PLAYER_BLACK) and not cls.has_any_legal_move(board, PLAYER_WHITE):
-            return True
+    def is_draw(cls, board):
         return False
     @classmethod
-    def evaluate_game(cls, board, no_capture_count=0):
+    def evaluate_game(cls, board):
         result = GameResult()
-        if cls.is_draw(board, no_capture_count):
-            result.game_over = True
-            result.draw = True
-            result.winner = None
-            return result
         if not cls.is_game_over(board):
             return result
         result.game_over = True

@@ -1,4 +1,4 @@
-# games/connect4/constants.py
+#games/connect4/constants.py
 GAME_NAME = "Connect Four"
 GAME_VERSION = "1.0.0"
 BOARD_ROWS = 6

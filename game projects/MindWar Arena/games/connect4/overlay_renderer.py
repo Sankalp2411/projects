@@ -1,4 +1,4 @@
-# games/connect4/overlay_renderer.py
+#games/connect4/overlay_renderer.py
 from games.connect4.constants import (PLAYER_RED,PLAYER_YELLOW,)
 class OverlayRenderer:
     def __init__(self, renderer):
@@ -22,8 +22,8 @@ class OverlayRenderer:
             message = "Yellow Wins!"
         else:
             return
-        self.renderer.draw_overlay_message(message=message,color=(255, 255, 255),size=56,)
+        self.renderer.draw_overlay_message(message=message, color=(255, 255, 255), size=56,)
     def draw_draw_overlay(self):
-        self.renderer.draw_overlay_message(message="Draw Game!",color=(255, 255, 255),size=56,)
+        self.renderer.draw_overlay_message(message="Draw Game!", color=(255, 255, 255), size=56,)
     def reset(self):
         pass

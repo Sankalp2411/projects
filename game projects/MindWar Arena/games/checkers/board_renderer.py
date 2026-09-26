@@ -1,5 +1,5 @@
 # games/checkers/board_renderer.py
-from games.checkers.constants import (BLACK_KING,BLACK_MAN,BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CAPTURE_MOVE_COLOR,DARK_SQUARE_COLOR,EMPTY,KING_INDICATOR_COLOR,KING_INDICATOR_RADIUS,LEGAL_MOVE_COLOR,LIGHT_SQUARE_COLOR,PIECE_RADIUS,SELECTED_CELL_COLOR,WHITE_KING,WHITE_MAN,)
+from games.checkers.constants import (BOARD_COLUMNS,BOARD_PADDING,BOARD_ROWS,CAPTURE_MOVE_COLOR,DARK_SQUARE_COLOR,EMPTY,KING_INDICATOR_COLOR,KING_INDICATOR_RADIUS,LEGAL_MOVE_COLOR,LIGHT_SQUARE_COLOR,PIECE_RADIUS,BLACK_KING,BLACK_MAN,PLAYER_BLACK,PLAYER_WHITE,SELECTED_CELL_COLOR,WHITE_KING,WHITE_MAN,)
 class CheckersBoardRenderer:
     def __init__(self, renderer):
         self.renderer = renderer
@@ -13,8 +13,8 @@ class CheckersBoardRenderer:
         if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
             raise ValueError(f"Invalid board position: ({row}, {column})")
         cell_size = self._get_cell_size()
-        x = BOARD_PADDING + (column + 0.5) * cell_size
-        y = BOARD_PADDING + (row + 0.5) * cell_size
+        x = (BOARD_PADDING + (column + 0.5) * cell_size)
+        y = (BOARD_PADDING + (row + 0.5) * cell_size)
         return x, y
     def screen_to_board(self, position):
         if position is None:
@@ -31,7 +31,7 @@ class CheckersBoardRenderer:
             return None
         return row, column
     def get_board_size(self):
-        size = BOARD_COLUMNS * self._get_cell_size() + BOARD_PADDING * 2
+        size = (BOARD_COLUMNS * self._get_cell_size() + BOARD_PADDING * 2)
         return size, size
     def _draw_board(self):
         cell_size = self._get_cell_size()
@@ -41,8 +41,8 @@ class CheckersBoardRenderer:
                     square_color = DARK_SQUARE_COLOR
                 else:
                     square_color = LIGHT_SQUARE_COLOR
-                left = BOARD_PADDING + column * cell_size
-                top = BOARD_PADDING + row * cell_size
+                left = (BOARD_PADDING + column * cell_size)
+                top = (BOARD_PADDING + row * cell_size)
                 self._draw_rectangle(left,top,cell_size,cell_size,square_color,)
     def _draw_pieces(self, board):
         for row in range(BOARD_ROWS):
@@ -88,19 +88,19 @@ class CheckersBoardRenderer:
         if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
             return
         cell_size = self._get_cell_size()
-        left = BOARD_PADDING + column * cell_size
-        top = BOARD_PADDING + row * cell_size
+        left = (BOARD_PADDING + column * cell_size)
+        top = (BOARD_PADDING + row * cell_size)
         self._draw_rectangle_outline(left,top,cell_size,cell_size,color,4,)
     def _draw_destination_highlight(self,position,color,):
         row, column = position
         if not (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS):
             return
         center = self.board_to_screen(row,column,)
-        radius = self._get_cell_size() * 0.13
+        radius = (self._get_cell_size() * 0.13) 
         self.renderer.draw_filled_circle(center,radius,color,)
     @staticmethod
     def _is_capture_move(move):
-        return abs(move[2] - move[0]) == 2 and abs(move[3] - move[1]) == 2
+        return (abs(move[2] - move[0]) == 2 and abs(move[3] - move[1]) == 2)
     def _draw_rectangle(self,x,y,width,height,color,):
         self.renderer.draw_rectangle((x, y),(width, height),color,)
     def _draw_rectangle_outline(self,x,y,width,height,color,line_width,):
@@ -110,6 +110,6 @@ class CheckersBoardRenderer:
         if hasattr(self.renderer,"draw_rectangle",):
             self.renderer.draw_rectangle((x, y),(width, height),color,)
     def _get_cell_size(self):
-        return self._board_pixel_size() / BOARD_COLUMNS
+        return (self._board_pixel_size() / BOARD_COLUMNS)
     def _board_pixel_size(self):
         return 560.0

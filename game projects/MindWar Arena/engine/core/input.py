@@ -1,28 +1,22 @@
-# engine/core/input.py
-from __future__ import annotations
+#engine/core/input.py
 import pygame
 from engine.utils.logger import Logger
 class Input:
     _pressed_keys = set()
-    _keys_down = set()
-    _keys_up = set()
     _mouse_x = 0
     _mouse_y = 0
     _left_pressed = False
     _left_clicked = False
     @classmethod
     def initialize(cls):
-        cls.reset()
-        Logger.info("[Input] Initialized")
-    @classmethod
-    def reset(cls):
-        cls._pressed_keys.clear()
-        cls._keys_down.clear()
-        cls._keys_up.clear()
+        cls._pressed_keys = set()
+        cls._keys_down = set()
+        cls._keys_up = set()
         cls._mouse_x = 0
         cls._mouse_y = 0
         cls._left_pressed = False
         cls._left_clicked = False
+        Logger.info("[Input] Initialized")
     @classmethod
     def update(cls, events):
         cls._keys_down.clear()
@@ -43,13 +37,6 @@ class Input:
             elif event.type == pygame.MOUSEBUTTONUP:
                 if event.button == 1:
                     cls._left_pressed = False
-            elif event.type == getattr(pygame, "WINDOWFOCUSLOST", -1):
-                cls._pressed_keys.clear()
-                cls._left_pressed = False
-            elif event.type == pygame.ACTIVEEVENT:
-                if getattr(event, "gain", 1) == 0:
-                    cls._pressed_keys.clear()
-                    cls._left_pressed = False
     @classmethod
     def is_key_pressed(cls, key):
         return key in cls._pressed_keys
@@ -58,7 +45,7 @@ class Input:
         return key in cls._keys_down
     @classmethod
     def get_mouse_position(cls):
-        return (cls._mouse_x, cls._mouse_y)
+        return (cls._mouse_x, cls._mouse_y, )
     @classmethod
     def get_mouse_x(cls):
         return cls._mouse_x

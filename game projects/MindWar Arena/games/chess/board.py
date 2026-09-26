@@ -1,11 +1,12 @@
 # games/chess/board.py
+from copy import deepcopy
 from games.chess.constants import (BLACK_BISHOP,BLACK_KING,BLACK_KNIGHT,BLACK_PAWN,BLACK_QUEEN,BLACK_ROOK,BOARD_COLUMNS,BOARD_ROWS,DARK_SQUARE,EMPTY,LIGHT_SQUARE,PLAYER_BLACK,PLAYER_WHITE,WHITE_BISHOP,WHITE_KING,WHITE_KNIGHT,WHITE_PAWN,WHITE_QUEEN,WHITE_ROOK,)
 class ChessBoard:
     def __init__(self):
         self._board = []
         self.reset()
     def reset(self):
-        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)] for _ in range(BOARD_ROWS)]
+        self._board = [[EMPTY for _ in range(BOARD_COLUMNS)]for _ in range(BOARD_ROWS)]
         self._board[0] = [BLACK_ROOK,BLACK_KNIGHT,BLACK_BISHOP,BLACK_QUEEN,BLACK_KING,BLACK_BISHOP,BLACK_KNIGHT,BLACK_ROOK,]
         self._board[1] = [BLACK_PAWN for _ in range(BOARD_COLUMNS)]
         self._board[6] = [WHITE_PAWN for _ in range(BOARD_COLUMNS)]
@@ -21,7 +22,7 @@ class ChessBoard:
             raise ValueError(f"Invalid piece value: {value}")
         self._board[row][column] = value
     def is_valid_position(self, row, column):
-        return 0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS
+        return (0 <= row < BOARD_ROWS and 0 <= column < BOARD_COLUMNS)
     def get_square_color(self, row, column):
         if not self.is_valid_position(row, column):
             raise ValueError(f"Invalid board position: ({row}, {column})")
@@ -29,11 +30,11 @@ class ChessBoard:
             return LIGHT_SQUARE
         return DARK_SQUARE
     def is_light_square(self, row, column):
-        return self.get_square_color(row, column) == LIGHT_SQUARE
+        return (self.get_square_color(row, column) == LIGHT_SQUARE)
     def is_dark_square(self, row, column):
-        return self.get_square_color(row, column) == DARK_SQUARE
+        return (self.get_square_color(row, column) == DARK_SQUARE)
     def is_empty(self, row, column):
-        return self.get_cell(row, column) == EMPTY
+        return (self.get_cell(row, column) == EMPTY)
     def is_valid_piece(self, piece):
         return piece in (EMPTY,WHITE_PAWN,WHITE_KNIGHT,WHITE_BISHOP,WHITE_ROOK,WHITE_QUEEN,WHITE_KING,BLACK_PAWN,BLACK_KNIGHT,BLACK_BISHOP,BLACK_ROOK,BLACK_QUEEN,BLACK_KING,)
     @staticmethod
@@ -99,12 +100,10 @@ class ChessBoard:
             return None
         return positions[0]
     def get_board_state(self):
-        return [row[:] for row in self._board]
-    def set_board_state(self, state):
-        self._board = [row[:] for row in state]
+        return deepcopy(self._board)
     def copy(self):
         new_board = ChessBoard()
-        new_board._board = [row[:] for row in self._board]
+        new_board._board = deepcopy(self._board)
         return new_board
     def __str__(self):
         symbols = {EMPTY: ".",WHITE_PAWN: "P",WHITE_KNIGHT: "N",WHITE_BISHOP: "B",WHITE_ROOK: "R",WHITE_QUEEN: "Q",WHITE_KING: "K",BLACK_PAWN: "p",BLACK_KNIGHT: "n",BLACK_BISHOP: "b",BLACK_ROOK: "r",BLACK_QUEEN: "q",BLACK_KING: "k",}

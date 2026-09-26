@@ -1,4 +1,4 @@
-# engine/core/scene.py
+#engine/core/scene.py
 from engine.utils.logger import Logger
 class Scene:
     def __init__(self, name):
